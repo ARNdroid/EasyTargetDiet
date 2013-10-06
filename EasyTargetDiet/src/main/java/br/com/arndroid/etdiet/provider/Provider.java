@@ -25,11 +25,19 @@ public class Provider extends ContentProvider {
     private static final UriMatcher sUriMatcher;
     private static final int FOODS_USAGE_URI_MATCH = 1;
     private static final int FOODS_USAGE_ITEM_URI_MATCH = 2;
+    private static final int WEEKDAY_PARAMETERS_URI_MATCH = 3;
+    private static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 4;
+    private static final int PARAMETERS_HISTORY_URI_MATCH = 5;
+    private static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 6;
 
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME, FOODS_USAGE_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/#", FOODS_USAGE_ITEM_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.WeekdayParameters.TABLE_NAME, WEEKDAY_PARAMETERS_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.WeekdayParameters.TABLE_NAME + "/#", WEEKDAY_PARAMETERS_ITEM_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.ParametersHistory.TABLE_NAME, PARAMETERS_HISTORY_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.ParametersHistory.TABLE_NAME + "/#", PARAMETERS_HISTORY_ITEM_URI_MATCH);
     }
 
 	/*
@@ -58,6 +66,18 @@ public class Provider extends ContentProvider {
 
             case FOODS_USAGE_ITEM_URI_MATCH:
                 return Contract.FoodsUsage.CONTENT_ITEM_TYPE;
+
+            case WEEKDAY_PARAMETERS_URI_MATCH:
+                return Contract.WeekdayParameters.CONTENT_TYPE;
+
+            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
+                return Contract.WeekdayParameters.CONTENT_ITEM_TYPE;
+
+            case PARAMETERS_HISTORY_URI_MATCH:
+                return Contract.ParametersHistory.CONTENT_TYPE;
+
+            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
+                return Contract.ParametersHistory.CONTENT_ITEM_TYPE;
 
             default:
                 Log.w(TAG, "Unknown URI in getType(Uri): " + uri);
@@ -95,6 +115,29 @@ public class Provider extends ContentProvider {
                 qb.appendWhere(Contract.FoodsUsage._ID + "=" + uri.getLastPathSegment());
                 break;
 
+            case WEEKDAY_PARAMETERS_URI_MATCH:
+                qb.setTables(Contract.WeekdayParameters.TABLE_NAME);
+                break;
+
+            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
+                qb.setTables(Contract.WeekdayParameters.TABLE_NAME);
+                qb.appendWhere(Contract.WeekdayParameters._ID + "=" + uri.getLastPathSegment());
+                break;
+
+            case PARAMETERS_HISTORY_URI_MATCH:
+                qb.setTables(Contract.ParametersHistory.TABLE_NAME);
+                if(TextUtils.isEmpty(sortOrder)) {
+                    orderBy = Contract.ParametersHistory.DEFAULT_SORT_ORDER;
+                } else {
+                    orderBy = sortOrder;
+                }
+                break;
+
+            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
+                qb.setTables(Contract.ParametersHistory.TABLE_NAME);
+                qb.appendWhere(Contract.ParametersHistory._ID + "=" + uri.getLastPathSegment());
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -107,18 +150,28 @@ public class Provider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        final AbstractEntity entity;
 
         if (values == null) {
             throw new IllegalArgumentException("values == null");
         }
 
+        final AbstractEntity entity;
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case FOODS_USAGE_URI_MATCH:
                 // Get entity (we don't have default values to join here):
                 entity = FoodsUsageEntity.fromContentValues(values);
                 break;
+
+            case WEEKDAY_PARAMETERS_URI_MATCH:
+                // Insert not allowed here:
+                return null;
+
+            case PARAMETERS_HISTORY_URI_MATCH:
+                // Get entity (we don't have default values to join here):
+                entity = ParametersHistoryEntity.fromContentValues(values);
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -137,6 +190,10 @@ public class Provider extends ContentProvider {
                 case FOODS_USAGE_URI_MATCH:
                     // We're doing nothing here because all constraint are safely validated inside
                     // validateOrThrow().
+                    break;
+                case PARAMETERS_HISTORY_URI_MATCH:
+                    // We're doing nothing here because despite we have a UNIQUE INDEX, breaking it
+                    // is not allowed to users. The index will be break only by a bug.
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -159,13 +216,14 @@ public class Provider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
-        final AbstractEntity entity;
-        final ContentValues currentValues;
-        final int fail = 0;
         if (values == null) {
             throw new IllegalArgumentException("values must be not null");
         }
 
+        final int fail = 0;
+        final ContentValues currentValues;
+        final AbstractEntity entity;
+        final Cursor c;
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case FOODS_USAGE_URI_MATCH:
@@ -173,7 +231,7 @@ public class Provider extends ContentProvider {
 
             case FOODS_USAGE_ITEM_URI_MATCH:
                 // Verify current values:
-                Cursor c = query(uri, null, null, null, null);
+                c = query(uri, null, null, null, null);
                 try {
                     if (c.getCount() != 1) {
                         return fail;
@@ -186,12 +244,52 @@ public class Provider extends ContentProvider {
                 // Get entity AND join current values:
                 entity = FoodsUsageEntity.fromJoinInContentValues(values, currentValues);
                 break;
+
+            case WEEKDAY_PARAMETERS_URI_MATCH:
+                return fail;
+
+            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
+                // Verify current values:
+                c = query(uri, null, null, null, null);
+                try {
+                    if (c.getCount() != 1) {
+                        return fail;
+                    }
+                    c.moveToFirst();
+                    currentValues = WeekdayParametersEntity.fromCursor(c).toContentValues();
+                } finally {
+                    c.close();
+                }
+                // Get entity AND join current values:
+                entity = WeekdayParametersEntity.fromJoinInContentValues(values, currentValues);
+                break;
+
+            case PARAMETERS_HISTORY_URI_MATCH:
+                return fail;
+
+            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
+                // Verify current values:
+                c = query(uri, null, null, null, null);
+                try {
+                    if (c.getCount() != 1) {
+                        return fail;
+                    }
+                    c.moveToFirst();
+                    currentValues = ParametersHistoryEntity.fromCursor(c).toContentValues();
+                } finally {
+                    c.close();
+                }
+                // Get entity AND join current values:
+                entity = ParametersHistoryEntity.fromJoinInContentValues(values, currentValues);
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
         // Validations
 
+        // TODO: we need to prepare following op to days table that has a TEXT _id (yyyyMMdd)
         // Id change is not allowed.
         // A try will be notified with the exception.
         // If client is sending the same id, we'll remove it.
@@ -219,8 +317,10 @@ public class Provider extends ContentProvider {
             // this constraint exception (and we know that just in the insert moment).
             switch (match) {
                 case FOODS_USAGE_URI_MATCH:
+                case WEEKDAY_PARAMETERS_URI_MATCH:
+                case PARAMETERS_HISTORY_URI_MATCH:
                     // We're doing nothing here because all constraint are safely validated inside
-                    // validateOrThrow().
+                    // entity.validateOrThrow().
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -235,11 +335,18 @@ public class Provider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        final int fail = 0;
         final String tableName;
         final String whereClause;
-
         final int match = sUriMatcher.match(uri);
         switch (match) {
+            case WEEKDAY_PARAMETERS_URI_MATCH:
+            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
+            case PARAMETERS_HISTORY_URI_MATCH:
+            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
+                // Delete not allowed here:
+                return fail;
             case FOODS_USAGE_URI_MATCH:
                 tableName = Contract.FoodsUsage.TABLE_NAME;
                 whereClause = selection;
@@ -254,43 +361,12 @@ public class Provider extends ContentProvider {
 
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
-        final int fail = 0;
         int rowsDeleted = db.delete(tableName, whereClause, selectionArgs);
         if (rowsDeleted > fail) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
         return rowsDeleted;
-    }
-
-	/*
-	 * Utilities
-	 */
-
-    private boolean isAlreadyInDatabase(String tableName, String columnName, Object value, String excludedIdColumnName, Long excludedIdValue) {
-        Cursor c = null;
-
-        SQLiteDatabase db = mDBHelper.getReadableDatabase();
-        try {
-            c = db.query(tableName, null, columnName + "=?", new String[] {value.toString()}, null, null, null);
-            if (excludedIdValue == null) {
-                return c.getCount() > 0;
-            } else {
-                if (c.getCount() == 0) {
-                    return false;
-                } else {
-                    c.moveToFirst();
-                    do {
-                        if (c.getLong(c.getColumnIndex(excludedIdColumnName)) != excludedIdValue) {
-                            return true;
-                        }
-                    } while (c.moveToNext());
-                    return false;
-                }
-            }
-        } finally {
-            if(c != null) c.close();
-        }
     }
 
     // Log

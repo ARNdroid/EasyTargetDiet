@@ -18,5 +18,4 @@ public final class Meals {
     static public int SNEAK = 3;
     static public int DINNER = 4;
     static public int SUPPER = 5;
-
 }

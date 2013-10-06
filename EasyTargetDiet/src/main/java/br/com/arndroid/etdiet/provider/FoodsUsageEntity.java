@@ -270,7 +270,7 @@ public class FoodsUsageEntity extends AbstractEntity {
             result.setId(complement.getAsLong(Contract.FoodsUsage._ID));
         }
         // day_id:
-        if (principal.getAsLong(Contract.FoodsUsage.DAY_ID) != null) {
+        if (principal.getAsString(Contract.FoodsUsage.DAY_ID) != null) {
             result.setDayId(principal.getAsString(Contract.FoodsUsage.DAY_ID));
         } else {
             result.setDayId(complement.getAsString(Contract.FoodsUsage.DAY_ID));
