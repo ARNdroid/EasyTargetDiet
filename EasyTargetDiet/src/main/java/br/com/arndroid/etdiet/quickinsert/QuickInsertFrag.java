@@ -21,7 +21,7 @@ import android.widget.TimePicker;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.compat.Compat;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.util.DateUtil;
 
 /*

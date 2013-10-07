@@ -39,7 +39,7 @@ public class Contract {
             private String mColumnName;
             private Object mValue;
 
-            protected FieldDescriptor(String tableName, String columnName, Object value) {
+            public FieldDescriptor(String tableName, String columnName, Object value) {
                 mTableName = tableName;
                 mColumnName = columnName;
                 mValue = value;
@@ -70,7 +70,7 @@ public class Contract {
         private final FieldDescriptor[] mFieldDescriptorArray;
         private String mDetailMessage;
 
-        protected TargetException(int errorCode, FieldDescriptor[] fieldDescriptorArray, Throwable cause) {
+        public TargetException(int errorCode, FieldDescriptor[] fieldDescriptorArray, Throwable cause) {
             super(cause);
             mErrorCode = errorCode;
             mFieldDescriptorArray = fieldDescriptorArray;
@@ -158,7 +158,7 @@ public class Contract {
 		 * Sort order
 		 */
 
-        public static final String DEFAULT_SORT_ORDER = TIME + " ASC";
+        public static final String TIME_ASC_SORT_ORDER = TIME + " ASC";
 
 		/*
 		 * Utility methods
@@ -287,11 +287,12 @@ public class Contract {
         public static final int DONT_USE_EXERCISE_USE_MODE = 0;
         public static final int USE_DONT_ACCUMULATE_EXERCISE_USE_MODE = 1;
         public static final int USE_AND_ACCUMULATE_EXERCISE_USE_MODE = 2;
+
 		/*
 		 * Sort order
 		 */
 
-        public static final String DEFAULT_SORT_ORDER = DATE + " DESC";
+        public static final String DATE_DESC_SORT_ORDER = DATE + " DESC";
 
 		/*
 		 * Utility methods

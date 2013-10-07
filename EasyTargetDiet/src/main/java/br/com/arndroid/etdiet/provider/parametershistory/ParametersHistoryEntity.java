@@ -1,7 +1,10 @@
-package br.com.arndroid.etdiet.provider;
+package br.com.arndroid.etdiet.provider.parametershistory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import br.com.arndroid.etdiet.provider.AbstractEntity;
+import br.com.arndroid.etdiet.provider.Contract;
 
 public class ParametersHistoryEntity extends AbstractEntity {
     private Long id;

@@ -9,8 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.ParametersHistoryEntity;
-import br.com.arndroid.etdiet.provider.WeekdayParametersEntity;
+import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryEntity;
+import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.util.DateUtil;
 
 public class DBOpenHelper extends SQLiteOpenHelper {

@@ -1,7 +1,11 @@
-package br.com.arndroid.etdiet.provider;
+package br.com.arndroid.etdiet.provider.foodsusage;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import br.com.arndroid.etdiet.provider.AbstractEntity;
+import br.com.arndroid.etdiet.provider.Contract;
+
 import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor;
 
 public class FoodsUsageEntity extends AbstractEntity {

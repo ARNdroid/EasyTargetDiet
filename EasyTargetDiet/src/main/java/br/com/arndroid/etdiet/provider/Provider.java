@@ -9,26 +9,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.util.Log;
 
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageOperation;
+import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryOperation;
+import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersOperation;
 import br.com.arndroid.etdiet.sqlite.DBOpenHelper;
 
 import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor;
 
 public class Provider extends ContentProvider {
 
-	/*
-	 * Static Initialization
-	 */
+    public static final int QUERY_OPERATION = 0;
+    public static final int INSERT_OPERATION = 1;
+    public static final int UPDATE_OPERATION = 2;
+    public static final int DELETE_OPERATION = 3;
 
     private static final UriMatcher sUriMatcher;
-    private static final int FOODS_USAGE_URI_MATCH = 1;
-    private static final int FOODS_USAGE_ITEM_URI_MATCH = 2;
-    private static final int WEEKDAY_PARAMETERS_URI_MATCH = 3;
-    private static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 4;
-    private static final int PARAMETERS_HISTORY_URI_MATCH = 5;
-    private static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 6;
+    public static final int FOODS_USAGE_URI_MATCH = 1;
+    public static final int FOODS_USAGE_ITEM_URI_MATCH = 2;
+    public static final int WEEKDAY_PARAMETERS_URI_MATCH = 3;
+    public static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 4;
+    public static final int PARAMETERS_HISTORY_URI_MATCH = 5;
+    public static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 6;
 
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -40,9 +43,25 @@ public class Provider extends ContentProvider {
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.ParametersHistory.TABLE_NAME + "/#", PARAMETERS_HISTORY_ITEM_URI_MATCH);
     }
 
-	/*
-	 * Implementation
-	 */
+	private ProviderOperation providerOperationForUri(Uri uri) {
+        switch (sUriMatcher.match(uri)) {
+            case FOODS_USAGE_URI_MATCH:
+            case FOODS_USAGE_ITEM_URI_MATCH:
+                return new FoodsUsageOperation();
+
+            case WEEKDAY_PARAMETERS_URI_MATCH:
+            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
+                return new WeekdayParametersOperation();
+
+            case PARAMETERS_HISTORY_URI_MATCH:
+            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
+                return new ParametersHistoryOperation();
+
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+    }
+
     private DBOpenHelper mDBHelper;
 
     @Override
@@ -60,275 +79,139 @@ public class Provider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
 
-        switch (sUriMatcher.match(uri)) {
-            case FOODS_USAGE_URI_MATCH:
-                return Contract.FoodsUsage.CONTENT_TYPE;
-
-            case FOODS_USAGE_ITEM_URI_MATCH:
-                return Contract.FoodsUsage.CONTENT_ITEM_TYPE;
-
-            case WEEKDAY_PARAMETERS_URI_MATCH:
-                return Contract.WeekdayParameters.CONTENT_TYPE;
-
-            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
-                return Contract.WeekdayParameters.CONTENT_ITEM_TYPE;
-
-            case PARAMETERS_HISTORY_URI_MATCH:
-                return Contract.ParametersHistory.CONTENT_TYPE;
-
-            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
-                return Contract.ParametersHistory.CONTENT_ITEM_TYPE;
-
-            default:
-                Log.w(TAG, "Unknown URI in getType(Uri): " + uri);
-                return null;
+        try {
+            return providerOperationForUri(uri).getType(uri);
+        } catch (IllegalArgumentException e) {
+            return null;
         }
     }
 
-    public SQLiteOpenHelper hookOpenHelperForTests() {
+    @SuppressWarnings("UnusedDeclaration")
+    public SQLiteOpenHelper getOpenHelper() {
         return mDBHelper;
     }
-
-	/*
-	 * CRUD
-	 */
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        String orderBy = null;
+        final ProviderOperation operation = providerOperationForUri(uri);
 
-        switch (sUriMatcher.match(uri)) {
-            case FOODS_USAGE_URI_MATCH:
-                qb.setTables(Contract.FoodsUsage.TABLE_NAME);
-                if(TextUtils.isEmpty(sortOrder)) {
-                    orderBy = Contract.FoodsUsage.DEFAULT_SORT_ORDER;
-                } else {
-                    orderBy = sortOrder;
-                }
-                break;
-
-            case FOODS_USAGE_ITEM_URI_MATCH:
-                qb.setTables(Contract.FoodsUsage.TABLE_NAME);
-                qb.appendWhere(Contract.FoodsUsage._ID + "=" + uri.getLastPathSegment());
-                break;
-
-            case WEEKDAY_PARAMETERS_URI_MATCH:
-                qb.setTables(Contract.WeekdayParameters.TABLE_NAME);
-                break;
-
-            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
-                qb.setTables(Contract.WeekdayParameters.TABLE_NAME);
-                qb.appendWhere(Contract.WeekdayParameters._ID + "=" + uri.getLastPathSegment());
-                break;
-
-            case PARAMETERS_HISTORY_URI_MATCH:
-                qb.setTables(Contract.ParametersHistory.TABLE_NAME);
-                if(TextUtils.isEmpty(sortOrder)) {
-                    orderBy = Contract.ParametersHistory.DEFAULT_SORT_ORDER;
-                } else {
-                    orderBy = sortOrder;
-                }
-                break;
-
-            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
-                qb.setTables(Contract.ParametersHistory.TABLE_NAME);
-                qb.appendWhere(Contract.ParametersHistory._ID + "=" + uri.getLastPathSegment());
-                break;
-
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        if(!operation.isOperationAllowedForUri(QUERY_OPERATION, uri)) {
+            return null;
         }
 
+        OperationParameters parameters = new OperationParameters(projection, selection, selectionArgs,
+                null, null, sortOrder, null);
+        operation.onValidateParameters(QUERY_OPERATION, uri, parameters, this);
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(operation.tableName());
+
         SQLiteDatabase db = mDBHelper.getReadableDatabase();
-        Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
-        c.setNotificationUri(getContext().getContentResolver(), uri);
+        Cursor c = qb.query(db, parameters.getProjection(), parameters.getSelection(),
+                parameters.getSelectionArgs(), parameters.getGroupBy(), parameters.getHaving(),
+                parameters.getSortOrder());
+        operation.notify(QUERY_OPERATION, uri, c, this);
+
         return c;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
 
-        if (values == null) {
+        final ProviderOperation operation = providerOperationForUri(uri);
+
+        if(!operation.isOperationAllowedForUri(INSERT_OPERATION, uri)) {
+            return null;
+        }
+
+        OperationParameters parameters = new OperationParameters(null, null, null, null, null, null,
+                values);
+        operation.onValidateParameters(INSERT_OPERATION, uri, parameters, this);
+
+        if (parameters.getValues() == null) {
             throw new IllegalArgumentException("values == null");
         }
 
-        final AbstractEntity entity;
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case FOODS_USAGE_URI_MATCH:
-                // Get entity (we don't have default values to join here):
-                entity = FoodsUsageEntity.fromContentValues(values);
-                break;
-
-            case WEEKDAY_PARAMETERS_URI_MATCH:
-                // Insert not allowed here:
-                return null;
-
-            case PARAMETERS_HISTORY_URI_MATCH:
-                // Get entity (we don't have default values to join here):
-                entity = ParametersHistoryEntity.fromContentValues(values);
-                break;
-
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
-        }
-
-        entity.validateOrThrow();
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
-        long idInserted = -1;
+        long idInserted;
         try {
-            idInserted = db.insertOrThrow(entity.getTableName(), null, entity.toContentValues());
+            idInserted = db.insertOrThrow(operation.tableName(), null, parameters.getValues());
         } catch (SQLiteConstraintException e) {
-            // Is this constraint violation "expected"? If is, we will throw a "better" exception.
+            // We have a constraint violation here.
             // An example is an attribute used like a "primary key" but not a DB PK. Since this
             // attribute will have an UNIQUE INDEX, an attempt to insert an equal value can throw
             // this constraint exception (and we know that just in the insert moment).
-            switch (match) {
-                case FOODS_USAGE_URI_MATCH:
-                    // We're doing nothing here because all constraint are safely validated inside
-                    // validateOrThrow().
-                    break;
-                case PARAMETERS_HISTORY_URI_MATCH:
-                    // We're doing nothing here because despite we have a UNIQUE INDEX, breaking it
-                    // is not allowed to users. The index will be break only by a bug.
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown URI: " + uri);
+            // The operation, in the following call, has a chance to:
+            //   i. Adjust DB and returns true in following call. We'll continue and try the same operation
+            //      again. WARNING: this may create a infinite loop if the constraint violation continues
+            //      to occurs again and again...
+            //  ii. Throws a "better" exception. This is the suggested approach.
+            // iii. Returns false and we'll throw the original exception. This is the default implementation.
+            if(operation.continueOnConstraintViolation(INSERT_OPERATION, uri, parameters, e, this)) {
+                return insert(uri, parameters.getValues());
+            } else {
+                throw e;
             }
         }
 
-        Uri result = Uri.withAppendedPath(uri, String.valueOf(idInserted));
-        getContext().getContentResolver().notifyChange(result, null);
+        Uri resultUri = Uri.withAppendedPath(uri, String.valueOf(idInserted));
+        operation.notify(INSERT_OPERATION, resultUri, null, this);
 
         if(isLogEnabled) {
             Log.d(TAG,
                   " ->insert()" +
-                  " ->entity = " + entity.toString() +
                   " ->idInserted = " + idInserted
             );
         }
-        return result;
+
+        return resultUri;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
-        if (values == null) {
+        final ProviderOperation operation = providerOperationForUri(uri);
+
+        final int fail = 0;
+        if(!operation.isOperationAllowedForUri(UPDATE_OPERATION, uri)) {
+            return fail;
+        }
+
+        OperationParameters parameters = new OperationParameters(null, selection, selectionArgs,
+                null, null, null, values);
+        operation.onValidateParameters(UPDATE_OPERATION, uri, parameters, this);
+
+        if (parameters.getValues() == null) {
             throw new IllegalArgumentException("values must be not null");
         }
 
-        final int fail = 0;
-        final ContentValues currentValues;
-        final AbstractEntity entity;
-        final Cursor c;
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case FOODS_USAGE_URI_MATCH:
-                return fail;
-
-            case FOODS_USAGE_ITEM_URI_MATCH:
-                // Verify current values:
-                c = query(uri, null, null, null, null);
-                try {
-                    if (c.getCount() != 1) {
-                        return fail;
-                    }
-                    c.moveToFirst();
-                    currentValues = FoodsUsageEntity.fromCursor(c).toContentValues();
-                } finally {
-                    c.close();
-                }
-                // Get entity AND join current values:
-                entity = FoodsUsageEntity.fromJoinInContentValues(values, currentValues);
-                break;
-
-            case WEEKDAY_PARAMETERS_URI_MATCH:
-                return fail;
-
-            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
-                // Verify current values:
-                c = query(uri, null, null, null, null);
-                try {
-                    if (c.getCount() != 1) {
-                        return fail;
-                    }
-                    c.moveToFirst();
-                    currentValues = WeekdayParametersEntity.fromCursor(c).toContentValues();
-                } finally {
-                    c.close();
-                }
-                // Get entity AND join current values:
-                entity = WeekdayParametersEntity.fromJoinInContentValues(values, currentValues);
-                break;
-
-            case PARAMETERS_HISTORY_URI_MATCH:
-                return fail;
-
-            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
-                // Verify current values:
-                c = query(uri, null, null, null, null);
-                try {
-                    if (c.getCount() != 1) {
-                        return fail;
-                    }
-                    c.moveToFirst();
-                    currentValues = ParametersHistoryEntity.fromCursor(c).toContentValues();
-                } finally {
-                    c.close();
-                }
-                // Get entity AND join current values:
-                entity = ParametersHistoryEntity.fromJoinInContentValues(values, currentValues);
-                break;
-
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
-        }
-
-        // Validations
-
-        // TODO: we need to prepare following op to days table that has a TEXT _id (yyyyMMdd)
-        // Id change is not allowed.
-        // A try will be notified with the exception.
-        // If client is sending the same id, we'll remove it.
-        if (values.containsKey(entity.getIdColumnName())) {
-            if (!values.getAsLong(entity.getIdColumnName()).equals(currentValues.getAsLong(entity.getIdColumnName()))) {
-                FieldDescriptor[] fieldsDescriptorArray = new FieldDescriptor[2];
-                fieldsDescriptorArray[0] = new FieldDescriptor(entity.getTableName(), entity.getIdColumnName(), currentValues.getAsLong(entity.getIdColumnName()));
-                fieldsDescriptorArray[1] = new FieldDescriptor(entity.getTableName(), entity.getIdColumnName(), values.getAsLong(entity.getIdColumnName()));
-                throw new Contract.TargetException(Contract.TargetException.ID_UPDATED, fieldsDescriptorArray, null);
-            }
-            values.remove(entity.getIdColumnName());
-        }
-
-        // Fields validations (entity must be values U currentValues here!):
-        entity.validateOrThrow();
-
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
-        int rowsUpdated = -1;
+        int rowsUpdated;
         try {
-            rowsUpdated = db.update(entity.getTableName(), values, entity.getIdColumnName() + "=?", new String[] {uri.getLastPathSegment()});
+            rowsUpdated = db.update(operation.tableName(), parameters.getValues(), parameters.getSelection(),
+                    parameters.getSelectionArgs());
         } catch (SQLiteConstraintException e) {
-            // Is this constraint violation "expected"? If is, we will throw a "better" exception.
+            // We have a constraint violation here.
             // An example is an attribute used like a "primary key" but not a DB PK. Since this
             // attribute will have an UNIQUE INDEX, an attempt to insert an equal value can throw
             // this constraint exception (and we know that just in the insert moment).
-            switch (match) {
-                case FOODS_USAGE_URI_MATCH:
-                case WEEKDAY_PARAMETERS_URI_MATCH:
-                case PARAMETERS_HISTORY_URI_MATCH:
-                    // We're doing nothing here because all constraint are safely validated inside
-                    // entity.validateOrThrow().
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown URI: " + uri);
+            // The operation, in the following call, has a chance to:
+            //   i. Adjust DB and returns true in following call. We'll continue and try the same operation
+            //      again. WARNING: this may create a infinite loop if the constraint violation continues
+            //      to occurs again and again...
+            //  ii. Throws a "better" exception. This is the suggested approach.
+            // iii. Returns false and we'll throw the original exception. This is the default implementation.
+            if(operation.continueOnConstraintViolation(UPDATE_OPERATION, uri, parameters, e, this)) {
+                return update(uri, parameters.getValues(), parameters.getSelection(), parameters.getSelectionArgs());
+            } else {
+                throw e;
             }
         }
 
         if (rowsUpdated > fail) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            operation.notify(UPDATE_OPERATION, uri, null, this);
         }
         return rowsUpdated;
     }
@@ -336,36 +219,22 @@ public class Provider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
+        final ProviderOperation operation = providerOperationForUri(uri);
         final int fail = 0;
-        final String tableName;
-        final String whereClause;
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case WEEKDAY_PARAMETERS_URI_MATCH:
-            case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
-            case PARAMETERS_HISTORY_URI_MATCH:
-            case PARAMETERS_HISTORY_ITEM_URI_MATCH:
-                // Delete not allowed here:
-                return fail;
-            case FOODS_USAGE_URI_MATCH:
-                tableName = Contract.FoodsUsage.TABLE_NAME;
-                whereClause = selection;
-                break;
-            case FOODS_USAGE_ITEM_URI_MATCH:
-                tableName = Contract.FoodsUsage.TABLE_NAME;
-                whereClause = Contract.FoodsUsage._ID + "=" + uri.getLastPathSegment();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        if(!operation.isOperationAllowedForUri(DELETE_OPERATION, uri)) {
+            return fail;
         }
+
+        OperationParameters parameters = new OperationParameters(null, selection, selectionArgs,
+                null, null, null, null);
+        operation.onValidateParameters(DELETE_OPERATION, uri, parameters, this);
+
 
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
-
-        int rowsDeleted = db.delete(tableName, whereClause, selectionArgs);
+        int rowsDeleted = db.delete(operation.tableName(), parameters.getSelection(), parameters.getSelectionArgs());
         if (rowsDeleted > fail) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            operation.notify(DELETE_OPERATION, uri, null, this);
         }
-
         return rowsDeleted;
     }
 
