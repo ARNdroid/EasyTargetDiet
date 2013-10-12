@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
+import br.com.arndroid.etdiet.provider.days.DaysOperation;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageOperation;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryOperation;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersOperation;
@@ -26,12 +27,14 @@ public class Provider extends ContentProvider {
     public static final int DELETE_OPERATION = 3;
 
     private static final UriMatcher sUriMatcher;
-    public static final int FOODS_USAGE_URI_MATCH = 1;
-    public static final int FOODS_USAGE_ITEM_URI_MATCH = 2;
-    public static final int WEEKDAY_PARAMETERS_URI_MATCH = 3;
-    public static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 4;
-    public static final int PARAMETERS_HISTORY_URI_MATCH = 5;
-    public static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 6;
+    public static final int DAYS_URI_MATCH = 0;
+    public static final int DAYS_ITEM_URI_MATCH = 1;
+    public static final int FOODS_USAGE_URI_MATCH = 2;
+    public static final int FOODS_USAGE_ITEM_URI_MATCH = 3;
+    public static final int WEEKDAY_PARAMETERS_URI_MATCH = 4;
+    public static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 5;
+    public static final int PARAMETERS_HISTORY_URI_MATCH = 6;
+    public static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 7;
 
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -45,6 +48,10 @@ public class Provider extends ContentProvider {
 
 	private ProviderOperation providerOperationForUri(Uri uri) {
         switch (sUriMatcher.match(uri)) {
+            case DAYS_URI_MATCH:
+            case DAYS_ITEM_URI_MATCH:
+                return new DaysOperation();
+
             case FOODS_USAGE_URI_MATCH:
             case FOODS_USAGE_ITEM_URI_MATCH:
                 return new FoodsUsageOperation();

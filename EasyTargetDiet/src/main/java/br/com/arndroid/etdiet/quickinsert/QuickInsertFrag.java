@@ -119,7 +119,7 @@ public class QuickInsertFrag extends DialogFragment {
             c.moveToFirst();
             FoodsUsageEntity entity = FoodsUsageEntity.fromCursor(c);
             mSpnMeal.setSelection(entity.getMeal());
-            DateUtil.initDatePickerWithDateId(mDteDate, entity.getDayId());
+            DateUtil.initDatePickerWithDateId(mDteDate, entity.getDateId());
             DateUtil.initTimePickerWithTimeAsInt(mTimTime, entity.getTime());
             mEdtDescription.setText(entity.getDescription());
             mEdtValue.setText(String.valueOf(entity.getValue()));

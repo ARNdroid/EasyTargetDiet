@@ -107,6 +107,79 @@ public class Contract {
     }
 
 	/*
+	 * Days Definitions
+	 */
+
+    protected interface DaysColumns {
+
+        // Table:
+        public static final String TABLE_NAME = "days";
+
+        // Columns:
+        public static final String DATE_ID = "date_id";
+        public static final String ALLOWED = "allowed";
+        public static final String BREAKFAST_START_TIME = "breakfast_start_time";
+        public static final String BREAKFAST_END_TIME = "breakfast_end_time";
+        public static final String BREAKFAST_GOAL = "breakfast_goal";
+        public static final String BRUNCH_START_TIME = "brunch_start_time";
+        public static final String BRUNCH_END_TIME = "brunch_end_time";
+        public static final String BRUNCH_GOAL = "brunch_goal";
+        public static final String LUNCH_START_TIME = "lunch_start_time";
+        public static final String LUNCH_END_TIME = "lunch_end_time";
+        public static final String LUNCH_GOAL = "lunch_goal";
+        public static final String SNACK_START_TIME = "snack_start_time";
+        public static final String SNACK_END_TIME = "snack_end_time";
+        public static final String SNACK_GOAL = "snack_goal";
+        public static final String DINNER_START_TIME = "dinner_start_time";
+        public static final String DINNER_END_TIME = "dinner_end_time";
+        public static final String DINNER_GOAL = "dinner_goal";
+        public static final String SUPPER_START_TIME = "supper_start_time";
+        public static final String SUPPER_END_TIME = "supper_end_time";
+        public static final String SUPPER_GOAL = "supper_goal";
+        public static final String EXERCISE_GOAL = "exercise_goal";
+        public static final String LIQUID_DONE = "liquid_done";
+        public static final String LIQUID_GOAL = "liquid_goal";
+        public static final String OIL_DONE = "oil_done";
+        public static final String OIL_GOAL = "oil_goal";
+        public static final String SUPPLEMENT_DONE = "supplement_done";
+        public static final String SUPPLEMENT_GOAL = "supplement_goal";
+        public static final String NOTE = "note";
+    }
+
+    public static final class Days implements BaseColumns, DaysColumns {
+
+        // This utility class cannot be instantiated:
+        private Days() {}
+
+		/*
+		 * URI's
+		 */
+
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+		/*
+		 * MIME types
+		 */
+
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + TABLE_NAME;
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd." + AUTHORITY + "." + TABLE_NAME;
+
+		/*
+		 * Sort order
+		 */
+
+        public static final String DATE_ID_ASC = DATE_ID + " ASC";
+
+		/*
+		 * Utility methods
+		 */
+
+        public static int fieldTypeForColumn(String columnName) {
+            return fieldTypeForTableAndColumn(TABLE_NAME, columnName);
+        }
+    }
+
+	/*
 	 * Foods Usage Definitions
 	 */
 
@@ -116,7 +189,7 @@ public class Contract {
         public static final String TABLE_NAME = "foods_usage";
 
         // Columns:
-        public static final String DAY_ID = "day_id";
+        public static final String DATE_ID = "date_id";
         public static final String MEAL = "meal";
         public static final String TIME = "time";
         public static final String DESCRIPTION = "description";
@@ -152,7 +225,7 @@ public class Contract {
 		 * Selection
 		 */
 
-        public static final String DAY_AND_MEAL_SELECTION = DAY_ID + "=? AND " + MEAL + "=?";
+        public static final String DAY_AND_MEAL_SELECTION = DATE_ID + "=? AND " + MEAL + "=?";
 
 		/*
 		 * Sort order
@@ -307,7 +380,7 @@ public class Contract {
         if(FoodsUsage.TABLE_NAME.equals(tableName)) {
             if (FoodsUsage._ID.equals(columnName)) {
                 return FIELD_TYPE_LONG;
-            } else if (FoodsUsage.DAY_ID.equals(columnName)) {
+            } else if (FoodsUsage.DATE_ID.equals(columnName)) {
                 return FIELD_TYPE_STRING;
             } else if (FoodsUsage.MEAL.equals(columnName)) {
                 return FIELD_TYPE_INTEGER;

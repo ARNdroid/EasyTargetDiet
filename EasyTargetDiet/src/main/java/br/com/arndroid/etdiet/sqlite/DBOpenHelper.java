@@ -160,17 +160,52 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private void createTables(SQLiteDatabase db) {
         db.beginTransaction();
         try {
+            // Days:
+            db.execSQL("CREATE TABLE " + Contract.Days.TABLE_NAME + " ("
+                    + Contract.Days._ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                    + Contract.Days.DATE_ID + " TEXT NOT NULL, "
+                    + Contract.Days.ALLOWED + " REAL NOT NULL, "
+                    + Contract.Days.BREAKFAST_START_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.BREAKFAST_END_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.BREAKFAST_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.BRUNCH_START_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.BRUNCH_END_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.BRUNCH_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.LUNCH_START_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.LUNCH_END_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.LUNCH_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.SNACK_START_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.SNACK_END_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.SNACK_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.DINNER_START_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.DINNER_END_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.DINNER_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.SUPPER_START_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.SUPPER_END_TIME + " INTEGER NOT NULL, "
+                    + Contract.Days.SUPPER_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.EXERCISE_GOAL + " REAL NOT NULL, "
+                    + Contract.Days.LIQUID_DONE + " INTEGER NOT NULL, "
+                    + Contract.Days.LIQUID_GOAL + " INTEGER NOT NULL, "
+                    + Contract.Days.OIL_DONE + " INTEGER NOT NULL, "
+                    + Contract.Days.OIL_GOAL + " INTEGER NOT NULL, "
+                    + Contract.Days.SUPPLEMENT_DONE + " INTEGER NOT NULL, "
+                    + Contract.Days.SUPPLEMENT_GOAL + " INTEGER NOT NULL, "
+                    + Contract.Days.NOTE + " TEXT);");
+            db.execSQL("CREATE UNIQUE INDEX " + Contract.Days.TABLE_NAME + "_"
+                    + Contract.Days.DATE_ID + "_idx "
+                    + "ON " + Contract.Days.TABLE_NAME + " (" + Contract.Days.DATE_ID + ");");
+
             // Foods Usage:
             db.execSQL("CREATE TABLE " + Contract.FoodsUsage.TABLE_NAME + " ("
                     + Contract.FoodsUsage._ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
-                    + Contract.FoodsUsage.DAY_ID + " TEXT NOT NULL, "
+                    + Contract.FoodsUsage.DATE_ID + " TEXT NOT NULL, "
                     + Contract.FoodsUsage.MEAL + " INTEGER NOT NULL, "
                     + Contract.FoodsUsage.TIME + " INTEGER NOT NULL, "
                     + Contract.FoodsUsage.DESCRIPTION + " TEXT NOT NULL, "
                     + Contract.FoodsUsage.VALUE + " REAL NOT NULL);");
             db.execSQL("CREATE INDEX " + Contract.FoodsUsage.TABLE_NAME + "_"
-                    + Contract.FoodsUsage.DAY_ID + "_" + Contract.FoodsUsage.MEAL + "_idx "
-                    + "ON " + Contract.FoodsUsage.TABLE_NAME + " (" + Contract.FoodsUsage.DAY_ID + ", " + Contract.FoodsUsage.MEAL + ");");
+                    + Contract.FoodsUsage.DATE_ID + "_" + Contract.FoodsUsage.MEAL + "_idx "
+                    + "ON " + Contract.FoodsUsage.TABLE_NAME + " (" + Contract.FoodsUsage.DATE_ID + ", " + Contract.FoodsUsage.MEAL + ");");
 
             // Weekday Parameters:
             db.execSQL("CREATE TABLE " + Contract.WeekdayParameters.TABLE_NAME + " ("

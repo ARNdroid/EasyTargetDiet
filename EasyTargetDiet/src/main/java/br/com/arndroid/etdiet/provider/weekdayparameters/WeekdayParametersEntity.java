@@ -98,7 +98,6 @@ public class WeekdayParametersEntity extends AbstractEntity {
         return cv;
     }
 
-    // TODO: start from here
     @Override
     public ContentValues toContentValuesIgnoreNulls() {
         ContentValues cv = new ContentValues();
@@ -544,7 +543,7 @@ public class WeekdayParametersEntity extends AbstractEntity {
                 + Contract.WeekdayParameters.EXERCISE_GOAL + "=" + exerciseGoal + ", "
                 + Contract.WeekdayParameters.LIQUID_GOAL + "=" + liquidGoal + ", "
                 + Contract.WeekdayParameters.OIL_GOAL + "=" + oilGoal + ", "
-                + Contract.WeekdayParameters.SUPPLEMENT_GOAL + "=" + supplementGoal + ", "
+                + Contract.WeekdayParameters.SUPPLEMENT_GOAL + "=" + supplementGoal
                 + "]";
     }
 
