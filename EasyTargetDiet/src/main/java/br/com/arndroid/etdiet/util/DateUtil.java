@@ -117,4 +117,12 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_STRING);
         return sdf.format(dateIdToDate(dateId));
     }
+
+    public static boolean dateIdStartsBefore(String before, String after) {
+        return before.compareTo(after) < 0;
+    }
+
+    public static boolean dateIdStartsEqualsOrBefore(String before, String after) {
+        return before.compareTo(after) <= 0;
+    }
 }

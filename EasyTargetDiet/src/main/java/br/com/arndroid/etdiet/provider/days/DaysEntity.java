@@ -907,35 +907,64 @@ public class DaysEntity extends AbstractEntity {
         }
 
         return new DaysEntity(
-                cursor.getLong(cursor.getColumnIndex(Contract.Days._ID)),
-                cursor.getString(cursor.getColumnIndex(Contract.Days.DATE_ID)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.ALLOWED)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.BREAKFAST_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.BREAKFAST_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.BREAKFAST_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.BRUNCH_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.BRUNCH_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.BRUNCH_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.LUNCH_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.LUNCH_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.LUNCH_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.SNACK_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.SNACK_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.SNACK_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.DINNER_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.DINNER_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.DINNER_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPER_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPER_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.SUPPER_GOAL)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.Days.EXERCISE_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.LIQUID_DONE)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.LIQUID_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.OIL_DONE)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.OIL_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPLEMENT_DONE)),
-                cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPLEMENT_GOAL)),
-                cursor.getString(cursor.getColumnIndex(Contract.Days.NOTE)));
+                cursor.getColumnIndex(Contract.Days._ID) == -1 ?
+                    null : cursor.getLong(cursor.getColumnIndex(Contract.Days._ID)),
+                cursor.getColumnIndex(Contract.Days.DATE_ID) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.Days.DATE_ID)),
+                cursor.getColumnIndex(Contract.Days.ALLOWED) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.ALLOWED)),
+                cursor.getColumnIndex(Contract.Days.BREAKFAST_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.BREAKFAST_START_TIME)),
+                cursor.getColumnIndex(Contract.Days.BREAKFAST_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.BREAKFAST_END_TIME)),
+                cursor.getColumnIndex(Contract.Days.BREAKFAST_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.BREAKFAST_GOAL)),
+                cursor.getColumnIndex(Contract.Days.BRUNCH_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.BRUNCH_START_TIME)),
+                cursor.getColumnIndex(Contract.Days.BRUNCH_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.BRUNCH_END_TIME)),
+                cursor.getColumnIndex(Contract.Days.BRUNCH_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.BRUNCH_GOAL)),
+                cursor.getColumnIndex(Contract.Days.LUNCH_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.LUNCH_START_TIME)),
+                cursor.getColumnIndex(Contract.Days.LUNCH_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.LUNCH_END_TIME)),
+                cursor.getColumnIndex(Contract.Days.LUNCH_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.LUNCH_GOAL)),
+                cursor.getColumnIndex(Contract.Days.SNACK_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.SNACK_START_TIME)),
+                cursor.getColumnIndex(Contract.Days.SNACK_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.SNACK_END_TIME)),
+                cursor.getColumnIndex(Contract.Days.SNACK_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.SNACK_GOAL)),
+                cursor.getColumnIndex(Contract.Days.DINNER_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.DINNER_START_TIME)),
+                cursor.getColumnIndex(Contract.Days.DINNER_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.DINNER_END_TIME)),
+                cursor.getColumnIndex(Contract.Days.DINNER_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.DINNER_GOAL)),
+                cursor.getColumnIndex(Contract.Days.SUPPER_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPER_START_TIME)),
+                cursor.getColumnIndex(Contract.Days.SUPPER_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPER_END_TIME)),
+                cursor.getColumnIndex(Contract.Days.SUPPER_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.SUPPER_GOAL)),
+                cursor.getColumnIndex(Contract.Days.EXERCISE_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.Days.EXERCISE_GOAL)),
+                cursor.getColumnIndex(Contract.Days.LIQUID_DONE) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.LIQUID_DONE)),
+                cursor.getColumnIndex(Contract.Days.LIQUID_GOAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.LIQUID_GOAL)),
+                cursor.getColumnIndex(Contract.Days.OIL_DONE) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.OIL_DONE)),
+                cursor.getColumnIndex(Contract.Days.OIL_GOAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.OIL_GOAL)),
+                cursor.getColumnIndex(Contract.Days.SUPPLEMENT_DONE) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPLEMENT_DONE)),
+                cursor.getColumnIndex(Contract.Days.SUPPLEMENT_GOAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.Days.SUPPLEMENT_GOAL)),
+                cursor.getColumnIndex(Contract.Days.NOTE) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.Days.NOTE)));
     }
 
     public static DaysEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {

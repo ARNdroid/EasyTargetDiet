@@ -260,12 +260,18 @@ public class FoodsUsageEntity extends AbstractEntity {
         }
 
         return new FoodsUsageEntity(
-                cursor.getLong(cursor.getColumnIndex(Contract.FoodsUsage._ID)),
-                cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID)),
-                cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.MEAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.TIME)),
-                cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.FoodsUsage.VALUE)));
+                cursor.getColumnIndex(Contract.FoodsUsage._ID) == -1 ?
+                    null : cursor.getLong(cursor.getColumnIndex(Contract.FoodsUsage._ID)),
+                cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID)),
+                cursor.getColumnIndex(Contract.FoodsUsage.MEAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.MEAL)),
+                cursor.getColumnIndex(Contract.FoodsUsage.TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.TIME)),
+                cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION)),
+                cursor.getColumnIndex(Contract.FoodsUsage.VALUE) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.FoodsUsage.VALUE)));
     }
 
     public static FoodsUsageEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {

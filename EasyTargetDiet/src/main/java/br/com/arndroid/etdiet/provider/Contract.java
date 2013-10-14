@@ -348,11 +348,15 @@ public class Contract {
             The value of follow constants can NOT be changed or
             we will break legacy data in DB.
          */
+
         public static final int DAILY_ALLOWANCE_PARAMETER_TYPE = 0;
         public static final int WEEKLY_ALLOWANCE_PARAMETER_TYPE = 1;
         public static final int TRACKING_WEEKDAY_PARAMETER_TYPE = 2;
         public static final int EXERCISE_USE_MODE_PARAMETER_TYPE = 3;
         public static final int EXERCISE_USE_ORDER_PARAMETER_TYPE = 4;
+
+        public static final int UNDEFINED_INTEGRAL_PARAMATER_VALUE = -1;
+        public static final float UNDEFINED_FLOATING_POINT_PARAMATER_VALUE = -1.0f;
 
         public static final int EXERCISES_FIRST_EXERCISE_USE_ORDER = 0;
         public static final int WEEKLY_FIRST_EXERCISE_USE_ORDER = 1;
@@ -360,6 +364,23 @@ public class Contract {
         public static final int DONT_USE_EXERCISE_USE_MODE = 0;
         public static final int USE_DONT_ACCUMULATE_EXERCISE_USE_MODE = 1;
         public static final int USE_AND_ACCUMULATE_EXERCISE_USE_MODE = 2;
+
+		/*
+		 * Projections
+		 */
+
+        public static final String[] ID_PROJECTION = {_ID};
+        public static final String[] INTEGRAL_PROJECTION = {_ID, DATE, INTEGRAL_NEW_VALUE};
+        public static final String[] FLOATING_POINT_PROJECTION = {_ID, DATE, FLOATING_POINT_NEW_VALUE};
+        public static final String[] TEXT_PROJECTION = {_ID, DATE, TEXT_NEW_VALUE};
+        public static final String[] ALL_COLS_PROJECTION = {_ID, TYPE, DATE, INTEGRAL_NEW_VALUE, FLOATING_POINT_NEW_VALUE, TEXT_NEW_VALUE};
+
+		/*
+		 * Selection
+		 */
+
+        public static final String TYPE_SELECTION = TYPE + "=?";
+        public static final String DATE_AND_TYPE_SELECTION = DATE + "=? AND " + TYPE + "=?";
 
 		/*
 		 * Sort order
