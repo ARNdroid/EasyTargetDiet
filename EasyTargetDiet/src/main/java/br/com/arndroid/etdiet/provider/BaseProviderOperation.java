@@ -30,7 +30,7 @@ public abstract class BaseProviderOperation extends ProviderOperation {
     }
 
     @Override
-    public void notify(int operation, Uri uri, Cursor cursor, Provider provider) {
+    public void doNotifyOperations(int operation, Uri uri, Cursor cursor, Provider provider) {
         switch (operation) {
             case Provider.QUERY_OPERATION:
                 cursor.setNotificationUri(provider.getContext().getContentResolver(), uri);

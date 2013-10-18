@@ -155,7 +155,15 @@ public class Contract {
 		 * URI's
 		 */
 
+        // Refactor: Dealing with Uri by parse.
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri DATE_ID_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" +
+                TABLE_NAME + "/date_id");
+
+		/*
+		    Projections
+		 */
+        public static final String[] ID_PROJECTION = {_ID};
 
 		/*
 		 * MIME types
@@ -163,6 +171,13 @@ public class Contract {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + TABLE_NAME;
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd." + AUTHORITY + "." + TABLE_NAME;
+
+        /*
+		 * Selection
+		 */
+
+        public static final String ID_SELECTION = _ID + "=?";
+        public static final String DATE_ID_SELECTION = DATE_ID + "=?";
 
 		/*
 		 * Sort order
@@ -194,6 +209,7 @@ public class Contract {
         public static final String TIME = "time";
         public static final String DESCRIPTION = "description";
         public static final String VALUE = "value";
+        public static final String SUM_VALUE = "sum_value"; // Calculated only.
 
     }
 
@@ -207,6 +223,12 @@ public class Contract {
 		 */
 
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri DATE_ID_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" +
+                TABLE_NAME + "/date_id");
+        public static final Uri SUM_USAGE_URI = Uri.parse("content://" + AUTHORITY + "/"
+                + TABLE_NAME + "/sum_usage");
+        public static final Uri SUM_EXERCISE_URI = Uri.parse("content://" + AUTHORITY + "/"
+                + TABLE_NAME + "/sum_exercise");
 
 		/*
 		 * MIME types
@@ -214,18 +236,23 @@ public class Contract {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + TABLE_NAME;
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd." + AUTHORITY + "." + TABLE_NAME;
+        public static final String SUM_USAGE_TYPE = "float";
+        public static final String SUM_EXERCISE_TYPE = "float";
 
 		/*
 		 * Projections
 		 */
 
         public static final String[] SIMPLE_LIST_PROJECTION = {_ID, TIME, DESCRIPTION, VALUE};
+        public static final String[] MEAL_AND_VALUE_PROJECTION = {MEAL, VALUE};
 
 		/*
 		 * Selection
 		 */
 
-        public static final String DAY_AND_MEAL_SELECTION = DATE_ID + "=? AND " + MEAL + "=?";
+        public static final String ID_SELECTION = _ID + "=?";
+        public static final String DATE_ID_AND_MEAL_SELECTION = DATE_ID + "=? AND " + MEAL + "=?";
+        public static final String DATE_ID_SELECTION = DATE_ID + "=?";
 
 		/*
 		 * Sort order
@@ -293,6 +320,12 @@ public class Contract {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + TABLE_NAME;
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd." + AUTHORITY + "." + TABLE_NAME;
+
+        /*
+		 * Selection
+		 */
+
+        public static final String ID_SELECTION = _ID + "=?";
 
 		/*
 		 * Utility methods

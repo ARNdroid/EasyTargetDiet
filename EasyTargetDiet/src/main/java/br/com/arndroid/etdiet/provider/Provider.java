@@ -17,8 +17,6 @@ import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryOperat
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersOperation;
 import br.com.arndroid.etdiet.sqlite.DBOpenHelper;
 
-import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor;
-
 public class Provider extends ContentProvider {
 
     public static final int QUERY_OPERATION = 0;
@@ -31,22 +29,29 @@ public class Provider extends ContentProvider {
     public static final int DAYS_ITEM_URI_MATCH = 1;
     public static final int FOODS_USAGE_URI_MATCH = 2;
     public static final int FOODS_USAGE_ITEM_URI_MATCH = 3;
-    public static final int WEEKDAY_PARAMETERS_URI_MATCH = 4;
-    public static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 5;
-    public static final int PARAMETERS_HISTORY_URI_MATCH = 6;
-    public static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 7;
+    public static final int FOODS_USAGE_SUM_USAGE_URI_MATCH = 4;
+    public static final int FOODS_USAGE_SUM_EXERCISE_URI_MATCH = 5;
+    public static final int WEEKDAY_PARAMETERS_URI_MATCH = 6;
+    public static final int WEEKDAY_PARAMETERS_ITEM_URI_MATCH = 7;
+    public static final int PARAMETERS_HISTORY_URI_MATCH = 8;
+    public static final int PARAMETERS_HISTORY_ITEM_URI_MATCH = 9;
 
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        // Refactor: Dealing with Uri by Authority + Path.
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.Days.TABLE_NAME, DAYS_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.Days.TABLE_NAME + "/#", DAYS_ITEM_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME, FOODS_USAGE_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/#", FOODS_USAGE_ITEM_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/sum_usage/#", FOODS_USAGE_SUM_USAGE_URI_MATCH);
+        sUriMatcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/sum_exercise/#", FOODS_USAGE_SUM_EXERCISE_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.WeekdayParameters.TABLE_NAME, WEEKDAY_PARAMETERS_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.WeekdayParameters.TABLE_NAME + "/#", WEEKDAY_PARAMETERS_ITEM_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.ParametersHistory.TABLE_NAME, PARAMETERS_HISTORY_URI_MATCH);
         sUriMatcher.addURI(Contract.AUTHORITY, Contract.ParametersHistory.TABLE_NAME + "/#", PARAMETERS_HISTORY_ITEM_URI_MATCH);
     }
 
-	private ProviderOperation providerOperationForUri(Uri uri) {
+    private ProviderOperation providerOperationForUri(Uri uri) {
         switch (sUriMatcher.match(uri)) {
             case DAYS_URI_MATCH:
             case DAYS_ITEM_URI_MATCH:
@@ -54,6 +59,8 @@ public class Provider extends ContentProvider {
 
             case FOODS_USAGE_URI_MATCH:
             case FOODS_USAGE_ITEM_URI_MATCH:
+            case FOODS_USAGE_SUM_USAGE_URI_MATCH:
+            case FOODS_USAGE_SUM_EXERCISE_URI_MATCH:
                 return new FoodsUsageOperation();
 
             case WEEKDAY_PARAMETERS_URI_MATCH:
@@ -119,7 +126,7 @@ public class Provider extends ContentProvider {
         Cursor c = qb.query(db, parameters.getProjection(), parameters.getSelection(),
                 parameters.getSelectionArgs(), parameters.getGroupBy(), parameters.getHaving(),
                 parameters.getSortOrder());
-        operation.notify(QUERY_OPERATION, uri, c, this);
+        operation.doNotifyOperations(QUERY_OPERATION, uri, c, this);
 
         return c;
     }
@@ -164,7 +171,7 @@ public class Provider extends ContentProvider {
         }
 
         Uri resultUri = Uri.withAppendedPath(uri, String.valueOf(idInserted));
-        operation.notify(INSERT_OPERATION, resultUri, null, this);
+        operation.doNotifyOperations(INSERT_OPERATION, resultUri, null, this);
 
         if(isLogEnabled) {
             Log.d(TAG,
@@ -218,7 +225,7 @@ public class Provider extends ContentProvider {
         }
 
         if (rowsUpdated > fail) {
-            operation.notify(UPDATE_OPERATION, uri, null, this);
+            operation.doNotifyOperations(UPDATE_OPERATION, uri, null, this);
         }
         return rowsUpdated;
     }
@@ -240,7 +247,7 @@ public class Provider extends ContentProvider {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         int rowsDeleted = db.delete(operation.tableName(), parameters.getSelection(), parameters.getSelectionArgs());
         if (rowsDeleted > fail) {
-            operation.notify(DELETE_OPERATION, uri, null, this);
+            operation.doNotifyOperations(DELETE_OPERATION, uri, null, this);
         }
         return rowsDeleted;
     }

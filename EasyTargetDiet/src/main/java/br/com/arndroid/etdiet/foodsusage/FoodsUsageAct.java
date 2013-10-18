@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.foodsusage;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
 
@@ -36,29 +36,21 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
 
     @Override
     public void onFoodUsageSelected(long foodUsageId) {
-        Uri uri = Uri.withAppendedPath(Contract.FoodsUsage.CONTENT_URI, String.valueOf(foodUsageId));
         FragmentManager manager = getSupportFragmentManager();
         QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setUri(uri);
+        dialog.setId(foodUsageId);
         dialog.show(manager, QuickInsertFrag.UPDATE_TAG);
     }
 
     @Override
-    public void onFoodUsageLongSelected(long foodUsageId) {
-        final Uri uri = Uri.withAppendedPath(Contract.FoodsUsage.CONTENT_URI, String.valueOf(foodUsageId));
-        Cursor c = this.getContentResolver().query(uri, null, null, null, null);
-        FoodsUsageEntity entity = null;
-        try {
-            c.moveToFirst();
-            entity = FoodsUsageEntity.fromCursor(c);
-        } finally {
-            c.close();
-        }
+    public void onFoodUsageLongSelected(final long foodUsageId) {
+        final FoodsUsageManager manager = new FoodsUsageManager(this);
+        final FoodsUsageEntity entity = manager.foodUsageFromId(foodUsageId);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                getContentResolver().delete(uri, null, null);
+                manager.remove(foodUsageId);
             }
         });
         builder.setNegativeButton(android.R.string.cancel, null);

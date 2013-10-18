@@ -1,25 +1,29 @@
 package br.com.arndroid.etdiet.provider.foodsusage;
 
-import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.BaseProviderOperation;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryEntity;
-import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 
 public class FoodsUsageOperation extends BaseProviderOperation {
 
     public FoodsUsageOperation() {
         UriMatcher matcher =  getUriMatcher();
-        matcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME, Provider.FOODS_USAGE_URI_MATCH);
-        matcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/#", Provider.FOODS_USAGE_ITEM_URI_MATCH);
+        matcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME,
+                Provider.FOODS_USAGE_URI_MATCH);
+        matcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/#",
+                Provider.FOODS_USAGE_ITEM_URI_MATCH);
+        matcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/sum_usage/#",
+                Provider.FOODS_USAGE_SUM_USAGE_URI_MATCH);
+        matcher.addURI(Contract.AUTHORITY, Contract.FoodsUsage.TABLE_NAME + "/sum_exercise/#",
+                Provider.FOODS_USAGE_SUM_EXERCISE_URI_MATCH);
     }
 
     @Override
@@ -29,6 +33,10 @@ public class FoodsUsageOperation extends BaseProviderOperation {
                 return Contract.FoodsUsage.CONTENT_TYPE;
             case Provider.FOODS_USAGE_ITEM_URI_MATCH:
                 return Contract.FoodsUsage.CONTENT_ITEM_TYPE;
+            case Provider.FOODS_USAGE_SUM_USAGE_URI_MATCH:
+                return Contract.FoodsUsage.SUM_USAGE_TYPE;
+            case Provider.FOODS_USAGE_SUM_EXERCISE_URI_MATCH:
+                return Contract.FoodsUsage.SUM_EXERCISE_TYPE;
             default:
                 Log.w(TAG, "Unknown uri in getType(Uri): " + uri);
                 return null;
@@ -51,7 +59,7 @@ public class FoodsUsageOperation extends BaseProviderOperation {
             case Provider.INSERT_OPERATION:
                 return match == Provider.FOODS_USAGE_URI_MATCH;
             case Provider.UPDATE_OPERATION:
-                return true;
+                return (match == Provider.FOODS_USAGE_URI_MATCH || match == Provider.FOODS_USAGE_ITEM_URI_MATCH);
             case Provider.DELETE_OPERATION:
                 return match == Provider.FOODS_USAGE_ITEM_URI_MATCH;
             default:
@@ -66,7 +74,7 @@ public class FoodsUsageOperation extends BaseProviderOperation {
 
     @Override
     public String defaultSelection() {
-        return Contract.FoodsUsage.DAY_AND_MEAL_SELECTION;
+        return Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION;
     }
 
     @Override
@@ -85,13 +93,33 @@ public class FoodsUsageOperation extends BaseProviderOperation {
                         setDefaultParameters(parameters);
                         break;
                     case Provider.FOODS_USAGE_ITEM_URI_MATCH:
+                        // TODO: this values must be converted to constants:
                         parameters.setSelection(Contract.FoodsUsage._ID + "=?");
+                        parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
+                        break;
+                    case Provider.FOODS_USAGE_SUM_USAGE_URI_MATCH:
+                        // TODO: this values must be converted to constants:
+                        parameters.setProjection(new String[] {"sum(" + Contract.FoodsUsage.VALUE
+                        + ") as " + Contract.FoodsUsage.SUM_VALUE});
+                        // TODO: this values must be converted to constants:
+                        parameters.setSelection(Contract.FoodsUsage.DATE_ID + "=? AND "
+                                + Contract.FoodsUsage.MEAL + ">" + Meals.EXERCISE);
+                        parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
+                        break;
+                    case Provider.FOODS_USAGE_SUM_EXERCISE_URI_MATCH:
+                        // TODO: this values must be converted to constants:
+                        parameters.setProjection(new String[] {"sum(" + Contract.FoodsUsage.VALUE
+                                + ") as " + Contract.FoodsUsage.SUM_VALUE});
+                        // TODO: this values must be converted to constants:
+                        parameters.setSelection(Contract.FoodsUsage.DATE_ID + "=? AND "
+                                + Contract.FoodsUsage.MEAL + "=" + Meals.EXERCISE);
                         parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
                 break;
+
             case Provider.INSERT_OPERATION:
                 // We don't have default parameters for food usage.
                 // Validation:
@@ -117,12 +145,16 @@ public class FoodsUsageOperation extends BaseProviderOperation {
                         // The interface must assure:
                         // - The update will result in a valid value;
                         // - The id column won't be modified.
+                        // - The date_id won't be modified (to modify it delete the old record and
+                        //   insert a new with the updated date_id)
+                        // TODO: this values must be converted to constants:
                         parameters.setSelection(Contract.FoodsUsage._ID + "=?");
                         parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
+                break;
 
             case Provider.DELETE_OPERATION:
                 switch (getUriMatcher().match(uri)) {
@@ -131,16 +163,38 @@ public class FoodsUsageOperation extends BaseProviderOperation {
                         // If we are here there is a bug in Provider...
                         throw new IllegalStateException("Invalid try to delete foods usage multiple rows");
                     case Provider.FOODS_USAGE_ITEM_URI_MATCH:
+                        // TODO: this values must be converted to constants:
                         parameters.setSelection(Contract.FoodsUsage._ID + "=?");
                         parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
-
                 break;
+
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
+        }
+    }
+
+    @Override
+    public void doNotifyOperations(int operation, Uri uri, Cursor cursor, Provider provider) {
+        super.doNotifyOperations(operation, uri, cursor, provider);
+        if(operation == Provider.INSERT_OPERATION || operation == Provider.UPDATE_OPERATION
+                || operation == Provider.DELETE_OPERATION) {
+            Cursor c = null;
+            try {
+                // TODO: aff! The following code is not working. NPE in c...
+
+                //ContentResolver resolver = provider.getContext().getContentResolver();
+                //resolver.query(uri, null, null, null, null);
+                //c.moveToFirst();
+                //final Uri extraUri = UriUtils.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
+                //        c.getString(c.getColumnIndex(Contract.FoodsUsage.DATE_ID)));
+                //resolver.notifyChange(extraUri, null);
+            } finally {
+                if(c != null) c.close();
+            }
         }
     }
 

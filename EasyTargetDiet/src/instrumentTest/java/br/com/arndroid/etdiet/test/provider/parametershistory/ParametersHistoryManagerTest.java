@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.test.parametershistory;
+package br.com.arndroid.etdiet.test.provider.parametershistory;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

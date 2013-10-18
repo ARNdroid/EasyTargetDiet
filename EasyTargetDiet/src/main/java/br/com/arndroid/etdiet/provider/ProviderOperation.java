@@ -11,7 +11,7 @@ public abstract class ProviderOperation {
     public abstract String tableName();
     public abstract void onValidateParameters(int operation, Uri uri, OperationParameters parameters,
                                               Provider provider);
-    public abstract void notify(int operation, Uri uri, Cursor cursor, Provider provider);
+    public abstract void doNotifyOperations(int operation, Uri uri, Cursor cursor, Provider provider);
     public abstract boolean isOperationAllowedForUri(int operation, Uri uri);
     public abstract boolean continueOnConstraintViolation(int operation, Uri uri, OperationParameters parameters,
                                                           SQLiteConstraintException constraintException,

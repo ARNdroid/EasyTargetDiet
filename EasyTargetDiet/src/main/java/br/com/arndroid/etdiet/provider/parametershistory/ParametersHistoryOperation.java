@@ -119,6 +119,7 @@ public class ParametersHistoryOperation extends BaseProviderOperation {
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
+                break;
 
             case Provider.DELETE_OPERATION:
                 switch (getUriMatcher().match(uri)) {
@@ -133,8 +134,8 @@ public class ParametersHistoryOperation extends BaseProviderOperation {
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
-
                 break;
+
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
         }

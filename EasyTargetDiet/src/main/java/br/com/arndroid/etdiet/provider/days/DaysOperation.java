@@ -1,6 +1,8 @@
 package br.com.arndroid.etdiet.provider.days;
 
+import android.content.ContentResolver;
 import android.content.UriMatcher;
+import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -9,12 +11,13 @@ import br.com.arndroid.etdiet.provider.BaseProviderOperation;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.provider.days.DaysEntity;
+import br.com.arndroid.etdiet.util.UriUtils;
 
 public class DaysOperation extends BaseProviderOperation {
 
     public DaysOperation() {
         UriMatcher matcher =  getUriMatcher();
+        // Refactor: Dealing with Uri by Authority + Path.
         matcher.addURI(Contract.AUTHORITY, Contract.Days.TABLE_NAME, Provider.DAYS_URI_MATCH);
         matcher.addURI(Contract.AUTHORITY, Contract.Days.TABLE_NAME + "/#", Provider.DAYS_ITEM_URI_MATCH);
     }
@@ -72,6 +75,7 @@ public class DaysOperation extends BaseProviderOperation {
                         setDefaultParameters(parameters);
                         break;
                     case Provider.DAYS_ITEM_URI_MATCH:
+                        // TODO: the follow string must be a constant
                         parameters.setSelection(Contract.Days._ID + "=?");
                         parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
                         break;
@@ -110,6 +114,7 @@ public class DaysOperation extends BaseProviderOperation {
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
+                break;
 
             case Provider.DELETE_OPERATION:
                 switch (getUriMatcher().match(uri)) {
@@ -127,6 +132,26 @@ public class DaysOperation extends BaseProviderOperation {
 
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
+        }
+    }
+
+    @Override
+    public void doNotifyOperations(int operation, Uri uri, Cursor cursor, Provider provider) {
+        super.doNotifyOperations(operation, uri, cursor, provider);
+        if(operation == Provider.INSERT_OPERATION) {
+            Cursor c = null;
+            try {
+                // TODO: aff! The following code is not working. NPE in c...
+
+                // ContentResolver resolver = provider.getContext().getContentResolver();
+                // resolver.query(uri, null, null, null, null);
+                // c.moveToFirst();
+                // final Uri virtualUri = UriUtils.withAppendedId(Contract.Days.DATE_ID_CONTENT_URI,
+                //        c.getString(c.getColumnIndex(Contract.Days.DATE_ID)));
+                // resolver.notifyChange(virtualUri, null);
+            } finally {
+                if(c != null) c.close();
+            }
         }
     }
 

@@ -89,6 +89,7 @@ public class WeekdayParametersOperation extends BaseProviderOperation {
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
                 break;
+
             case Provider.INSERT_OPERATION:
                 // We can't be here because we didn't allow insert into this table.
                 // If we are here there is a bug in Provider...
@@ -118,6 +119,7 @@ public class WeekdayParametersOperation extends BaseProviderOperation {
                     default:
                         throw new IllegalArgumentException("Unknown uri: " + uri);
                 }
+                break;
 
             case Provider.DELETE_OPERATION:
                 // We can't be here because we didn't allow delete from this table.
