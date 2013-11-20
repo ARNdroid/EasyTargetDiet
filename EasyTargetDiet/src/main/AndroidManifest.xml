@@ -36,7 +36,9 @@
         <provider android:name=".provider.Provider"
             android:authorities="br.com.arndroid.provider.etdiet"
             android:exported="false" />
+
         <service android:name=".virtualweek.JournalService" />
+
     </application>
 
 </manifest>

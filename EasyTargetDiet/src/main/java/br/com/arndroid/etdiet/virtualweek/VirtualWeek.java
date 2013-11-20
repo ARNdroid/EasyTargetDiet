@@ -1,9 +1,6 @@
 package br.com.arndroid.etdiet.virtualweek;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.net.Uri;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -151,7 +148,7 @@ public class VirtualWeek {
 
         ParametersHistoryManager parametersHistoryManager = new ParametersHistoryManager(mContext);
         Date lastWeekday = DateUtil.dateIdToDate(mDaySummaryArray[LAST_WEEKDAY_INDEX].getEntity().getDateId());
-        mInitialWeeklyAllowance = parametersHistoryManager.getWeklyAllowanceForDate(
+        mInitialWeeklyAllowance = parametersHistoryManager.getWeeklyAllowanceForDate(
                 lastWeekday);
         mExerciseUseMode = parametersHistoryManager.getExerciseUseModeForDate(lastWeekday);
         mExerciseUseOrder = parametersHistoryManager.getExerciseUseOrderForDate(lastWeekday);

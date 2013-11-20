@@ -2,17 +2,11 @@ package br.com.arndroid.etdiet.test.provider.weekdayparameters;
 
 import android.test.ProviderTestCase2;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.provider.days.DaysEntity;
-import br.com.arndroid.etdiet.provider.days.DaysManager;
-import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.util.DateUtil;
 
 public class WeekdayParametersManagerTest extends ProviderTestCase2<Provider> {
 
@@ -60,5 +54,17 @@ public class WeekdayParametersManagerTest extends ProviderTestCase2<Provider> {
         mManager.refresh(insertedEntity);
         WeekdayParametersEntity retrievedEntity = mManager.weekdayParametersFromWeekday(1);
         assertEquals(insertedEntity, retrievedEntity);
+    }
+
+    public void testRefreshWithInvalidEntityMustThrow() {
+        WeekdayParametersEntity invalidEntity = new WeekdayParametersEntity(null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null);
+        try {
+            mManager.refresh(invalidEntity);
+            fail();
+        } catch (Contract.TargetException e) {
+            assertTrue(true);
+        }
     }
 }

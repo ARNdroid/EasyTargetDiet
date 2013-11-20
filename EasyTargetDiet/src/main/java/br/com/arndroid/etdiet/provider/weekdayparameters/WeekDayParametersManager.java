@@ -32,6 +32,9 @@ public class WeekdayParametersManager {
     }
 
     public void refresh(WeekdayParametersEntity entity) {
+
+        entity.validateOrThrow();
+
         if(entity.getId() == null) {
             throw new IllegalStateException("WeekdayParameters doesn't allow insertions. Entity.getId() must be NOT null");
         }

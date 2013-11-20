@@ -1,9 +1,6 @@
 package br.com.arndroid.etdiet.test.provider.days;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.test.ProviderTestCase2;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,7 +9,6 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
-import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryEntity;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
@@ -91,5 +87,17 @@ public class DaysManagerTest extends ProviderTestCase2<Provider> {
         mManager.refresh(insertedEntity);
         retrievedEntity = mManager.dayFromDate(date);
         assertEquals(insertedEntity, retrievedEntity);
+    }
+
+    public void testRefreshWithInvalidEntityMustThrow() {
+        DaysEntity invalidEntity = new DaysEntity(null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null);
+        try {
+            mManager.refresh(invalidEntity);
+            fail();
+        } catch (Contract.TargetException e) {
+            assertTrue(true);
+        }
     }
 }

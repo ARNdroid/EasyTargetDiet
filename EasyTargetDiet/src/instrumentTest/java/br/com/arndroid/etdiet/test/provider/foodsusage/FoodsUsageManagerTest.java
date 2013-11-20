@@ -175,4 +175,14 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
         FoodsUsageEntity retrievedEntity = mManager.foodUsageFromId(oldId);
         assertEquals(entity, retrievedEntity);
     }
+
+    public void testRefreshWithInvalidEntityMustThrow() {
+        FoodsUsageEntity invalidEntity = new FoodsUsageEntity(null, null, null, null, null, null);
+        try {
+            mManager.refresh(invalidEntity);
+            fail();
+        } catch (Contract.TargetException e) {
+            assertTrue(true);
+        }
+    }
 }

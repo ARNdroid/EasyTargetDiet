@@ -18,7 +18,6 @@ public class ParametersHistoryManager {
         mContext = context;
     }
 
-    // Daily Allowance:
     public float getDailyAllowanceForDate(Date referenceDate) {
         return getFloatParameter(Contract.ParametersHistory.DAILY_ALLOWANCE_PARAMETER_TYPE, referenceDate);
     }
@@ -31,8 +30,7 @@ public class ParametersHistoryManager {
         setFloatParameter(Contract.ParametersHistory.DAILY_ALLOWANCE_PARAMETER_TYPE, newValue, newDate);
     }
 
-    // Weekly Allowance:
-    public float getWeklyAllowanceForDate(Date referenceDate) {
+    public float getWeeklyAllowanceForDate(Date referenceDate) {
         return getFloatParameter(Contract.ParametersHistory.WEEKLY_ALLOWANCE_PARAMETER_TYPE, referenceDate);
     }
 
@@ -44,7 +42,6 @@ public class ParametersHistoryManager {
         setFloatParameter(Contract.ParametersHistory.WEEKLY_ALLOWANCE_PARAMETER_TYPE, newValue, newDate);
     }
 
-    // Tracking weekday:
     public int getTrackingWeekdayForDate(Date referenceDate) {
         return getIntParameter(Contract.ParametersHistory.TRACKING_WEEKDAY_PARAMETER_TYPE, referenceDate);
     }
@@ -57,7 +54,6 @@ public class ParametersHistoryManager {
         setIntParameter(Contract.ParametersHistory.TRACKING_WEEKDAY_PARAMETER_TYPE, newWeekday, newDate);
     }
 
-    // Exercise use mode
     public int getExerciseUseModeForDate(Date referenceDate) {
         return getIntParameter(Contract.ParametersHistory.EXERCISE_USE_MODE_PARAMETER_TYPE, referenceDate);
     }
@@ -70,7 +66,6 @@ public class ParametersHistoryManager {
         setIntParameter(Contract.ParametersHistory.EXERCISE_USE_MODE_PARAMETER_TYPE, newExerciseUseMode, newDate);
     }
 
-    // Exercise use order:
     public int getExerciseUseOrderForDate(Date referenceDate) {
         return getIntParameter(Contract.ParametersHistory.EXERCISE_USE_ORDER_PARAMETER_TYPE, referenceDate);
     }

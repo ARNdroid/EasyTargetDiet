@@ -101,6 +101,9 @@ public class FoodsUsageManager {
     }
 
     public void refresh(FoodsUsageEntity entity) {
+
+        entity.validateOrThrow();
+
         if(entity.getId() == null) {
             createDayIfNecessaryForDateId(entity.getDateId());
             final Uri resultUri = mContext.getContentResolver().insert(Contract.FoodsUsage.CONTENT_URI,

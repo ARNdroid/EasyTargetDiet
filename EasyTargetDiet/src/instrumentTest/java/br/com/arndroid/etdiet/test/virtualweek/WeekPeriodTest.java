@@ -1,7 +1,6 @@
 package br.com.arndroid.etdiet.test.virtualweek;
 
 import android.test.ProviderTestCase2;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;

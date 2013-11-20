@@ -5,6 +5,8 @@ import android.provider.BaseColumns;
 
 import java.io.Serializable;
 
+import br.com.arndroid.etdiet.meals.Meals;
+
 public class Contract {
 
     // This utility class cannot be instantiated.
@@ -155,7 +157,6 @@ public class Contract {
 		 * URI's
 		 */
 
-        // Refactor: Dealing with Uri by parse.
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
         public static final Uri DATE_ID_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" +
                 TABLE_NAME + "/date_id");
@@ -245,6 +246,7 @@ public class Contract {
 
         public static final String[] SIMPLE_LIST_PROJECTION = {_ID, TIME, DESCRIPTION, VALUE};
         public static final String[] MEAL_AND_VALUE_PROJECTION = {MEAL, VALUE};
+        public static final String[] SUM_VALUE_PROJECTION = {"sum(" + VALUE + ") as " + SUM_VALUE};
 
 		/*
 		 * Selection
@@ -253,6 +255,8 @@ public class Contract {
         public static final String ID_SELECTION = _ID + "=?";
         public static final String DATE_ID_AND_MEAL_SELECTION = DATE_ID + "=? AND " + MEAL + "=?";
         public static final String DATE_ID_SELECTION = DATE_ID + "=?";
+        public static final String DATE_ID_AND_NOT_EXERCISE_SELECTION = DATE_ID + "=? AND " + MEAL + ">" + Meals.EXERCISE;
+        public static final String DATE_ID_AND_EXERCISE_SELECTION = DATE_ID + "=? AND " + MEAL + "=" + Meals.EXERCISE;
 
 		/*
 		 * Sort order
@@ -412,6 +416,7 @@ public class Contract {
 		 * Selection
 		 */
 
+        public static final String ID_SELECTION = _ID + "=?";
         public static final String TYPE_SELECTION = TYPE + "=?";
         public static final String DATE_AND_TYPE_SELECTION = DATE + "=? AND " + TYPE + "=?";
 

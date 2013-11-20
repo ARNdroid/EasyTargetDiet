@@ -8,12 +8,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
 import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.UriUtils;
 
 public class DaysManager {
     private Context mContext;
@@ -62,6 +60,9 @@ public class DaysManager {
     }
 
     public void refresh(DaysEntity entity) {
+
+        entity.validateOrThrow();
+
         if(entity.getId() == null) {
             final Uri resultUri = mContext.getContentResolver().insert(Contract.Days.CONTENT_URI,
                     entity.toContentValues());
