@@ -1,13 +1,17 @@
-package br.com.arndroid.etdiet.provider;
+package br.com.arndroid.etdiet.provider.foodsusage;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import br.com.arndroid.etdiet.provider.AbstractEntity;
+import br.com.arndroid.etdiet.provider.Contract;
+
 import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor;
 
 public class FoodsUsageEntity extends AbstractEntity {
 
     private Long id;
-    private String dayId;
+    private String dateId;
     private Integer meal;
     private Integer time;
     private String description;
@@ -17,10 +21,10 @@ public class FoodsUsageEntity extends AbstractEntity {
 	 * Implementation
 	 */
 
-    public FoodsUsageEntity(Long id, String dayId, Integer meal, Integer time, String description,
+    public FoodsUsageEntity(Long id, String dateId, Integer meal, Integer time, String description,
                             Float value) {
         this.id = id;
-        this.dayId = dayId;
+        this.dateId = dateId;
         this.meal = meal;
         this.time = time;
         this.description = description;
@@ -31,7 +35,7 @@ public class FoodsUsageEntity extends AbstractEntity {
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
         cv.put(Contract.FoodsUsage._ID, id);
-        cv.put(Contract.FoodsUsage.DAY_ID, dayId);
+        cv.put(Contract.FoodsUsage.DATE_ID, dateId);
         cv.put(Contract.FoodsUsage.MEAL, meal);
         cv.put(Contract.FoodsUsage.TIME, time);
         cv.put(Contract.FoodsUsage.DESCRIPTION, description);
@@ -45,8 +49,8 @@ public class FoodsUsageEntity extends AbstractEntity {
         if (id != null) {
             cv.put(Contract.FoodsUsage._ID, id);
         }
-        if (dayId != null) {
-            cv.put(Contract.FoodsUsage.DAY_ID, dayId);
+        if (dateId != null) {
+            cv.put(Contract.FoodsUsage.DATE_ID, dateId);
         }
         if (meal != null) {
             cv.put(Contract.FoodsUsage.MEAL, meal);
@@ -67,8 +71,8 @@ public class FoodsUsageEntity extends AbstractEntity {
     public void validateOrThrow() {
 
         // Day (id) must be not null:
-        if (dayId == null) {
-            throwNullValueException(Contract.FoodsUsage.DAY_ID);
+        if (dateId == null) {
+            throwNullValueException(Contract.FoodsUsage.DATE_ID);
         }
 
         // Meal must be not null:
@@ -124,12 +128,12 @@ public class FoodsUsageEntity extends AbstractEntity {
                     return false;
             }
 
-            // dayId:
-            if (this.dayId != null) {
-                if(!this.dayId.equals(temp.dayId))
+            // dateId:
+            if (this.dateId != null) {
+                if(!this.dateId.equals(temp.dateId))
                     return false;
             } else {
-                if (temp.dayId != null)
+                if (temp.dateId != null)
                     return false;
             }
 
@@ -178,7 +182,7 @@ public class FoodsUsageEntity extends AbstractEntity {
     public int hashCode() {
         int result;
         result = id == null? 0 : id.hashCode();
-        result += dayId == null? 0: dayId.hashCode();
+        result += dateId == null? 0: dateId.hashCode();
         result += meal == null? 0: meal.hashCode();
         result += time == null? 0: time.hashCode();
         result += description == null? 0: description.hashCode();
@@ -189,7 +193,14 @@ public class FoodsUsageEntity extends AbstractEntity {
     @Override
     public String toString() {
 
-        return "[" + Contract.FoodsUsage._ID + "=" + id + ", " + Contract.FoodsUsage.DAY_ID + "=" + dayId + ", " + Contract.FoodsUsage.MEAL + "=" + meal + ", " + Contract.FoodsUsage.TIME + "=" + time + ", " + Contract.FoodsUsage.DESCRIPTION + "=" + description + ", " + Contract.FoodsUsage.VALUE + "=" + value + "]";
+        return "["
+                + Contract.FoodsUsage._ID + "=" + id + ", "
+                + Contract.FoodsUsage.DATE_ID + "=" + dateId + ", "
+                + Contract.FoodsUsage.MEAL + "=" + meal + ", "
+                + Contract.FoodsUsage.TIME + "=" + time + ", "
+                + Contract.FoodsUsage.DESCRIPTION + "=" + description + ", "
+                + Contract.FoodsUsage.VALUE + "=" + value
+                + "]";
     }
 
     public Long getId() {
@@ -200,12 +211,12 @@ public class FoodsUsageEntity extends AbstractEntity {
         this.id = id;
     }
 
-    public String getDayId() {
-        return dayId;
+    public String getDateId() {
+        return dateId;
     }
 
-    public void setDayId(String dayId) {
-        this.dayId = dayId;
+    public void setDateId(String dateId) {
+        this.dateId = dateId;
     }
 
     public Integer getMeal() {
@@ -249,12 +260,18 @@ public class FoodsUsageEntity extends AbstractEntity {
         }
 
         return new FoodsUsageEntity(
-                cursor.getLong(cursor.getColumnIndex(Contract.FoodsUsage._ID)),
-                cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DAY_ID)),
-                cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.MEAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.TIME)),
-                cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.FoodsUsage.VALUE)));
+                cursor.getColumnIndex(Contract.FoodsUsage._ID) == -1 ?
+                    null : cursor.getLong(cursor.getColumnIndex(Contract.FoodsUsage._ID)),
+                cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID)),
+                cursor.getColumnIndex(Contract.FoodsUsage.MEAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.MEAL)),
+                cursor.getColumnIndex(Contract.FoodsUsage.TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.TIME)),
+                cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION)),
+                cursor.getColumnIndex(Contract.FoodsUsage.VALUE) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.FoodsUsage.VALUE)));
     }
 
     public static FoodsUsageEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
@@ -270,10 +287,10 @@ public class FoodsUsageEntity extends AbstractEntity {
             result.setId(complement.getAsLong(Contract.FoodsUsage._ID));
         }
         // day_id:
-        if (principal.getAsString(Contract.FoodsUsage.DAY_ID) != null) {
-            result.setDayId(principal.getAsString(Contract.FoodsUsage.DAY_ID));
+        if (principal.getAsString(Contract.FoodsUsage.DATE_ID) != null) {
+            result.setDateId(principal.getAsString(Contract.FoodsUsage.DATE_ID));
         } else {
-            result.setDayId(complement.getAsString(Contract.FoodsUsage.DAY_ID));
+            result.setDateId(complement.getAsString(Contract.FoodsUsage.DATE_ID));
         }
         // meal:
         if (principal.getAsInteger(Contract.FoodsUsage.MEAL) != null) {
@@ -310,7 +327,7 @@ public class FoodsUsageEntity extends AbstractEntity {
 
         return new FoodsUsageEntity(
                 values.getAsLong(Contract.FoodsUsage._ID),
-                values.getAsString(Contract.FoodsUsage.DAY_ID),
+                values.getAsString(Contract.FoodsUsage.DATE_ID),
                 values.getAsInteger(Contract.FoodsUsage.MEAL),
                 values.getAsInteger(Contract.FoodsUsage.TIME),
                 values.getAsString(Contract.FoodsUsage.DESCRIPTION),

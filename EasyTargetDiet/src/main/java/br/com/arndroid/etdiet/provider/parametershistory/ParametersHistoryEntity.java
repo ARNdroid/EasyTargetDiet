@@ -1,7 +1,10 @@
-package br.com.arndroid.etdiet.provider;
+package br.com.arndroid.etdiet.provider.parametershistory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import br.com.arndroid.etdiet.provider.AbstractEntity;
+import br.com.arndroid.etdiet.provider.Contract;
 
 public class ParametersHistoryEntity extends AbstractEntity {
     private Long id;
@@ -242,12 +245,18 @@ public class ParametersHistoryEntity extends AbstractEntity {
         }
 
         return new ParametersHistoryEntity(
-                cursor.getLong(cursor.getColumnIndex(Contract.ParametersHistory._ID)),
-                cursor.getInt(cursor.getColumnIndex(Contract.ParametersHistory.TYPE)),
-                cursor.getString(cursor.getColumnIndex(Contract.ParametersHistory.DATE)),
-                cursor.getInt(cursor.getColumnIndex(Contract.ParametersHistory.INTEGRAL_NEW_VALUE)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.ParametersHistory.FLOATING_POINT_NEW_VALUE)),
-                cursor.getString(cursor.getColumnIndex(Contract.ParametersHistory.TEXT_NEW_VALUE)));
+                cursor.getColumnIndex(Contract.ParametersHistory._ID) == -1 ?
+                    null : cursor.getLong(cursor.getColumnIndex(Contract.ParametersHistory._ID)),
+                cursor.getColumnIndex(Contract.ParametersHistory.TYPE) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.ParametersHistory.TYPE)),
+                cursor.getColumnIndex(Contract.ParametersHistory.DATE) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.ParametersHistory.DATE)),
+                cursor.getColumnIndex(Contract.ParametersHistory.INTEGRAL_NEW_VALUE) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.ParametersHistory.INTEGRAL_NEW_VALUE)),
+                cursor.getColumnIndex(Contract.ParametersHistory.FLOATING_POINT_NEW_VALUE) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.ParametersHistory.FLOATING_POINT_NEW_VALUE)),
+                cursor.getColumnIndex(Contract.ParametersHistory.TEXT_NEW_VALUE) == -1 ?
+                    null : cursor.getString(cursor.getColumnIndex(Contract.ParametersHistory.TEXT_NEW_VALUE)));
     }
 
     public static ParametersHistoryEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {

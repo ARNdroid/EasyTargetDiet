@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.quickinsert;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -21,7 +20,8 @@ import android.widget.TimePicker;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.compat.Compat;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.util.DateUtil;
 
 /*
@@ -39,9 +39,9 @@ public class QuickInsertFrag extends DialogFragment {
 
     public static final String INSERT_TAG = QuickInsertFrag.class.getSimpleName() + ".INSERT_TAG";
     public static final String UPDATE_TAG = QuickInsertFrag.class.getSimpleName() + ".UPDATE_TAG";
-    public static final String URI_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".URI_PARAMETER";
+    public static final String ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".ID_PARAMETER";
 
-    private Uri mUri;
+    private Long mId;
     private Spinner mSpnMeal;
     private DatePicker mDteDate;
     private TimePicker mTimTime;
@@ -68,7 +68,7 @@ public class QuickInsertFrag extends DialogFragment {
         setupFields();
 
         if (savedInstanceState != null) {
-            setUri((Uri) savedInstanceState.get(URI_PARAMETER));
+            setId(savedInstanceState.getLong(ID_PARAMETER));
         } else {
             if (UPDATE_TAG.equals(getTag())) {
                 fillFormWithDataFromDB();
@@ -113,19 +113,12 @@ public class QuickInsertFrag extends DialogFragment {
     }
 
     private void fillFormWithDataFromDB() {
-        Cursor c = null;
-        try {
-            c = getActivity().getContentResolver().query(mUri, null, null, null, null);
-            c.moveToFirst();
-            FoodsUsageEntity entity = FoodsUsageEntity.fromCursor(c);
-            mSpnMeal.setSelection(entity.getMeal());
-            DateUtil.initDatePickerWithDateId(mDteDate, entity.getDayId());
-            DateUtil.initTimePickerWithTimeAsInt(mTimTime, entity.getTime());
-            mEdtDescription.setText(entity.getDescription());
-            mEdtValue.setText(String.valueOf(entity.getValue()));
-        } finally {
-            if (c != null) c.close();
-        }
+        FoodsUsageEntity entity = new FoodsUsageManager(getActivity()).foodUsageFromId(mId);
+        mSpnMeal.setSelection(entity.getMeal());
+        DateUtil.initDatePickerWithDateId(mDteDate, entity.getDateId());
+        DateUtil.initTimePickerWithTimeAsInt(mTimTime, entity.getTime());
+        mEdtDescription.setText(entity.getDescription());
+        mEdtValue.setText(String.valueOf(entity.getValue()));
     }
 
     private void setupFields() {
@@ -145,11 +138,9 @@ public class QuickInsertFrag extends DialogFragment {
     }
 
     private boolean insertOrUpdateFoodsUsage() {
-        final Long id = mUri == null ? null : Long.parseLong(mUri.getLastPathSegment());
-
         // TODO: this is intended to be a method, but I have a NullPointerException AVD Genymotion
         FoodsUsageEntity entity = new FoodsUsageEntity(
-                id,
+                mId,
                 DateUtil.datePickerToDateId(mDteDate),
                 mSpnMeal.getSelectedItemPosition(),
                 DateUtil.timePickerToTimeAsInt(mTimTime),
@@ -165,24 +156,8 @@ public class QuickInsertFrag extends DialogFragment {
         }
 
         // Operation:
-        if (INSERT_TAG.equals(getTag())) {
-            try {
-                setUri(getActivity().getContentResolver().insert(Contract.FoodsUsage.CONTENT_URI,
-                        entity.toContentValues()));
-            } catch (Contract.TargetException e) {
-                constructDialogForError(e);
-                return false;
-            }
-        } else if (UPDATE_TAG.equals(getTag())) {
-            try {
-                getActivity().getContentResolver().update(mUri, entity.toContentValues(), null, null);
-            } catch (Contract.TargetException e) {
-                constructDialogForError(e);
-                return false;
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid Tag '" + getTag());
-        }
+        new FoodsUsageManager(getActivity()).refresh(entity);
+        setId(entity.getId());
         return true;
     }
 
@@ -195,8 +170,8 @@ public class QuickInsertFrag extends DialogFragment {
         builder.create().show();
     }
 
-    public void setUri(Uri uri) {
-        mUri = uri;
+    public void setId(Long id) {
+        mId = id;
     }
 
     private void fillFormWithDataFromSetters() {

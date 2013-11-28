@@ -66,6 +66,12 @@ public class DateUtil {
         return Integer.parseInt(dateId.substring(DATE_ID_DAY_START_POSITION));
     }
 
+    public static int getWeekdayFromDateId(String dateId) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateIdToDate(dateId));
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
     public static int hoursToMillis(int hours) {
         return hours * 60 * 60 * 1000;
     }
@@ -116,5 +122,13 @@ public class DateUtil {
     public static String dateIdToFormattedString(String dateId) {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_STRING);
         return sdf.format(dateIdToDate(dateId));
+    }
+
+    public static boolean dateIdStartsBefore(String before, String after) {
+        return before.compareTo(after) < 0;
+    }
+
+    public static boolean dateIdStartsEqualsOrBefore(String before, String after) {
+        return before.compareTo(after) <= 0;
     }
 }

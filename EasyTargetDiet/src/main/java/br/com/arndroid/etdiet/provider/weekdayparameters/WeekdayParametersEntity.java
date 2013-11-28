@@ -1,7 +1,10 @@
-package br.com.arndroid.etdiet.provider;
+package br.com.arndroid.etdiet.provider.weekdayparameters;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import br.com.arndroid.etdiet.provider.AbstractEntity;
+import br.com.arndroid.etdiet.provider.Contract;
 
 public class WeekdayParametersEntity extends AbstractEntity {
 
@@ -95,7 +98,6 @@ public class WeekdayParametersEntity extends AbstractEntity {
         return cv;
     }
 
-    // TODO: start from here
     @Override
     public ContentValues toContentValuesIgnoreNulls() {
         ContentValues cv = new ContentValues();
@@ -541,7 +543,7 @@ public class WeekdayParametersEntity extends AbstractEntity {
                 + Contract.WeekdayParameters.EXERCISE_GOAL + "=" + exerciseGoal + ", "
                 + Contract.WeekdayParameters.LIQUID_GOAL + "=" + liquidGoal + ", "
                 + Contract.WeekdayParameters.OIL_GOAL + "=" + oilGoal + ", "
-                + Contract.WeekdayParameters.SUPPLEMENT_GOAL + "=" + supplementGoal + ", "
+                + Contract.WeekdayParameters.SUPPLEMENT_GOAL + "=" + supplementGoal
                 + "]";
     }
 
@@ -738,29 +740,52 @@ public class WeekdayParametersEntity extends AbstractEntity {
         }
 
         return new WeekdayParametersEntity(
-                cursor.getLong(cursor.getColumnIndex(Contract.WeekdayParameters._ID)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_START_TIME)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_END_TIME)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_GOAL)),
-                cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.EXERCISE_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LIQUID_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.OIL_GOAL)),
-                cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPLEMENT_GOAL)));
+                cursor.getColumnIndex(Contract.WeekdayParameters._ID) == -1 ?
+                    null : cursor.getLong(cursor.getColumnIndex(Contract.WeekdayParameters._ID)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_START_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_END_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_START_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_END_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.BRUNCH_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_START_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_END_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.LUNCH_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_START_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_END_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.SNACK_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_START_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_END_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.DINNER_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_START_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_START_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_END_TIME) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_END_TIME)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPER_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.EXERCISE_GOAL) == -1 ?
+                    null : cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.EXERCISE_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.LIQUID_GOAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LIQUID_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.OIL_GOAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.OIL_GOAL)),
+                cursor.getColumnIndex(Contract.WeekdayParameters.SUPPLEMENT_GOAL) == -1 ?
+                    null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPLEMENT_GOAL)));
     }
 
     public static WeekdayParametersEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {

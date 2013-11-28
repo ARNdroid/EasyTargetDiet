@@ -113,7 +113,7 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
             case FOODS_USAGE_LOADER_ID:
                 return new CursorLoader(getActivity(), Contract.FoodsUsage.CONTENT_URI,
                         Contract.FoodsUsage.SIMPLE_LIST_PROJECTION,
-                        Contract.FoodsUsage.DAY_AND_MEAL_SELECTION,
+                        Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION,
                         new String[] {String.valueOf(mDayId), String.valueOf(mMeal)}, null);
             default:
                 throw new IllegalArgumentException("Invalid loader id '" + id + "'");

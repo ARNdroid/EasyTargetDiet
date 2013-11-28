@@ -12,10 +12,11 @@ public final class Meals {
     // The value of this constants can NOT
     // be changed since their values are stored
     // in database
-    static public int BREAKFAST = 0;
-    static public int BUNCH = 1;
-    static public int LUNCH = 2;
-    static public int SNEAK = 3;
-    static public int DINNER = 4;
-    static public int SUPPER = 5;
+    static final public int EXERCISE = -1;
+    static final public int BREAKFAST = 0;
+    static final public int BUNCH = 1;
+    static final public int LUNCH = 2;
+    static final public int SNEAK = 3;
+    static final public int DINNER = 4;
+    static final public int SUPPER = 5;
 }
