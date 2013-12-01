@@ -41,7 +41,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Test it!"
-        android:id="@+id/button"
+        android:id="@+id/btnTestIt"
         android:layout_gravity="center"
         android:onClick="cmdTestBreakfast" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Service!"
+        android:id="@+id/btnTestService"
+        android:layout_gravity="center"
+        android:onClick="cmdTestService" />
+
 </LinearLayout>

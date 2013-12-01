@@ -1,5 +1,6 @@
 package br.com.arndroid.etdiet.provider.weekdayparameters;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,11 +36,12 @@ public class WeekdayParametersManager {
 
         entity.validateOrThrow();
 
-        if(entity.getId() == null) {
+        final Long id = entity.getId();
+        if(id == null) {
             throw new IllegalStateException("WeekdayParameters doesn't allow insertions. Entity.getId() must be NOT null");
         }
-        mContext.getContentResolver().update(Contract.WeekdayParameters.CONTENT_URI,
-                entity.toContentValues(), Contract.WeekdayParameters.ID_SELECTION,
-                new String[] {String.valueOf(entity.getId())});
+        mContext.getContentResolver().update(
+                ContentUris.withAppendedId(Contract.WeekdayParameters.CONTENT_URI, id),
+                entity.toContentValues(), null, null);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.arndroid.etdiet.provider.days;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -63,14 +64,14 @@ public class DaysManager {
 
         entity.validateOrThrow();
 
-        if(entity.getId() == null) {
+        final Long id = entity.getId();
+        if(id == null) {
             final Uri resultUri = mContext.getContentResolver().insert(Contract.Days.CONTENT_URI,
                     entity.toContentValues());
             entity.setId(Long.parseLong(resultUri.getLastPathSegment()));
         } else {
-            mContext.getContentResolver().update(Contract.Days.CONTENT_URI,
-                    entity.toContentValues(), Contract.Days.ID_SELECTION,
-                    new String[] {String.valueOf(entity.getId())});
+            mContext.getContentResolver().update(ContentUris.withAppendedId(Contract.Days.CONTENT_URI,id),
+                    entity.toContentValues(), null, null);
         }
     }
 }

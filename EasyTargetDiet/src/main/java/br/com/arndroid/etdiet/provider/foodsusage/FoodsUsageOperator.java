@@ -155,6 +155,9 @@ public class FoodsUsageOperator extends BaseProviderOperator {
             final Uri extraUri = UriUtil.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.FoodsUsage.DATE_ID));
             final ContentResolver resolver = provider.getContext().getContentResolver();
+            if (isLogEnabled) {
+                Log.d(TAG, "insert, notifying extraUri=" + extraUri);
+            }
             resolver.notifyChange(extraUri, null);
         }
 

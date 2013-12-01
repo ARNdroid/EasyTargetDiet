@@ -199,4 +199,24 @@ public class VirtualWeek {
     public float getDiaryAllowanceAfterUsageForIndex(int index) {
         return mDaySummaryArray[index].getDiaryAllowanceAfterUsage();
     }
+
+    public DaySummary daySummaryForIndex(int index) {
+        return new DaySummary(mDaySummaryArray[index]);
+    }
+
+    public DaySummary daySummaryForDateId(String dateId) {
+
+        final int index = indexForDateId(dateId);
+        return index == NO_INDEX ? null : mDaySummaryArray[index];
+    }
+
+    private int indexForDateId(String dateId) {
+
+        for (int i = 0; i < mDaySummaryArray.length; i++) {
+            if (mDaySummaryArray[i].getEntity().getDateId().equals(dateId)) {
+                return i;
+            }
+        }
+        return NO_INDEX;
+    }
 }

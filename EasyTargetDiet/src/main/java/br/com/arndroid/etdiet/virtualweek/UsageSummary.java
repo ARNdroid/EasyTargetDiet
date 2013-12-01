@@ -9,6 +9,18 @@ public class UsageSummary {
     private float dinnerUsed;
     private float supperUsed;
 
+    public UsageSummary() {}
+
+    public UsageSummary(UsageSummary toClone) {
+        exerciseDone = toClone.exerciseDone;
+        breakfastUsed = toClone.breakfastUsed;
+        brunchUsed = toClone.brunchUsed;
+        lunchUsed = toClone.lunchUsed;
+        sneakUsed = toClone.sneakUsed;
+        dinnerUsed = toClone.dinnerUsed;
+        supperUsed = toClone.supperUsed;
+    }
+
     public float getTotalUsed() {
         return getBreakfastUsed()
                 + getBrunchUsed()

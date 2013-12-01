@@ -87,6 +87,9 @@ public class DaysOperator extends BaseProviderOperator {
             ContentResolver resolver = provider.getContext().getContentResolver();
             final Uri virtualUri = UriUtil.withAppendedId(Contract.Days.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.Days.DATE_ID));
+            if (isLogEnabled) {
+                Log.d(TAG, "insert, notifying virtualUri=" + virtualUri);
+            }
             resolver.notifyChange(virtualUri, null);
         }
 

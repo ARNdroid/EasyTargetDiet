@@ -55,6 +55,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     }
 
     protected void doNotifyOperations(int operation, Uri uri, Cursor cursor, Provider provider) {
+        if (isLogEnabled) {
+            Log.d(TAG, "Inside doNotifyOperations and context=" + provider.getContext());
+        }
         switch (operation) {
             case QUERY_OPERATION:
                 cursor.setNotificationUri(provider.getContext().getContentResolver(), uri);
@@ -120,6 +123,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         }
 
         Uri resultUri = Uri.withAppendedPath(uri, String.valueOf(idInserted));
+        if (isLogEnabled) {
+            Log.d(TAG, "insert, notifying uri=" + resultUri);
+        }
         doNotifyOperations(INSERT_OPERATION, resultUri, null, provider);
 
         if(isLogEnabled) {
@@ -174,6 +180,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         }
 
         if (rowsUpdated > FAIL) {
+            if (isLogEnabled) {
+                Log.d(TAG, "update, notifying uri=" + uri);
+            }
             doNotifyOperations(UPDATE_OPERATION, uri, null, provider);
         }
         return rowsUpdated;
@@ -193,6 +202,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         SQLiteDatabase db = provider.getOpenHelper().getWritableDatabase();
         int rowsDeleted = db.delete(tableName(), parameters.getSelection(), parameters.getSelectionArgs());
         if (rowsDeleted > FAIL) {
+            if (isLogEnabled) {
+                Log.d(TAG, "delete, notifying uri=" + uri);
+            }
             doNotifyOperations(DELETE_OPERATION, uri, null, provider);
         }
         return rowsDeleted;
