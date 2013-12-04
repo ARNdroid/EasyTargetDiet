@@ -35,7 +35,6 @@ public class DaysManager {
         } finally {
             if(cursor != null) cursor.close();
         }
-
     }
 
     private DaysEntity buildMemoryDayForDate(Date date) {

@@ -55,9 +55,6 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     }
 
     protected void doNotifyOperations(int operation, Uri uri, Cursor cursor, Provider provider) {
-        if (isLogEnabled) {
-            Log.d(TAG, "Inside doNotifyOperations and context=" + provider.getContext());
-        }
         switch (operation) {
             case QUERY_OPERATION:
                 cursor.setNotificationUri(provider.getContext().getContentResolver(), uri);
@@ -66,6 +63,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
             case INSERT_OPERATION:
             case UPDATE_OPERATION:
             case DELETE_OPERATION:
+                if (isLogEnabled) {
+                    Log.d(TAG, "Inside doNotifyOperations and context=" + provider.getContext() + " and operation =" + operation);
+                }
                 provider.getContext().getContentResolver().notifyChange(uri, null);
                 break;
 

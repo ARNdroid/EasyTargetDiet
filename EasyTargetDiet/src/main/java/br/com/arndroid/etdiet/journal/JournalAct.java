@@ -4,8 +4,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
@@ -22,12 +26,17 @@ import br.com.arndroid.etdiet.compat.Compat;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageAct;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.provider.days.DaysEntity;
+import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
+import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.util.DateUtil;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.JournalApi;
 import br.com.arndroid.etdiet.virtualweek.JournalService;
+import br.com.arndroid.etdiet.virtualweek.TestContentObserver;
 import br.com.arndroid.etdiet.virtualweek.ViewObserver;
 
 public class JournalAct extends ActionBarActivity implements ViewObserver {
@@ -36,6 +45,7 @@ public class JournalAct extends ActionBarActivity implements ViewObserver {
     private DatePicker mDteDate;
     private JournalApi mJournalApi;
     private boolean mBound = false;
+    private TestContentObserver mObserver = new TestContentObserver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +94,73 @@ public class JournalAct extends ActionBarActivity implements ViewObserver {
         Compat.getInstance().setCalendarViewShownToDatePicker(false, mDteDate);
     }
 
-    public void cmdTestService(View view) {
+    public void cmdTestObserver(View view) {
+        mObserver.mCalled = false;
+        final String dateId = DateUtil.dateToDateId(new Date());
+        getContentResolver().registerContentObserver(Uri.withAppendedPath(
+                Contract.FoodsUsage.DATE_ID_CONTENT_URI, dateId), true, mObserver);
+
+        final FoodsUsageManager foodsManager = new FoodsUsageManager(this);
+        FoodsUsageEntity foodsEntity = null;
+
+        foodsEntity = new FoodsUsageEntity(null, dateId,
+                Meals.BREAKFAST, 1, "food for test", 7.7f);
+        foodsManager.refresh(foodsEntity);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (mObserver.mCalled) {
+                    Toast.makeText(JournalAct.this, "myObserver was called!!!!!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, 100);
+
+        getContentResolver().unregisterContentObserver(mObserver);
+        //testInsertFood();
+        //testUpdateFood();
+        //testInsertDate();
+        //testUpdateDate();
+        //testParameter();
+    }
+
+    private void testParameter() {
+        final ParametersHistoryManager parametersHistoryManager = new ParametersHistoryManager(this);
+        parametersHistoryManager.setTrackingWeekday(Calendar.SATURDAY);
+    }
+
+    private void testUpdateDate() {
+        final DaysManager daysManager = new DaysManager(this);
+        DaysEntity daysEntity = daysManager.dayFromDate(new Date());
+
+        daysManager.refresh(daysEntity);
+    }
+
+    private void testInsertDate() {
+        final DaysManager daysManager = new DaysManager(this);
+        DaysEntity daysEntity = null;
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+        daysEntity = daysManager.dayFromDate(cal.getTime());
+
+        daysManager.refresh(daysEntity);
+    }
+
+    private void testInsertFood() {
         final FoodsUsageManager foodsManager = new FoodsUsageManager(this);
         FoodsUsageEntity foodsEntity = null;
 
         foodsEntity = new FoodsUsageEntity(null, DateUtil.dateToDateId(new Date()),
                 Meals.BREAKFAST, 1, "food for toast test", 7.7f);
+
+        foodsManager.refresh(foodsEntity);
+    }
+
+    private void testUpdateFood() {
+        final FoodsUsageManager foodsManager = new FoodsUsageManager(this);
+        FoodsUsageEntity foodsEntity = foodsManager.foodUsageFromId(126L);
+        foodsEntity.setDescription("updated!");
 
         foodsManager.refresh(foodsEntity);
     }
@@ -139,7 +210,7 @@ public class JournalAct extends ActionBarActivity implements ViewObserver {
 
     @Override
     public void onFoodsUsageChanged(DaySummary summary) {
-        Toast.makeText(this, "onFoodsUsageChanged called!!!!!!!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "onFoodsUsageChanged called!!!!!!!", Toast.LENGTH_LONG).show();
     }
 
     @Override

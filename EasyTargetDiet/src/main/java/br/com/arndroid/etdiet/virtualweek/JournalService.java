@@ -152,13 +152,15 @@ public class JournalService extends Service implements JournalApi, DatabaseChang
     }
 
     private void notifyAllViewObservers(int changeType, int index) {
-        final DaySummary daySummary = mVirtualWeek.daySummaryForIndex(index);
+        DaySummary daySummary;
         for (ViewObserver viewObserver : viewObservers) {
             switch (changeType) {
                 case DatabaseChangeObserver.DAY_CHANGE_TYPE:
+                    daySummary = mVirtualWeek.daySummaryForIndex(index);
                     viewObserver.onDayChanged(daySummary);
                     break;
                 case DatabaseChangeObserver.FOODS_USAGE_CHANGE_TYPE:
+                    daySummary = mVirtualWeek.daySummaryForIndex(index);
                     viewObserver.onFoodsUsageChanged(daySummary);
                     break;
                 case DatabaseChangeObserver.PARAMETERS_HISTORY_CHANGE_TYPE:
