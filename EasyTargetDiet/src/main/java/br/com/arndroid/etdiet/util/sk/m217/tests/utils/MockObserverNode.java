@@ -1,4 +1,4 @@
-package sk.m217.tests.utils;
+package br.com.arndroid.etdiet.util.sk.m217.tests.utils;
 /*
  * Copyright (C) 2011 The Android Open Source Project
  *
@@ -33,8 +33,11 @@ public final class MockObserverNode {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static final int INSERT_TYPE = 0;
+    @SuppressWarnings("UnusedDeclaration")
     public static final int UPDATE_TYPE = 1;
+    @SuppressWarnings("UnusedDeclaration")
     public static final int DELETE_TYPE = 2;
 
     private String mName;
@@ -82,9 +85,9 @@ public final class MockObserverNode {
         if (segment == null) {
             throw new IllegalArgumentException("Invalid Uri (" + uri + ") used for observer");
         }
+        @SuppressWarnings("UnusedDeclaration")
         int N = mChildren.size();
-        for (int i = 0; i < N; i++) {
-            MockObserverNode node = mChildren.get(i);
+        for (MockObserverNode node : mChildren) {
             if (node.mName.equals(segment)) {
                 node.addObserver(uri, index + 1, observer, notifyForDescendents);
                 return;
@@ -117,18 +120,14 @@ public final class MockObserverNode {
             }
         }
 
-        if (mChildren.size() == 0 && mObservers.size() == 0) {
-            return true;
-        }
-        return false;
+        return (mChildren.size() == 0 && mObservers.size() == 0);
     }
 
     private void notifyMyObservers(boolean leaf, ContentObserver observer,
             boolean selfNotify) {
+        @SuppressWarnings("UnusedDeclaration")
         int N = mObservers.size();
-        for (int i = 0; i < N; i++) {
-            MockObserverEntry entry = mObservers.get(i);
-
+        for (MockObserverEntry entry : mObservers) {
             // Don't notify the observer if it sent the notification and isn't interesed
             // in self notifications
             if (entry.observer == observer && !selfNotify) {
@@ -155,9 +154,9 @@ public final class MockObserverNode {
             notifyMyObservers(false, observer, selfNotify);
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         int N = mChildren.size();
-        for (int i = 0; i < N; i++) {
-            MockObserverNode node = mChildren.get(i);
+        for (MockObserverNode node : mChildren) {
             if (segment == null || node.mName.equals(segment)) {
                 // We found the child,
                 node.notifyMyObservers(uri, index + 1, observer, selfNotify);

@@ -48,20 +48,20 @@ public class ParametersHistoryOperator extends BaseProviderOperator {
     }
 
     @Override
-    public boolean isOperationAllowedForUri(int operation, Uri uri) {
+    public boolean isOperationProhibitedForUri(int operation, Uri uri) {
         int match = getUriMatcher().match(uri);
         if(match == UriMatcher.NO_MATCH) throw new IllegalArgumentException("Unknown uri: " + uri);
 
         // Safe change ParametersHistory.Uri: evaluate line addition for new uri.
         switch (operation) {
             case QUERY_OPERATION:
-                return true;
+                return false;
             case INSERT_OPERATION:
-                return match == PARAMETERS_HISTORY_URI_MATCH;
+                return match != PARAMETERS_HISTORY_URI_MATCH;
             case UPDATE_OPERATION:
-                return true;
+                return false;
             case DELETE_OPERATION:
-                return match == PARAMETERS_HISTORY_ITEM_URI_MATCH;
+                return match != PARAMETERS_HISTORY_ITEM_URI_MATCH;
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
         }

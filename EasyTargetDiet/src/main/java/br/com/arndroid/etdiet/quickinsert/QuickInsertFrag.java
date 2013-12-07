@@ -113,7 +113,7 @@ public class QuickInsertFrag extends DialogFragment {
     }
 
     private void fillFormWithDataFromDB() {
-        FoodsUsageEntity entity = new FoodsUsageManager(getActivity()).foodUsageFromId(mId);
+        FoodsUsageEntity entity = new FoodsUsageManager(getActivity().getApplicationContext()).foodUsageFromId(mId);
         mSpnMeal.setSelection(entity.getMeal());
         DateUtil.initDatePickerWithDateId(mDteDate, entity.getDateId());
         DateUtil.initTimePickerWithTimeAsInt(mTimTime, entity.getTime());
@@ -156,7 +156,7 @@ public class QuickInsertFrag extends DialogFragment {
         }
 
         // Operation:
-        new FoodsUsageManager(getActivity()).refresh(entity);
+        new FoodsUsageManager(getActivity().getApplicationContext()).refresh(entity);
         setId(entity.getId());
         return true;
     }

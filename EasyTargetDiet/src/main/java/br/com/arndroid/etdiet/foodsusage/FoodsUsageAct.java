@@ -44,7 +44,7 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
 
     @Override
     public void onFoodUsageLongSelected(final long foodUsageId) {
-        final FoodsUsageManager manager = new FoodsUsageManager(this);
+        final FoodsUsageManager manager = new FoodsUsageManager(getApplicationContext());
         final FoodsUsageEntity entity = manager.foodUsageFromId(foodUsageId);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

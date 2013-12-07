@@ -63,20 +63,20 @@ public class FoodsUsageOperator extends BaseProviderOperator {
     }
 
     @Override
-    public boolean isOperationAllowedForUri(int operation, Uri uri) {
+    public boolean isOperationProhibitedForUri(int operation, Uri uri) {
         int match = getUriMatcher().match(uri);
         if(match == UriMatcher.NO_MATCH) throw new IllegalArgumentException("Unknown uri: " + uri);
 
         // Safe change FoodsUsage.Uri: add line for a new uri.
         switch (operation) {
             case QUERY_OPERATION:
-                return true;
+                return false;
             case INSERT_OPERATION:
-                return match == FOODS_USAGE_URI_MATCH;
+                return match != FOODS_USAGE_URI_MATCH;
             case UPDATE_OPERATION:
-                return (match == FOODS_USAGE_URI_MATCH || match == FOODS_USAGE_ITEM_URI_MATCH);
+                return (match != FOODS_USAGE_URI_MATCH && match != FOODS_USAGE_ITEM_URI_MATCH);
             case DELETE_OPERATION:
-                return match == FOODS_USAGE_ITEM_URI_MATCH;
+                return match != FOODS_USAGE_ITEM_URI_MATCH;
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
         }
@@ -156,7 +156,7 @@ public class FoodsUsageOperator extends BaseProviderOperator {
                     values.getAsString(Contract.FoodsUsage.DATE_ID));
             final ContentResolver resolver = provider.getContext().getContentResolver();
             if (isLogEnabled) {
-                Log.d(TAG, "insert, notifying extraUri=" + extraUri + " and context=" + provider.getContext());
+                Log.d(TAG, "insert, about to notify extraUri=" + extraUri + " and context=" + provider.getContext());
             }
             resolver.notifyChange(extraUri, null);
         }
@@ -228,6 +228,7 @@ public class FoodsUsageOperator extends BaseProviderOperator {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "==>ETD/" + FoodsUsageOperator.class.getSimpleName();
     @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;

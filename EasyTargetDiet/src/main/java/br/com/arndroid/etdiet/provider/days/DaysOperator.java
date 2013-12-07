@@ -49,20 +49,20 @@ public class DaysOperator extends BaseProviderOperator {
     }
 
     @Override
-    public boolean isOperationAllowedForUri(int operation, Uri uri) {
+    public boolean isOperationProhibitedForUri(int operation, Uri uri) {
         int match = getUriMatcher().match(uri);
         if(match == UriMatcher.NO_MATCH) throw new IllegalArgumentException("Unknown uri: " + uri);
 
         // Safe change Days.Uri: evaluate line addition for new uri.
         switch (operation) {
             case QUERY_OPERATION:
-                return true;
-            case INSERT_OPERATION:
-                return match == DAYS_URI_MATCH;
-            case UPDATE_OPERATION:
-                return true;
-            case DELETE_OPERATION:
                 return false;
+            case INSERT_OPERATION:
+                return match != DAYS_URI_MATCH;
+            case UPDATE_OPERATION:
+                return false;
+            case DELETE_OPERATION:
+                return true;
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
         }
@@ -88,7 +88,7 @@ public class DaysOperator extends BaseProviderOperator {
             final Uri virtualUri = UriUtil.withAppendedId(Contract.Days.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.Days.DATE_ID));
             if (isLogEnabled) {
-                Log.d(TAG, "insert, notifying virtualUri=" + virtualUri);
+                Log.d(TAG, "insert, about to notify virtualUri=" + virtualUri);
             }
             resolver.notifyChange(virtualUri, null);
         }

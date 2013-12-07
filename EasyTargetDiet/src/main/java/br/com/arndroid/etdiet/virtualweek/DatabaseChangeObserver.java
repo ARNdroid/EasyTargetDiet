@@ -30,9 +30,6 @@ public class DatabaseChangeObserver extends ContentObserver {
 
     @Override
     public void onChange(boolean selfChange, Uri uri) {
-        if (isLogEnabled) {
-            Log.d(TAG, "Observer.onChange() called!!!!!!!!!");
-        }
         mObserver.onContentChanged(mChangeType, mIndex);
     }
 
@@ -40,6 +37,8 @@ public class DatabaseChangeObserver extends ContentObserver {
         public void onContentChanged(int changeType, int index);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "==>ETD/" + DatabaseChangeObserver.class.getSimpleName();
+    @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;
 }

@@ -1,4 +1,4 @@
-package sk.m217.tests.utils;
+package br.com.arndroid.etdiet.util.sk.m217.tests.utils;
 /*
  * Copyright (C) 2011 The Android Open Source Project
  *
@@ -39,4 +39,6 @@ public class MockContentResolver2 extends MockContentResolver {
 	public void safeUnregisterContentObserver(ContentObserver observer) {
 		mRootNode.removeObserver(observer);
 	}
+
+
 }

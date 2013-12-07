@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -36,8 +36,6 @@
         <provider android:name=".provider.Provider"
             android:authorities="br.com.arndroid.provider.etdiet"
             android:exported="false" />
-
-        <service android:name=".virtualweek.JournalService" />
 
     </application>
 
