@@ -1,7 +1,11 @@
 package br.com.arndroid.etdiet.journal;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
@@ -9,17 +13,23 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
+
+import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.compat.Compat;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageAct;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.virtualweek.DaySummary;
+import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
-public class JournalAct extends ActionBarActivity {
+public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObserver {
 
     private Spinner mSpnMeal;
     private DatePicker mDteDate;
+    private VirtualWeek mVirtualWeek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +39,22 @@ public class JournalAct extends ActionBarActivity {
 
         setFieldsReferenceFromForm();
         setupFields();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVirtualWeek = VirtualWeek.getInstance(this.getApplicationContext());
+        mVirtualWeek.registerViewObserver(this);
+        // TODO: change dateId creation to last dateId (it must be done by savedInstanceState)
+        mVirtualWeek.requestSummaryForDateId(this, DateUtil.dateToDateId(new Date()));
+    }
+
+    @Override
+    protected void onPause() {
+        mVirtualWeek.unregisterViewObserver(this);
+        mVirtualWeek = null;
+        super.onPause();
     }
 
     @Override
@@ -67,5 +93,25 @@ public class JournalAct extends ActionBarActivity {
             startActivity(intent);
         }
 
+    }
+
+    @Override
+    public void onDayChanged(DaySummary summary) {
+        // TODO: Implement.
+    }
+
+    @Override
+    public void onFoodsUsageChanged(DaySummary summary) {
+        // TODO: Implement.
+    }
+
+    @Override
+    public void onParametersChanged() {
+        // TODO: Implement.
+    }
+
+    @Override
+    public void onSummaryRequested(DaySummary daySummary) {
+        // TODO: Implement.
     }
 }

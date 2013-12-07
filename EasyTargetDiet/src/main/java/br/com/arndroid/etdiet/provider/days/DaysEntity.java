@@ -80,6 +80,38 @@ public class DaysEntity extends AbstractEntity {
         this.note = note;
     }
 
+    public DaysEntity(DaysEntity toClone) {
+        id = toClone.id;
+        dateId = toClone.dateId;
+        allowed = toClone.allowed;
+        breakfastStartTime = toClone.breakfastStartTime;
+        breakfastEndTime = toClone.breakfastEndTime;
+        breakfastGoal = toClone.breakfastGoal;
+        brunchStartTime = toClone.brunchStartTime;
+        brunchEndTime = toClone.brunchEndTime;
+        brunchGoal = toClone.brunchGoal;
+        lunchStartTime = toClone.lunchStartTime;
+        lunchEndTime = toClone.lunchEndTime;
+        lunchGoal = toClone.lunchGoal;
+        snackStartTime = toClone.snackStartTime;
+        snackEndTime = toClone.snackEndTime;
+        snackGoal = toClone.snackGoal;
+        dinnerStartTime = toClone.dinnerStartTime;
+        dinnerEndTime = toClone.dinnerEndTime;
+        dinnerGoal = toClone.dinnerGoal;
+        supperStartTime = toClone.supperStartTime;
+        supperEndTime = toClone.supperEndTime;
+        supperGoal = toClone.supperGoal;
+        exerciseGoal = toClone.exerciseGoal;
+        liquidDone = toClone.liquidDone;
+        liquidGoal = toClone.liquidGoal;
+        oilDone = toClone.oilDone;
+        oilGoal = toClone.oilGoal;
+        supplementDone = toClone.supplementDone;
+        supplementGoal = toClone.supplementGoal;
+        note = toClone.note;
+    }
+
     @Override
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();

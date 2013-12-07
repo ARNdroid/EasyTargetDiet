@@ -13,6 +13,19 @@ public class DaySummary {
     private float weeklyAllowanceBeforeUsage;
     private float weeklyAllowanceAfterUsage;
 
+    public DaySummary() {}
+
+    public DaySummary(DaySummary toClone) {
+        entity = new DaysEntity(toClone.entity);
+        usage = new UsageSummary(toClone.usage);
+        exerciseAfterUsage = toClone.exerciseAfterUsage;
+        exerciseToCarry = toClone.exerciseToCarry;
+        totalExercise = toClone.totalExercise;
+        diaryAllowanceAfterUsage = toClone.diaryAllowanceAfterUsage;
+        weeklyAllowanceBeforeUsage = toClone.weeklyAllowanceBeforeUsage;
+        weeklyAllowanceAfterUsage = toClone.weeklyAllowanceAfterUsage;
+    }
+
     public UsageSummary getUsage() {
         return usage;
     }

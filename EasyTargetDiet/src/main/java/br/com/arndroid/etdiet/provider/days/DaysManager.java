@@ -1,8 +1,10 @@
 package br.com.arndroid.etdiet.provider.days;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +36,6 @@ public class DaysManager {
         } finally {
             if(cursor != null) cursor.close();
         }
-
     }
 
     private DaysEntity buildMemoryDayForDate(Date date) {
@@ -63,14 +64,28 @@ public class DaysManager {
 
         entity.validateOrThrow();
 
-        if(entity.getId() == null) {
+        final Long id = entity.getId();
+        if(id == null) {
+            if (isLogEnabled) {
+                Log.d(TAG, "About to insert entity=" + entity + "with Uri=" + Contract.Days.CONTENT_URI);
+            }
             final Uri resultUri = mContext.getContentResolver().insert(Contract.Days.CONTENT_URI,
                     entity.toContentValues());
             entity.setId(Long.parseLong(resultUri.getLastPathSegment()));
+            if (isLogEnabled) {
+                Log.d(TAG, "Returning from insert: entity inserted with id=" + entity.getId() + " and dateId=" + entity.getDateId());
+            }
         } else {
-            mContext.getContentResolver().update(Contract.Days.CONTENT_URI,
-                    entity.toContentValues(), Contract.Days.ID_SELECTION,
-                    new String[] {String.valueOf(entity.getId())});
+            mContext.getContentResolver().update(ContentUris.withAppendedId(Contract.Days.CONTENT_URI,id),
+                    entity.toContentValues(), null, null);
+            if (isLogEnabled) {
+                Log.d(TAG, "Returning from update: entity updated =" + entity);
+            }
         }
     }
+
+    @SuppressWarnings("UnusedDeclaration")
+    private static final String TAG = "==>ETD/" + DaysManager.class.getSimpleName();
+    @SuppressWarnings("UnusedDeclaration")
+    private static final boolean isLogEnabled = true;
 }

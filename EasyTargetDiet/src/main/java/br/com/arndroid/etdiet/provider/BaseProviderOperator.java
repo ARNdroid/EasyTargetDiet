@@ -34,7 +34,7 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder, Provider provider) {
-        if(!isOperationAllowedForUri(QUERY_OPERATION, uri)) {
+        if(isOperationProhibitedForUri(QUERY_OPERATION, uri)) {
             return null;
         }
 
@@ -80,12 +80,12 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     protected abstract void onValidateParameters(int operation, Uri uri, OperationParameters parameters,
                                                  Provider provider);
 
-    protected abstract boolean isOperationAllowedForUri(int operation, Uri uri);
+    protected abstract boolean isOperationProhibitedForUri(int operation, Uri uri);
 
     @Override
     public Uri insert(Uri uri, ContentValues values, Provider provider) {
 
-        if(!isOperationAllowedForUri(INSERT_OPERATION, uri)) {
+        if(isOperationProhibitedForUri(INSERT_OPERATION, uri)) {
             return null;
         }
 
@@ -120,6 +120,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         }
 
         Uri resultUri = Uri.withAppendedPath(uri, String.valueOf(idInserted));
+        if (isLogEnabled) {
+            Log.d(TAG, "insert, about to notify uri=" + resultUri);
+        }
         doNotifyOperations(INSERT_OPERATION, resultUri, null, provider);
 
         if(isLogEnabled) {
@@ -128,16 +131,19 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         return resultUri;
     }
 
-    private boolean continueOnConstraintViolation(int operation, Uri uri, OperationParameters parameters,
-                                                  SQLiteConstraintException constraintException,
-                                                  Provider provider) {
+
+    private boolean continueOnConstraintViolation(@SuppressWarnings("UnusedDeclaration") int operation,
+                                                  @SuppressWarnings("UnusedDeclaration") Uri uri,
+                                                  @SuppressWarnings("UnusedDeclaration") OperationParameters parameters,
+                                                  @SuppressWarnings("UnusedDeclaration") SQLiteConstraintException constraintException,
+                                                  @SuppressWarnings("UnusedDeclaration") Provider provider) {
         return false;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs, Provider provider) {
 
-        if(!isOperationAllowedForUri(UPDATE_OPERATION, uri)) {
+        if(isOperationProhibitedForUri(UPDATE_OPERATION, uri)) {
             return FAIL;
         }
 
@@ -174,6 +180,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         }
 
         if (rowsUpdated > FAIL) {
+            if (isLogEnabled) {
+                Log.d(TAG, "update, about to notify uri=" + uri);
+            }
             doNotifyOperations(UPDATE_OPERATION, uri, null, provider);
         }
         return rowsUpdated;
@@ -182,7 +191,7 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs, Provider provider) {
 
-        if(!isOperationAllowedForUri(DELETE_OPERATION, uri)) {
+        if(isOperationProhibitedForUri(DELETE_OPERATION, uri)) {
             return FAIL;
         }
 
@@ -193,11 +202,16 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         SQLiteDatabase db = provider.getOpenHelper().getWritableDatabase();
         int rowsDeleted = db.delete(tableName(), parameters.getSelection(), parameters.getSelectionArgs());
         if (rowsDeleted > FAIL) {
+            if (isLogEnabled) {
+                Log.d(TAG, "delete, about to notify uri=" + uri);
+            }
             doNotifyOperations(DELETE_OPERATION, uri, null, provider);
         }
         return rowsDeleted;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "==>ETD/" + BaseProviderOperator.class.getSimpleName();
+    @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;
 }

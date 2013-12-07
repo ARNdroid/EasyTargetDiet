@@ -47,20 +47,20 @@ public class WeekdayParametersOperator extends BaseProviderOperator {
     }
 
     @Override
-    public boolean isOperationAllowedForUri(int operation, Uri uri) {
+    public boolean isOperationProhibitedForUri(int operation, Uri uri) {
         int match = getUriMatcher().match(uri);
         if(match == UriMatcher.NO_MATCH) throw new IllegalArgumentException("Unknown uri: " + uri);
 
         // Safe change WeekdayParameters.Uri: evaluate line addition for new uri.
         switch (operation) {
             case QUERY_OPERATION:
-                return true;
+                return false;
             case INSERT_OPERATION:
-                return false;
-            case UPDATE_OPERATION:
                 return true;
-            case DELETE_OPERATION:
+            case UPDATE_OPERATION:
                 return false;
+            case DELETE_OPERATION:
+                return true;
             default:
                 throw new IllegalArgumentException("Unknown operation: " + operation);
         }

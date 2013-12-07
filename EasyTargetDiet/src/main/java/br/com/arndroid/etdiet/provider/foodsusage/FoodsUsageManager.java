@@ -104,20 +104,21 @@ public class FoodsUsageManager {
 
         entity.validateOrThrow();
 
-        if(entity.getId() == null) {
+        final Long id = entity.getId();
+        if(id == null) {
             createDayIfNecessaryForDateId(entity.getDateId());
             final Uri resultUri = mContext.getContentResolver().insert(Contract.FoodsUsage.CONTENT_URI,
                     entity.toContentValues());
             entity.setId(Long.parseLong(resultUri.getLastPathSegment()));
         } else {
             if(isDateUpdate(entity)) {
-                remove(entity.getId());
+                remove(id);
                 entity.setId(null);
                 refresh(entity);
             } else {
-                mContext.getContentResolver().update(Contract.FoodsUsage.CONTENT_URI,
-                        entity.toContentValues(), Contract.FoodsUsage.ID_SELECTION,
-                        new String[] {String.valueOf(entity.getId())});
+                mContext.getContentResolver().update(
+                        ContentUris.withAppendedId(Contract.FoodsUsage.CONTENT_URI, id),
+                        entity.toContentValues(), null, null);
             }
         }
     }
