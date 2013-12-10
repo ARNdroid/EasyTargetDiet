@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,8 +18,7 @@ public class DateUtil {
     private static final int DATE_ID_DAY_START_POSITION = 6; // inclusive
     private static final String DATE_ID_FORMAT_STRING = "yyyyMMdd";
     private static final String DATE_FORMAT_STRING = "dd/MM/yyyy";
-    private static final String TAG = "==>ETD/" + DateUtil.class.getSimpleName();
-    private static final boolean isLogEnabled = true;
+    private static final String TIME_FORMAT_STRING = "hh:mm";
 
     // Utility class.
     private DateUtil() {
@@ -35,7 +35,7 @@ public class DateUtil {
 
     }
 
-    private static int getMinutesFromTimeAsInt(int time) {
+    public static int getMinutesFromTimeAsInt(int time) {
         int onlyMinutes = time - hoursToMillis(getHoursFromTimeAsInt(time));
         int result = onlyMinutes / minutesToMillis(1);
         if(isLogEnabled) {
@@ -50,7 +50,7 @@ public class DateUtil {
         return result;
     }
 
-    private static int getHoursFromTimeAsInt(int time) {
+    public static int getHoursFromTimeAsInt(int time) {
         return  time / hoursToMillis(1);
     }
 
@@ -131,4 +131,22 @@ public class DateUtil {
     public static boolean dateIdStartsEqualsOrBefore(String before, String after) {
         return before.compareTo(after) <= 0;
     }
+
+    public static String timeToFormattedString(int time) {
+        final DecimalFormat df = new DecimalFormat("00");
+        return new StringBuilder()
+                .append(df.format(getHoursFromTimeAsInt(time)))
+                .append(":")
+                .append(df.format(getMinutesFromTimeAsInt(time)))
+                .toString();
+    }
+
+    public static int dateToTimeAsInt(Date date) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return hoursToMillis(cal.get(Calendar.HOUR_OF_DAY)) + minutesToMillis(cal.get(Calendar.MINUTE));
+    }
+
+    private static final String TAG = "==>ETD/" + DateUtil.class.getSimpleName();
+    private static final boolean isLogEnabled = false;
 }

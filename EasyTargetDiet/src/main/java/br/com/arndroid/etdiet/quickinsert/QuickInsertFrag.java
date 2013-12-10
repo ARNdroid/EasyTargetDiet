@@ -1,9 +1,11 @@
 package br.com.arndroid.etdiet.quickinsert;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
@@ -13,12 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TimePicker;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.compat.Compat;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
@@ -35,23 +37,25 @@ import br.com.arndroid.etdiet.util.DateUtil;
     with the following custom attribute in AndroidManifest.xml:
     <activity android:theme="@android:style/Theme.Holo.DialogWhenLarge" >
  */
-public class QuickInsertFrag extends DialogFragment {
+public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
 
     public static final String INSERT_TAG = QuickInsertFrag.class.getSimpleName() + ".INSERT_TAG";
     public static final String UPDATE_TAG = QuickInsertFrag.class.getSimpleName() + ".UPDATE_TAG";
     public static final String ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".ID_PARAMETER";
 
     private Long mId;
-    private Spinner mSpnMeal;
-    private DatePicker mDteDate;
-    private TimePicker mTimTime;
-    private EditText mEdtDescription;
-    private EditText mEdtValue;
-    private String mDayIdSet = null;
+    private String mDateIdSet = null;
     private Integer mTimeSet = null;
     private Integer mMealSet = null;
     private String mDescriptionSet = null;
     private Float mValueSet = null;
+    private Button btnDate;
+    private Button btnTime;
+    private Spinner spnMeal;
+    private EditText edtDescription;
+    private NumberPicker pickerInteger;
+    private NumberPicker pickerDecimal;
 
     public QuickInsertFrag() {
         // This constructor is required for DialogFragment
@@ -78,7 +82,6 @@ public class QuickInsertFrag extends DialogFragment {
             }
         }
 
-        builder.setTitle(getResources().getText(R.string.quick_add));
         builder.setView(view);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
@@ -112,40 +115,69 @@ public class QuickInsertFrag extends DialogFragment {
         return dlg;
     }
 
+    @SuppressLint("NewApi")
     private void fillFormWithDataFromDB() {
         FoodsUsageEntity entity = new FoodsUsageManager(getActivity().getApplicationContext()).foodUsageFromId(mId);
-        mSpnMeal.setSelection(entity.getMeal());
-        DateUtil.initDatePickerWithDateId(mDteDate, entity.getDateId());
-        DateUtil.initTimePickerWithTimeAsInt(mTimTime, entity.getTime());
-        mEdtDescription.setText(entity.getDescription());
-        mEdtValue.setText(String.valueOf(entity.getValue()));
+        spnMeal.setSelection(entity.getMeal());
+        btnDate.setText(DateUtil.dateIdToFormattedString(entity.getDateId()));
+        mDateIdSet = entity.getDateId();
+        btnTime.setText(DateUtil.timeToFormattedString(entity.getTime()));
+        mTimeSet = entity.getTime();
+        edtDescription.setText(entity.getDescription());
+        pickerInteger.setValue((int) Math.floor(entity.getValue()));
+        pickerDecimal.setValue(entity.getValue() % 1 == 0 ? 0 : 1);
     }
 
+    @SuppressLint("NewApi")
     private void setupFields() {
         SpinnerAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meals_name_list,
                 android.R.layout.simple_spinner_dropdown_item);
-        mSpnMeal.setAdapter(adapter);
-        Compat.getInstance().setCalendarViewShownToDatePicker(false, mDteDate);
-        mTimTime.setIs24HourView(true);
+        spnMeal.setAdapter(adapter);
+        pickerInteger.setMinValue(0);
+        pickerInteger.setMaxValue(99);
+        pickerDecimal.setMinValue(0);
+        pickerDecimal.setMaxValue(1);
+        pickerDecimal.setDisplayedValues(new String[]{"0", "5"});
+        pickerDecimal.setWrapSelectorWheel(true);
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dialog = new DatePickerDialog(QuickInsertFrag.this.getActivity(),
+                        QuickInsertFrag.this, DateUtil.getYearFromDateId(mDateIdSet),
+                        DateUtil.getMonthFromDateId(mDateIdSet) - 1,
+                        DateUtil.getDayFromDateId(mDateIdSet));
+                dialog.show();
+            }
+        });
+        btnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog dialog = new TimePickerDialog(QuickInsertFrag.this.getActivity(),
+                        QuickInsertFrag.this, DateUtil.getHoursFromTimeAsInt(mTimeSet),
+                        DateUtil.getMinutesFromTimeAsInt(mTimeSet), true);
+                dialog.show();
+            }
+        });
     }
 
     private void setFieldsReferenceFromForm(View view) {
-        mSpnMeal = (Spinner) view.findViewById(R.id.spnMeal);
-        mDteDate = (DatePicker) view.findViewById(R.id.dteDate);
-        mTimTime = (TimePicker) view.findViewById(R.id.timTime);
-        mEdtDescription = (EditText) view.findViewById(R.id.edtDescription);
-        mEdtValue = (EditText) view.findViewById(R.id.edtValue);
+        spnMeal = (Spinner) view.findViewById(R.id.spnMeal);
+        btnDate = (Button) view.findViewById(R.id.btnDate);
+        btnTime = (Button) view.findViewById(R.id.btnTime);
+        edtDescription = (EditText) view.findViewById(R.id.edtDescription);
+        pickerInteger = (NumberPicker) view.findViewById(R.id.pickerInteger);
+        pickerDecimal = (NumberPicker) view.findViewById(R.id.pickerDecimal);
     }
 
     private boolean insertOrUpdateFoodsUsage() {
         // TODO: this is intended to be a method, but I have a NullPointerException AVD Genymotion
         FoodsUsageEntity entity = new FoodsUsageEntity(
                 mId,
-                DateUtil.datePickerToDateId(mDteDate),
-                mSpnMeal.getSelectedItemPosition(),
-                DateUtil.timePickerToTimeAsInt(mTimTime),
-                TextUtils.isEmpty(mEdtDescription.getText().toString()) ? null : mEdtDescription.getText().toString(),
-                TextUtils.isEmpty(mEdtValue.getText().toString()) ? null : Float.parseFloat(mEdtValue.getText().toString()));
+                mDateIdSet,
+                spnMeal.getSelectedItemPosition(),
+                mTimeSet,
+                TextUtils.isEmpty(edtDescription.getText().toString()) ? null : edtDescription.getText().toString(),
+                pickerDecimal.getValue() == 0 ? pickerInteger.getValue() : pickerInteger.getValue() + 0.5f);
 
         // Validations:
         try {
@@ -174,16 +206,18 @@ public class QuickInsertFrag extends DialogFragment {
         mId = id;
     }
 
+    @SuppressLint("NewApi")
     private void fillFormWithDataFromSetters() {
-        DateUtil.initDatePickerWithDateId(mDteDate, mDayIdSet);
-        DateUtil.initTimePickerWithTimeAsInt(mTimTime, mTimeSet);
-        mSpnMeal.setSelection(mMealSet);
-        mEdtDescription.setText(mDescriptionSet);
-        mEdtValue.setText(String.valueOf(mValueSet));
+        spnMeal.setSelection(mMealSet);
+        btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
+        btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
+        edtDescription.setText(mDescriptionSet);
+        pickerInteger.setValue((int) Math.floor(mValueSet));
+        pickerDecimal.setValue(mValueSet % 1 == 0 ? 0 : 1);
     }
 
-    public void setDayId(String dayId) {
-        mDayIdSet = dayId;
+    public void setDateId(String dayId) {
+        mDateIdSet = dayId;
     }
 
     public void setTime(Integer time) {
@@ -200,5 +234,17 @@ public class QuickInsertFrag extends DialogFragment {
 
     public void setValue(Float value) {
         mValueSet = value;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        mDateIdSet = DateUtil.datePickerToDateId(view);
+        btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mTimeSet = DateUtil.timePickerToTimeAsInt(view);
+        btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
     }
 }

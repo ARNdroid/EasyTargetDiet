@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.util.DateUtil;
 import br.com.arndroid.etdiet.util.sk.m217.tests.utils.MockContentResolver2;
 
 public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
@@ -44,11 +45,11 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
     protected VirtualWeek(Context context, MockContentResolver2 mockContentResolver2) {
         mContext = context;
         mMockContentResolver2 = mockContentResolver2;
-        createVirtualWeekAndRegisterObservers();
+        createVirtualWeekEngineAndRegisterObservers(new Date());
     }
 
-    private void createVirtualWeekAndRegisterObservers() {
-        mVirtualWeekEngine = new VirtualWeekEngine(mContext, new Date());
+    private void createVirtualWeekEngineAndRegisterObservers(Date referenceDate) {
+        mVirtualWeekEngine = new VirtualWeekEngine(mContext, referenceDate);
         registerObservers();
     }
 
@@ -172,7 +173,7 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
             case DatabaseChangeObserver.PARAMETERS_HISTORY_CHANGE_TYPE:
             case DatabaseChangeObserver.WEEKDAY_PARAMETERS_CHANGE_TYPE:
                 unregisterObservers();
-                createVirtualWeekAndRegisterObservers();
+                createVirtualWeekEngineAndRegisterObservers(new Date());
                 break;
             default:
                 throw new IllegalStateException("Invalid changeType = " + changeType);
@@ -212,7 +213,18 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
     }
 
     public void requestSummaryForDateId(ViewObserver observer, String dateId) {
-        observer.onSummaryRequested(mVirtualWeekEngine.daySummaryForDateId(dateId));
+        final DaySummary summary = mVirtualWeekEngine.daySummaryForDateId(dateId);
+        if (summary != null) {
+            observer.onSummaryRequested(summary);
+        } else {
+            swapVirtualWeek(dateId);
+            requestSummaryForDateId(observer, dateId);
+        }
+    }
+
+    private void swapVirtualWeek(String referenceDateId) {
+        unregisterObservers();
+        createVirtualWeekEngineAndRegisterObservers(DateUtil.dateIdToDate(referenceDateId));
     }
 
     public static interface ViewObserver {
