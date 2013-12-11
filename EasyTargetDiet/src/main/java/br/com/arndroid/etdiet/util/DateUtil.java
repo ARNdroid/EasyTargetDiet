@@ -134,11 +134,7 @@ public class DateUtil {
 
     public static String timeToFormattedString(int time) {
         final DecimalFormat df = new DecimalFormat("00");
-        return new StringBuilder()
-                .append(df.format(getHoursFromTimeAsInt(time)))
-                .append(":")
-                .append(df.format(getMinutesFromTimeAsInt(time)))
-                .toString();
+        return df.format(getHoursFromTimeAsInt(time)) + ":" + df.format(getMinutesFromTimeAsInt(time));
     }
 
     public static int dateToTimeAsInt(Date date) {

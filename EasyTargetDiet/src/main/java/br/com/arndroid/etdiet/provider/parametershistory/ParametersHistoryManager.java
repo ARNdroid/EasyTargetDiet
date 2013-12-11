@@ -12,7 +12,7 @@ import br.com.arndroid.etdiet.util.DateUtil;
 
 public class ParametersHistoryManager {
 
-    private Context mContext;
+    final private Context mContext;
 
     public ParametersHistoryManager(Context context) {
         mContext = context;

@@ -36,6 +36,8 @@ import br.com.arndroid.etdiet.util.DateUtil;
     We need to see Android Dialogs from Android Developers: there is an option to create a activity
     with the following custom attribute in AndroidManifest.xml:
     <activity android:theme="@android:style/Theme.Holo.DialogWhenLarge" >
+    Another refactor: the workflow for save/restore instance state plus fill* are unclear and have
+    duplicated code.
  */
 public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
@@ -43,6 +45,9 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     public static final String INSERT_TAG = QuickInsertFrag.class.getSimpleName() + ".INSERT_TAG";
     public static final String UPDATE_TAG = QuickInsertFrag.class.getSimpleName() + ".UPDATE_TAG";
     public static final String ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".ID_PARAMETER";
+    private static final String DATE_ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".DATE_ID_PARAMETER";
+    private static final String TIME_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".TIME_PARAMETER";
+    private static final String VALUE_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".VALUE_PARAMETER";
 
     private Long mId;
     private String mDateIdSet = null;
@@ -72,7 +77,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         setupFields();
 
         if (savedInstanceState != null) {
-            setId(savedInstanceState.getLong(ID_PARAMETER));
+            fillFormWithDataFromInstanceState(savedInstanceState);
         } else {
             if (UPDATE_TAG.equals(getTag())) {
                 fillFormWithDataFromDB();
@@ -115,7 +120,33 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         return dlg;
     }
 
-    @SuppressLint("NewApi")
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mId != null) {
+            outState.putLong(ID_PARAMETER, mId);
+        }
+        outState.putString(DATE_ID_PARAMETER, mDateIdSet);
+        outState.putInt(TIME_PARAMETER, mTimeSet);
+        mValueSet = pickerDecimal.getValue() == 0 ? pickerInteger.getValue() : pickerInteger.getValue() + 0.5f;
+        outState.putFloat(VALUE_PARAMETER, mValueSet);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    private void fillFormWithDataFromInstanceState(Bundle savedInstanceState) {
+        final long returnedId = savedInstanceState.getLong(ID_PARAMETER, -1L);
+        if (returnedId != -1L) {
+            setId(returnedId);
+        }
+        mDateIdSet = savedInstanceState.getString(DATE_ID_PARAMETER);
+        btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
+        mTimeSet = savedInstanceState.getInt(TIME_PARAMETER);
+        btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
+        mValueSet = savedInstanceState.getFloat(VALUE_PARAMETER);
+        pickerInteger.setValue((int) Math.floor(mValueSet));
+        pickerDecimal.setValue(mValueSet % 1 == 0 ? 0 : 1);
+    }
+
     private void fillFormWithDataFromDB() {
         FoodsUsageEntity entity = new FoodsUsageManager(getActivity().getApplicationContext()).foodUsageFromId(mId);
         spnMeal.setSelection(entity.getMeal());
@@ -124,11 +155,11 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         btnTime.setText(DateUtil.timeToFormattedString(entity.getTime()));
         mTimeSet = entity.getTime();
         edtDescription.setText(entity.getDescription());
+        mValueSet = entity.getValue();
         pickerInteger.setValue((int) Math.floor(entity.getValue()));
         pickerDecimal.setValue(entity.getValue() % 1 == 0 ? 0 : 1);
     }
 
-    @SuppressLint("NewApi")
     private void setupFields() {
         SpinnerAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meals_name_list,
                 android.R.layout.simple_spinner_dropdown_item);
@@ -206,7 +237,6 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         mId = id;
     }
 
-    @SuppressLint("NewApi")
     private void fillFormWithDataFromSetters() {
         spnMeal.setSelection(mMealSet);
         btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
@@ -247,4 +277,10 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         mTimeSet = DateUtil.timePickerToTimeAsInt(view);
         btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
     }
+
+    @SuppressWarnings("UnusedDeclaration")
+    private static final String TAG = "==>ETD/" + QuickInsertFrag.class.getSimpleName();
+    @SuppressWarnings("UnusedDeclaration")
+    private static final boolean isLogEnabled = true;
+
 }

@@ -16,7 +16,7 @@ public class FoodsUsageManager {
 
     private static final float FLOAT_ZERO = 0.0f;
 
-    private Context mContext;
+    final private Context mContext;
 
     public FoodsUsageManager(Context context) {
         mContext = context;

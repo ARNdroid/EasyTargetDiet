@@ -11,7 +11,7 @@ public class WeekPeriod {
 
     private Date mInitialDate;
     private Date mFinalDate;
-    private Date mReferenceDate;
+    final private Date mReferenceDate;
 
     public WeekPeriod(Context context, Date referenceDate) {
 
