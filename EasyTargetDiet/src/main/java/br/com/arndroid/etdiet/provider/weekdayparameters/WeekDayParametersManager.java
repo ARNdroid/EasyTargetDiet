@@ -14,7 +14,7 @@ import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManage
 import br.com.arndroid.etdiet.util.DateUtil;
 
 public class WeekdayParametersManager {
-    private Context mContext;
+    final private Context mContext;
 
     public WeekdayParametersManager(Context context) {
         mContext = context;

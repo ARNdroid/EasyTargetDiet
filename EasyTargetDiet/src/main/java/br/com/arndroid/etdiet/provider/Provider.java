@@ -17,7 +17,7 @@ import br.com.arndroid.etdiet.sqlite.DBOpenHelper;
 
 public class Provider extends ContentProvider {
 
-    static private List<ProviderOperator> operators = new ArrayList<ProviderOperator>();
+    final static private List<ProviderOperator> operators = new ArrayList<ProviderOperator>();
 
     static {
         // Safe change ProviderOperator: on new implementation add a new line.

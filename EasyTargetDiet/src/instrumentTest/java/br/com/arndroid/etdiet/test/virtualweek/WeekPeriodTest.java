@@ -16,13 +16,6 @@ public class WeekPeriodTest extends ProviderTestCase2<Provider>  {
         super(Provider.class, Contract.AUTHORITY);
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        // Important: calling the base class implementation of this method
-        // where the "magic" of isolation is set up:
-        super.setUp();
-    }
-
     public void testInitialAndFinalDateForWholeWeekMustReturnsCorrectValues() {
 
         ParametersHistoryManager parametersHistoryManager = new ParametersHistoryManager(getMockContext());

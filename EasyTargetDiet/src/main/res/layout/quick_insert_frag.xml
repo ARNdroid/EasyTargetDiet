@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/apk/res-auto"
-    xmlns:tools2="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/default_view_padding">
@@ -10,7 +8,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -21,14 +19,14 @@
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:text="dd/MM/yyyy" />
+                android:text="@string/no_show_date_mask" />
+
             <Button
                 android:id="@+id/btnTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:onClick="btnTimeAction"
-                android:text="hh:MM" />
+                android:text="@string/no_show_time_mask" />
         </LinearLayout>
 
         <Spinner
@@ -41,7 +39,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtDescription"
             android:layout_gravity="left|center_vertical"
-            android:text="some food"/>
+            android:hint="@string/description"
+            android:inputType="text"
+            android:text="@string/some_food"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -52,11 +52,10 @@
             <NumberPicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pickerInteger"
-                tools2:ignore="NewApi" />
+                android:id="@+id/pickerInteger" />
 
             <TextView
-                android:text="."
+                android:text="@string/decimal_point"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -65,8 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pickerDecimal"
-                android:layout_gravity="right"
-                tools2:ignore="NewApi" />
+                android:layout_gravity="right" />
 
         </LinearLayout>
 

@@ -20,9 +20,9 @@ public class VirtualWeekEngine {
     public static final int NO_INDEX = -1;
     private static final float FLOAT_ZERO = 0.0f;
     private static final float FORCE_CHAIN_CALC = -1.0f;
-    private Context mContext;
+    final private Context mContext;
     private WeekPeriod mWeekPeriod;
-    private DaySummary[] mDaySummaryArray = new DaySummary[DAYS_IN_A_WEEK];
+    final private DaySummary[] mDaySummaryArray = new DaySummary[DAYS_IN_A_WEEK];
     private float mInitialWeeklyAllowance;
     private int mExerciseUseMode;
     private int mExerciseUseOrder;

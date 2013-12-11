@@ -15,17 +15,17 @@ import br.com.arndroid.etdiet.util.sk.m217.tests.utils.MockContentResolver2;
 
 public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
 
-    private MockContentResolver2 mMockContentResolver2;
+    final private MockContentResolver2 mMockContentResolver2;
     private static VirtualWeek mInstance = null;
     private final Context mContext;
     private VirtualWeekEngine mVirtualWeekEngine;
-    private DatabaseChangeObserver[] mDayObserverArray =
+    final private DatabaseChangeObserver[] mDayObserverArray =
             new DatabaseChangeObserver[VirtualWeekEngine.DAYS_IN_A_WEEK];
-    private DatabaseChangeObserver[] mFoodUsageObserverArray =
+    final private DatabaseChangeObserver[] mFoodUsageObserverArray =
             new DatabaseChangeObserver[VirtualWeekEngine.DAYS_IN_A_WEEK];
     private DatabaseChangeObserver mParametersHistoryObserver = null;
     private DatabaseChangeObserver mWeekdayParametersObserver = null;
-    private List<ViewObserver> viewObservers = new LinkedList<ViewObserver>();
+    final private List<ViewObserver> viewObservers = new LinkedList<ViewObserver>();
 
     public static VirtualWeek getInstance(Context context) {
         /*
