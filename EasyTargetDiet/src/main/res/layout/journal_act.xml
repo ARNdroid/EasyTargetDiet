@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +13,6 @@
 
         <Button
             android:id="@+id/btnDay"
-            tools:ignore="NewApi"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/default_view_size"
             android:layout_height="@dimen/default_view_big_size"
@@ -154,7 +152,6 @@
 
             <Button
                 android:id="@+id/btnExerciseGoal"
-                tools:ignore="NewApi"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -165,7 +162,6 @@
 
             <Button
                 android:id="@+id/btnLiquidGoal"
-                tools:ignore="NewApi"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -176,7 +172,6 @@
 
             <Button
                 android:id="@+id/btnOilGoal"
-                tools:ignore="NewApi"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -187,7 +182,6 @@
 
             <Button
                 android:id="@+id/btnSupplementGoal"
-                tools:ignore="NewApi"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="1"

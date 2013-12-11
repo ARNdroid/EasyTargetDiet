@@ -37,9 +37,9 @@ public class Contract {
         // A descriptor for fields with problem:
         public static final class FieldDescriptor implements Serializable {
 
-            private String mTableName;
-            private String mColumnName;
-            private Object mValue;
+            final private String mTableName;
+            final private String mColumnName;
+            final private Object mValue;
 
             public FieldDescriptor(String tableName, String columnName, Object value) {
                 mTableName = tableName;

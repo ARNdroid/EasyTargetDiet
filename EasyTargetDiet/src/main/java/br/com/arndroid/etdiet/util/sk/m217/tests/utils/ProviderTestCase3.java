@@ -40,8 +40,8 @@ public abstract class ProviderTestCase3<T extends ContentProvider> extends Andro
 
 	public static final String FILENAME_PREFIX = "test.";
 
-	Class<T> mProviderClass;
-	String[] mProviderAuthority;
+	final Class<T> mProviderClass;
+	final String[] mProviderAuthority;
 
 	private IsolatedContext mProviderContext;
 	private MockContentResolver2 mResolver;

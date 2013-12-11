@@ -40,9 +40,9 @@ public final class MockObserverNode {
     @SuppressWarnings("UnusedDeclaration")
     public static final int DELETE_TYPE = 2;
 
-    private String mName;
-    private ArrayList<MockObserverNode> mChildren = new ArrayList<MockObserverNode>();
-    private ArrayList<MockObserverEntry> mObservers = new ArrayList<MockObserverEntry>();
+    final private String mName;
+    final private ArrayList<MockObserverNode> mChildren = new ArrayList<MockObserverNode>();
+    final private ArrayList<MockObserverEntry> mObservers = new ArrayList<MockObserverEntry>();
 
     public MockObserverNode(String name) {
         mName = name;

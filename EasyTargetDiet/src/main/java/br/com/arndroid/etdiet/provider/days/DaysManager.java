@@ -16,7 +16,7 @@ import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManage
 import br.com.arndroid.etdiet.util.DateUtil;
 
 public class DaysManager {
-    private Context mContext;
+    final private Context mContext;
 
     public DaysManager(Context context) {
         mContext = context;
