@@ -58,7 +58,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
 
 
         try {
-            entity = new FoodsUsageEntity(null, dateId, Meals.BUNCH, 0, "none", 0.2f);
+            entity = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, 0, "none", 0.2f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
             c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
@@ -94,7 +94,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         }
 
         try {
-            entity = new FoodsUsageEntity(null, "20130919", Meals.BUNCH, 0, "none", 999.9f);
+            entity = new FoodsUsageEntity(null, "20130919", Meals.BRUNCH, 0, "none", 999.9f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
             c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);

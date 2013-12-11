@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.foodsusage;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
@@ -16,7 +15,6 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
@@ -60,10 +58,10 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
     }
 
     @Override
-    public void onQuickAddMenuSelected(String dayId, int time, int meal, String description, float value) {
+    public void onQuickAddMenuSelected(String dateId, int time, int meal, String description, float value) {
         FragmentManager manager = getSupportFragmentManager();
         QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setDayId(dayId);
+        dialog.setDateId(dateId);
         dialog.setTime(time);
         dialog.setMeal(meal);
         dialog.setDescription(description);

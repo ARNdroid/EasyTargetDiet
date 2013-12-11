@@ -51,13 +51,13 @@ public class FoodsUsageManager {
                         case Meals.BREAKFAST:
                             breakfastUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.BUNCH:
+                        case Meals.BRUNCH:
                             brunchUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
                         case Meals.LUNCH:
                             lunchUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.SNEAK:
+                        case Meals.SNACK:
                             sneakUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
                         case Meals.DINNER:

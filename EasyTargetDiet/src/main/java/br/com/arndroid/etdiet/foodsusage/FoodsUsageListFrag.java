@@ -15,19 +15,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Date;
+
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.util.DateUtil;
 
 public class FoodsUsageListFrag extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     static private final int FOODS_USAGE_LOADER_ID = 1;
-    private String mDayId;
+    private String mDateId;
     private int mMeal;
     private SimpleCursorAdapter mAdapter;
     private OnFoodUsageListFragListener mListener;
 
-    public void refresh(String dayId, int meal) {
-        mDayId = dayId;
+    public void refresh(String dateId, int meal) {
+        mDateId = dateId;
         mMeal = meal;
         // If not loaded, load the first instance,
         // otherwise closes current loader e start a new one:
@@ -78,7 +82,7 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.quick_add:
-                mListener.onQuickAddMenuSelected(mDayId, getDefaultTime(), mMeal,
+                mListener.onQuickAddMenuSelected(mDateId, getDefaultTime(), mMeal,
                         getDefaultDescription(), getDefaultValue());
                 return true;
             default:
@@ -87,18 +91,16 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
     }
 
     private float getDefaultValue() {
-        // TODO: implement.
-        return 10;
+        return Meals.preferredUsageForMealInDate(this.getActivity().getApplicationContext(),
+                mMeal, DateUtil.dateIdToDate(mDateId));
     }
 
     private String getDefaultDescription() {
-        // TODO: implement.
-        return "some description";
+        return "some food";
     }
 
     private int getDefaultTime() {
-        // TODO: implement.
-        return 7 * 60 * 60 * 1000 + 7 * 60 * 1000; // 07:07
+        return DateUtil.dateToTimeAsInt(new Date());
     }
 
     @Override
@@ -114,7 +116,7 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
                 return new CursorLoader(getActivity(), Contract.FoodsUsage.CONTENT_URI,
                         Contract.FoodsUsage.SIMPLE_LIST_PROJECTION,
                         Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION,
-                        new String[] {String.valueOf(mDayId), String.valueOf(mMeal)}, null);
+                        new String[] {String.valueOf(mDateId), String.valueOf(mMeal)}, null);
             default:
                 throw new IllegalArgumentException("Invalid loader id '" + id + "'");
         }
