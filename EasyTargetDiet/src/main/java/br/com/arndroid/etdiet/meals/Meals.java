@@ -19,13 +19,13 @@ public final class Meals {
     // The value of this constants can NOT
     // be changed since their values are stored
     // in database
-    static final public int BREAKFAST = 0;
-    static final public int BRUNCH = 1;
-    static final public int LUNCH = 2;
-    static final public int SNACK = 3;
-    static final public int DINNER = 4;
-    static final public int SUPPER = 5;
-    static final public int EXERCISE = 6;
+    public static final int BREAKFAST = 0;
+    public static final int BRUNCH = 1;
+    public static final int LUNCH = 2;
+    public static final int SNACK = 3;
+    public static final int DINNER = 4;
+    public static final int SUPPER = 5;
+    public static final int EXERCISE = 6;
 
     public static int preferredMealForTimeInDate(Context context, int time, Date date) {
         final DaysManager manager = new DaysManager(context);

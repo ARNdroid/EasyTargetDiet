@@ -39,6 +39,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private IntegerPickerDialog.OnNumberSetListener mOilSetListener;
     private IntegerPickerDialog.OnNumberSetListener mSupplementListener;
 
+
     private Button btnDay;
     private TextView txtMonth;
     private TextView txtWeekday;
@@ -88,6 +89,33 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     }
 
     private void setUpFields() {
+        btnExerciseGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager manager = getSupportFragmentManager();
+                QuickInsertFrag dialog = new QuickInsertFrag();
+
+                dialog.setDateId(mCurrentDateId);
+
+                final int timeHint = DateUtil.dateToTimeAsInt(new Date());
+                dialog.setMeal(Meals.EXERCISE);
+                dialog.setTime(timeHint);
+
+                dialog.setValue(3.0f);
+
+                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+
+            }
+        });
+        btnExerciseGoal.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                btnMealAction(btnExerciseGoal);
+                return true;
+            }
+        });
+
         btnLiquidGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,6 +349,9 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
             case R.id.lblSupperName:
                 meal = Meals.SUPPER;
                 break;
+            case R.id.btnExerciseGoal:
+                meal = Meals.EXERCISE;
+                break;
             default:
                 throw new IllegalStateException("Invalid View.id " + view.getId());
         }
@@ -353,8 +384,6 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                         timeHint, currentDate);
                 dialog.setMeal(mealHint);
                 dialog.setTime(timeHint);
-
-                dialog.setDescription("some food");
 
                 final float usageHint = Meals.preferredUsageForMealInDate(this.getApplicationContext(),
                         mealHint, currentDate);
