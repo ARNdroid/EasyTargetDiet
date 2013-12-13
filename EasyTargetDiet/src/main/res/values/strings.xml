@@ -60,4 +60,5 @@
     <string name="some_food">some food</string>
     <string name="no_show_time_mask">hh:MM</string>
     <string name="no_show_date_mask">dd/MM/yyyy</string>
+    <string name="done">Set</string>
 </resources>
