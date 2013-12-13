@@ -18,7 +18,7 @@
     <string name="time">Time</string>
     <string name="description">Description</string>
     <string name="value">Value</string>
-    <string name="list_empty_foods_usage">Nothing to show yet. Try adding some food</string>
+    <string name="list_empty_foods_usage">Nothing to show yet. Try adding some values.</string>
     <string name="delete_food_usage_msg">Delete %1$s from %2$s?</string>
     <string name="no_show_two_digits_number">NN</string>
     <string name="no_show_small_month">Sep</string>

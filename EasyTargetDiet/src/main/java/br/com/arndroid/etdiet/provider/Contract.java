@@ -255,7 +255,7 @@ public class Contract {
         public static final String ID_SELECTION = _ID + "=?";
         public static final String DATE_ID_AND_MEAL_SELECTION = DATE_ID + "=? AND " + MEAL + "=?";
         public static final String DATE_ID_SELECTION = DATE_ID + "=?";
-        public static final String DATE_ID_AND_NOT_EXERCISE_SELECTION = DATE_ID + "=? AND " + MEAL + ">" + Meals.EXERCISE;
+        public static final String DATE_ID_AND_NOT_EXERCISE_SELECTION = DATE_ID + "=? AND " + MEAL + "<>" + Meals.EXERCISE;
         public static final String DATE_ID_AND_EXERCISE_SELECTION = DATE_ID + "=? AND " + MEAL + "=" + Meals.EXERCISE;
 
 		/*

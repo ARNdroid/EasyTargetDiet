@@ -8,6 +8,7 @@
         <item>@string/sneak</item>
         <item>@string/dinner</item>
         <item>@string/supper</item>
+        <item>@string/exercises</item>
     </string-array>
 
     <string-array name="months_short_name_list">
