@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -19,8 +20,11 @@ import br.com.arndroid.etdiet.foodsusage.FoodsUsageAct;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.provider.days.DaysEntity;
+import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.util.IntegerPickerDialog;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
@@ -31,6 +35,9 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private String mCurrentDateId;
     private String[] mMonthsShortNameArray;
     private String[] mWeekdaysShortNameArray;
+    private IntegerPickerDialog.OnNumberSetListener mLiquidSetListener;
+    private IntegerPickerDialog.OnNumberSetListener mOilSetListener;
+    private IntegerPickerDialog.OnNumberSetListener mSupplementListener;
 
     private Button btnDay;
     private TextView txtMonth;
@@ -77,6 +84,102 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         }
 
         setFieldsReferenceFromForm();
+        setUpFields();
+    }
+
+    private void setUpFields() {
+        btnLiquidGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setLiquidDone(entity.getLiquidDone() + 1);
+                manager.refresh(entity);
+
+            }
+        });
+        mLiquidSetListener = new IntegerPickerDialog.OnNumberSetListener() {
+            @Override
+            public void onDateSet(NumberPicker view, int value) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setLiquidDone(value);
+                manager.refresh(entity);
+            }
+        };
+        btnLiquidGoal.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mLiquidSetListener,
+                        getString(R.string.liquid), 0, 99, entity.getLiquidDone());
+                dialog.show();
+                return true;
+            }
+        });
+
+        btnOilGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setOilDone(entity.getOilDone() + 1);
+                manager.refresh(entity);
+
+            }
+        });
+        mOilSetListener = new IntegerPickerDialog.OnNumberSetListener() {
+            @Override
+            public void onDateSet(NumberPicker view, int value) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setOilDone(value);
+                manager.refresh(entity);
+            }
+        };
+        btnOilGoal.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mOilSetListener,
+                        getString(R.string.oil), 0, 99, entity.getOilDone());
+                dialog.show();
+                return true;
+            }
+        });
+
+        btnSupplementGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setSupplementDone(entity.getSupplementDone() + 1);
+                manager.refresh(entity);
+
+            }
+        });
+        mSupplementListener = new IntegerPickerDialog.OnNumberSetListener() {
+            @Override
+            public void onDateSet(NumberPicker view, int value) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setSupplementDone(value);
+                manager.refresh(entity);
+            }
+        };
+        btnSupplementGoal.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mSupplementListener,
+                        getString(R.string.supplement), 0, 99, entity.getSupplementDone());
+                dialog.show();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -138,7 +241,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtNotes = (TextView) findViewById(R.id.txtNotes);
     }
 
-    private void setupFields(DaySummary daySummary) {
+    private void updateFields(DaySummary daySummary) {
         btnDay.setText(String.valueOf(DateUtil.getDayFromDateId(daySummary.getEntity().getDateId())));
         final int month = DateUtil.getMonthFromDateId(daySummary.getEntity().getDateId()) - 1;
         txtMonth.setText(mMonthsShortNameArray[month]);
@@ -284,7 +387,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
     @Override
     public void onSummaryRequested(DaySummary daySummary) {
-        setupFields(daySummary);
+        updateFields(daySummary);
     }
 
     @Override
