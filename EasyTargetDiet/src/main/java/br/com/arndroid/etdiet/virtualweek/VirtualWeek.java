@@ -222,9 +222,6 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
         }
     }
 
-    public DaySummary requestImmediateSummaryForDateId(String dateId) {
-        return mVirtualWeekEngine.daySummaryForDateId(dateId);
-    }
 
     private void swapVirtualWeek(String referenceDateId) {
         unregisterObservers();
