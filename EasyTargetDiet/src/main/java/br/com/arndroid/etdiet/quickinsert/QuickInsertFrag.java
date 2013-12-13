@@ -11,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -164,6 +165,20 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         SpinnerAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meals_name_list,
                 android.R.layout.simple_spinner_dropdown_item);
         spnMeal.setAdapter(adapter);
+        spnMeal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (TextUtils.isEmpty(edtDescription.getText())) {
+                    final String hint = String.format(getResources().getString(R.string.quick_insert_description),
+                            getResources().getStringArray(R.array.meals_name_list)[position].toLowerCase());
+                    edtDescription.setHint(hint);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing...
+            }
+        });
         pickerInteger.setMinValue(0);
         pickerInteger.setMaxValue(99);
         pickerDecimal.setMinValue(0);
@@ -207,7 +222,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
                 mDateIdSet,
                 spnMeal.getSelectedItemPosition(),
                 mTimeSet,
-                TextUtils.isEmpty(edtDescription.getText().toString()) ? null : edtDescription.getText().toString(),
+                TextUtils.isEmpty(edtDescription.getText().toString()) ? edtDescription.getHint().toString() : edtDescription.getText().toString(),
                 pickerDecimal.getValue() == 0 ? pickerInteger.getValue() : pickerInteger.getValue() + 0.5f);
 
         // Validations:

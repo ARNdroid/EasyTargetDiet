@@ -83,7 +83,7 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
         switch (item.getItemId()) {
             case R.id.quick_add:
                 mListener.onQuickAddMenuSelected(mDateId, getDefaultTime(), mMeal,
-                        getDefaultDescription(), getDefaultValue());
+                        null, getDefaultValue());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -93,10 +93,6 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
     private float getDefaultValue() {
         return Meals.preferredUsageForMealInDate(this.getActivity().getApplicationContext(),
                 mMeal, DateUtil.dateIdToDate(mDateId));
-    }
-
-    private String getDefaultDescription() {
-        return "some food";
     }
 
     private int getDefaultTime() {

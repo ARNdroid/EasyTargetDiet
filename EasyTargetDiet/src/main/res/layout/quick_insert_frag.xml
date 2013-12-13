@@ -39,9 +39,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtDescription"
             android:layout_gravity="left|center_vertical"
-            android:hint="@string/description"
-            android:inputType="text"
-            android:text="@string/some_food"/>
+            android:inputType="text" />
 
         <LinearLayout
             android:orientation="horizontal"
