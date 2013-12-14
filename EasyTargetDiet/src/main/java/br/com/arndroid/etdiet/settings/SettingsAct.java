@@ -51,6 +51,7 @@ public class SettingsAct extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    // TODO: review this! May be our solution to FragmentAct class.
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
