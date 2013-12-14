@@ -53,6 +53,7 @@ public class SettingsAct extends ActionBarActivity {
      */
     // TODO: review this! May be our solution to FragmentAct class.
     // We agree!
+    // Me too!
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
