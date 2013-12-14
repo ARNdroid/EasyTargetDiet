@@ -222,6 +222,7 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
         }
     }
 
+
     private void swapVirtualWeek(String referenceDateId) {
         unregisterObservers();
         createVirtualWeekEngineAndRegisterObservers(DateUtil.dateIdToDate(referenceDateId));

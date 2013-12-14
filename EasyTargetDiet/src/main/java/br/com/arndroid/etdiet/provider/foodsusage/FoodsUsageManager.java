@@ -45,9 +45,6 @@ public class FoodsUsageManager {
                 c.moveToFirst();
                 do {
                     switch (c.getInt(c.getColumnIndex(Contract.FoodsUsage.MEAL))) {
-                        case Meals.EXERCISE:
-                            exerciseDone += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
-                            break;
                         case Meals.BREAKFAST:
                             breakfastUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
@@ -66,6 +63,12 @@ public class FoodsUsageManager {
                         case Meals.SUPPER:
                             supperUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
+                        case Meals.EXERCISE:
+                            exerciseDone += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
+                            break;
+                        default:
+                            throw new IllegalStateException("Invalid meal id inside DB: id="
+                                    + c.getInt(c.getColumnIndex(Contract.FoodsUsage.MEAL)));
                     }
                 } while (c.moveToNext());
             }
