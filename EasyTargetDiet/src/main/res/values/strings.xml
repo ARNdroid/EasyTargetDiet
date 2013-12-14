@@ -3,7 +3,6 @@
 
     <string name="app_name">Easy Target Diet</string>
     <string name="quick_add">Quick Add</string>
-
     <string name="breakfast">Breakfast</string>
     <string name="brunch">Brunch</string>
     <string name="lunch">Lunch</string>
@@ -61,4 +60,8 @@
     <string name="no_show_time_mask">hh:MM</string>
     <string name="no_show_date_mask">dd/MM/yyyy</string>
     <string name="done">Set</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
