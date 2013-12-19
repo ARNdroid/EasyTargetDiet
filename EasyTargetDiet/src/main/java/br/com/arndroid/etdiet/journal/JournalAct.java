@@ -23,6 +23,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
+import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.util.DateUtil;
 import br.com.arndroid.etdiet.util.IntegerPickerDialog;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
@@ -391,6 +392,10 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
                 dialog.show(manager, QuickInsertFrag.INSERT_TAG);
 
+                return true;
+            case R.id.settings:
+                Intent intent = new Intent(this, SettingsMainActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

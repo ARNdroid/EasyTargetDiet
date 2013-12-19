@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.foodsusage;
+package br.com.arndroid.etdiet.settings;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -22,7 +22,7 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.util.DateUtil;
 
-public class FoodsUsageListFrag extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SettingsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     static private final int FOODS_USAGE_LOADER_ID = 1;
     private String mDateId;

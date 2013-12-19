@@ -60,8 +60,8 @@
     <string name="no_show_time_mask">hh:MM</string>
     <string name="no_show_date_mask">dd/MM/yyyy</string>
     <string name="done">Set</string>
-    <string name="title_activity_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="units_actual_value">%1$.1f units</string>
 
 </resources>

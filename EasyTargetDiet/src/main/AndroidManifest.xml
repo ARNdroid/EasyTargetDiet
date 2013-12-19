@@ -33,16 +33,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".journal.JournalAct" />
         </activity>
+        <activity
+            android:name=".settings.SettingsMainActivity"
+            android:label="@string/settings"
+            android:theme="@style/Theme.AppCompat.Light" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".journal.JournalAct" />
+        </activity>
 
         <provider
             android:name="br.com.arndroid.etdiet.provider.Provider"
             android:authorities="br.com.arndroid.provider.etdiet"
             android:exported="false" />
 
-        <activity
-            android:name="br.com.arndroid.etdiet.settings.SettingsAct"
-            android:label="@string/title_activity_settings" >
-        </activity>
     </application>
 
 </manifest>
