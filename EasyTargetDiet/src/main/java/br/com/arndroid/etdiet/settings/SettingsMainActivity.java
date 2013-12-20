@@ -9,7 +9,8 @@ import android.view.MenuItem;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.util.PointPickerDialog;
 
-public class SettingsMainActivity extends ActionBarActivity implements PointPickerDialog.OnPointSetListener {
+public class SettingsMainActivity extends ActionBarActivity implements PointPickerDialog.OnPointSetListener,
+        SettingsMainFragment.SettingsMainFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,14 @@ public class SettingsMainActivity extends ActionBarActivity implements PointPick
         }
     }
 
+    @Override
+    public void onExerciseGoalSettingsSelected() {
+        // TODO: call another fragment or a new activity to change Exercise Goal Setting
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "==>ETD/" + SettingsMainActivity.class.getSimpleName();
+
     @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;
 }

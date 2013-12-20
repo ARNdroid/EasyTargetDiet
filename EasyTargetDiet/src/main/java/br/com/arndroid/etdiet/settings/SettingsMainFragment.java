@@ -1,5 +1,6 @@
 package br.com.arndroid.etdiet.settings;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,9 @@ import br.com.arndroid.etdiet.util.PointPickerDialog;
 
 public class SettingsMainFragment extends Fragment implements PointPickerDialog.OnPointSetListener {
 
+    public interface SettingsMainFragmentListener {
+        public void onExerciseGoalSettingsSelected();
+    }
     private TextView mTxtExerciseGoalActualValue;
 
     public static final String OWNER_TAG = SettingsMainFragment.class.getSimpleName();
@@ -32,6 +36,16 @@ public class SettingsMainFragment extends Fragment implements PointPickerDialog.
         refreshScreen();
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (!(activity instanceof SettingsMainFragmentListener)) {
+            throw new ClassCastException(activity.toString() + " must implement " +
+                SettingsMainFragmentListener.class.getSimpleName());
+        }
     }
 
     private void refreshScreen() {
@@ -55,29 +69,14 @@ public class SettingsMainFragment extends Fragment implements PointPickerDialog.
         layExerciseGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: change to show the list view (where a parameter will be edited)
-                final WeekdayParametersEntity entity = new WeekdayParametersManager(
-                        getActivity().getApplicationContext()).weekdayParametersFromWeekday(Calendar.SUNDAY);
-
-                final PointPickerDialog dialog = new PointPickerDialog();
-                dialog.setTitle(getResources().getString(R.string.exercise));
-                dialog.setMinIntegerValue(0);
-                dialog.setMaxIntegerValue(99);
-                dialog.setInitialValue(entity.getExerciseGoal());
-                dialog.show(SettingsMainFragment.this.getFragmentManager(), EXERCISE_GOAL_TAG);
+                ((SettingsMainFragmentListener)getActivity()).onExerciseGoalSettingsSelected();
             }
         });
     }
 
     @Override
     public void onPointSet(String tag, float actualValue) {
-        final WeekdayParametersManager manager = new WeekdayParametersManager(
-                SettingsMainFragment.this.getActivity().getApplicationContext());
-        for (int i = Calendar.SUNDAY; i <= Calendar.SATURDAY; i++) {
-            final WeekdayParametersEntity entity = manager.weekdayParametersFromWeekday(i);
-            entity.setExerciseGoal(actualValue);
-            manager.refresh(entity);
-        }
+        // TODO: Implement.
         refreshScreen();
     }
 }
