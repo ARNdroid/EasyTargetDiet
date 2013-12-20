@@ -24,7 +24,7 @@ import br.com.arndroid.etdiet.util.DateUtil;
 
 public class FoodsUsageListFrag extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    static private final int FOODS_USAGE_LOADER_ID = 1;
+    private static final int FOODS_USAGE_LOADER_ID = 1;
     private String mDateId;
     private int mMeal;
     private SimpleCursorAdapter mAdapter;

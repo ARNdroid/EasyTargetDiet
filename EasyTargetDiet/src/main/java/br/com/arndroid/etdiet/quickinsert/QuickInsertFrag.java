@@ -46,7 +46,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     public static final String INSERT_TAG = QuickInsertFrag.class.getSimpleName() + ".INSERT_TAG";
     public static final String UPDATE_TAG = QuickInsertFrag.class.getSimpleName() + ".UPDATE_TAG";
     public static final String ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".ID_PARAMETER";
-    private static final String DATE_ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".DATE_ID_PARAMETER";
+    private static final String DATE_ID_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".SETTINGS_TYPE_PARAMETER";
     private static final String TIME_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".TIME_PARAMETER";
     private static final String VALUE_PARAMETER = QuickInsertFrag.class.getSimpleName() + ".VALUE_PARAMETER";
 

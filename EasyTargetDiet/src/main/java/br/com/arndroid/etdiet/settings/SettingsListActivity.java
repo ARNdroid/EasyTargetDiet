@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.foodsusage;
+package br.com.arndroid.etdiet.settings;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,63 +15,23 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
 
-public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFrag.OnFoodUsageListFragListener,
-        ActionBar.OnNavigationListener {
+public class SettingsListActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
-    public static final String DATE_ID_PARAMETER = FoodsUsageAct.class.getSimpleName() + ".SETTINGS_TYPE_PARAMETER";
-    public static final String MEAL_PARAMETER = FoodsUsageAct.class.getSimpleName() + ".MEAL_PARAMETER";
-    private static final String TAG = "==>ETD/" + FoodsUsageAct.class.getSimpleName();
-    private static final boolean isLogEnabled = true;
-    private FoodsUsageListFrag mFragment;
-    private String mDateId;
-    private String[] mealsNameList;
-    private TextView mTxtDate;
-
-    @Override
-    public void onFoodUsageSelected(long foodUsageId) {
-        QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setId(foodUsageId);
-        dialog.show(getSupportFragmentManager(), QuickInsertFrag.UPDATE_TAG);
-    }
-
-    @Override
-    public void onFoodUsageLongSelected(final long foodUsageId) {
-        final FoodsUsageManager manager = new FoodsUsageManager(getApplicationContext());
-        final FoodsUsageEntity entity = manager.foodUsageFromId(foodUsageId);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                manager.remove(foodUsageId);
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.setMessage(String.format(getResources().getString(R.string.delete_food_usage_msg),
-                entity.getDescription(), mealsNameList[entity.getMeal()]));
-        builder.create().show();
-    }
-
-    @Override
-    public void onQuickAddMenuSelected(String dateId, int time, int meal, String description, float value) {
-        FragmentManager manager = getSupportFragmentManager();
-        QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setDateId(dateId);
-        dialog.setTime(time);
-        dialog.setMeal(meal);
-        dialog.setDescription(description);
-        dialog.setValue(value);
-        dialog.show(manager, QuickInsertFrag.INSERT_TAG);
-    }
+    public static final String SETTINGS_TYPE_PARAMETER = SettingsListActivity.class.getSimpleName()
+            + ".SETTINGS_TYPE_PARAMETER";
+    private SettingsListFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO: changes from here...
         setContentView(R.layout.foods_usage_act);
 
         mealsNameList = getResources().getStringArray(R.array.meals_name_list);
@@ -88,10 +48,10 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
         // that started this activity:
         if(savedInstanceState == null) {
             Intent intent = getIntent();
-            mDateId = intent.getExtras().getString(DATE_ID_PARAMETER);
+            mDateId = intent.getExtras().getString(SETTINGS_TYPE_PARAMETER);
             actionBar.setSelectedNavigationItem(intent.getExtras().getInt(MEAL_PARAMETER));
         } else {
-            mDateId = savedInstanceState.getString(DATE_ID_PARAMETER);
+            mDateId = savedInstanceState.getString(SETTINGS_TYPE_PARAMETER);
             actionBar.setSelectedNavigationItem(savedInstanceState.getInt(MEAL_PARAMETER));
         }
         mFragment = (FoodsUsageListFrag) getSupportFragmentManager().findFragmentById(R.id.foods_usage_list_frag);
@@ -105,7 +65,7 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(DATE_ID_PARAMETER, mDateId);
+        outState.putString(SETTINGS_TYPE_PARAMETER, mDateId);
         outState.putInt(MEAL_PARAMETER, getSupportActionBar().getSelectedNavigationIndex());
     }
 
@@ -142,4 +102,9 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
     private void setupFields() {
         mTxtDate.setText(DateUtil.dateIdToFormattedString(mDateId));
     }
+
+    @SuppressWarnings("UnusedDeclaration")
+    private static final String TAG = "==>ETD/" + SettingsListActivity.class.getSimpleName();
+    @SuppressWarnings("UnusedDeclaration")
+    private static final boolean isLogEnabled = true;
 }
