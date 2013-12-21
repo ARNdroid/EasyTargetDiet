@@ -20,11 +20,12 @@ public class SettingsMainFragment extends Fragment implements PointPickerDialog.
 
     public interface SettingsMainFragmentListener {
         public void onExerciseGoalSettingsSelected();
+        public void onLiquidGoalSettingsSelected();
+        public void onOilGoalSettingsSelected();
+        public void onSupplementGoalSettingsSelected();
     }
-    private TextView mTxtExerciseGoalActualValue;
 
     public static final String OWNER_TAG = SettingsMainFragment.class.getSimpleName();
-    public static final String EXERCISE_GOAL_TAG = OWNER_TAG + ".EXERCISE_GOAL";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,19 +50,11 @@ public class SettingsMainFragment extends Fragment implements PointPickerDialog.
     }
 
     private void refreshScreen() {
-        final WeekdayParametersManager weekdayParametersManager =
-                new WeekdayParametersManager(getActivity().getApplicationContext());
-        final WeekdayParametersEntity weekdayParametersEntity =
-                weekdayParametersManager.weekdayParametersFromWeekday(Calendar.SUNDAY);
-        final String units_actual_value_string = getResources().getString(R.string.units_actual_value);
-
-        mTxtExerciseGoalActualValue.setText(String.format(
-                units_actual_value_string, weekdayParametersEntity.getExerciseGoal()) +
-                "\n(for all weekdays)");
+        // TODO: may be necessary to implement for others settings...
     }
 
     private void attachScreen(View rootView) {
-        mTxtExerciseGoalActualValue = (TextView) rootView.findViewById(R.id.txtExerciseGoalActualValue);
+        // TODO: may be necessary to implement for others settings...
     }
 
     private void setupScreen(View rootView) {
@@ -72,11 +65,35 @@ public class SettingsMainFragment extends Fragment implements PointPickerDialog.
                 ((SettingsMainFragmentListener)getActivity()).onExerciseGoalSettingsSelected();
             }
         });
+
+        final RelativeLayout layLiquidGoal = (RelativeLayout) rootView.findViewById(R.id.layLiquidGoal);
+        layLiquidGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener)getActivity()).onLiquidGoalSettingsSelected();
+            }
+        });
+
+        final RelativeLayout layOilGoal = (RelativeLayout) rootView.findViewById(R.id.layOilGoal);
+        layOilGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onOilGoalSettingsSelected();
+            }
+        });
+
+        final RelativeLayout laySupplementGoal = (RelativeLayout) rootView.findViewById(R.id.laySupplementGoal);
+        laySupplementGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onSupplementGoalSettingsSelected();
+            }
+        });
     }
 
     @Override
     public void onPointSet(String tag, float actualValue) {
-        // TODO: Implement.
+        // May be necessary for other settings implementations...
         refreshScreen();
     }
 }

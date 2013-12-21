@@ -1,15 +1,21 @@
 package br.com.arndroid.etdiet.settings;
 
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.NumberPicker;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.util.OldIntegerPickerDialog;
 import br.com.arndroid.etdiet.util.PointPickerDialog;
 
-public class SettingsMainActivity extends ActionBarActivity implements PointPickerDialog.OnPointSetListener,
+public class SettingsMainActivity extends ActionBarActivity implements
+        PointPickerDialog.OnPointSetListener,
+        OldIntegerPickerDialog.OnIntegerSetListener,
         SettingsMainFragment.SettingsMainFragmentListener {
 
     @Override
@@ -53,8 +59,50 @@ public class SettingsMainActivity extends ActionBarActivity implements PointPick
     }
 
     @Override
+    public void onNumberSet(NumberPicker view, int value) {
+        // TODO: waiting for OldIntegerPickerDialog refactoring.
+        // We are here against our will, again...
+//        if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
+//            final SettingsMainFragment fragment = (SettingsMainFragment) getSupportFragmentManager()
+//                    .findFragmentById(R.id.settings_fragment);
+//            fragment.onPointSet(tag, actualValue);
+//        } else {
+//            throw new IllegalArgumentException("Invalid tag=" + tag);
+//        }
+    }
+
+    private void callListFragmentForSetting(String settingName) {
+        SettingsListFragment settingsListFragment = (SettingsListFragment)
+                getSupportFragmentManager().findFragmentById(R.id.settings_list_fragment);
+
+        if (settingsListFragment != null) {
+            settingsListFragment.refresh(settingName);
+        } else {
+            Intent intent = new Intent(this, SettingsListActivity.class);
+            intent.putExtra(SettingsListActivity.SETTINGS_TYPE_PARAMETER,
+                    settingName);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     public void onExerciseGoalSettingsSelected() {
-        // TODO: call another fragment or a new activity to change Exercise Goal Setting
+        callListFragmentForSetting(Contract.WeekdayParameters.EXERCISE_GOAL);
+    }
+
+    @Override
+    public void onLiquidGoalSettingsSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.LIQUID_GOAL);
+    }
+
+    @Override
+    public void onOilGoalSettingsSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.OIL_GOAL);
+    }
+
+    @Override
+    public void onSupplementGoalSettingsSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.SUPPLEMENT_GOAL);
     }
 
     @SuppressWarnings("UnusedDeclaration")

@@ -33,7 +33,7 @@ public class SettingsListFragment extends ListFragment implements PointPickerDia
 
     private int mSelectedWeekday;
 
-    private SimpleCursorAdapter mAdapter;
+    private SettingsWeekdayAdapter mAdapter;
 
     public void refresh(String settingsColumn) {
         mSettingsColumnName = settingsColumn;
@@ -50,11 +50,7 @@ public class SettingsListFragment extends ListFragment implements PointPickerDia
             mSelectedWeekday = savedInstanceState.getInt(SELECTED_WEEKDAY_KEY);
         }
 
-        // TODO: change to custom adapter:
-        mAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_2, null,
-                new String[] {Contract.WeekdayParameters._ID, Contract.WeekdayParameters.EXERCISE_GOAL},
-                new int[] {android.R.id.text1, android.R.id.text2}, 0);
+        mAdapter = new SettingsWeekdayAdapter(getActivity(), mSettingsColumnName);
         setListAdapter(mAdapter);
     }
 
@@ -73,7 +69,7 @@ public class SettingsListFragment extends ListFragment implements PointPickerDia
 
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
             final PointPickerDialog dialog = new PointPickerDialog();
-            dialog.setTitle(getResources().getString(R.string.exercise));
+            dialog.setTitle(getResources().getString(R.string.exercise_goal));
             dialog.setMinIntegerValue(0);
             dialog.setMaxIntegerValue(99);
             dialog.setInitialValue(entity.getExerciseGoal());

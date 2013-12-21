@@ -47,7 +47,7 @@
             android:theme="@style/Theme.AppCompat.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalAct" />
+                android:value=".settings.SettingsMainActivity" />
         </activity>
 
         <provider

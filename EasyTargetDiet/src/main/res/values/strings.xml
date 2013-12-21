@@ -64,5 +64,16 @@
     <string name="settings">Settings</string>
     <string name="units_actual_value">%1$.1f units</string>
     <string name="exercise_goal">Exercise goal</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="choose_exercise_goal">Choose exercise goal for weekday</string>
+    <string name="choose_liquid_goal">Choose liquid goal for weekday</string>
+    <string name="choose_oil_goal">Choose oil goal for weekday</string>
+    <string name="choose_supplement_goal">Choose supplement for weekday</string>
 
 </resources>

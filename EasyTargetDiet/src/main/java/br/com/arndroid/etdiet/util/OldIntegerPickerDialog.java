@@ -13,35 +13,35 @@ import br.com.arndroid.etdiet.R;
 /*
  Build by example of Android DatePickerDialog class
  */
-public class IntegerPickerDialog extends AlertDialog implements DialogInterface.OnClickListener {
+public class OldIntegerPickerDialog extends AlertDialog implements DialogInterface.OnClickListener {
 
     private static final String CURRENT_VALUE_KEY = "CURRENT_VALUE_KEY";
     private NumberPicker mNumberPicker = null;
-    private final OnNumberSetListener mCallBack;
+    private final OnIntegerSetListener mCallBack;
 
     /**
      * The callback used to indicate the user is done filling in the integer.
      */
-    public interface OnNumberSetListener {
-        void onDateSet(NumberPicker view, int value);
+    public interface OnIntegerSetListener {
+        void onNumberSet(NumberPicker view, int value);
     }
 
-    public IntegerPickerDialog(Context context,
-                               OnNumberSetListener callBack,
-                               String title,
-                               int minValue,
-                               int maxValue,
-                               int value) {
+    public OldIntegerPickerDialog(Context context,
+                                  OnIntegerSetListener callBack,
+                                  String title,
+                                  int minValue,
+                                  int maxValue,
+                                  int value) {
         this(context, 0, callBack, title, minValue, maxValue, value);
     }
 
-    public IntegerPickerDialog(Context context,
-                               int theme,
-                               OnNumberSetListener callBack,
-                               String title,
-                               int minValue,
-                               int maxValue,
-                               int value) {
+    public OldIntegerPickerDialog(Context context,
+                                  int theme,
+                                  OnIntegerSetListener callBack,
+                                  String title,
+                                  int minValue,
+                                  int maxValue,
+                                  int value) {
         super(context, theme);
 
         mCallBack = callBack;
@@ -82,7 +82,7 @@ public class IntegerPickerDialog extends AlertDialog implements DialogInterface.
     private void tryNotifyDateSet() {
         if (mCallBack != null) {
             mNumberPicker.clearFocus();
-            mCallBack.onDateSet(mNumberPicker, mNumberPicker.getValue());
+            mCallBack.onNumberSet(mNumberPicker, mNumberPicker.getValue());
         }
     }
 

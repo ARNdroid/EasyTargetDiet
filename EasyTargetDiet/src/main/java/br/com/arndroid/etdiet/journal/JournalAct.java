@@ -25,7 +25,7 @@ import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.OldIntegerPickerDialog;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
@@ -36,9 +36,9 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private String mCurrentDateId;
     private String[] mMonthsShortNameArray;
     private String[] mWeekdaysShortNameArray;
-    private IntegerPickerDialog.OnNumberSetListener mLiquidSetListener;
-    private IntegerPickerDialog.OnNumberSetListener mOilSetListener;
-    private IntegerPickerDialog.OnNumberSetListener mSupplementListener;
+    private OldIntegerPickerDialog.OnIntegerSetListener mLiquidSetListener;
+    private OldIntegerPickerDialog.OnIntegerSetListener mOilSetListener;
+    private OldIntegerPickerDialog.OnIntegerSetListener mSupplementListener;
 
 
     private Button btnDay;
@@ -127,9 +127,9 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        mLiquidSetListener = new IntegerPickerDialog.OnNumberSetListener() {
+        mLiquidSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
-            public void onDateSet(NumberPicker view, int value) {
+            public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
                 entity.setLiquidDone(value);
@@ -141,7 +141,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
-                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mLiquidSetListener,
+                OldIntegerPickerDialog dialog = new OldIntegerPickerDialog(JournalAct.this, mLiquidSetListener,
                         getString(R.string.liquid), 0, 99, entity.getLiquidDone());
                 dialog.show();
                 return true;
@@ -158,9 +158,9 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        mOilSetListener = new IntegerPickerDialog.OnNumberSetListener() {
+        mOilSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
-            public void onDateSet(NumberPicker view, int value) {
+            public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
                 entity.setOilDone(value);
@@ -172,7 +172,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
-                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mOilSetListener,
+                OldIntegerPickerDialog dialog = new OldIntegerPickerDialog(JournalAct.this, mOilSetListener,
                         getString(R.string.oil), 0, 99, entity.getOilDone());
                 dialog.show();
                 return true;
@@ -189,9 +189,9 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        mSupplementListener = new IntegerPickerDialog.OnNumberSetListener() {
+        mSupplementListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
-            public void onDateSet(NumberPicker view, int value) {
+            public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
                 entity.setSupplementDone(value);
@@ -203,7 +203,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
-                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mSupplementListener,
+                OldIntegerPickerDialog dialog = new OldIntegerPickerDialog(JournalAct.this, mSupplementListener,
                         getString(R.string.supplement), 0, 99, entity.getSupplementDone());
                 dialog.show();
                 return true;
