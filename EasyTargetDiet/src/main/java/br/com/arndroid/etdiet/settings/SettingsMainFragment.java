@@ -7,16 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import java.util.Calendar;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
-import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.util.PointPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
 
-public class SettingsMainFragment extends Fragment implements PointPickerDialog.OnPointSetListener {
+public class SettingsMainFragment extends Fragment implements
+        PointPickerDialog.OnPointSetListener,
+        IntegerPickerDialog.OnIntegerSetListener {
 
     public interface SettingsMainFragmentListener {
         public void onExerciseGoalSettingsSelected();
@@ -93,6 +91,12 @@ public class SettingsMainFragment extends Fragment implements PointPickerDialog.
 
     @Override
     public void onPointSet(String tag, float actualValue) {
+        // May be necessary for other settings implementations...
+        refreshScreen();
+    }
+
+    @Override
+    public void onIntegerSet(String tag, int actualValue) {
         // May be necessary for other settings implementations...
         refreshScreen();
     }

@@ -71,7 +71,7 @@ public class OldIntegerPickerDialog extends AlertDialog implements DialogInterfa
     }
 
     private void attachScreen(View rootView) {
-        mNumberPicker = (NumberPicker) rootView.findViewById(R.id.numberPicker);
+        mNumberPicker = (NumberPicker) rootView.findViewById(R.id.integerPicker);
     }
 
     @Override

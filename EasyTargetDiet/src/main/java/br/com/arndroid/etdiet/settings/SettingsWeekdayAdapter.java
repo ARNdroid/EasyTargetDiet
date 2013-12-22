@@ -42,14 +42,23 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
         final Resources resources = context.getResources();
         holder.text1.setText(resources.getStringArray(R.array.weekdays_name_list)[weekday - 1]);
 
-        final String actualValue;
+        final String formattedValue;
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            actualValue = String.format(resources.getString(R.string.units_actual_value),
+            formattedValue = String.format(resources.getString(R.string.units_actual_value),
                     cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.EXERCISE_GOAL)));
+        } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
+            formattedValue = String.format(resources.getString(R.string.times_actual_value),
+                    cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.LIQUID_GOAL)));
+        } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
+            formattedValue = String.format(resources.getString(R.string.times_actual_value),
+                    cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.OIL_GOAL)));
+        } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
+            formattedValue = String.format(resources.getString(R.string.times_actual_value),
+                    cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPLEMENT_GOAL)));
         } else {
             throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
-        holder.text2.setText(actualValue);
+        holder.text2.setText(formattedValue);
     }
 
     private static class ViewHolder {

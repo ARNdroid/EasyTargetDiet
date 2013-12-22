@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.util;
+package br.com.arndroid.etdiet.util.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -116,7 +116,7 @@ public class PointPickerDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnPointSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement PointPickerDialog.OnPointSetListener");
+            throw new ClassCastException(activity.toString() + " must implement PointPickerDialog.OnIntegerSetListener");
         }
     }
 

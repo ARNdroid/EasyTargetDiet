@@ -62,7 +62,7 @@
     <string name="done">Set</string>
     <string name="hello_world">Hello world!</string>
     <string name="settings">Settings</string>
-    <string name="units_actual_value">%1$.1f units</string>
+    <string name="units_actual_value">%.1f units</string>
     <string name="exercise_goal">Exercise goal</string>
     <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
@@ -75,5 +75,9 @@
     <string name="choose_liquid_goal">Choose liquid goal for weekday</string>
     <string name="choose_oil_goal">Choose oil goal for weekday</string>
     <string name="choose_supplement_goal">Choose supplement for weekday</string>
+    <string name="times_actual_value">%d times</string>
+    <string name="liquid_goal">Liquid Goal</string>
+    <string name="oil_goal">Oil goal</string>
+    <string name="supplement_goal">Supplement goal</string>
 
 </resources>

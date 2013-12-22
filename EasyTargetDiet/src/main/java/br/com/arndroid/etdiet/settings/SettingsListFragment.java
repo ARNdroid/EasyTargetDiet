@@ -6,7 +6,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.widget.ListView;
 
@@ -14,13 +13,19 @@ import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.util.PointPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
 
-public class SettingsListFragment extends ListFragment implements PointPickerDialog.OnPointSetListener,
+public class SettingsListFragment extends ListFragment implements
+        PointPickerDialog.OnPointSetListener,
+        IntegerPickerDialog.OnIntegerSetListener,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String OWNER_TAG = SettingsListFragment.class.getSimpleName();
     public static final String EXERCISE_GOAL_SETTINGS_TAG = OWNER_TAG + ".EXERCISE_GOAL_SETTINGS";
+    public static final String LIQUID_GOAL_SETTINGS_TAG = OWNER_TAG + ".LIQUID_GOAL_SETTINGS";
+    public static final String OIL_GOAL_SETTINGS_TAG = OWNER_TAG + ".OIL_GOAL_SETTINGS";
+    public static final String SUPPLEMENT_GOAL_SETTINGS_TAG = OWNER_TAG + ".SUPPLEMENT_GOAL_SETTINGS";
 
     private static final int WEEKDAY_PARAMETERS_SETTINGS_LOADER_ID = 1;
     private static final String SELECTED_WEEKDAY_KEY = "SELECTED_WEEKDAY_KEY";
@@ -74,6 +79,27 @@ public class SettingsListFragment extends ListFragment implements PointPickerDia
             dialog.setMaxIntegerValue(99);
             dialog.setInitialValue(entity.getExerciseGoal());
             dialog.show(getFragmentManager(), EXERCISE_GOAL_SETTINGS_TAG);
+        } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
+            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            dialog.setTitle(getResources().getString(R.string.liquid_goal));
+            dialog.setMinValue(0);
+            dialog.setMaxValue(99);
+            dialog.setInitialValue(entity.getLiquidGoal());
+            dialog.show(getFragmentManager(), LIQUID_GOAL_SETTINGS_TAG);
+        } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
+            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            dialog.setTitle(getResources().getString(R.string.oil_goal));
+            dialog.setMinValue(0);
+            dialog.setMaxValue(99);
+            dialog.setInitialValue(entity.getOilGoal());
+            dialog.show(getFragmentManager(), OIL_GOAL_SETTINGS_TAG);
+        } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
+            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            dialog.setTitle(getResources().getString(R.string.supplement_goal));
+            dialog.setMinValue(0);
+            dialog.setMaxValue(99);
+            dialog.setInitialValue(entity.getSupplementGoal());
+            dialog.show(getFragmentManager(), SUPPLEMENT_GOAL_SETTINGS_TAG);
         } else {
             throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
@@ -111,5 +137,24 @@ public class SettingsListFragment extends ListFragment implements PointPickerDia
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
+    }
+
+    @Override
+    public void onIntegerSet(String tag, int actualValue) {
+        final WeekdayParametersManager manager = new WeekdayParametersManager(getActivity()
+                .getApplicationContext());
+        final WeekdayParametersEntity entity = manager.weekdayParametersFromWeekday(mSelectedWeekday);
+
+        if (LIQUID_GOAL_SETTINGS_TAG.equals(tag)) {
+            entity.setLiquidGoal(actualValue);
+        } else if (OIL_GOAL_SETTINGS_TAG.equals(tag)) {
+            entity.setOilGoal(actualValue);
+        } else if (SUPPLEMENT_GOAL_SETTINGS_TAG.equals(tag)) {
+            entity.setSupplementGoal(actualValue);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
+
+        manager.refresh(entity);
     }
 }

@@ -6,16 +6,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.NumberPicker;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.OldIntegerPickerDialog;
-import br.com.arndroid.etdiet.util.PointPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
 
 public class SettingsMainActivity extends ActionBarActivity implements
         PointPickerDialog.OnPointSetListener,
-        OldIntegerPickerDialog.OnIntegerSetListener,
+        IntegerPickerDialog.OnIntegerSetListener,
         SettingsMainFragment.SettingsMainFragmentListener {
 
     @Override
@@ -59,16 +58,15 @@ public class SettingsMainActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void onNumberSet(NumberPicker view, int value) {
-        // TODO: waiting for OldIntegerPickerDialog refactoring.
+    public void onIntegerSet(String tag, int actualValue) {
         // We are here against our will, again...
-//        if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
-//            final SettingsMainFragment fragment = (SettingsMainFragment) getSupportFragmentManager()
-//                    .findFragmentById(R.id.settings_fragment);
-//            fragment.onPointSet(tag, actualValue);
-//        } else {
-//            throw new IllegalArgumentException("Invalid tag=" + tag);
-//        }
+        if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
+            final SettingsMainFragment fragment = (SettingsMainFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.settings_fragment);
+            fragment.onIntegerSet(tag, actualValue);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
     }
 
     private void callListFragmentForSetting(String settingName) {
