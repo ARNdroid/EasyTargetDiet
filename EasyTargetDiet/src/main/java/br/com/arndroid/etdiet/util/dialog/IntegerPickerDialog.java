@@ -41,19 +41,19 @@ public class IntegerPickerDialog extends DialogFragment {
 
         attachScreen(view);
 
-        int actualValue = mInitialValue;
+        int actualValue = getInitialValue();
         if (savedInstanceState != null) {
-            mTitle = savedInstanceState.getString(TITLE_KEY);
-            mMinValue = savedInstanceState.getInt(MIN_KEY);
-            mMaxValue = savedInstanceState.getInt(MAX_KEY);
-            mInitialValue = savedInstanceState.getInt(INITIAL_KEY);
+            setTitle(savedInstanceState.getString(TITLE_KEY));
+            setMinValue(savedInstanceState.getInt(MIN_KEY));
+            setMaxValue(savedInstanceState.getInt(MAX_KEY));
+            setInitialValue(savedInstanceState.getInt(INITIAL_KEY));
             actualValue = savedInstanceState.getInt(ACTUAL_KEY);
         }
 
         setupScreen();
         refreshScreen(actualValue);
 
-        builder.setTitle(mTitle);
+        builder.setTitle(getTitle());
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -71,13 +71,13 @@ public class IntegerPickerDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void refreshScreen(float actualValue) {
-        mPickerInteger.setValue((int) Math.floor(actualValue));
+    private void refreshScreen(int actualValue) {
+        mPickerInteger.setValue(actualValue);
     }
 
     private void setupScreen() {
-        mPickerInteger.setMinValue(mMinValue);
-        mPickerInteger.setMaxValue(mMaxValue);
+        mPickerInteger.setMinValue(getMinValue());
+        mPickerInteger.setMaxValue(getMaxValue());
     }
 
     private void attachScreen(View rootView) {
@@ -86,10 +86,10 @@ public class IntegerPickerDialog extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString(TITLE_KEY, mTitle);
-        outState.putInt(MIN_KEY, mMinValue);
-        outState.putInt(MAX_KEY, mMaxValue);
-        outState.putInt(INITIAL_KEY, mInitialValue);
+        outState.putString(TITLE_KEY, getTitle());
+        outState.putInt(MIN_KEY, getMinValue());
+        outState.putInt(MAX_KEY, getMaxValue());
+        outState.putInt(INITIAL_KEY, getInitialValue());
         outState.putInt(ACTUAL_KEY, mPickerInteger.getValue());
         super.onSaveInstanceState(outState);
     }

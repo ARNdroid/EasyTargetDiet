@@ -79,5 +79,18 @@
     <string name="liquid_goal">Liquid Goal</string>
     <string name="oil_goal">Oil goal</string>
     <string name="supplement_goal">Supplement goal</string>
-
+    <string name="my_plan">My plan</string>
+    <string name="daily_allowance">Daily allowance</string>
+    <string name="weekly_allowance">Weekly allowance</string>
+    <string name="no_show_exercise_use_mode">Exercise use mode description</string>
+    <string name="exercise_use_mode">Exercise use mode</string>
+    <string name="exercise_use_order">Exercise use order</string>
+    <string name="no_show_exercise_use_order">Exercise use order description</string>
+    <string name="exercise_use_mode_dont_use">Don\'t use</string>
+    <string name="exercise_use_mode_use_dont_accumulate">Use but don\'t accumulate</string>
+    <string name="exercise_use_mode_use_and_accumulate">Use and accumulate</string>
+    <string name="exercise_use_order_use_exercises_first">Use exercises first</string>
+    <string name="exercise_use_order_use_weekly_allowance_first">Use weekly allowance first</string>
+    <string name="tracking_weekday">Tracking weekday</string>
+    <string name="no_show_tracking_weekday">A tracking weekday</string>
 </resources>

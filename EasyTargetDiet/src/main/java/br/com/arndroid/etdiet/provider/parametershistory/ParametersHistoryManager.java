@@ -179,7 +179,7 @@ public class ParametersHistoryManager {
                 String referenceID = DateUtil.dateToDateId(referenceDate);
                 c.moveToFirst();
                 do {
-                    result = c.getInt(c.getColumnIndex(Contract.ParametersHistory.FLOATING_POINT_NEW_VALUE));
+                    result = c.getFloat(c.getColumnIndex(Contract.ParametersHistory.FLOATING_POINT_NEW_VALUE));
                     if(DateUtil.dateIdStartsEqualsOrBefore(c.getString(c.getColumnIndex(Contract.ParametersHistory.DATE)), referenceID)) {
                         break;
                     }

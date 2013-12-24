@@ -5,16 +5,18 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
 import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.StringListDialog;
 
 public class SettingsMainActivity extends ActionBarActivity implements
         PointPickerDialog.OnPointSetListener,
-        IntegerPickerDialog.OnIntegerSetListener,
+        StringListDialog.OnStringSelectedListener,
         SettingsMainFragment.SettingsMainFragmentListener {
 
     @Override
@@ -49,21 +51,19 @@ public class SettingsMainActivity extends ActionBarActivity implements
          The following code send the event to original Fragment again.
          */
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
-            final SettingsMainFragment fragment = (SettingsMainFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.settings_fragment);
-            fragment.onPointSet(tag, actualValue);
+            ((PointPickerDialog.OnPointSetListener) getSupportFragmentManager()
+                    .findFragmentById(R.id.settings_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
     }
 
     @Override
-    public void onIntegerSet(String tag, int actualValue) {
-        // We are here against our will, again...
+    public void onStringSelected(String tag, int chosenIndex) {
+        // We are here against our will...
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
-            final SettingsMainFragment fragment = (SettingsMainFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.settings_fragment);
-            fragment.onIntegerSet(tag, actualValue);
+            ((StringListDialog.OnStringSelectedListener) getSupportFragmentManager()
+                    .findFragmentById(R.id.settings_fragment)).onStringSelected(tag, chosenIndex);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }

@@ -76,8 +76,8 @@ public class VirtualWeekEngine {
         boolean weeklyAllowanceAfterUsageComputed = false;
 
         if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
-                && mExerciseUseMode != Contract.ParametersHistory.DONT_USE_EXERCISE_USE_MODE
-                && mExerciseUseOrder == Contract.ParametersHistory.EXERCISES_FIRST_EXERCISE_USE_ORDER) {
+                && mExerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
+                && mExerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST) {
             currentSummary.setDiaryAllowanceAfterUsage(
                     currentSummary.getDiaryAllowanceAfterUsage()
                             + currentSummary.getTotalExercise());
@@ -103,8 +103,8 @@ public class VirtualWeekEngine {
         }
 
         if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
-                && mExerciseUseMode != Contract.ParametersHistory.DONT_USE_EXERCISE_USE_MODE
-                && mExerciseUseOrder == Contract.ParametersHistory.WEEKLY_FIRST_EXERCISE_USE_ORDER) {
+                && mExerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
+                && mExerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST) {
             currentSummary.setDiaryAllowanceAfterUsage(currentSummary.getDiaryAllowanceAfterUsage()
                 + currentSummary.getTotalExercise());
             currentSummary.setExerciseAfterUsage(FLOAT_ZERO);
@@ -123,7 +123,7 @@ public class VirtualWeekEngine {
             currentSummary.setExerciseAfterUsage(currentSummary.getTotalExercise());
         }
 
-        if(mExerciseUseMode == Contract.ParametersHistory.USE_AND_ACCUMULATE_EXERCISE_USE_MODE) {
+        if(mExerciseUseMode == Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE) {
             currentSummary.setExerciseToCarry(currentSummary.getExerciseAfterUsage());
         } else {
             currentSummary.setExerciseToCarry(FLOAT_ZERO);
