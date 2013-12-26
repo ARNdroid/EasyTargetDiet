@@ -103,6 +103,11 @@ public class SettingsMainActivity extends ActionBarActivity implements
         callListFragmentForSetting(Contract.WeekdayParameters.SUPPLEMENT_GOAL);
     }
 
+    @Override
+    public void onBreakfastIdealValuesSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.BREAKFAST_GOAL);
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "==>ETD/" + SettingsMainActivity.class.getSimpleName();
 

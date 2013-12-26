@@ -58,8 +58,8 @@ public class PointPickerDialog extends DialogFragment {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                final float actualValue = getActualValueFromPickers();
-                ((OnPointSetListener)getActivity()).onPointSet(PointPickerDialog.this.getTag(), actualValue);
+                ((OnPointSetListener)getActivity()).onPointSet(PointPickerDialog.this.getTag(),
+                        getActualValueFromPickers());
                 dialog.dismiss();
             }
         });

@@ -93,4 +93,11 @@
     <string name="exercise_use_order_use_weekly_allowance_first">Use weekly allowance first</string>
     <string name="tracking_weekday">Tracking weekday</string>
     <string name="no_show_tracking_weekday">A tracking weekday</string>
+    <string name="to">To</string>
+    <string name="from">From</string>
+    <string name="ideal_meal_value">Ideal meal units</string>
+    <string name="my_meals_ideal_values">My meals ideal values</string>
+    <string name="choose_breakfast_ideal_values">Choose breakfast ideal values for weekday</string>
+    <string name="breakfast_ideal_values">Breakfast ideal values</string>
+    <string name="meal_ideal_actual_values">%1$.1f units, from %2$s to %3$s</string>
 </resources>

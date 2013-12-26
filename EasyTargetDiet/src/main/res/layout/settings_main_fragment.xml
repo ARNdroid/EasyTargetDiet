@@ -232,5 +232,38 @@
                 android:text="@string/choose_supplement_goal"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/lblMyMealsIdealValues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_meals_ideal_values"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <View style="@style/DividerHorizontal" />
+
+        <RelativeLayout
+            android:id="@+id/layBreakfastIdealValues"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblBreakfast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/breakfast"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblBreakfast"
+                android:text="@string/choose_breakfast_ideal_values"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
     </LinearLayout>
+
 </ScrollView>

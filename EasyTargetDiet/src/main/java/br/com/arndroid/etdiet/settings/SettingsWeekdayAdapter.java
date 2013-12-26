@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.util.DateUtil;
 
 public class SettingsWeekdayAdapter extends CursorAdapter {
 
@@ -55,6 +56,13 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
         } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
             formattedValue = String.format(resources.getString(R.string.times_actual_value),
                     cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPLEMENT_GOAL)));
+        } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(mSettingsColumnName)) {
+            formattedValue = String.format(resources.getString(R.string.meal_ideal_actual_values),
+                    cursor.getFloat(cursor.getColumnIndex(Contract.WeekdayParameters.BREAKFAST_GOAL)),
+                    DateUtil.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
+                            Contract.WeekdayParameters.BREAKFAST_START_TIME))),
+                    DateUtil.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
+                            Contract.WeekdayParameters.BREAKFAST_END_TIME))));
         } else {
             throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }

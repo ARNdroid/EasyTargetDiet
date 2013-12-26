@@ -14,9 +14,11 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
 import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
 
 public class SettingsListFragment extends ListFragment implements
+        MealIdealValuesDialog.OnMealIdealValuesSetListener,
         PointPickerDialog.OnPointSetListener,
         IntegerPickerDialog.OnIntegerSetListener,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -26,6 +28,7 @@ public class SettingsListFragment extends ListFragment implements
     public static final String LIQUID_GOAL_SETTINGS_TAG = OWNER_TAG + ".LIQUID_GOAL_SETTINGS";
     public static final String OIL_GOAL_SETTINGS_TAG = OWNER_TAG + ".OIL_GOAL_SETTINGS";
     public static final String SUPPLEMENT_GOAL_SETTINGS_TAG = OWNER_TAG + ".SUPPLEMENT_GOAL_SETTINGS";
+    public static final String BREAKFAST_GOAL_SETTINGS_TAG = OWNER_TAG + ".SUPPLEMENT_GOAL_SETTINGS";
 
     private static final int WEEKDAY_PARAMETERS_SETTINGS_LOADER_ID = 1;
     private static final String SELECTED_WEEKDAY_KEY = "SELECTED_WEEKDAY_KEY";
@@ -100,6 +103,15 @@ public class SettingsListFragment extends ListFragment implements
             dialog.setMaxValue(99);
             dialog.setInitialValue(entity.getSupplementGoal());
             dialog.show(getFragmentManager(), SUPPLEMENT_GOAL_SETTINGS_TAG);
+        } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(mSettingsColumnName)) {
+            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
+            dialog.setTitle(getResources().getString(R.string.breakfast_ideal_values));
+            dialog.setMinIntegerValue(0);
+            dialog.setMaxIntegerValue(99);
+            dialog.setInitialStartTime(entity.getBreakfastStartTime());
+            dialog.setInitialEndTime(entity.getBreakfastEndTime());
+            dialog.setInitialIdealValue(entity.getBreakfastGoal());
+            dialog.show(getFragmentManager(), BREAKFAST_GOAL_SETTINGS_TAG);
         } else {
             throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
@@ -156,5 +168,20 @@ public class SettingsListFragment extends ListFragment implements
         }
 
         manager.refresh(entity);
+    }
+
+    @Override
+    public void onMealIdealValuesSet(String tag, int actualStartTime, int actualEndTime, float actualValue) {
+        if (BREAKFAST_GOAL_SETTINGS_TAG.equals(tag)) {
+            final WeekdayParametersManager manager = new WeekdayParametersManager(getActivity()
+                    .getApplicationContext());
+            final WeekdayParametersEntity entity = manager.weekdayParametersFromWeekday(mSelectedWeekday);
+            entity.setBreakfastStartTime(actualStartTime);
+            entity.setBreakfastEndTime(actualEndTime);
+            entity.setBreakfastGoal(actualValue);
+            manager.refresh(entity);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
     }
 }

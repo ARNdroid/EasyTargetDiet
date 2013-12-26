@@ -10,9 +10,11 @@ import android.view.MenuItem;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
 
 public class SettingsListActivity extends ActionBarActivity implements
+        MealIdealValuesDialog.OnMealIdealValuesSetListener,
         PointPickerDialog.OnPointSetListener,
         IntegerPickerDialog.OnIntegerSetListener {
 
@@ -52,6 +54,8 @@ public class SettingsListActivity extends ActionBarActivity implements
             return getResources().getString(R.string.oil_goal);
         } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(settingsColumnName)) {
             return getResources().getString(R.string.supplement_goal);
+        } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(settingsColumnName)) {
+            return getResources().getString(R.string.breakfast_ideal_values);
         } else {
             throw new IllegalArgumentException("Invalid settingsColumnName=" + settingsColumnName);
         }
@@ -91,6 +95,18 @@ public class SettingsListActivity extends ActionBarActivity implements
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
             ((IntegerPickerDialog.OnIntegerSetListener)getSupportFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onIntegerSet(tag, actualValue);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
+    }
+
+    @Override
+    public void onMealIdealValuesSet(String tag, int actualStartTime, int actualEndTime, float actualValue) {
+        // We are here against our will...
+        if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
+            ((MealIdealValuesDialog.OnMealIdealValuesSetListener)getSupportFragmentManager()
+                    .findFragmentById(R.id.settings_list_fragment)).onMealIdealValuesSet(
+                    tag, actualStartTime, actualEndTime, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }

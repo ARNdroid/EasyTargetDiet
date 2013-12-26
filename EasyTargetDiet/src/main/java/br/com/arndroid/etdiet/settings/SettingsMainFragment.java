@@ -34,7 +34,9 @@ public class SettingsMainFragment extends Fragment implements
         public void onLiquidGoalSettingsSelected();
         public void onOilGoalSettingsSelected();
         public void onSupplementGoalSettingsSelected();
+        public void onBreakfastIdealValuesSelected();
     }
+
     public static final String OWNER_TAG = SettingsMainFragment.class.getSimpleName();
 
     private static final String DAILY_ALLOWANCE_SETTINGS_TAG = OWNER_TAG
@@ -244,6 +246,14 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 ((SettingsMainFragmentListener) getActivity()).onSupplementGoalSettingsSelected();
+            }
+        });
+
+        final RelativeLayout layBreakfastIdealValues = (RelativeLayout) rootView.findViewById(R.id.layBreakfastIdealValues);
+        layBreakfastIdealValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onBreakfastIdealValuesSelected();
             }
         });
     }
