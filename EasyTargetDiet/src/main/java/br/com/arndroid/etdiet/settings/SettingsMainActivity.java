@@ -77,8 +77,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
             settingsListFragment.refresh(settingName);
         } else {
             Intent intent = new Intent(this, SettingsListActivity.class);
-            intent.putExtra(SettingsListActivity.SETTINGS_TYPE_PARAMETER,
-                    settingName);
+            intent.putExtra(SettingsListActivity.SETTINGS_TYPE_PARAMETER, settingName);
             startActivity(intent);
         }
     }
@@ -106,6 +105,31 @@ public class SettingsMainActivity extends ActionBarActivity implements
     @Override
     public void onBreakfastIdealValuesSelected() {
         callListFragmentForSetting(Contract.WeekdayParameters.BREAKFAST_GOAL);
+    }
+
+    @Override
+    public void onBrunchIdealValuesSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.BRUNCH_GOAL);
+    }
+
+    @Override
+    public void onLunchIdealValuesSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.LUNCH_GOAL);
+    }
+
+    @Override
+    public void onSnackIdealValuesSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.SNACK_GOAL);
+    }
+
+    @Override
+    public void onDinnerIdealValuesSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.DINNER_GOAL);
+    }
+
+    @Override
+    public void onSupperIdealValuesSelected() {
+        callListFragmentForSetting(Contract.WeekdayParameters.SUPPER_GOAL);
     }
 
     @SuppressWarnings("UnusedDeclaration")

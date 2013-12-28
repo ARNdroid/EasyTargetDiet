@@ -138,6 +138,7 @@
 
         <TextView
             android:id="@+id/lblMyGoals"
+            android:paddingTop="@dimen/default_view_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_goals"
@@ -235,6 +236,7 @@
 
         <TextView
             android:id="@+id/lblMyMealsIdealValues"
+            android:paddingTop="@dimen/default_view_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_meals_ideal_values"
@@ -261,6 +263,116 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblBreakfast"
                 android:text="@string/choose_breakfast_ideal_values"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layBrunchIdealValues"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblBrunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/brunch"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblBrunch"
+                android:text="@string/choose_brunch_ideal_values"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layLunchIdealValues"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblLunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lunch"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblLunch"
+                android:text="@string/choose_lunch_ideal_values"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/laySnackIdealValues"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblSnack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/snack"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblSnack"
+                android:text="@string/choose_snack_ideal_values"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layDinnerIdealValues"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblDinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dinner"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblDinner"
+                android:text="@string/choose_dinner_ideal_values"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/laySupperIdealValues"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblSupper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/supper"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblSupper"
+                android:text="@string/choose_supper_ideal_values"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 

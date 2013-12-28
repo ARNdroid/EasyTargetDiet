@@ -35,6 +35,12 @@ public class SettingsMainFragment extends Fragment implements
         public void onOilGoalSettingsSelected();
         public void onSupplementGoalSettingsSelected();
         public void onBreakfastIdealValuesSelected();
+        public void onBrunchIdealValuesSelected();
+        public void onLunchIdealValuesSelected();
+        public void onSnackIdealValuesSelected();
+        public void onDinnerIdealValuesSelected();
+        public void onSupperIdealValuesSelected();
+
     }
 
     public static final String OWNER_TAG = SettingsMainFragment.class.getSimpleName();
@@ -254,6 +260,46 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 ((SettingsMainFragmentListener) getActivity()).onBreakfastIdealValuesSelected();
+            }
+        });
+
+        final RelativeLayout layBrunchIdealValues = (RelativeLayout) rootView.findViewById(R.id.layBrunchIdealValues);
+        layBrunchIdealValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onBrunchIdealValuesSelected();
+            }
+        });
+
+        final RelativeLayout layLunchIdealValues = (RelativeLayout) rootView.findViewById(R.id.layLunchIdealValues);
+        layLunchIdealValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onLunchIdealValuesSelected();
+            }
+        });
+
+        final RelativeLayout laySnackIdealValues = (RelativeLayout) rootView.findViewById(R.id.laySnackIdealValues);
+        laySnackIdealValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onSnackIdealValuesSelected();
+            }
+        });
+
+        final RelativeLayout layDinnerIdealValues = (RelativeLayout) rootView.findViewById(R.id.layDinnerIdealValues);
+        layDinnerIdealValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onDinnerIdealValuesSelected();
+            }
+        });
+
+        final RelativeLayout laySupperIdealValues = (RelativeLayout) rootView.findViewById(R.id.laySupperIdealValues);
+        laySupperIdealValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SettingsMainFragmentListener) getActivity()).onSupperIdealValuesSelected();
             }
         });
     }

@@ -373,7 +373,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txtLunchTime"
             android:layout_alignParentLeft="true"
-            android:text="@string/sneak"
+            android:text="@string/snack"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
             android:onClick="btnMealAction" />

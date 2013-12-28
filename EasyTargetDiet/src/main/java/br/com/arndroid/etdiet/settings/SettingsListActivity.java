@@ -56,6 +56,16 @@ public class SettingsListActivity extends ActionBarActivity implements
             return getResources().getString(R.string.supplement_goal);
         } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(settingsColumnName)) {
             return getResources().getString(R.string.breakfast_ideal_values);
+        } else if (Contract.WeekdayParameters.BRUNCH_GOAL.equals(settingsColumnName)) {
+            return getResources().getString(R.string.brunch_ideal_values);
+        } else if (Contract.WeekdayParameters.LUNCH_GOAL.equals(settingsColumnName)) {
+            return getResources().getString(R.string.lunch_ideal_values);
+        } else if (Contract.WeekdayParameters.SNACK_GOAL.equals(settingsColumnName)) {
+            return getResources().getString(R.string.snack_ideal_values);
+        } else if (Contract.WeekdayParameters.DINNER_GOAL.equals(settingsColumnName)) {
+            return getResources().getString(R.string.dinner_ideal_values);
+        } else if (Contract.WeekdayParameters.SUPPER_GOAL.equals(settingsColumnName)) {
+            return getResources().getString(R.string.supper_ideal_values);
         } else {
             throw new IllegalArgumentException("Invalid settingsColumnName=" + settingsColumnName);
         }
