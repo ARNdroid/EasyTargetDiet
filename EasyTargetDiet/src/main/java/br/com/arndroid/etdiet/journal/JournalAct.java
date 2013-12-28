@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -47,10 +48,14 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private TextView txtPtsDay;
     private TextView txtPtsWeek;
     private TextView txtPtsExercise;
-    private Button btnExerciseGoal;
-    private Button btnLiquidGoal;
-    private Button btnOilGoal;
-    private Button btnSupplementGoal;
+    private RelativeLayout layExerciseGoal;
+    private TextView txtExerciseGoal;
+    private RelativeLayout layLiquidGoal;
+    private TextView txtLiquidGoal;
+    private RelativeLayout layOilGoal;
+    private TextView txtOilGoal;
+    private RelativeLayout laySupplementGoal;
+    private TextView txtSupplementGoal;
     private TextView txtBreakfastPts;
     private TextView txtBreakfastTime;
     private TextView txtBreakfastIdeal;
@@ -90,7 +95,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     }
 
     private void setUpFields() {
-        btnExerciseGoal.setOnClickListener(new View.OnClickListener() {
+        layExerciseGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -109,15 +114,15 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        btnExerciseGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        layExerciseGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                btnMealAction(btnExerciseGoal);
+                layMealAction(layExerciseGoal);
                 return true;
             }
         });
 
-        btnLiquidGoal.setOnClickListener(new View.OnClickListener() {
+        layLiquidGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -136,7 +141,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 manager.refresh(entity);
             }
         };
-        btnLiquidGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        layLiquidGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -148,7 +153,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
             }
         });
 
-        btnOilGoal.setOnClickListener(new View.OnClickListener() {
+        layOilGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -167,7 +172,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 manager.refresh(entity);
             }
         };
-        btnOilGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        layOilGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -179,7 +184,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
             }
         });
 
-        btnSupplementGoal.setOnClickListener(new View.OnClickListener() {
+        laySupplementGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -198,7 +203,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 manager.refresh(entity);
             }
         };
-        btnSupplementGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        laySupplementGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -245,10 +250,14 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtPtsDay = (TextView) findViewById(R.id.txtPtsDay);
         txtPtsWeek = (TextView) findViewById(R.id.txtPtsWeek);
         txtPtsExercise = (TextView) findViewById(R.id.txtPtsExercise);
-        btnExerciseGoal = (Button) findViewById(R.id.btnExerciseGoal);
-        btnLiquidGoal = (Button) findViewById(R.id.btnLiquidGoal);
-        btnOilGoal = (Button) findViewById(R.id.btnOilGoal);
-        btnSupplementGoal = (Button) findViewById(R.id.btnSupplementGoal);
+        layExerciseGoal = (RelativeLayout) findViewById(R.id.layExerciseGoal);
+        txtExerciseGoal = (TextView) findViewById(R.id.txtExerciseGoal);
+        layLiquidGoal = (RelativeLayout) findViewById(R.id.layLiquidGoal);
+        txtLiquidGoal = (TextView) findViewById(R.id.txtLiquidGoal);
+        layOilGoal = (RelativeLayout) findViewById(R.id.layOilGoal);
+        txtOilGoal = (TextView) findViewById(R.id.txtOilGoal);
+        laySupplementGoal = (RelativeLayout) findViewById(R.id.laySupplementGoal);
+        txtSupplementGoal = (TextView) findViewById(R.id.txtSupplementGoal);
         txtBreakfastPts = (TextView) findViewById(R.id.txtBreakfastPts);
         txtBreakfastTime = (TextView) findViewById(R.id.txtBreakfastTime);
         txtBreakfastIdeal = (TextView) findViewById(R.id.txtBreakfastIdeal);
@@ -281,13 +290,13 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtPtsWeek.setText(String.valueOf(daySummary.getWeeklyAllowanceAfterUsage()));
         txtPtsExercise.setText(String.valueOf(daySummary.getExerciseAfterUsage()));
 
-        btnExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
+        txtExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
                 + String.valueOf(daySummary.getEntity().getExerciseGoal()));
-        btnLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
+        txtLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getLiquidGoal()));
-        btnOilGoal.setText(String.valueOf(daySummary.getEntity().getOilDone()) + "/"
+        txtOilGoal.setText(String.valueOf(daySummary.getEntity().getOilDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getOilGoal()));
-        btnSupplementGoal.setText(String.valueOf(daySummary.getEntity().getSupplementDone()) + "/"
+        txtSupplementGoal.setText(String.valueOf(daySummary.getEntity().getSupplementDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getSupplementGoal()));
 
         txtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
@@ -328,29 +337,29 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
     }
 
-    public void btnMealAction(View view) {
+    public void layMealAction(View view) {
 
         int meal;
         switch (view.getId()) {
-            case R.id.lblBreakfastName:
+            case R.id.layBreakfast:
                 meal = Meals.BREAKFAST;
                 break;
-            case R.id.lblBrunchName:
+            case R.id.layBrunch:
                 meal = Meals.BRUNCH;
                 break;
-            case R.id.lblLunchName:
+            case R.id.layLunch:
                 meal = Meals.LUNCH;
                 break;
-            case R.id.lblSneakName:
+            case R.id.laySnack:
                 meal = Meals.SNACK;
                 break;
-            case R.id.lblDinnerName:
+            case R.id.layDinner:
                 meal = Meals.DINNER;
                 break;
-            case R.id.lblSupperName:
+            case R.id.laySupper:
                 meal = Meals.SUPPER;
                 break;
-            case R.id.btnExerciseGoal:
+            case R.id.layExerciseGoal:
                 meal = Meals.EXERCISE;
                 break;
             default:

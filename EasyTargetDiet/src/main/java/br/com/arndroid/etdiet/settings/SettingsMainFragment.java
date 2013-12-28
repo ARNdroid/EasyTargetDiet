@@ -15,8 +15,8 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
-import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
-import br.com.arndroid.etdiet.util.dialog.StringListDialog;
+import br.com.arndroid.etdiet.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.dialog.StringListDialog;
 
 public class SettingsMainFragment extends Fragment implements
         StringListDialog.OnStringSelectedListener,

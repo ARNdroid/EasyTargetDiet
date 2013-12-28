@@ -9,9 +9,9 @@ import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
-import br.com.arndroid.etdiet.util.dialog.MealIdealValuesDialog;
-import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.dialog.IntegerPickerDialog;
+import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
+import br.com.arndroid.etdiet.dialog.PointPickerDialog;
 
 public class SettingsListActivity extends ActionBarActivity implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,

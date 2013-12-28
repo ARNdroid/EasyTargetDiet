@@ -5,14 +5,12 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.dialog.IntegerPickerDialog;
-import br.com.arndroid.etdiet.util.dialog.PointPickerDialog;
-import br.com.arndroid.etdiet.util.dialog.StringListDialog;
+import br.com.arndroid.etdiet.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.dialog.StringListDialog;
 
 public class SettingsMainActivity extends ActionBarActivity implements
         PointPickerDialog.OnPointSetListener,

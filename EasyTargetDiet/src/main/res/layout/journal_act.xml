@@ -148,92 +148,117 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/lblMyGoals">
+            android:layout_below="@id/lblMyGoals"
+            android:baselineAligned="false">
 
-            <Button
-                android:id="@+id/btnExerciseGoal"
-                style="?android:attr/borderlessButtonStyle"
+            <RelativeLayout
+                android:id="@+id/layExerciseGoal"
+                android:clickable="true"
+                android:background="@android:drawable/list_selector_background"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/no_show_done_and_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:drawableLeft="@android:drawable/btn_star"/>
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btnLiquidGoal"
-                style="?android:attr/borderlessButtonStyle"
+                <TextView
+                    android:id="@+id/txtExerciseGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/no_show_done_and_goal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblExerciseGoal"
+                    android:layout_below="@id/txtExerciseGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/exercise"
+                    android:textSize="@dimen/micro_font_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layLiquidGoal"
+                android:clickable="true"
+                android:background="@android:drawable/list_selector_background"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/no_show_done_and_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:drawableLeft="@android:drawable/btn_star"/>
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btnOilGoal"
-                style="?android:attr/borderlessButtonStyle"
+                <TextView
+                    android:id="@+id/txtLiquidGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/no_show_done_and_goal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblLiquidGoal"
+                    android:layout_below="@id/txtLiquidGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/liquid"
+                    android:textSize="@dimen/micro_font_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layOilGoal"
+                android:clickable="true"
+                android:background="@android:drawable/list_selector_background"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/no_show_done_and_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:drawableLeft="@android:drawable/btn_star"/>
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btnSupplementGoal"
-                style="?android:attr/borderlessButtonStyle"
+                <TextView
+                    android:id="@+id/txtOilGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/no_show_done_and_goal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblOilGoal"
+                    android:layout_below="@id/txtOilGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/oil"
+                    android:textSize="@dimen/micro_font_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/laySupplementGoal"
+                android:clickable="true"
+                android:background="@android:drawable/list_selector_background"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/no_show_done_and_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:drawableLeft="@android:drawable/btn_star"/>
+                android:layout_height="wrap_content">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/txtSupplementGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/no_show_done_and_goal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <LinearLayout
-            android:id="@+id/lbl_goal_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/goal_layout">
+                <TextView
+                    android:id="@+id/lblSupplementGoal"
+                    android:layout_below="@id/txtSupplementGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/supplement"
+                    android:textSize="@dimen/micro_font_size" />
 
-            <TextView
-                android:id="@+id/lblExerciseGoal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/exercise"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/lblLiquidGoal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/liquid"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/lblOilGoal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/oil"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/lblSupplementGoal"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/supplement"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>
 
@@ -241,7 +266,7 @@
             android:id="@+id/lblMyMeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lbl_goal_layout"
+            android:layout_below="@id/goal_layout"
             android:paddingTop="@dimen/default_view_padding"
             android:text="@string/my_meals"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -251,242 +276,283 @@
             android:layout_below="@id/lblMyMeals" />
 
 
-        <TextView
-            android:id="@+id/lblBreakfastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layBreakfast"
             android:layout_below="@id/lblMyMeals"
-            android:layout_alignParentLeft="true"
-            android:paddingTop="@dimen/default_view_padding"
-            android:text="@string/breakfast"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:clickable="true"
-            android:onClick="btnMealAction" />
-
-        <TextView
-            android:id="@+id/txtBreakfastPts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblMyMeals"
-            android:layout_alignParentRight="true"
-            android:paddingTop="@dimen/default_view_padding"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txtBreakfastTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblBreakfastName"
-            android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtBreakfastIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBreakfastPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/lblBrunchName"
+            android:onClick="layMealAction"
+            android:background="@android:drawable/list_selector_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBreakfastTime"
-            android:layout_alignParentLeft="true"
-            android:text="@string/brunch"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblBreakfastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="@dimen/default_view_padding"
+                android:text="@string/breakfast"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtBreakfastPts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingTop="@dimen/default_view_padding"
+                android:text="@string/no_show_two_digits_number"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtBreakfastTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblBreakfastName"
+                android:layout_alignParentLeft="true"
+                android:text="@string/no_show_time_interval"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtBreakfastIdeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtBreakfastPts"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_ideal_usage"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layBrunch"
+            android:layout_below="@id/layBreakfast"
             android:clickable="true"
-            android:onClick="btnMealAction" />
-
-        <TextView
-            android:id="@+id/txtBrunchPts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBreakfastIdeal"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txtBrunchTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblBrunchName"
-            android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtBrunchIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBrunchPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/lblLunchName"
+            android:onClick="layMealAction"
+            android:background="@android:drawable/list_selector_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBrunchTime"
-            android:layout_alignParentLeft="true"
-            android:text="@string/lunch"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblBrunchName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/brunch"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtBrunchPts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_two_digits_number"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtBrunchTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblBrunchName"
+                android:layout_alignParentLeft="true"
+                android:text="@string/no_show_time_interval"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtBrunchIdeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtBrunchPts"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_ideal_usage"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layLunch"
+            android:layout_below="@id/layBrunch"
             android:clickable="true"
-            android:onClick="btnMealAction" />
-
-        <TextView
-            android:id="@+id/txtLunchPts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBrunchIdeal"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txtLunchTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblLunchName"
-            android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtLunchIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtLunchPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/lblSneakName"
+            android:onClick="layMealAction"
+            android:background="@android:drawable/list_selector_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtLunchTime"
-            android:layout_alignParentLeft="true"
-            android:text="@string/snack"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblLunchName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/lunch"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtLunchPts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_two_digits_number"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtLunchTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblLunchName"
+                android:layout_alignParentLeft="true"
+                android:text="@string/no_show_time_interval"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtLunchIdeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtLunchPts"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_ideal_usage"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/laySnack"
+            android:layout_below="@id/layLunch"
             android:clickable="true"
-            android:onClick="btnMealAction" />
-
-        <TextView
-            android:id="@+id/txtSneakPts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtLunchIdeal"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txtSneakTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblSneakName"
-            android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtSneakIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtSneakPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/lblDinnerName"
+            android:onClick="layMealAction"
+            android:background="@android:drawable/list_selector_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtSneakTime"
-            android:layout_alignParentLeft="true"
-            android:text="@string/dinner"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblSnackName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/snack"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtSneakPts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_two_digits_number"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtSneakTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblSnackName"
+                android:layout_alignParentLeft="true"
+                android:text="@string/no_show_time_interval"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtSneakIdeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtSneakPts"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_ideal_usage"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layDinner"
+            android:layout_below="@id/laySnack"
             android:clickable="true"
-            android:onClick="btnMealAction" />
-
-        <TextView
-            android:id="@+id/txtDinnerPts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtSneakIdeal"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txtDinnerTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblDinnerName"
-            android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtDinnerIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtDinnerPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/lblSupperName"
+            android:onClick="layMealAction"
+            android:background="@android:drawable/list_selector_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtDinnerTime"
-            android:layout_alignParentLeft="true"
-            android:text="@string/supper"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblDinnerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/dinner"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtDinnerPts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_two_digits_number"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/txtDinnerTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblDinnerName"
+                android:layout_alignParentLeft="true"
+                android:text="@string/no_show_time_interval"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtDinnerIdeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtDinnerPts"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_ideal_usage"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/laySupper"
+            android:layout_below="@id/layDinner"
             android:clickable="true"
-            android:onClick="btnMealAction" />
+            android:onClick="layMealAction"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txtSupperPts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtDinnerIdeal"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/lblSupperName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/supper"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/txtSupperTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lblSupperName"
-            android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/txtSupperPts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_two_digits_number"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/txtSupperIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtSupperPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/txtSupperTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblSupperName"
+                android:layout_alignParentLeft="true"
+                android:text="@string/no_show_time_interval"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
+            <TextView
+                android:id="@+id/txtSupperIdeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtSupperPts"
+                android:layout_alignParentRight="true"
+                android:text="@string/no_show_ideal_usage"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/lblNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtSupperIdeal"
+            android:layout_below="@id/laySupper"
             android:layout_alignParentLeft="true"
             android:paddingTop="@dimen/default_view_padding"
             android:text="@string/notes"
@@ -505,4 +571,5 @@
             android:paddingTop="@dimen/default_view_padding"
             android:text="@string/no_show_bla_bla_bla" />
     </RelativeLayout>
+
 </ScrollView>

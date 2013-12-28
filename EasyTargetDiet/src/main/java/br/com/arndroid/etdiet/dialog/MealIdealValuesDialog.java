@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.util.dialog;
+package br.com.arndroid.etdiet.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
