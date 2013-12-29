@@ -8,57 +8,50 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.NumberPicker;
+import android.widget.EditText;
 
 import br.com.arndroid.etdiet.R;
 
-public class IntegerPickerDialog extends DialogFragment {
+public class TextDialog extends DialogFragment {
     /**
-     * The callback used to indicate the user is done filling in the point number.
+     * The callback used to indicate the user is done filling in the text.
      */
-    public interface OnIntegerSetListener {
-        void onIntegerSet(String tag, int actualValue);
+    public interface OnTextSetListener {
+        void onTextSet(String tag, String actualText);
     }
 
     private static final String TITLE_KEY = "TITLE_KEY";
-    private static final String MIN_KEY = "MIN_KEY";
-    private static final String MAX_KEY = "MAX_KEY";
     private static final String INITIAL_KEY = "INITIAL_KEY";
     private static final String ACTUAL_KEY = "ACTUAL_KEY";
 
     private String mTitle;
-    private int mMinValue;
-    private int mMaxValue;
-    private int mInitialValue;
-    private NumberPicker mPickerInteger;
+    private String mInitialText;
+    private EditText mEdtText;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.integer_picker_dialog, null);
+        View view = inflater.inflate(R.layout.text_dialog, null);
         builder.setView(view);
 
         attachScreen(view);
 
-        int actualValue = getInitialValue();
+        String actualText = getInitialText();
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getString(TITLE_KEY));
-            setMinValue(savedInstanceState.getInt(MIN_KEY));
-            setMaxValue(savedInstanceState.getInt(MAX_KEY));
-            setInitialValue(savedInstanceState.getInt(INITIAL_KEY));
-            actualValue = savedInstanceState.getInt(ACTUAL_KEY);
+            setInitialText(savedInstanceState.getString(INITIAL_KEY));
+            actualText = savedInstanceState.getString(ACTUAL_KEY);
         }
 
-        setupScreen();
-        refreshScreen(actualValue);
+        refreshScreen(actualText);
 
         builder.setTitle(getTitle());
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                ((OnIntegerSetListener)getActivity()).onIntegerSet(IntegerPickerDialog.this.getTag(),
-                        mPickerInteger.getValue());
+                ((OnTextSetListener)getActivity()).onTextSet(TextDialog.this.getTag(),
+                        mEdtText.getText().toString());
                 dialog.dismiss();
             }
         });
@@ -71,26 +64,19 @@ public class IntegerPickerDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void refreshScreen(int actualValue) {
-        mPickerInteger.setValue(actualValue);
-    }
-
-    private void setupScreen() {
-        mPickerInteger.setMinValue(getMinValue());
-        mPickerInteger.setMaxValue(getMaxValue());
+    private void refreshScreen(String actualText) {
+        mEdtText.setText(actualText);
     }
 
     private void attachScreen(View rootView) {
-        mPickerInteger = (NumberPicker) rootView.findViewById(R.id.integerPicker);
+        mEdtText = (EditText) rootView.findViewById(R.id.edtText);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
-        outState.putInt(MIN_KEY, getMinValue());
-        outState.putInt(MAX_KEY, getMaxValue());
-        outState.putInt(INITIAL_KEY, getInitialValue());
-        outState.putInt(ACTUAL_KEY, mPickerInteger.getValue());
+        outState.putString(INITIAL_KEY, getInitialText());
+        outState.putString(ACTUAL_KEY, mEdtText.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
@@ -103,8 +89,8 @@ public class IntegerPickerDialog extends DialogFragment {
            Due to it, the attached activity must implement the interface.
          */
         super.onAttach(activity);
-        if (!(activity instanceof OnIntegerSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement IntegerPickerDialog.OnTextSetListener");
+        if (!(activity instanceof OnTextSetListener)) {
+            throw new ClassCastException(activity.toString() + " must implement TextDialog.OnTextSetListener");
         }
     }
 
@@ -116,32 +102,16 @@ public class IntegerPickerDialog extends DialogFragment {
         this.mTitle = title;
     }
 
-    public int getMinValue() {
-        return mMinValue;
+    public String getInitialText() {
+        return mInitialText;
     }
 
-    public void setMinValue(int minIntegerValue) {
-        this.mMinValue = minIntegerValue;
-    }
-
-    public int getMaxValue() {
-        return mMaxValue;
-    }
-
-    public void setMaxValue(int maxIntegerValue) {
-        this.mMaxValue = maxIntegerValue;
-    }
-
-    public int getInitialValue() {
-        return mInitialValue;
-    }
-
-    public void setInitialValue(int currentValue) {
-        this.mInitialValue = currentValue;
+    public void setInitialText(String currentText) {
+        mInitialText = currentText;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + IntegerPickerDialog.class.getSimpleName();
+    private static final String TAG = "==>ETD/" + TextDialog.class.getSimpleName();
     @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;
 }

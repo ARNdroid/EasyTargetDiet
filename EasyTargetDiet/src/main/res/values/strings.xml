@@ -35,7 +35,7 @@
     <string name="no_show_time_interval">hh:mm - hh:mm</string>
     <string name="no_show_ideal_usage">ideal NN</string>
     <string name="notes">Notes</string>
-    <string name="no_show_bla_bla_bla">Bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla...</string>
+    <string name="note_empty">You have no note for current date</string>
     <string name="january_short">Jan</string>
     <string name="february_short">Fev</string>
     <string name="march_short">Mar</string>
@@ -110,4 +110,7 @@
     <string name="snack_ideal_values">Snack ideal values</string>
     <string name="dinner_ideal_values">Dinner ideal values</string>
     <string name="supper_ideal_values">Supper ideal values</string>
+    <string name="note_create"><![CDATA[Add note <strong><u><font color="blue">here</font></u></strong>.]]></string>
+    <string name="note_edit"><![CDATA[Edit note <strong><u><font color="blue">here</font></u></strong>.]]></string>
+
 </resources>

@@ -569,7 +569,16 @@
             android:layout_below="@id/lblNotes"
             android:layout_alignParentLeft="true"
             android:paddingTop="@dimen/default_view_padding"
-            android:text="@string/no_show_bla_bla_bla" />
+            android:text="@string/note_empty" />
+
+        <TextView
+            android:id="@+id/txtEditNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtNotes"
+            android:layout_alignParentRight="true"
+            android:text="@string/note_create" />
+
     </RelativeLayout>
 
 </ScrollView>

@@ -116,7 +116,7 @@ public class PointPickerDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnPointSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement PointPickerDialog.OnIntegerSetListener");
+            throw new ClassCastException(activity.toString() + " must implement PointPickerDialog.OnTextSetListener");
         }
     }
 

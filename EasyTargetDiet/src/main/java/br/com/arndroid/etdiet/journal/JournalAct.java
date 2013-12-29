@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageAct;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -27,6 +32,7 @@ import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.util.DateUtil;
 import br.com.arndroid.etdiet.util.OldIntegerPickerDialog;
+import br.com.arndroid.etdiet.util.OldTextDialog;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
@@ -40,7 +46,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private OldIntegerPickerDialog.OnIntegerSetListener mLiquidSetListener;
     private OldIntegerPickerDialog.OnIntegerSetListener mOilSetListener;
     private OldIntegerPickerDialog.OnIntegerSetListener mSupplementListener;
-
+    private OldTextDialog.OnTextSetListener mNoteSetListener;
 
     private Button btnDay;
     private TextView txtMonth;
@@ -75,6 +81,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private TextView txtSupperTime;
     private TextView txtSupperIdeal;
     private TextView txtNotes;
+    private TextView txtEditNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +221,26 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 return true;
             }
         });
+
+        mNoteSetListener = new OldTextDialog.OnTextSetListener() {
+            @Override
+            public void onTextSet(EditText view, String text) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setNote(text);
+                manager.refresh(entity);
+            }
+        };
+        txtEditNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                OldTextDialog dialog = new OldTextDialog(JournalAct.this, mNoteSetListener,
+                        getString(R.string.notes), entity.getNote());
+                dialog.show();
+            }
+        });
     }
 
     @Override
@@ -277,6 +304,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtSupperTime = (TextView) findViewById(R.id.txtSupperTime);
         txtSupperIdeal = (TextView) findViewById(R.id.txtSupperIdeal);
         txtNotes = (TextView) findViewById(R.id.txtNotes);
+        txtEditNotes = (TextView) findViewById(R.id.txtEditNotes);
     }
 
     private void updateFields(DaySummary daySummary) {
@@ -325,7 +353,15 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getSupperEndTime()));
         txtSupperIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSupperGoal()));
 
-        txtNotes.setText(daySummary.getEntity().getNote());
+        if (TextUtils.isEmpty(daySummary.getEntity().getNote())) {
+            txtNotes.setText(R.string.note_empty);
+            final Spanned result = Html.fromHtml(getResources().getString((R.string.note_create)));
+            txtEditNotes.setText(result);
+        } else {
+            txtNotes.setText(daySummary.getEntity().getNote());
+            final Spanned result = Html.fromHtml(getResources().getString((R.string.note_edit)));
+            txtEditNotes.setText(result);
+        }
     }
 
     public void btnDayAction(View view) {
