@@ -160,67 +160,72 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         Date present = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         Date future = calendar.getTime();
+
+        final float pasteValue = 20.4f;
+        final float presentValue = 26.0f;
+        final float futureValue = 30.6f;
+
         ParametersHistoryEntity entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.DAILY_ALLOWANCE_PARAMETER_TYPE,
-                DateUtil.dateToDateId(paste), null, 20.0f, null);
+                DateUtil.dateToDateId(paste), null, pasteValue, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
         entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.DAILY_ALLOWANCE_PARAMETER_TYPE,
-                DateUtil.dateToDateId(future), null, 30.0f, null);
+                DateUtil.dateToDateId(future), null, futureValue, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
 
         // Paste:
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, -5);
-        float expectedDailyAllowance = 20.0f;
+        float expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        expectedDailyAllowance = 20.0f;
+        expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
-        expectedDailyAllowance = 20.0f;
+        expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, 5);
-        expectedDailyAllowance = 20.0f;
+        expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
 
         // Present:
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        expectedDailyAllowance = 20.0f;
+        expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(present);
-        expectedDailyAllowance = 26.0f;
+        expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
-        expectedDailyAllowance = 26.0f;
+        expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, 5);
-        expectedDailyAllowance = 26.0f;
+        expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
 
         // Future:
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        expectedDailyAllowance = 26.0f;
+        expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
-        expectedDailyAllowance = 30.0f;
+        expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
-        expectedDailyAllowance = 30.0f;
+        expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
-        expectedDailyAllowance = 30.0f;
+        expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 1000);
-        expectedDailyAllowance = 30.0f;
+        expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
     }
 

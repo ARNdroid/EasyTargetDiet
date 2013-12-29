@@ -13,34 +13,35 @@ import br.com.arndroid.etdiet.R;
 /*
  Build by example of Android DatePickerDialog class
  */
-public class IntegerPickerDialog extends AlertDialog implements DialogInterface.OnClickListener {
+public class OldIntegerPickerDialog extends AlertDialog implements DialogInterface.OnClickListener {
+
     private static final String CURRENT_VALUE_KEY = "CURRENT_VALUE_KEY";
-    private final NumberPicker mNumberPicker;
-    private final OnNumberSetListener mCallBack;
+    private NumberPicker mNumberPicker = null;
+    private final OnIntegerSetListener mCallBack;
 
     /**
-     * The callback used to indicate the user is done filling in the date.
+     * The callback used to indicate the user is done filling in the integer.
      */
-    public interface OnNumberSetListener {
-        void onDateSet(NumberPicker view, int value);
+    public interface OnIntegerSetListener {
+        void onNumberSet(NumberPicker view, int value);
     }
 
-    public IntegerPickerDialog(Context context,
-                               OnNumberSetListener callBack,
-                               String title,
-                               int minValue,
-                               int maxValue,
-                               int value) {
+    public OldIntegerPickerDialog(Context context,
+                                  OnIntegerSetListener callBack,
+                                  String title,
+                                  int minValue,
+                                  int maxValue,
+                                  int value) {
         this(context, 0, callBack, title, minValue, maxValue, value);
     }
 
-    public IntegerPickerDialog(Context context,
-                               int theme,
-                               OnNumberSetListener callBack,
-                               String title,
-                               int minValue,
-                               int maxValue,
-                               int value) {
+    public OldIntegerPickerDialog(Context context,
+                                  int theme,
+                                  OnIntegerSetListener callBack,
+                                  String title,
+                                  int minValue,
+                                  int maxValue,
+                                  int value) {
         super(context, theme);
 
         mCallBack = callBack;
@@ -51,13 +52,26 @@ public class IntegerPickerDialog extends AlertDialog implements DialogInterface.
 
         LayoutInflater inflater =
                 (LayoutInflater) themeContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.number_picker_dialog, null);
+        View view = inflater.inflate(R.layout.integer_picker_dialog, null);
         setView(view);
         setTitle(title);
-        mNumberPicker = (NumberPicker) view.findViewById(R.id.numberPicker);
+
+        attachScreen(view);
+        setupScreen(minValue, maxValue);
+        refreshScreen(value);
+    }
+
+    private void refreshScreen(int value) {
+        mNumberPicker.setValue(value);
+    }
+
+    private void setupScreen(int minValue, int maxValue) {
         mNumberPicker.setMinValue(minValue);
         mNumberPicker.setMaxValue(maxValue);
-        mNumberPicker.setValue(value);
+    }
+
+    private void attachScreen(View rootView) {
+        mNumberPicker = (NumberPicker) rootView.findViewById(R.id.integerPicker);
     }
 
     @Override
@@ -65,14 +79,10 @@ public class IntegerPickerDialog extends AlertDialog implements DialogInterface.
         tryNotifyDateSet();
     }
 
-    public NumberPicker getNumberPicker() {
-        return mNumberPicker;
-    }
-
     private void tryNotifyDateSet() {
         if (mCallBack != null) {
             mNumberPicker.clearFocus();
-            mCallBack.onDateSet(mNumberPicker, mNumberPicker.getValue());
+            mCallBack.onNumberSet(mNumberPicker, mNumberPicker.getValue());
         }
     }
 
@@ -90,7 +100,7 @@ public class IntegerPickerDialog extends AlertDialog implements DialogInterface.
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(@SuppressWarnings("NullableProblems") Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mNumberPicker.setValue(savedInstanceState.getInt(CURRENT_VALUE_KEY));
     }

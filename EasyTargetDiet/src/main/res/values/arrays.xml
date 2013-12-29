@@ -5,7 +5,7 @@
         <item>@string/breakfast</item>
         <item>@string/brunch</item>
         <item>@string/lunch</item>
-        <item>@string/sneak</item>
+        <item>@string/snack</item>
         <item>@string/dinner</item>
         <item>@string/supper</item>
         <item>@string/exercise</item>
@@ -34,5 +34,25 @@
         <item>@string/thursday_short</item>
         <item>@string/friday_short</item>
         <item>@string/saturday_short</item>
+    </string-array>
+
+    <string-array name="weekdays_name_list" >
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+    </string-array>
+
+    <string-array name="exercise_use_mode_list">
+        <item>@string/exercise_use_mode_dont_use</item>
+        <item>@string/exercise_use_mode_use_dont_accumulate</item>
+        <item>@string/exercise_use_mode_use_and_accumulate</item>
+    </string-array>
+    <string-array name="exercise_use_order_list">
+        <item>@string/exercise_use_order_use_exercises_first</item>
+        <item>@string/exercise_use_order_use_weekly_allowance_first</item>
     </string-array>
 </resources>

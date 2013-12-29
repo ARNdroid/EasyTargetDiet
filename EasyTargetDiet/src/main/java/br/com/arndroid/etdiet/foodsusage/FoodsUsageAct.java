@@ -23,7 +23,7 @@ import br.com.arndroid.etdiet.util.DateUtil;
 public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFrag.OnFoodUsageListFragListener,
         ActionBar.OnNavigationListener {
 
-    public static final String DATE_ID_PARAMETER = FoodsUsageAct.class.getSimpleName() + ".DATE_ID_PARAMETER";
+    public static final String DATE_ID_PARAMETER = FoodsUsageAct.class.getSimpleName() + ".SETTINGS_TYPE_PARAMETER";
     public static final String MEAL_PARAMETER = FoodsUsageAct.class.getSimpleName() + ".MEAL_PARAMETER";
     private static final String TAG = "==>ETD/" + FoodsUsageAct.class.getSimpleName();
     private static final boolean isLogEnabled = true;
@@ -34,10 +34,9 @@ public class FoodsUsageAct extends ActionBarActivity implements FoodsUsageListFr
 
     @Override
     public void onFoodUsageSelected(long foodUsageId) {
-        FragmentManager manager = getSupportFragmentManager();
         QuickInsertFrag dialog = new QuickInsertFrag();
         dialog.setId(foodUsageId);
-        dialog.show(manager, QuickInsertFrag.UPDATE_TAG);
+        dialog.show(getSupportFragmentManager(), QuickInsertFrag.UPDATE_TAG);
     }
 
     @Override

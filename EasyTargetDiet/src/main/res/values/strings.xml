@@ -3,11 +3,10 @@
 
     <string name="app_name">Easy Target Diet</string>
     <string name="quick_add">Quick Add</string>
-
     <string name="breakfast">Breakfast</string>
     <string name="brunch">Brunch</string>
     <string name="lunch">Lunch</string>
-    <string name="sneak">Sneak</string>
+    <string name="snack">Snack</string>
     <string name="dinner">Dinner</string>
     <string name="supper">Supper</string>
     <string name="date">Date</string>
@@ -36,7 +35,7 @@
     <string name="no_show_time_interval">hh:mm - hh:mm</string>
     <string name="no_show_ideal_usage">ideal NN</string>
     <string name="notes">Notes</string>
-    <string name="no_show_bla_bla_bla">Bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla, bla...</string>
+    <string name="note_empty">You have no note for current date</string>
     <string name="january_short">Jan</string>
     <string name="february_short">Fev</string>
     <string name="march_short">Mar</string>
@@ -61,4 +60,57 @@
     <string name="no_show_time_mask">hh:MM</string>
     <string name="no_show_date_mask">dd/MM/yyyy</string>
     <string name="done">Set</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="settings">Settings</string>
+    <string name="units_actual_value">%.1f units</string>
+    <string name="exercise_goal">Exercise goal</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="choose_exercise_goal">Choose exercise goal for weekday</string>
+    <string name="choose_liquid_goal">Choose liquid goal for weekday</string>
+    <string name="choose_oil_goal">Choose oil goal for weekday</string>
+    <string name="choose_supplement_goal">Choose supplement for weekday</string>
+    <string name="times_actual_value">%d times</string>
+    <string name="liquid_goal">Liquid Goal</string>
+    <string name="oil_goal">Oil goal</string>
+    <string name="supplement_goal">Supplement goal</string>
+    <string name="my_plan">My plan</string>
+    <string name="daily_allowance">Daily allowance</string>
+    <string name="weekly_allowance">Weekly allowance</string>
+    <string name="no_show_exercise_use_mode">Exercise use mode description</string>
+    <string name="exercise_use_mode">Exercise use mode</string>
+    <string name="exercise_use_order">Exercise use order</string>
+    <string name="no_show_exercise_use_order">Exercise use order description</string>
+    <string name="exercise_use_mode_dont_use">Don\'t use</string>
+    <string name="exercise_use_mode_use_dont_accumulate">Use but don\'t accumulate</string>
+    <string name="exercise_use_mode_use_and_accumulate">Use and accumulate</string>
+    <string name="exercise_use_order_use_exercises_first">Use exercises first</string>
+    <string name="exercise_use_order_use_weekly_allowance_first">Use weekly allowance first</string>
+    <string name="tracking_weekday">Tracking weekday</string>
+    <string name="no_show_tracking_weekday">A tracking weekday</string>
+    <string name="to">To</string>
+    <string name="from">From</string>
+    <string name="ideal_meal_value">Ideal meal units</string>
+    <string name="my_meals_ideal_values">My meals ideal values</string>
+    <string name="choose_breakfast_ideal_values">Choose breakfast ideal values for weekday</string>
+    <string name="breakfast_ideal_values">Breakfast ideal values</string>
+    <string name="meal_ideal_actual_values">%1$.1f units, from %2$s to %3$s</string>
+    <string name="choose_brunch_ideal_values">Choose brunch ideal values for weekday</string>
+    <string name="choose_lunch_ideal_values">Choose lunch ideal values for weekday</string>
+    <string name="choose_snack_ideal_values">Choose snack ideal values for weekday</string>
+    <string name="choose_dinner_ideal_values">Choose dinner ideal values for weekday</string>
+    <string name="choose_supper_ideal_values">Choose supper ideal values for weekday</string>
+    <string name="brunch_ideal_values">Brunch ideal values</string>
+    <string name="lunch_ideal_values">Lunch ideal values</string>
+    <string name="snack_ideal_values">Snack ideal values</string>
+    <string name="dinner_ideal_values">Dinner ideal values</string>
+    <string name="supper_ideal_values">Supper ideal values</string>
+    <string name="note_create"><![CDATA[Add note <strong><u><font color="blue">here</font></u></strong>.]]></string>
+    <string name="note_edit"><![CDATA[Edit note <strong><u><font color="blue">here</font></u></strong>.]]></string>
+
 </resources>

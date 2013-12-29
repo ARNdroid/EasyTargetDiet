@@ -137,6 +137,10 @@ public class DateUtil {
         return df.format(getHoursFromTimeAsInt(time)) + ":" + df.format(getMinutesFromTimeAsInt(time));
     }
 
+    public static int formattedStringToTime(String formattedString) {
+        return hoursToMillis(Integer.parseInt(formattedString.substring(0, 2)))
+                + minutesToMillis(Integer.parseInt(formattedString.substring(3, 5)));
+    }
     public static int dateToTimeAsInt(Date date) {
         final Calendar cal = Calendar.getInstance();
         cal.setTime(date);

@@ -43,8 +43,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         float dailyAllowance = 26.0f;
         float weeklyAllowance = 49.0f;
         int trackingWeekday = Calendar.SATURDAY;
-        int exerciseUseMode = Contract.ParametersHistory.USE_DONT_ACCUMULATE_EXERCISE_USE_MODE;
-        int exerciseUseOrder = Contract.ParametersHistory.EXERCISES_FIRST_EXERCISE_USE_ORDER;
+        int exerciseUseMode = Contract.ParametersHistory.EXERCISE_USE_MODE_USE_DONT_ACCUMULATE;
+        int exerciseUseOrder = Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST;
 
         db.beginTransaction();
         try {

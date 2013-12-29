@@ -5,17 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageAct;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -23,8 +29,10 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
+import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.IntegerPickerDialog;
+import br.com.arndroid.etdiet.util.OldIntegerPickerDialog;
+import br.com.arndroid.etdiet.util.OldTextDialog;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
@@ -35,10 +43,10 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private String mCurrentDateId;
     private String[] mMonthsShortNameArray;
     private String[] mWeekdaysShortNameArray;
-    private IntegerPickerDialog.OnNumberSetListener mLiquidSetListener;
-    private IntegerPickerDialog.OnNumberSetListener mOilSetListener;
-    private IntegerPickerDialog.OnNumberSetListener mSupplementListener;
-
+    private OldIntegerPickerDialog.OnIntegerSetListener mLiquidSetListener;
+    private OldIntegerPickerDialog.OnIntegerSetListener mOilSetListener;
+    private OldIntegerPickerDialog.OnIntegerSetListener mSupplementListener;
+    private OldTextDialog.OnTextSetListener mNoteSetListener;
 
     private Button btnDay;
     private TextView txtMonth;
@@ -46,10 +54,14 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private TextView txtPtsDay;
     private TextView txtPtsWeek;
     private TextView txtPtsExercise;
-    private Button btnExerciseGoal;
-    private Button btnLiquidGoal;
-    private Button btnOilGoal;
-    private Button btnSupplementGoal;
+    private RelativeLayout layExerciseGoal;
+    private TextView txtExerciseGoal;
+    private RelativeLayout layLiquidGoal;
+    private TextView txtLiquidGoal;
+    private RelativeLayout layOilGoal;
+    private TextView txtOilGoal;
+    private RelativeLayout laySupplementGoal;
+    private TextView txtSupplementGoal;
     private TextView txtBreakfastPts;
     private TextView txtBreakfastTime;
     private TextView txtBreakfastIdeal;
@@ -69,6 +81,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     private TextView txtSupperTime;
     private TextView txtSupperIdeal;
     private TextView txtNotes;
+    private TextView txtEditNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +102,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
     }
 
     private void setUpFields() {
-        btnExerciseGoal.setOnClickListener(new View.OnClickListener() {
+        layExerciseGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -108,15 +121,15 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        btnExerciseGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        layExerciseGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                btnMealAction(btnExerciseGoal);
+                layMealAction(layExerciseGoal);
                 return true;
             }
         });
 
-        btnLiquidGoal.setOnClickListener(new View.OnClickListener() {
+        layLiquidGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -126,28 +139,28 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        mLiquidSetListener = new IntegerPickerDialog.OnNumberSetListener() {
+        mLiquidSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
-            public void onDateSet(NumberPicker view, int value) {
+            public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
                 entity.setLiquidDone(value);
                 manager.refresh(entity);
             }
         };
-        btnLiquidGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        layLiquidGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
-                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mLiquidSetListener,
+                OldIntegerPickerDialog dialog = new OldIntegerPickerDialog(JournalAct.this, mLiquidSetListener,
                         getString(R.string.liquid), 0, 99, entity.getLiquidDone());
                 dialog.show();
                 return true;
             }
         });
 
-        btnOilGoal.setOnClickListener(new View.OnClickListener() {
+        layOilGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -157,28 +170,28 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        mOilSetListener = new IntegerPickerDialog.OnNumberSetListener() {
+        mOilSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
-            public void onDateSet(NumberPicker view, int value) {
+            public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
                 entity.setOilDone(value);
                 manager.refresh(entity);
             }
         };
-        btnOilGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        layOilGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
-                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mOilSetListener,
+                OldIntegerPickerDialog dialog = new OldIntegerPickerDialog(JournalAct.this, mOilSetListener,
                         getString(R.string.oil), 0, 99, entity.getOilDone());
                 dialog.show();
                 return true;
             }
         });
 
-        btnSupplementGoal.setOnClickListener(new View.OnClickListener() {
+        laySupplementGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -188,24 +201,44 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
             }
         });
-        mSupplementListener = new IntegerPickerDialog.OnNumberSetListener() {
+        mSupplementListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
-            public void onDateSet(NumberPicker view, int value) {
+            public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
                 entity.setSupplementDone(value);
                 manager.refresh(entity);
             }
         };
-        btnSupplementGoal.setOnLongClickListener(new View.OnLongClickListener() {
+        laySupplementGoal.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
                 DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
-                IntegerPickerDialog dialog = new IntegerPickerDialog(JournalAct.this, mSupplementListener,
+                OldIntegerPickerDialog dialog = new OldIntegerPickerDialog(JournalAct.this, mSupplementListener,
                         getString(R.string.supplement), 0, 99, entity.getSupplementDone());
                 dialog.show();
                 return true;
+            }
+        });
+
+        mNoteSetListener = new OldTextDialog.OnTextSetListener() {
+            @Override
+            public void onTextSet(EditText view, String text) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setNote(text);
+                manager.refresh(entity);
+            }
+        };
+        txtEditNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                OldTextDialog dialog = new OldTextDialog(JournalAct.this, mNoteSetListener,
+                        getString(R.string.notes), entity.getNote());
+                dialog.show();
             }
         });
     }
@@ -244,10 +277,14 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtPtsDay = (TextView) findViewById(R.id.txtPtsDay);
         txtPtsWeek = (TextView) findViewById(R.id.txtPtsWeek);
         txtPtsExercise = (TextView) findViewById(R.id.txtPtsExercise);
-        btnExerciseGoal = (Button) findViewById(R.id.btnExerciseGoal);
-        btnLiquidGoal = (Button) findViewById(R.id.btnLiquidGoal);
-        btnOilGoal = (Button) findViewById(R.id.btnOilGoal);
-        btnSupplementGoal = (Button) findViewById(R.id.btnSupplementGoal);
+        layExerciseGoal = (RelativeLayout) findViewById(R.id.layExerciseGoal);
+        txtExerciseGoal = (TextView) findViewById(R.id.txtExerciseGoal);
+        layLiquidGoal = (RelativeLayout) findViewById(R.id.layLiquidGoal);
+        txtLiquidGoal = (TextView) findViewById(R.id.txtLiquidGoal);
+        layOilGoal = (RelativeLayout) findViewById(R.id.layOilGoal);
+        txtOilGoal = (TextView) findViewById(R.id.txtOilGoal);
+        laySupplementGoal = (RelativeLayout) findViewById(R.id.laySupplementGoal);
+        txtSupplementGoal = (TextView) findViewById(R.id.txtSupplementGoal);
         txtBreakfastPts = (TextView) findViewById(R.id.txtBreakfastPts);
         txtBreakfastTime = (TextView) findViewById(R.id.txtBreakfastTime);
         txtBreakfastIdeal = (TextView) findViewById(R.id.txtBreakfastIdeal);
@@ -267,6 +304,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtSupperTime = (TextView) findViewById(R.id.txtSupperTime);
         txtSupperIdeal = (TextView) findViewById(R.id.txtSupperIdeal);
         txtNotes = (TextView) findViewById(R.id.txtNotes);
+        txtEditNotes = (TextView) findViewById(R.id.txtEditNotes);
     }
 
     private void updateFields(DaySummary daySummary) {
@@ -280,13 +318,13 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtPtsWeek.setText(String.valueOf(daySummary.getWeeklyAllowanceAfterUsage()));
         txtPtsExercise.setText(String.valueOf(daySummary.getExerciseAfterUsage()));
 
-        btnExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
+        txtExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
                 + String.valueOf(daySummary.getEntity().getExerciseGoal()));
-        btnLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
+        txtLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getLiquidGoal()));
-        btnOilGoal.setText(String.valueOf(daySummary.getEntity().getOilDone()) + "/"
+        txtOilGoal.setText(String.valueOf(daySummary.getEntity().getOilDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getOilGoal()));
-        btnSupplementGoal.setText(String.valueOf(daySummary.getEntity().getSupplementDone()) + "/"
+        txtSupplementGoal.setText(String.valueOf(daySummary.getEntity().getSupplementDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getSupplementGoal()));
 
         txtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
@@ -315,7 +353,15 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getSupperEndTime()));
         txtSupperIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSupperGoal()));
 
-        txtNotes.setText(daySummary.getEntity().getNote());
+        if (TextUtils.isEmpty(daySummary.getEntity().getNote())) {
+            txtNotes.setText(R.string.note_empty);
+            final Spanned result = Html.fromHtml(getResources().getString((R.string.note_create)));
+            txtEditNotes.setText(result);
+        } else {
+            txtNotes.setText(daySummary.getEntity().getNote());
+            final Spanned result = Html.fromHtml(getResources().getString((R.string.note_edit)));
+            txtEditNotes.setText(result);
+        }
     }
 
     public void btnDayAction(View view) {
@@ -327,29 +373,29 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
     }
 
-    public void btnMealAction(View view) {
+    public void layMealAction(View view) {
 
         int meal;
         switch (view.getId()) {
-            case R.id.lblBreakfastName:
+            case R.id.layBreakfast:
                 meal = Meals.BREAKFAST;
                 break;
-            case R.id.lblBrunchName:
+            case R.id.layBrunch:
                 meal = Meals.BRUNCH;
                 break;
-            case R.id.lblLunchName:
+            case R.id.layLunch:
                 meal = Meals.LUNCH;
                 break;
-            case R.id.lblSneakName:
+            case R.id.laySnack:
                 meal = Meals.SNACK;
                 break;
-            case R.id.lblDinnerName:
+            case R.id.layDinner:
                 meal = Meals.DINNER;
                 break;
-            case R.id.lblSupperName:
+            case R.id.laySupper:
                 meal = Meals.SUPPER;
                 break;
-            case R.id.btnExerciseGoal:
+            case R.id.layExerciseGoal:
                 meal = Meals.EXERCISE;
                 break;
             default:
@@ -391,6 +437,10 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
 
                 dialog.show(manager, QuickInsertFrag.INSERT_TAG);
 
+                return true;
+            case R.id.settings:
+                Intent intent = new Intent(this, SettingsMainActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

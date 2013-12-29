@@ -395,12 +395,12 @@ public class Contract {
         public static final int UNDEFINED_INTEGRAL_PARAMATER_VALUE = -1;
         public static final float UNDEFINED_FLOATING_POINT_PARAMATER_VALUE = -1.0f;
 
-        public static final int EXERCISES_FIRST_EXERCISE_USE_ORDER = 0;
-        public static final int WEEKLY_FIRST_EXERCISE_USE_ORDER = 1;
+        public static final int EXERCISE_USE_ORDER_USE_EXERCISES_FIRST = 0;
+        public static final int EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST = 1;
 
-        public static final int DONT_USE_EXERCISE_USE_MODE = 0;
-        public static final int USE_DONT_ACCUMULATE_EXERCISE_USE_MODE = 1;
-        public static final int USE_AND_ACCUMULATE_EXERCISE_USE_MODE = 2;
+        public static final int EXERCISE_USE_MODE_DONT_USE = 0;
+        public static final int EXERCISE_USE_MODE_USE_DONT_ACCUMULATE = 1;
+        public static final int EXERCISE_USE_MODE_USE_AND_ACCUMULATE = 2;
 
 		/*
 		 * Projections
