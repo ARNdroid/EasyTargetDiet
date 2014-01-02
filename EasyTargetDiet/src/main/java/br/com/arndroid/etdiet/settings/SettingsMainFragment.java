@@ -29,7 +29,6 @@ public class SettingsMainFragment extends Fragment implements
     private TextView mTxtTrackingWeekday;
 
     public interface SettingsMainFragmentListener {
-
         public void onExerciseGoalSettingsSelected();
         public void onLiquidGoalSettingsSelected();
         public void onOilGoalSettingsSelected();
@@ -40,7 +39,6 @@ public class SettingsMainFragment extends Fragment implements
         public void onSnackIdealValuesSelected();
         public void onDinnerIdealValuesSelected();
         public void onSupperIdealValuesSelected();
-
     }
 
     public static final String OWNER_TAG = SettingsMainFragment.class.getSimpleName();
@@ -61,7 +59,7 @@ public class SettingsMainFragment extends Fragment implements
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.settings_main_fragment, container, false);
 
-        attachScreen(rootView);
+        bindScreen(rootView);
         setupScreen(rootView);
         refreshScreen();
 
@@ -86,10 +84,12 @@ public class SettingsMainFragment extends Fragment implements
                 manager.getDailyAllowanceForDate(new Date())));
         mTxtWeeklyAllowanceActualValue.setText(String.format(unitsActualValueFormat,
                 manager.getWeeklyAllowanceForDate(new Date())));
-        mTxtExerciseUseMode.setText(exerciseUseModeDescription(manager.getExerciseUseModeForDate(new Date())));
-        mTxtExerciseUseOrder.setText(exerciseUseOrderDescription(manager.getExerciseUseOrderForDate(new Date())));
-        mTxtTrackingWeekday.setText(trackingWeekdayDescription(manager.getTrackingWeekdayForDate(new Date())));
-
+        mTxtExerciseUseMode.setText(exerciseUseModeDescription(
+                manager.getExerciseUseModeForDate(new Date())));
+        mTxtExerciseUseOrder.setText(exerciseUseOrderDescription(
+                manager.getExerciseUseOrderForDate(new Date())));
+        mTxtTrackingWeekday.setText(trackingWeekdayDescription(
+                manager.getTrackingWeekdayForDate(new Date())));
     }
 
     private String trackingWeekdayDescription(int trackingWeekday) {
@@ -137,7 +137,7 @@ public class SettingsMainFragment extends Fragment implements
         }
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mTxtDailyAllowanceActualValue = (TextView) rootView.findViewById(
                 R.id.txtDailyAllowanceActualValue);
         mTxtWeeklyAllowanceActualValue = (TextView) rootView.findViewById(

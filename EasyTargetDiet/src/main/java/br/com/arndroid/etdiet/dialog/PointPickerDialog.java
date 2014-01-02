@@ -40,7 +40,7 @@ public class PointPickerDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.point_picker_dialog, null);
         builder.setView(view);
 
-        attachScreen(view);
+        bindScreen(view);
 
         float actualValue = getInitialValue();
         if (savedInstanceState != null) {
@@ -91,7 +91,7 @@ public class PointPickerDialog extends DialogFragment {
         mPickerDecimal.setWrapSelectorWheel(true);
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mPickerInteger = (NumberPicker) rootView.findViewById(R.id.pickerInteger);
         mPickerDecimal = (NumberPicker) rootView.findViewById(R.id.pickerDecimal);
     }

@@ -53,7 +53,7 @@ public class MealIdealValuesDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.meal_ideal_values_dialog, null);
         builder.setView(view);
 
-        attachScreen(view);
+        bindScreen(view);
 
         float actualIdealValue = getInitialIdealValue();
         int actualStartTime = getInitialStartTime();
@@ -149,7 +149,7 @@ public class MealIdealValuesDialog extends DialogFragment {
         });
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mPickerInteger = (NumberPicker) rootView.findViewById(R.id.pickerInteger);
         mPickerDecimal = (NumberPicker) rootView.findViewById(R.id.pickerDecimal);
         mBtnStartTime = (Button) rootView.findViewById(R.id.btnStartTime);

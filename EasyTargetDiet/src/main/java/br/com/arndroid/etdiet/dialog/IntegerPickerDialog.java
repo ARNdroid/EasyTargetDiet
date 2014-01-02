@@ -39,7 +39,7 @@ public class IntegerPickerDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.integer_picker_dialog, null);
         builder.setView(view);
 
-        attachScreen(view);
+        bindScreen(view);
 
         int actualValue = getInitialValue();
         if (savedInstanceState != null) {
@@ -80,7 +80,7 @@ public class IntegerPickerDialog extends DialogFragment {
         mPickerInteger.setMaxValue(getMaxValue());
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mPickerInteger = (NumberPicker) rootView.findViewById(R.id.integerPicker);
     }
 

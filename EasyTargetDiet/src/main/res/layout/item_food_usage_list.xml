@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_view_padding">
+
+    <TextView
+        android:id="@+id/lblFoodValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="@string/no_show_two_digits_number"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/lblFoodDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/lblFoodValue"
+        android:text="@string/no_show_some_food"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <TextView
+        android:id="@+id/lblTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/lblFoodValue"
+        android:layout_below="@id/lblFoodDescription"
+        android:text="@string/no_show_time_mask"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    <View
+        style="@style/DividerHorizontal"
+        android:layout_below="@id/lblTime"/>
+
+</RelativeLayout>

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 
 import br.com.arndroid.etdiet.R;
 
@@ -53,7 +52,7 @@ public class OldTextDialog extends AlertDialog implements DialogInterface.OnClic
         setView(view);
         setTitle(title);
 
-        attachScreen(view);
+        bindScreen(view);
         refreshScreen(text);
     }
 
@@ -61,7 +60,7 @@ public class OldTextDialog extends AlertDialog implements DialogInterface.OnClic
         mEdtText.setText(text);
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mEdtText = (EditText) rootView.findViewById(R.id.edtText);
     }
 

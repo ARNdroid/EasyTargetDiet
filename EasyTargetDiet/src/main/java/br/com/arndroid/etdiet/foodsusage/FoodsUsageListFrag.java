@@ -30,7 +30,7 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
     private SimpleCursorAdapter mAdapter;
     private OnFoodUsageListFragListener mListener;
 
-    public void refresh(String dateId, int meal) {
+    public void refreshScreen(String dateId, int meal) {
         mDateId = dateId;
         mMeal = meal;
         // If not loaded, load the first instance,

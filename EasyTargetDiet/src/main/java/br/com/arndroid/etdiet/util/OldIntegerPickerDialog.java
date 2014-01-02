@@ -56,7 +56,7 @@ public class OldIntegerPickerDialog extends AlertDialog implements DialogInterfa
         setView(view);
         setTitle(title);
 
-        attachScreen(view);
+        bindScreen(view);
         setupScreen(minValue, maxValue);
         refreshScreen(value);
     }
@@ -70,7 +70,7 @@ public class OldIntegerPickerDialog extends AlertDialog implements DialogInterfa
         mNumberPicker.setMaxValue(maxValue);
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mNumberPicker = (NumberPicker) rootView.findViewById(R.id.integerPicker);
     }
 

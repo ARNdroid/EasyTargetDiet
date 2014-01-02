@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.arndroid.etdiet.foodsusage.FoodsUsageAct"
+            android:name=".foodsusage.FoodsUsageActivity"
             android:label="@string/app_name"
             android:parentActivityName=".journal.JournalAct"
             android:theme="@style/Theme.AppCompat.Light" >

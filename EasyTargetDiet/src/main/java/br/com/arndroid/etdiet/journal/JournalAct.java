@@ -21,8 +21,7 @@ import android.widget.TextView;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.dialog.TextDialog;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageAct;
+import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -330,7 +329,7 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
         txtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
         txtBreakfastTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getBreakfastStartTime())
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime()));
-        final String ideal = getResources().getString(R.string.goal) + " ";
+        final String ideal = getResources().getString(R.string.ideal_values) + " ";
         txtBreakfastIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBreakfastGoal()));
         txtBrunchPts.setText(String.valueOf(daySummary.getUsage().getBrunchUsed()));
         txtBrunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getBrunchStartTime())
@@ -406,11 +405,11 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 getSupportFragmentManager().findFragmentById(R.id.foods_usage_list_frag);
 
         if (foodsUsageListFrag != null) {
-            foodsUsageListFrag.refresh(mCurrentDateId, meal);
+            foodsUsageListFrag.refreshScreen(mCurrentDateId, meal);
         } else {
-            Intent intent = new Intent(this, FoodsUsageAct.class);
-            intent.putExtra(FoodsUsageAct.DATE_ID_PARAMETER, mCurrentDateId);
-            intent.putExtra(FoodsUsageAct.MEAL_PARAMETER, meal);
+            Intent intent = new Intent(this, FoodsUsageActivity.class);
+            intent.putExtra(FoodsUsageActivity.DATE_ID_PARAMETER, mCurrentDateId);
+            intent.putExtra(FoodsUsageActivity.MEAL_PARAMETER, meal);
             startActivity(intent);
         }
     }
