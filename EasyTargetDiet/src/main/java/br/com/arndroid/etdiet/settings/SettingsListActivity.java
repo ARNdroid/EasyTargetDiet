@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentReplier;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.dialog.IntegerPickerDialog;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
@@ -35,7 +36,7 @@ public class SettingsListActivity extends ActionBarActivity implements
         // that started this activity:
         if(savedInstanceState == null) {
             Intent intent = getIntent();
-            mSettingsColumnName = intent.getExtras().getString(SETTINGS_TYPE_PARAMETER);
+            mSettingsColumnName = intent.getExtras().getString(FragmentReplier.ACTION_TAG_KEY);
         } else {
             mSettingsColumnName = savedInstanceState.getString(SETTINGS_TYPE_PARAMETER);
         }

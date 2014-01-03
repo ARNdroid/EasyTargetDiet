@@ -22,9 +22,11 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.util.DateUtil;
 
-public class FoodsUsageListFrag extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class FoodsUsageListFrag extends ListFragment implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int FOODS_USAGE_LOADER_ID = 1;
+
     private String mDateId;
     private int mMeal;
     private SimpleCursorAdapter mAdapter;
@@ -43,6 +45,7 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(getResources().getText(R.string.list_empty_foods_usage));
+        // TODO: I think the best choice is menu only in activities. We need to migrate this.
         setHasOptionsMenu(true);
 
         mAdapter = new SimpleCursorAdapter(getActivity(),
@@ -79,11 +82,13 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
         super.onDetach();
     }
 
+    // TODO: I think the best choice is menu only in activities. We need to migrate this.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.foods_usage_list, menu);
     }
 
+    // TODO: I think the best choice is menu only in activities. We need to migrate this.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -96,11 +101,13 @@ public class FoodsUsageListFrag extends ListFragment implements LoaderManager.Lo
         }
     }
 
+    // TODO: I think the best choice is menu only in activities. We need to migrate this.
     private float getDefaultValue() {
         return Meals.preferredUsageForMealInDate(this.getActivity().getApplicationContext(),
                 mMeal, DateUtil.dateIdToDate(mDateId));
     }
 
+    // TODO: I think the best choice is menu only in activities. We need to migrate this.
     private int getDefaultTime() {
         return DateUtil.dateToTimeAsInt(new Date());
     }

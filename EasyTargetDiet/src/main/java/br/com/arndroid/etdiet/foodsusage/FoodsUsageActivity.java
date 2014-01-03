@@ -59,6 +59,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         builder.create().show();
     }
 
+    // TODO: I think the best choice is menu only in activities. We need to migrate this (to menu response).
     @Override
     public void onQuickAddMenuSelected(String dateId, int time, int meal, String description, float value) {
         FragmentManager manager = getSupportFragmentManager();

@@ -1,6 +1,7 @@
 package br.com.arndroid.etdiet.settings;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.ActivityCaller;
+import br.com.arndroid.etdiet.action.SimpleActivityCaller;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.dialog.PointPickerDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
@@ -15,7 +18,8 @@ import br.com.arndroid.etdiet.dialog.StringListDialog;
 public class SettingsMainActivity extends ActionBarActivity implements
         PointPickerDialog.OnPointSetListener,
         StringListDialog.OnStringSelectedListener,
-        SettingsMainFragment.SettingsMainFragmentListener {
+        SettingsMainFragment.SettingsMainFragmentListener,
+        ActivityCaller {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +132,14 @@ public class SettingsMainActivity extends ActionBarActivity implements
     @Override
     public void onSupperIdealValuesSelected() {
         callListFragmentForSetting(Contract.WeekdayParameters.SUPPER_GOAL);
+    }
+
+    @Override
+    public void onCallAction(int fragmentId, Class holderActivityClass, String actionTag,
+                             Bundle actionData) {
+
+        new SimpleActivityCaller().onCallAction(this, getSupportFragmentManager(), fragmentId,
+                holderActivityClass, actionTag, actionData);
     }
 
     @SuppressWarnings("UnusedDeclaration")

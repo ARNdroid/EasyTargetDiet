@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.ActivityCaller;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.dialog.PointPickerDialog;
@@ -70,10 +71,17 @@ public class SettingsMainFragment extends Fragment implements
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        // TODO: remove this
         if (!(activity instanceof SettingsMainFragmentListener)) {
             throw new ClassCastException(activity.toString() + " must implement " +
                 SettingsMainFragmentListener.class.getSimpleName());
         }
+
+        if (!(activity instanceof ActivityCaller)) {
+            throw new ClassCastException(activity.toString() + " must implement " +
+                    ActivityCaller.class.getSimpleName());
+        }
+
     }
 
     private void refreshScreen() {
@@ -227,7 +235,8 @@ public class SettingsMainFragment extends Fragment implements
         layExerciseGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener)getActivity()).onExerciseGoalSettingsSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.EXERCISE_GOAL, null);
             }
         });
 
