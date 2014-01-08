@@ -3,6 +3,7 @@ package br.com.arndroid.etdiet.foodsusage;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
@@ -14,13 +15,14 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
 
 public class FoodsUsageActivity extends ActionBarActivity implements
-        FoodsUsageListFrag.OnFoodUsageListFragListener,
+        FoodsUsageListFragment.FoodUsageListFragListener,
         ActionBar.OnNavigationListener {
 
     public static final String DATE_ID_PARAMETER = FoodsUsageActivity.class.getSimpleName()
@@ -28,12 +30,13 @@ public class FoodsUsageActivity extends ActionBarActivity implements
     public static final String MEAL_PARAMETER = FoodsUsageActivity.class.getSimpleName()
             + ".MEAL_PARAMETER";
 
-    private FoodsUsageListFrag mFragment;
+    private FoodsUsageListFragment mFragment;
     private String mDateId;
     private String[] mealsNameList;
     private TextView mTxtDate;
+    private TextView mTxtUsed;
 
-    // TODO: refactoring: migration to FoodsUsageListFrag.
+    // TODO: refactoring: migration to FoodsUsageListFragment.
     @Override
     public void onFoodUsageSelected(long foodUsageId) {
         QuickInsertFrag dialog = new QuickInsertFrag();
@@ -41,7 +44,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         dialog.show(getSupportFragmentManager(), QuickInsertFrag.UPDATE_TAG);
     }
 
-    // TODO: refactoring: migration to FoodsUsageListFrag.
+    // TODO: refactoring: migration to FoodsUsageListFragment.
     @Override
     public void onFoodUsageLongSelected(final long foodUsageId) {
         final FoodsUsageManager manager = new FoodsUsageManager(getApplicationContext());
@@ -100,7 +103,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         bindScreen();
         refreshScreen();
 
-        mFragment = (FoodsUsageListFrag) getSupportFragmentManager()
+        mFragment = (FoodsUsageListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.foods_usage_list_frag);
         mFragment.refreshScreen(mDateId, actionBar.getSelectedNavigationIndex());
     }
@@ -125,6 +128,18 @@ public class FoodsUsageActivity extends ActionBarActivity implements
     }
 
     @Override
+    public void onDataLoadFinished(Cursor data) {
+        // Data from origin has been changed. Update fields:
+        float totalUsed = 0.0f;
+        if (data.moveToFirst()) {
+            do {
+                totalUsed += data.getFloat(data.getColumnIndex(Contract.FoodsUsage.VALUE));
+            } while (data.moveToNext());
+        }
+        mTxtUsed.setText(String.format(getString(R.string.units_actual_value), totalUsed));
+    }
+
+    @Override
     public boolean onNavigationItemSelected(int position, long itemId) {
         // TODO: the following logic needs change to use itemId
         mFragment.refreshScreen(mDateId, position);
@@ -133,6 +148,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
     private void bindScreen() {
         mTxtDate = (TextView) findViewById(R.id.txtDate);
+        mTxtUsed = (TextView) findViewById(R.id.txtUsed);
     }
 
     private void refreshScreen() {

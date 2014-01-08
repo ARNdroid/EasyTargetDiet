@@ -22,7 +22,7 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag;
+import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
@@ -36,7 +36,7 @@ import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
 public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObserver,
-    DatePickerDialog.OnDateSetListener{
+    DatePickerDialog.OnDateSetListener {
 
     private VirtualWeek mVirtualWeek;
     private String mCurrentDateId;
@@ -401,11 +401,11 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 throw new IllegalStateException("Invalid View.id " + view.getId());
         }
 
-        FoodsUsageListFrag foodsUsageListFrag = (FoodsUsageListFrag)
+        FoodsUsageListFragment foodsUsageListFragment = (FoodsUsageListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.foods_usage_list_frag);
 
-        if (foodsUsageListFrag != null) {
-            foodsUsageListFrag.refreshScreen(mCurrentDateId, meal);
+        if (foodsUsageListFragment != null) {
+            foodsUsageListFragment.refreshScreen(mCurrentDateId, meal);
         } else {
             Intent intent = new Intent(this, FoodsUsageActivity.class);
             intent.putExtra(FoodsUsageActivity.DATE_ID_PARAMETER, mCurrentDateId);

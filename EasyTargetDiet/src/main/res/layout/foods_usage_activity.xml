@@ -91,7 +91,7 @@
 
     <fragment
         android:id="@+id/foods_usage_list_frag"
-        class="br.com.arndroid.etdiet.foodsusage.FoodsUsageListFrag"
+        class="br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/item_food_usage_list" />

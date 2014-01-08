@@ -33,8 +33,4 @@
         android:text="@string/no_show_time_mask"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-    <View
-        style="@style/DividerHorizontal"
-        android:layout_below="@id/lblTime"/>
-
 </RelativeLayout>

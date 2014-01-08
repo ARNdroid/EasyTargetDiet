@@ -18,7 +18,6 @@ import br.com.arndroid.etdiet.dialog.StringListDialog;
 public class SettingsMainActivity extends ActionBarActivity implements
         PointPickerDialog.OnPointSetListener,
         StringListDialog.OnStringSelectedListener,
-        SettingsMainFragment.SettingsMainFragmentListener,
         ActivityCaller {
 
     @Override
@@ -69,69 +68,6 @@ public class SettingsMainActivity extends ActionBarActivity implements
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
-    }
-
-    private void callListFragmentForSetting(String settingName) {
-        SettingsListFragment settingsListFragment = (SettingsListFragment)
-                getSupportFragmentManager().findFragmentById(R.id.settings_list_fragment);
-
-        if (settingsListFragment != null) {
-            settingsListFragment.refresh(settingName);
-        } else {
-            Intent intent = new Intent(this, SettingsListActivity.class);
-            intent.putExtra(SettingsListActivity.SETTINGS_TYPE_PARAMETER, settingName);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public void onExerciseGoalSettingsSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.EXERCISE_GOAL);
-    }
-
-    @Override
-    public void onLiquidGoalSettingsSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.LIQUID_GOAL);
-    }
-
-    @Override
-    public void onOilGoalSettingsSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.OIL_GOAL);
-    }
-
-    @Override
-    public void onSupplementGoalSettingsSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.SUPPLEMENT_GOAL);
-    }
-
-    @Override
-    public void onBreakfastIdealValuesSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.BREAKFAST_GOAL);
-    }
-
-    @Override
-    public void onBrunchIdealValuesSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.BRUNCH_GOAL);
-    }
-
-    @Override
-    public void onLunchIdealValuesSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.LUNCH_GOAL);
-    }
-
-    @Override
-    public void onSnackIdealValuesSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.SNACK_GOAL);
-    }
-
-    @Override
-    public void onDinnerIdealValuesSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.DINNER_GOAL);
-    }
-
-    @Override
-    public void onSupperIdealValuesSelected() {
-        callListFragmentForSetting(Contract.WeekdayParameters.SUPPER_GOAL);
     }
 
     @Override

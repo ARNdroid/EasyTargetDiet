@@ -22,7 +22,7 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.util.DateUtil;
 
-public class FoodsUsageListFrag extends ListFragment implements
+public class FoodsUsageListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int FOODS_USAGE_LOADER_ID = 1;
@@ -30,7 +30,6 @@ public class FoodsUsageListFrag extends ListFragment implements
     private String mDateId;
     private int mMeal;
     private SimpleCursorAdapter mAdapter;
-    private OnFoodUsageListFragListener mListener;
 
     public void refreshScreen(String dateId, int meal) {
         mDateId = dateId;
@@ -49,16 +48,16 @@ public class FoodsUsageListFrag extends ListFragment implements
         setHasOptionsMenu(true);
 
         mAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_2, null,
+                R.layout.item_food_usage_list, null,
                 new String[] {Contract.FoodsUsage.DESCRIPTION, Contract.FoodsUsage.VALUE},
-                new int[] {android.R.id.text1, android.R.id.text2}, 0);
+                new int[] {R.id.lblFoodDescription, R.id.lblFoodValue}, 0);
         setListAdapter(mAdapter);
 
         ListView list = getListView();
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mListener.onFoodUsageLongSelected(id);
+                ((FoodUsageListFragListener) getActivity()).onFoodUsageLongSelected(id);
                 return true;
             }
         });
@@ -68,18 +67,10 @@ public class FoodsUsageListFrag extends ListFragment implements
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        try {
-            mListener = (OnFoodUsageListFragListener) activity;
-        } catch (ClassCastException e) {
+        if (!(activity instanceof FoodUsageListFragListener)) {
             throw new ClassCastException(activity.toString() + " must implement " +
-                    OnFoodUsageListFragListener.class.getSimpleName());
+                    FoodUsageListFragListener.class.getSimpleName());
         }
-    }
-
-    @Override
-    public void onDetach() {
-        mListener = null;
-        super.onDetach();
     }
 
     // TODO: I think the best choice is menu only in activities. We need to migrate this.
@@ -93,8 +84,8 @@ public class FoodsUsageListFrag extends ListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.quick_add:
-                mListener.onQuickAddMenuSelected(mDateId, getDefaultTime(), mMeal,
-                        null, getDefaultValue());
+                ((FoodUsageListFragListener) getActivity()).onQuickAddMenuSelected(mDateId,
+                        getDefaultTime(), mMeal, null, getDefaultValue());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -115,7 +106,7 @@ public class FoodsUsageListFrag extends ListFragment implements
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         // Send the event and id to the host activity
-        mListener.onFoodUsageSelected(id);
+        ((FoodUsageListFragListener) getActivity()).onFoodUsageSelected(id);
     }
 
     @Override
@@ -134,6 +125,7 @@ public class FoodsUsageListFrag extends ListFragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor data) {
         mAdapter.swapCursor(data);
+        ((FoodUsageListFragListener) getActivity()).onDataLoadFinished(data);
     }
 
     @Override
@@ -141,7 +133,9 @@ public class FoodsUsageListFrag extends ListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    public interface OnFoodUsageListFragListener {
+    public interface FoodUsageListFragListener {
+        public void onDataLoadFinished(Cursor data);
+
         public void onFoodUsageSelected(long foodUsageId);
 
         public void onFoodUsageLongSelected(long foodUsageId);

@@ -29,19 +29,6 @@ public class SettingsMainFragment extends Fragment implements
     private TextView mTxtExerciseUseOrder;
     private TextView mTxtTrackingWeekday;
 
-    public interface SettingsMainFragmentListener {
-        public void onExerciseGoalSettingsSelected();
-        public void onLiquidGoalSettingsSelected();
-        public void onOilGoalSettingsSelected();
-        public void onSupplementGoalSettingsSelected();
-        public void onBreakfastIdealValuesSelected();
-        public void onBrunchIdealValuesSelected();
-        public void onLunchIdealValuesSelected();
-        public void onSnackIdealValuesSelected();
-        public void onDinnerIdealValuesSelected();
-        public void onSupperIdealValuesSelected();
-    }
-
     public static final String OWNER_TAG = SettingsMainFragment.class.getSimpleName();
 
     private static final String DAILY_ALLOWANCE_SETTINGS_TAG = OWNER_TAG
@@ -70,12 +57,6 @@ public class SettingsMainFragment extends Fragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // TODO: remove this
-        if (!(activity instanceof SettingsMainFragmentListener)) {
-            throw new ClassCastException(activity.toString() + " must implement " +
-                SettingsMainFragmentListener.class.getSimpleName());
-        }
 
         if (!(activity instanceof ActivityCaller)) {
             throw new ClassCastException(activity.toString() + " must implement " +
@@ -244,7 +225,8 @@ public class SettingsMainFragment extends Fragment implements
         layLiquidGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener)getActivity()).onLiquidGoalSettingsSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.LIQUID_GOAL, null);
             }
         });
 
@@ -252,7 +234,8 @@ public class SettingsMainFragment extends Fragment implements
         layOilGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onOilGoalSettingsSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.OIL_GOAL, null);
             }
         });
 
@@ -260,7 +243,8 @@ public class SettingsMainFragment extends Fragment implements
         laySupplementGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onSupplementGoalSettingsSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.SUPPLEMENT_GOAL, null);
             }
         });
 
@@ -268,7 +252,8 @@ public class SettingsMainFragment extends Fragment implements
         layBreakfastIdealValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onBreakfastIdealValuesSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.BREAKFAST_GOAL, null);
             }
         });
 
@@ -276,7 +261,8 @@ public class SettingsMainFragment extends Fragment implements
         layBrunchIdealValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onBrunchIdealValuesSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.BRUNCH_GOAL, null);
             }
         });
 
@@ -284,7 +270,8 @@ public class SettingsMainFragment extends Fragment implements
         layLunchIdealValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onLunchIdealValuesSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.LUNCH_GOAL, null);
             }
         });
 
@@ -292,7 +279,8 @@ public class SettingsMainFragment extends Fragment implements
         laySnackIdealValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onSnackIdealValuesSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.SNACK_GOAL, null);
             }
         });
 
@@ -300,7 +288,8 @@ public class SettingsMainFragment extends Fragment implements
         layDinnerIdealValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onDinnerIdealValuesSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.DINNER_GOAL, null);
             }
         });
 
@@ -308,7 +297,8 @@ public class SettingsMainFragment extends Fragment implements
         laySupperIdealValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SettingsMainFragmentListener) getActivity()).onSupperIdealValuesSelected();
+                ((ActivityCaller)getActivity()).onCallAction(R.id.settings_list_fragment,
+                        SettingsListActivity.class, Contract.WeekdayParameters.SUPPER_GOAL, null);
             }
         });
     }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentReplier;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
@@ -21,6 +22,7 @@ public class SettingsListFragment extends ListFragment implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
         PointPickerDialog.OnPointSetListener,
         IntegerPickerDialog.OnIntegerSetListener,
+        FragmentReplier,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String OWNER_TAG = SettingsListFragment.class.getSimpleName();
@@ -47,13 +49,6 @@ public class SettingsListFragment extends ListFragment implements
     private int mSelectedWeekday;
 
     private SettingsWeekdayAdapter mAdapter;
-
-    public void refresh(String settingsColumn) {
-        mSettingsColumnName = settingsColumn;
-        // If not loaded, load the first instance,
-        // otherwise closes current loader e start a new one:
-        getLoaderManager().restartLoader(WEEKDAY_PARAMETERS_SETTINGS_LOADER_ID, null, this);
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -259,5 +254,13 @@ public class SettingsListFragment extends ListFragment implements
         }
 
         manager.refresh(entity);
+    }
+
+    @Override
+    public void onReplyAction(String actionTag, Bundle actionData) {
+        mSettingsColumnName = actionTag;
+        // If not loaded, load the first instance,
+        // otherwise closes current loader e start a new one:
+        getLoaderManager().restartLoader(WEEKDAY_PARAMETERS_SETTINGS_LOADER_ID, null, this);
     }
 }

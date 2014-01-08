@@ -32,8 +32,6 @@ public class SettingsListActivity extends ActionBarActivity implements
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Tells fragment to show foods usage filtered by date and meal inside the intent/bundle
-        // that started this activity:
         if(savedInstanceState == null) {
             Intent intent = getIntent();
             mSettingsColumnName = intent.getExtras().getString(FragmentReplier.ACTION_TAG_KEY);
@@ -43,7 +41,7 @@ public class SettingsListActivity extends ActionBarActivity implements
         actionBar.setTitle(getTitleFromSettingsType(mSettingsColumnName));
         SettingsListFragment fragment = (SettingsListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.settings_list_fragment);
-        fragment.refresh(mSettingsColumnName);
+        fragment.onReplyAction(mSettingsColumnName, null);
     }
 
     private String getTitleFromSettingsType(String settingsColumnName) {

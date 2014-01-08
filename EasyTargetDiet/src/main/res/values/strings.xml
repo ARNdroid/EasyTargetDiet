@@ -111,7 +111,7 @@
     <string name="dinner_ideal_values">Dinner ideal values</string>
     <string name="supper_ideal_values">Supper ideal values</string>
     <string name="note_create"><![CDATA[Add note <strong><u><font color="blue">here</font></u></strong>.]]></string>
-    <string name="note_edit"><![CDATA[Edit note <strong><u><font color="blue">here</font></u></strong>.]]></string>
+    <string name="note_edit"><![CDATA[Edit note <u><font color="blue">here</font></u>.]]></string>
     <string name="meal_info">Meal information</string>
     <string name="food_list">Food list</string>
     <string name="total">Total</string>
