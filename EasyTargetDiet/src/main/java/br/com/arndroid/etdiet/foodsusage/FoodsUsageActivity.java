@@ -1,79 +1,37 @@
 package br.com.arndroid.etdiet.foodsusage;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdiet.meals.MealsAdapter;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
-import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
+import br.com.arndroid.etdiet.provider.days.DaysEntity;
+import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
 
 public class FoodsUsageActivity extends ActionBarActivity implements
-        FoodsUsageListFragment.FoodUsageListFragListener,
+        FoodsUsageListFragment.FoodUsageListFragmentListener,
         ActionBar.OnNavigationListener {
-
-    public static final String DATE_ID_PARAMETER = FoodsUsageActivity.class.getSimpleName()
-            + ".SETTINGS_TYPE_PARAMETER";
-    public static final String MEAL_PARAMETER = FoodsUsageActivity.class.getSimpleName()
-            + ".MEAL_PARAMETER";
 
     private FoodsUsageListFragment mFragment;
     private String mDateId;
-    private String[] mealsNameList;
     private TextView mTxtDate;
     private TextView mTxtUsed;
-
-    // TODO: refactoring: migration to FoodsUsageListFragment.
-    @Override
-    public void onFoodUsageSelected(long foodUsageId) {
-        QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setId(foodUsageId);
-        dialog.show(getSupportFragmentManager(), QuickInsertFrag.UPDATE_TAG);
-    }
-
-    // TODO: refactoring: migration to FoodsUsageListFragment.
-    @Override
-    public void onFoodUsageLongSelected(final long foodUsageId) {
-        final FoodsUsageManager manager = new FoodsUsageManager(getApplicationContext());
-        final FoodsUsageEntity entity = manager.foodUsageFromId(foodUsageId);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                manager.remove(foodUsageId);
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.setMessage(String.format(getResources().getString(R.string.delete_food_usage_msg),
-                entity.getDescription(), mealsNameList[entity.getMeal()]));
-        builder.create().show();
-    }
-
-    // TODO: I think the best choice is menu only in activities. We need to migrate this (to menu response).
-    @Override
-    public void onQuickAddMenuSelected(String dateId, int time, int meal, String description, float value) {
-        FragmentManager manager = getSupportFragmentManager();
-        QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setDateId(dateId);
-        dialog.setTime(time);
-        dialog.setMeal(meal);
-        dialog.setDescription(description);
-        dialog.setValue(value);
-        dialog.show(manager, QuickInsertFrag.INSERT_TAG);
-    }
+    private TextView mTxtGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,44 +39,66 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
         setContentView(R.layout.foods_usage_activity);
 
-        mealsNameList = getResources().getStringArray(R.array.meals_name_list);
-
-        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, R.array.meals_name_list,
-                android.R.layout.simple_spinner_dropdown_item);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        MealsAdapter adapter = new MealsAdapter(this);
         actionBar.setListNavigationCallbacks(adapter, this);
 
         if(savedInstanceState == null) {
-            Intent intent = getIntent();
-            mDateId = intent.getExtras().getString(DATE_ID_PARAMETER);
-            actionBar.setSelectedNavigationItem(intent.getExtras().getInt(MEAL_PARAMETER));
+            Bundle data = getIntent().getExtras().getBundle(FragmentReplier.ACTION_DATA_KEY);
+            mDateId = data.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
+            actionBar.setSelectedNavigationItem(data.getInt(FoodsUsageListFragment.MEAL_ACTION_KEY));
         } else {
-            mDateId = savedInstanceState.getString(DATE_ID_PARAMETER);
-            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(MEAL_PARAMETER));
+            mDateId = savedInstanceState.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+                    FoodsUsageListFragment.MEAL_ACTION_KEY));
         }
 
         bindScreen();
-        refreshScreen();
 
         mFragment = (FoodsUsageListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.foods_usage_list_frag);
-        mFragment.refreshScreen(mDateId, actionBar.getSelectedNavigationIndex());
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(DATE_ID_PARAMETER, mDateId);
-        outState.putInt(MEAL_PARAMETER, getSupportActionBar().getSelectedNavigationIndex());
+        outState.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mDateId);
+        outState.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY,
+                getSupportActionBar().getSelectedNavigationIndex());
 
         super.onSaveInstanceState(outState);
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        mFragment.registerListener(this);
+        callFoodsUsageListFragmentToReplyAction(mDateId,
+                getSupportActionBar().getSelectedNavigationIndex());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mFragment.unregisterListener(this);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.quick_add:
+                FragmentManager manager = getSupportFragmentManager();
+                QuickInsertFrag dialog = new QuickInsertFrag();
+                dialog.setDateId(mDateId);
+                dialog.setTime(getDefaultTime());
+                dialog.setMeal(Meals.getMealFromPosition(
+                        getSupportActionBar().getSelectedNavigationIndex()));
+                dialog.setDescription(null);
+                dialog.setValue(getDefaultValue());
+                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+                return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -127,8 +107,18 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         }
     }
 
+    private float getDefaultValue() {
+        return Meals.preferredUsageForMealInDate(getApplicationContext(),
+                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()),
+                DateUtil.dateIdToDate(mDateId));
+    }
+
+    private int getDefaultTime() {
+        return DateUtil.dateToTimeAsInt(new Date());
+    }
+
     @Override
-    public void onDataLoadFinished(Cursor data) {
+    public void onListValuesChanged(Cursor data) {
         // Data from origin has been changed. Update fields:
         float totalUsed = 0.0f;
         if (data.moveToFirst()) {
@@ -140,19 +130,84 @@ public class FoodsUsageActivity extends ActionBarActivity implements
     }
 
     @Override
-    public boolean onNavigationItemSelected(int position, long itemId) {
-        // TODO: the following logic needs change to use itemId
-        mFragment.refreshScreen(mDateId, position);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.foods_usage, menu);
         return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int position, long itemId) {
+        final int meal = (int) itemId;
+        refreshScreen(meal);
+        callFoodsUsageListFragmentToReplyAction(mDateId, meal);
+        return true;
+    }
+
+    private void callFoodsUsageListFragmentToReplyAction(String dateId, int meal) {
+        final Bundle data = new Bundle();
+        data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, dateId);
+        data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, meal);
+        mFragment.onReplyAction(null, data);
     }
 
     private void bindScreen() {
         mTxtDate = (TextView) findViewById(R.id.txtDate);
         mTxtUsed = (TextView) findViewById(R.id.txtUsed);
+        mTxtGoal = (TextView) findViewById(R.id.txtGoal);
     }
 
-    private void refreshScreen() {
+    private void refreshScreen(int meal) {
         mTxtDate.setText(DateUtil.dateIdToFormattedString(mDateId));
+        DaysEntity entity = new DaysManager(this).dayFromDateId(mDateId);
+        float ideal;
+        int startTime, endTime;
+        switch (meal) {
+            case Meals.BREAKFAST:
+                ideal = entity.getBreakfastGoal();
+                startTime = entity.getBreakfastStartTime();
+                endTime = entity.getBreakfastEndTime();
+                break;
+            case Meals.BRUNCH:
+                ideal = entity.getBrunchGoal();
+                startTime = entity.getBrunchStartTime();
+                endTime = entity.getBrunchEndTime();
+                break;
+            case Meals.LUNCH:
+                ideal = entity.getLunchGoal();
+                startTime = entity.getLunchStartTime();
+                endTime = entity.getLunchEndTime();
+                break;
+            case Meals.SNACK:
+                ideal = entity.getSnackGoal();
+                startTime = entity.getSnackStartTime();
+                endTime = entity.getSnackEndTime();
+                break;
+            case Meals.DINNER:
+                ideal = entity.getDinnerGoal();
+                startTime = entity.getDinnerStartTime();
+                endTime = entity.getDinnerEndTime();
+                break;
+            case Meals.SUPPER:
+                ideal = entity.getSupperGoal();
+                startTime = entity.getSupperStartTime();
+                endTime = entity.getSupperEndTime();
+                break;
+            case Meals.EXERCISE:
+                ideal = entity.getExerciseGoal();
+                startTime = -1;
+                endTime = -1;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal);
+        }
+        if (startTime >= 0) {
+            mTxtGoal.setText(String.format(getResources().getString(R.string.meal_ideal_actual_values),
+                    ideal, DateUtil.timeToFormattedString(startTime),
+                    DateUtil.timeToFormattedString(endTime)));
+        } else {
+            mTxtGoal.setText(String.format(getResources().getString(R.string.units_actual_value), ideal));
+        }
     }
 
     @SuppressWarnings("UnusedDeclaration")

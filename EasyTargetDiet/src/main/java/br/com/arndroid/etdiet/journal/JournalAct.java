@@ -21,6 +21,8 @@ import android.widget.TextView;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.action.SimpleActivityCaller;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -37,6 +39,8 @@ import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
 public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObserver,
     DatePickerDialog.OnDateSetListener {
+
+    private SimpleActivityCaller activityCaller = new SimpleActivityCaller();
 
     private VirtualWeek mVirtualWeek;
     private String mCurrentDateId;
@@ -401,17 +405,11 @@ public class JournalAct extends ActionBarActivity implements VirtualWeek.ViewObs
                 throw new IllegalStateException("Invalid View.id " + view.getId());
         }
 
-        FoodsUsageListFragment foodsUsageListFragment = (FoodsUsageListFragment)
-                getSupportFragmentManager().findFragmentById(R.id.foods_usage_list_frag);
-
-        if (foodsUsageListFragment != null) {
-            foodsUsageListFragment.refreshScreen(mCurrentDateId, meal);
-        } else {
-            Intent intent = new Intent(this, FoodsUsageActivity.class);
-            intent.putExtra(FoodsUsageActivity.DATE_ID_PARAMETER, mCurrentDateId);
-            intent.putExtra(FoodsUsageActivity.MEAL_PARAMETER, meal);
-            startActivity(intent);
-        }
+        final Bundle data = new Bundle();
+        data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
+        data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, meal);
+        activityCaller.onCallAction(this, getSupportFragmentManager(), R.id.foods_usage_list_frag,
+                FoodsUsageActivity.class, null, data);
     }
 
     @Override

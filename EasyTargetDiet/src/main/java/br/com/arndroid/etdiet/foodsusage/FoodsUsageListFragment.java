@@ -1,13 +1,14 @@
 package br.com.arndroid.etdiet.foodsusage;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,25 +19,37 @@ import android.widget.ListView;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentReplier;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
+import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.util.ExposedObservable;
 
 public class FoodsUsageListFragment extends ListFragment implements
+        FragmentReplier,
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final String DATE_ID_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
+            ".DATE_ID_ACTION_KEY";
+    public static final String MEAL_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
+            ".MEAL_ACTION_KEY";
     private static final int FOODS_USAGE_LOADER_ID = 1;
 
     private String mDateId;
     private int mMeal;
-    private SimpleCursorAdapter mAdapter;
+    private FoodsUsageListAdapter mAdapter;
+    private ExposedObservable<FoodUsageListFragmentListener> mListeners =
+            new ExposedObservable<FoodUsageListFragmentListener>();
 
-    public void refreshScreen(String dateId, int meal) {
-        mDateId = dateId;
-        mMeal = meal;
-        // If not loaded, load the first instance,
-        // otherwise closes current loader e start a new one:
-        getLoaderManager().restartLoader(FOODS_USAGE_LOADER_ID, null, this);
+    public void registerListener(FoodUsageListFragmentListener listener) {
+        mListeners.registerObserver(listener);
+    }
+
+    public void unregisterListener(FoodUsageListFragmentListener listener) {
+        mListeners.unregisterObserver(listener);
     }
 
     @Override
@@ -44,69 +57,42 @@ public class FoodsUsageListFragment extends ListFragment implements
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(getResources().getText(R.string.list_empty_foods_usage));
-        // TODO: I think the best choice is menu only in activities. We need to migrate this.
-        setHasOptionsMenu(true);
 
-        mAdapter = new SimpleCursorAdapter(getActivity(),
-                R.layout.item_food_usage_list, null,
-                new String[] {Contract.FoodsUsage.DESCRIPTION, Contract.FoodsUsage.VALUE},
-                new int[] {R.id.lblFoodDescription, R.id.lblFoodValue}, 0);
+        mAdapter = new FoodsUsageListAdapter(getActivity());
         setListAdapter(mAdapter);
 
         ListView list = getListView();
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ((FoodUsageListFragListener) getActivity()).onFoodUsageLongSelected(id);
+                // We need a final variable to use inside alert onClick event:
+                final long foodId = id;
+                final FoodsUsageManager manager = new FoodsUsageManager(
+                        getActivity().getApplicationContext());
+                final FoodsUsageEntity entity = manager.foodUsageFromId(foodId);
+                final String mealName = FoodsUsageListFragment.this.getString(
+                        Meals.getMealResourceNameIdFromMealId(entity.getMeal()));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        manager.remove(foodId);
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setMessage(String.format(getResources().getString(R.string.delete_food_usage_msg),
+                        entity.getDescription(), mealName));
+                builder.create().show();
                 return true;
             }
         });
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        if (!(activity instanceof FoodUsageListFragListener)) {
-            throw new ClassCastException(activity.toString() + " must implement " +
-                    FoodUsageListFragListener.class.getSimpleName());
-        }
-    }
-
-    // TODO: I think the best choice is menu only in activities. We need to migrate this.
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.foods_usage_list, menu);
-    }
-
-    // TODO: I think the best choice is menu only in activities. We need to migrate this.
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.quick_add:
-                ((FoodUsageListFragListener) getActivity()).onQuickAddMenuSelected(mDateId,
-                        getDefaultTime(), mMeal, null, getDefaultValue());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    // TODO: I think the best choice is menu only in activities. We need to migrate this.
-    private float getDefaultValue() {
-        return Meals.preferredUsageForMealInDate(this.getActivity().getApplicationContext(),
-                mMeal, DateUtil.dateIdToDate(mDateId));
-    }
-
-    // TODO: I think the best choice is menu only in activities. We need to migrate this.
-    private int getDefaultTime() {
-        return DateUtil.dateToTimeAsInt(new Date());
-    }
-
-    @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
-        // Send the event and id to the host activity
-        ((FoodUsageListFragListener) getActivity()).onFoodUsageSelected(id);
+        QuickInsertFrag dialog = new QuickInsertFrag();
+        dialog.setId(id);
+        dialog.show(getActivity().getSupportFragmentManager(), QuickInsertFrag.UPDATE_TAG);
     }
 
     @Override
@@ -125,7 +111,9 @@ public class FoodsUsageListFragment extends ListFragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor data) {
         mAdapter.swapCursor(data);
-        ((FoodUsageListFragListener) getActivity()).onDataLoadFinished(data);
+        for (FoodUsageListFragmentListener listener : mListeners.getAllObservers()) {
+            listener.onListValuesChanged(data);
+        }
     }
 
     @Override
@@ -133,14 +121,16 @@ public class FoodsUsageListFragment extends ListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    public interface FoodUsageListFragListener {
-        public void onDataLoadFinished(Cursor data);
+    @Override
+    public void onReplyAction(String actionTag, Bundle actionData) {
+        mDateId = actionData.getString(DATE_ID_ACTION_KEY);
+        mMeal = actionData.getInt(MEAL_ACTION_KEY);
+        // If not loaded, load the first instance,
+        // otherwise closes current loader e start a new one:
+        getLoaderManager().restartLoader(FOODS_USAGE_LOADER_ID, null, this);
+    }
 
-        public void onFoodUsageSelected(long foodUsageId);
-
-        public void onFoodUsageLongSelected(long foodUsageId);
-
-        public void onQuickAddMenuSelected(String dayId, int time, int meal, String description,
-                                           float value);
+    public interface FoodUsageListFragmentListener {
+        public void onListValuesChanged(Cursor data);
     }
 }

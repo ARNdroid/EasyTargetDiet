@@ -16,32 +16,33 @@ import br.com.arndroid.etdiet.util.DateUtil;
 public class SettingsWeekdayAdapter extends CursorAdapter {
 
     private final String mSettingsColumnName;
+    private final LayoutInflater mInflater;
+    private ViewHolder mHolder = null;
 
     public SettingsWeekdayAdapter(Context context, String settingsColumnName) {
         super(context, null, false);
         mSettingsColumnName = settingsColumnName;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        LayoutInflater inflater =  (LayoutInflater) context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(android.R.layout.simple_list_item_2, null, true);
+        View view = mInflater.inflate(android.R.layout.simple_list_item_2, null, true);
 
-        ViewHolder holder = new ViewHolder((TextView) view.findViewById(android.R.id.text1),
+        mHolder = new ViewHolder((TextView) view.findViewById(android.R.id.text1),
                 (TextView) view.findViewById(android.R.id.text2));
 
-        view.setTag(holder);
+        view.setTag(mHolder);
 
         return view;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ViewHolder holder = (ViewHolder) view.getTag();
+        mHolder = (ViewHolder) view.getTag();
         int weekday = (int) cursor.getLong(cursor.getColumnIndex(Contract.WeekdayParameters._ID));
         final Resources resources = context.getResources();
-        holder.text1.setText(resources.getStringArray(R.array.weekdays_name_list)[weekday - 1]);
+        mHolder.text1.setText(resources.getStringArray(R.array.weekdays_name_list)[weekday - 1]);
 
         final String formattedValue;
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
@@ -95,7 +96,7 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
         } else {
             throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
-        holder.text2.setText(formattedValue);
+        mHolder.text2.setText(formattedValue);
     }
 
     private String getFormattedUnitsActualValueFromColumnName(Cursor cursor, Resources resources,

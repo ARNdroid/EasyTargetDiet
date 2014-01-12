@@ -1,6 +1,5 @@
 package br.com.arndroid.etdiet.quickinsert;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -12,16 +11,16 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TimePicker;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdiet.meals.MealsAdapter;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
@@ -162,15 +161,15 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     }
 
     private void setupFields() {
-        SpinnerAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meals_name_list,
-                android.R.layout.simple_spinner_dropdown_item);
+        MealsAdapter adapter = new MealsAdapter(getActivity());
         spnMeal.setAdapter(adapter);
         spnMeal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (TextUtils.isEmpty(edtDescription.getText())) {
-                    final String hint = String.format(getResources().getString(R.string.quick_insert_description),
-                            getResources().getStringArray(R.array.meals_name_list)[position].toLowerCase());
+                    final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
+                            Meals.getMealFromPosition(position)));
+                    final String hint = String.format(getResources().getString(R.string.quick_insert_description), mealName.toLowerCase());
                     edtDescription.setHint(hint);
                 }
             }

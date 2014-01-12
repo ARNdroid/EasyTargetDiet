@@ -22,6 +22,10 @@ public class DaysManager {
         mContext = context;
     }
 
+    public DaysEntity dayFromDateId(String dateId) {
+        return dayFromDate(DateUtil.dateIdToDate(dateId));
+    }
+
     public DaysEntity dayFromDate(Date date) {
         Cursor cursor = null;
         try {
