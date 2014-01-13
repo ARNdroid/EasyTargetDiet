@@ -1,7 +1,5 @@
 package br.com.arndroid.etdiet.settings;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -11,12 +9,11 @@ import android.view.MenuItem;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityCaller;
 import br.com.arndroid.etdiet.action.SimpleActivityCaller;
-import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
 
 public class SettingsMainActivity extends ActionBarActivity implements
-        PointPickerDialog.OnPointSetListener,
+        PointDialog.OnPointSetListener,
         StringListDialog.OnStringSelectedListener,
         ActivityCaller {
 
@@ -52,7 +49,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
          The following code send the event to original Fragment again.
          */
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
-            ((PointPickerDialog.OnPointSetListener) getSupportFragmentManager()
+            ((PointDialog.OnPointSetListener) getSupportFragmentManager()
                     .findFragmentById(R.id.settings_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);

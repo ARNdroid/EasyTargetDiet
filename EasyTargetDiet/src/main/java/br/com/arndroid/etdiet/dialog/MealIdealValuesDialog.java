@@ -182,7 +182,8 @@ public class MealIdealValuesDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnMealIdealValuesSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement MealsIdealValuesDialog.OnMealIdealValuesSetListener");
+            throw new ClassCastException(activity.toString() +
+                    " must implement MealsIdealValuesDialog.OnMealIdealValuesSetListener");
         }
     }
 

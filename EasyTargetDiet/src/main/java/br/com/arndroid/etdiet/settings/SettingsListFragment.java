@@ -11,17 +11,17 @@ import android.widget.ListView;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.dialog.IntegerPickerDialog;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
-import br.com.arndroid.etdiet.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.dialog.PointDialog;
 
 public class SettingsListFragment extends ListFragment implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
-        PointPickerDialog.OnPointSetListener,
-        IntegerPickerDialog.OnIntegerSetListener,
+        PointDialog.OnPointSetListener,
+        IntegerDialog.OnIntegerSetListener,
         FragmentReplier,
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -76,28 +76,28 @@ public class SettingsListFragment extends ListFragment implements
                 .getApplicationContext()).weekdayParametersFromWeekday(mSelectedWeekday);
 
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            final PointPickerDialog dialog = new PointPickerDialog();
+            final PointDialog dialog = new PointDialog();
             dialog.setTitle(getResources().getString(R.string.exercise_goal));
             dialog.setMinIntegerValue(0);
             dialog.setMaxIntegerValue(99);
             dialog.setInitialValue(entity.getExerciseGoal());
             dialog.show(getFragmentManager(), EXERCISE_GOAL_SETTINGS_TAG);
         } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
-            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            final IntegerDialog dialog = new IntegerDialog();
             dialog.setTitle(getResources().getString(R.string.liquid_goal));
             dialog.setMinValue(0);
             dialog.setMaxValue(99);
             dialog.setInitialValue(entity.getLiquidGoal());
             dialog.show(getFragmentManager(), LIQUID_GOAL_SETTINGS_TAG);
         } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
-            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            final IntegerDialog dialog = new IntegerDialog();
             dialog.setTitle(getResources().getString(R.string.oil_goal));
             dialog.setMinValue(0);
             dialog.setMaxValue(99);
             dialog.setInitialValue(entity.getOilGoal());
             dialog.show(getFragmentManager(), OIL_GOAL_SETTINGS_TAG);
         } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
-            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            final IntegerDialog dialog = new IntegerDialog();
             dialog.setTitle(getResources().getString(R.string.supplement_goal));
             dialog.setMinValue(0);
             dialog.setMaxValue(99);

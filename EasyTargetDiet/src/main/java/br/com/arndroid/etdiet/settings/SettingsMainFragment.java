@@ -14,14 +14,14 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityCaller;
+import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
-import br.com.arndroid.etdiet.dialog.PointPickerDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
 
 public class SettingsMainFragment extends Fragment implements
         StringListDialog.OnStringSelectedListener,
-        PointPickerDialog.OnPointSetListener {
+        PointDialog.OnPointSetListener {
 
     private TextView mTxtDailyAllowanceActualValue;
     private TextView mTxtWeeklyAllowanceActualValue;
@@ -144,7 +144,7 @@ public class SettingsMainFragment extends Fragment implements
         layDailyAllowance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PointPickerDialog dialog = new PointPickerDialog();
+                final PointDialog dialog = new PointDialog();
                 dialog.setTitle(getResources().getString(R.string.daily_allowance));
                 dialog.setMinIntegerValue(0);
                 dialog.setMaxIntegerValue(99);
@@ -159,7 +159,7 @@ public class SettingsMainFragment extends Fragment implements
         layWeeklyAllowance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PointPickerDialog dialog = new PointPickerDialog();
+                final PointDialog dialog = new PointDialog();
                 dialog.setTitle(getResources().getString(R.string.weekly_allowance));
                 dialog.setMinIntegerValue(0);
                 dialog.setMaxIntegerValue(99);

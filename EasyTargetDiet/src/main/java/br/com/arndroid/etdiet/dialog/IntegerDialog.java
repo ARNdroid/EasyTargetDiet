@@ -12,12 +12,12 @@ import android.widget.NumberPicker;
 
 import br.com.arndroid.etdiet.R;
 
-public class PointPickerDialog extends DialogFragment {
+public class IntegerDialog extends DialogFragment {
     /**
      * The callback used to indicate the user is done filling in the point number.
      */
-    public interface OnPointSetListener {
-        void onPointSet(String tag, float actualValue);
+    public interface OnIntegerSetListener {
+        void onIntegerSet(String tag, int actualValue);
     }
 
     private static final String TITLE_KEY = "TITLE_KEY";
@@ -27,28 +27,27 @@ public class PointPickerDialog extends DialogFragment {
     private static final String ACTUAL_KEY = "ACTUAL_KEY";
 
     private String mTitle;
-    private int mMinIntegerValue;
-    private int mMaxIntegerValue;
-    private float mInitialValue;
+    private int mMinValue;
+    private int mMaxValue;
+    private int mInitialValue;
     private NumberPicker mPickerInteger;
-    private NumberPicker mPickerDecimal;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.point_picker_dialog, null);
+        View view = inflater.inflate(R.layout.integer_picker_dialog, null);
         builder.setView(view);
 
         bindScreen(view);
 
-        float actualValue = getInitialValue();
+        int actualValue = getInitialValue();
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getString(TITLE_KEY));
-            setMinIntegerValue(savedInstanceState.getInt(MIN_KEY));
-            setMaxIntegerValue(savedInstanceState.getInt(MAX_KEY));
-            setInitialValue(savedInstanceState.getFloat(INITIAL_KEY));
-            actualValue = savedInstanceState.getFloat(ACTUAL_KEY);
+            setMinValue(savedInstanceState.getInt(MIN_KEY));
+            setMaxValue(savedInstanceState.getInt(MAX_KEY));
+            setInitialValue(savedInstanceState.getInt(INITIAL_KEY));
+            actualValue = savedInstanceState.getInt(ACTUAL_KEY);
         }
 
         setupScreen();
@@ -58,8 +57,8 @@ public class PointPickerDialog extends DialogFragment {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                ((OnPointSetListener)getActivity()).onPointSet(PointPickerDialog.this.getTag(),
-                        getActualValueFromPickers());
+                ((OnIntegerSetListener)getActivity()).onIntegerSet(IntegerDialog.this.getTag(),
+                        mPickerInteger.getValue());
                 dialog.dismiss();
             }
         });
@@ -72,37 +71,26 @@ public class PointPickerDialog extends DialogFragment {
         return builder.create();
     }
 
-    private float getActualValueFromPickers() {
-        return mPickerDecimal.getValue() == 0 ?
-                mPickerInteger.getValue() : mPickerInteger.getValue() + 0.5f;
-    }
-
-    private void refreshScreen(float actualValue) {
-        mPickerInteger.setValue((int) Math.floor(actualValue));
-        mPickerDecimal.setValue(actualValue % 1 == 0 ? 0 : 1);
+    private void refreshScreen(int actualValue) {
+        mPickerInteger.setValue(actualValue);
     }
 
     private void setupScreen() {
-        mPickerInteger.setMinValue(getMinIntegerValue());
-        mPickerInteger.setMaxValue(getMaxIntegerValue());
-        mPickerDecimal.setDisplayedValues(new String[]{"0", "5"});
-        mPickerDecimal.setMinValue(0);
-        mPickerDecimal.setMaxValue(1);
-        mPickerDecimal.setWrapSelectorWheel(true);
+        mPickerInteger.setMinValue(getMinValue());
+        mPickerInteger.setMaxValue(getMaxValue());
     }
 
     private void bindScreen(View rootView) {
-        mPickerInteger = (NumberPicker) rootView.findViewById(R.id.pickerInteger);
-        mPickerDecimal = (NumberPicker) rootView.findViewById(R.id.pickerDecimal);
+        mPickerInteger = (NumberPicker) rootView.findViewById(R.id.integerPicker);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
-        outState.putInt(MIN_KEY, getMinIntegerValue());
-        outState.putInt(MAX_KEY, getMaxIntegerValue());
-        outState.putFloat(INITIAL_KEY, getInitialValue());
-        outState.putFloat(ACTUAL_KEY, getActualValueFromPickers());
+        outState.putInt(MIN_KEY, getMinValue());
+        outState.putInt(MAX_KEY, getMaxValue());
+        outState.putInt(INITIAL_KEY, getInitialValue());
+        outState.putInt(ACTUAL_KEY, mPickerInteger.getValue());
         super.onSaveInstanceState(outState);
     }
 
@@ -115,8 +103,9 @@ public class PointPickerDialog extends DialogFragment {
            Due to it, the attached activity must implement the interface.
          */
         super.onAttach(activity);
-        if (!(activity instanceof OnPointSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement PointPickerDialog.OnTextSetListener");
+        if (!(activity instanceof OnIntegerSetListener)) {
+            throw new ClassCastException(activity.toString() +
+                    " must implement IntegerDialog.OnIntegerSetListener");
         }
     }
 
@@ -128,32 +117,32 @@ public class PointPickerDialog extends DialogFragment {
         this.mTitle = title;
     }
 
-    public int getMinIntegerValue() {
-        return mMinIntegerValue;
+    public int getMinValue() {
+        return mMinValue;
     }
 
-    public void setMinIntegerValue(int minIntegerValue) {
-        this.mMinIntegerValue = minIntegerValue;
+    public void setMinValue(int minIntegerValue) {
+        this.mMinValue = minIntegerValue;
     }
 
-    public int getMaxIntegerValue() {
-        return mMaxIntegerValue;
+    public int getMaxValue() {
+        return mMaxValue;
     }
 
-    public void setMaxIntegerValue(int maxIntegerValue) {
-        this.mMaxIntegerValue = maxIntegerValue;
+    public void setMaxValue(int maxIntegerValue) {
+        this.mMaxValue = maxIntegerValue;
     }
 
-    public float getInitialValue() {
+    public int getInitialValue() {
         return mInitialValue;
     }
 
-    public void setInitialValue(float currentValue) {
+    public void setInitialValue(int currentValue) {
         this.mInitialValue = currentValue;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + PointPickerDialog.class.getSimpleName();
+    private static final String TAG = "==>ETD/" + IntegerDialog.class.getSimpleName();
     @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;
 }

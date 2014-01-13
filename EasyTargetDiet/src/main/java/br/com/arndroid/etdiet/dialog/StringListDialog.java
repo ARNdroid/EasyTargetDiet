@@ -12,7 +12,6 @@ public class StringListDialog extends DialogFragment {
      * The callback used to indicate the user is done selecting a item in list.
      */
     public interface OnStringSelectedListener {
-
         void onStringSelected(String tag, int chosenIndex);
     }
 
@@ -82,7 +81,8 @@ public class StringListDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnStringSelectedListener)) {
-            throw new ClassCastException(activity.toString() + " must implement StringListDialog.OnStringSelectedListener");
+            throw new ClassCastException(activity.toString() +
+                    " must implement StringListDialog.OnStringSelectedListener");
         }
     }
 

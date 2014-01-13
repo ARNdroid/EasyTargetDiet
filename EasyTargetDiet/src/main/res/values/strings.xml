@@ -116,5 +116,7 @@
     <string name="food_list">Food list</string>
     <string name="total">Total</string>
     <string name="no_show_some_food">Food description line 1...\nFood description line 2...\nFood description line 3...</string>
+    <string name="no_show_two_digits_with_decimal_number">NN.N</string>
+    <string name="no_show_done_and_goal_with_decimal">NN.N/NN.N</string>
 
 </resources>

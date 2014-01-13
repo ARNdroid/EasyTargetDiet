@@ -9,15 +9,15 @@ import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.dialog.IntegerDialog;
+import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.dialog.IntegerPickerDialog;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
-import br.com.arndroid.etdiet.dialog.PointPickerDialog;
 
 public class SettingsListActivity extends ActionBarActivity implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
-        PointPickerDialog.OnPointSetListener,
-        IntegerPickerDialog.OnIntegerSetListener {
+        PointDialog.OnPointSetListener,
+        IntegerDialog.OnIntegerSetListener {
 
     public static final String SETTINGS_TYPE_PARAMETER = SettingsListActivity.class.getSimpleName()
             + ".SETTINGS_TYPE_PARAMETER";
@@ -91,7 +91,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onPointSet(String tag, float actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((PointPickerDialog.OnPointSetListener)getSupportFragmentManager().findFragmentById(
+            ((PointDialog.OnPointSetListener)getSupportFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -102,7 +102,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onIntegerSet(String tag, int actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((IntegerPickerDialog.OnIntegerSetListener)getSupportFragmentManager().findFragmentById(
+            ((IntegerDialog.OnIntegerSetListener)getSupportFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onIntegerSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);

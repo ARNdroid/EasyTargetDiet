@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_view_padding"
+    android:background="@drawable/card_background">
+
+    <TextView
+        android:id="@+id/lblNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notes"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <View
+        style="@style/DividerHorizontal" />
+
+    <TextView
+        android:id="@+id/txtNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/note_empty" />
+
+    <TextView
+        android:id="@+id/txtEditNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="@string/note_create" />
+
+</LinearLayout>

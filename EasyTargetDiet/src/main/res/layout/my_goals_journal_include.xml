@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_view_padding"
+    android:background="@drawable/card_background">
+
+    <TextView
+        android:id="@+id/lblMyGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_goals"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <View
+        style="@style/DividerHorizontal" />
+
+    <LinearLayout
+        android:id="@+id/goal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <RelativeLayout
+            android:id="@+id/layExerciseGoal"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtExerciseGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/no_show_done_and_goal_with_decimal"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/lblExerciseGoal"
+                android:layout_below="@id/txtExerciseGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/exercise"
+                android:textSize="@dimen/micro_font_size" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layLiquidGoal"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtLiquidGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/no_show_done_and_goal"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/lblLiquidGoal"
+                android:layout_below="@id/txtLiquidGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/liquid"
+                android:textSize="@dimen/micro_font_size" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layOilGoal"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtOilGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/no_show_done_and_goal"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/lblOilGoal"
+                android:layout_below="@id/txtOilGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/oil"
+                android:textSize="@dimen/micro_font_size" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/laySupplementGoal"
+            android:clickable="true"
+            android:background="@android:drawable/list_selector_background"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtSupplementGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/no_show_done_and_goal"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/lblSupplementGoal"
+                android:layout_below="@id/txtSupplementGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/supplement"
+                android:textSize="@dimen/micro_font_size" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

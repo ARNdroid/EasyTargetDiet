@@ -1,0 +1,44 @@
+ABAIXO O QUE O TRATADOR DO EVENTO DO DIÁLOGO, NA ACTIVITY, DEVE FAZER
+        mLiquidSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
+            @Override
+            public void onNumberSet(NumberPicker view, int value) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setLiquidDone(value);
+                manager.refresh(entity);
+            }
+        };
+
+        mOilSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
+            @Override
+            public void onNumberSet(NumberPicker view, int value) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setOilDone(value);
+                manager.refresh(entity);
+            }
+        };
+
+        mSupplementListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
+            @Override
+            public void onNumberSet(NumberPicker view, int value) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setSupplementDone(value);
+                manager.refresh(entity);
+            }
+        };
+
+        mNoteSetListener = new OldTextDialog.OnTextSetListener() {
+            @Override
+            public void onTextSet(EditText view, String text) {
+                DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
+                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                entity.setNote(text);
+                manager.refresh(entity);
+            }
+        };
+
+ABAIXO O QUE A ACTIVITY DEVE FAZER (ACHO QUE COM ADAPTAÇÕES) PARA TRATAR O EVENTO GERADO NO FRAGMENT
+        activityCaller.onCallAction(this, getSupportFragmentManager(), R.id.foods_usage_list_frag,
+                FoodsUsageActivity.class, null, data);		

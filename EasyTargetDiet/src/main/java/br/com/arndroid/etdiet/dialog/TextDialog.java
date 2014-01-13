@@ -90,7 +90,8 @@ public class TextDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnTextSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement TextDialog.OnTextSetListener");
+            throw new ClassCastException(activity.toString() +
+                    " must implement TextDialog.OnTextSetListener");
         }
     }
 
