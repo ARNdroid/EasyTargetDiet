@@ -58,7 +58,7 @@
         android:text="@string/ideal_meal_value"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <include layout="@layout/point_picker_dialog" />
+    <include layout="@layout/point_dialog" />
 
 
 </LinearLayout>

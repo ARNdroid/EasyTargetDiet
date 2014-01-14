@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -34,14 +34,14 @@ public class SettingsListActivity extends ActionBarActivity implements
 
         if(savedInstanceState == null) {
             Intent intent = getIntent();
-            mSettingsColumnName = intent.getExtras().getString(FragmentReplier.ACTION_TAG_KEY);
+            mSettingsColumnName = intent.getExtras().getString(FragmentActionReplier.ACTION_TAG_KEY);
         } else {
             mSettingsColumnName = savedInstanceState.getString(SETTINGS_TYPE_PARAMETER);
         }
         actionBar.setTitle(getTitleFromSettingsType(mSettingsColumnName));
         SettingsListFragment fragment = (SettingsListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.settings_list_fragment);
-        fragment.onReplyAction(mSettingsColumnName, null);
+        fragment.onReplyActionFromOtherFragment(mSettingsColumnName, null);
     }
 
     private String getTitleFromSettingsType(String settingsColumnName) {

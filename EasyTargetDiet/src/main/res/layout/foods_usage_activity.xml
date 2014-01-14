@@ -83,17 +83,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/default_view_padding"
-        android:text="@string/food_list"
+        android:text="@string/usage_list"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View
         style="@style/DividerHorizontal" />
 
     <fragment
-        android:id="@+id/foods_usage_list_frag"
+        android:id="@+id/foods_usage_list_fragment"
         class="br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/item_food_usage_list" />
+        tools:layout="@layout/foods_usage_item" />
 
 </LinearLayout>

@@ -1,5 +1,13 @@
-ABAIXO O QUE O TRATADOR DO EVENTO DO DIÁLOGO, NA ACTIVITY, DEVE FAZER
-        mLiquidSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
+ABAIXO O QUE O TRATADOR DO EVENTO DO DIï¿½LOGO, NA ACTIVITY, DEVE FAZER
+
+    ** DateDialog
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        mCurrentDateId = DateUtil.datePickerToDateId(view);
+        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+    }
+    ---------------------------------------------------------------------------------
+    ** IntegerDialog
+            mLiquidSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
             public void onNumberSet(NumberPicker view, int value) {
                 DaysManager manager = new DaysManager(JournalAct.this.getApplicationContext());
@@ -9,6 +17,8 @@ ABAIXO O QUE O TRATADOR DO EVENTO DO DIÁLOGO, NA ACTIVITY, DEVE FAZER
             }
         };
 
+    ---------------------------------------------------------------------------------
+    ** IntegerDialog
         mOilSetListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
             public void onNumberSet(NumberPicker view, int value) {
@@ -19,6 +29,8 @@ ABAIXO O QUE O TRATADOR DO EVENTO DO DIÁLOGO, NA ACTIVITY, DEVE FAZER
             }
         };
 
+    ---------------------------------------------------------------------------------
+    ** IntegerDialog
         mSupplementListener = new OldIntegerPickerDialog.OnIntegerSetListener() {
             @Override
             public void onNumberSet(NumberPicker view, int value) {
@@ -29,6 +41,8 @@ ABAIXO O QUE O TRATADOR DO EVENTO DO DIÁLOGO, NA ACTIVITY, DEVE FAZER
             }
         };
 
+    ---------------------------------------------------------------------------------
+    ** TextDialog
         mNoteSetListener = new OldTextDialog.OnTextSetListener() {
             @Override
             public void onTextSet(EditText view, String text) {
@@ -38,7 +52,45 @@ ABAIXO O QUE O TRATADOR DO EVENTO DO DIÁLOGO, NA ACTIVITY, DEVE FAZER
                 manager.refresh(entity);
             }
         };
-
-ABAIXO O QUE A ACTIVITY DEVE FAZER (ACHO QUE COM ADAPTAÇÕES) PARA TRATAR O EVENTO GERADO NO FRAGMENT
+    ---------------------------------------------------------------------------------
+    ** ActivityCaller
+    ABAIXO O QUE A ACTIVITY DEVE FAZER (ACHO QUE COM ADAPTAï¿½ï¿½ES) PARA TRATAR O EVENTO GERADO NO FRAGMENT
         activityCaller.onCallAction(this, getSupportFragmentManager(), R.id.foods_usage_list_frag,
-                FoodsUsageActivity.class, null, data);		
+                FoodsUsageActivity.class, null, data);
+
+
+===================================================================================================
+                ** R.id.quick_add
+                FragmentManager manager = getSupportFragmentManager();
+                QuickInsertFrag dialog = new QuickInsertFrag();
+
+                dialog.setDateId(mCurrentDateId);
+
+                final Date currentDate = DateUtil.dateIdToDate(mCurrentDateId);
+                final int timeHint = DateUtil.dateToTimeAsInt(new Date());
+                final int mealHint = Meals.preferredMealForTimeInDate(this.getApplicationContext(),
+                        timeHint, currentDate);
+                dialog.setMeal(mealHint);
+                dialog.setTime(timeHint);
+
+                final float usageHint = Meals.preferredUsageForMealInDate(this.getApplicationContext(),
+                        mealHint, currentDate);
+                dialog.setValue(usageHint);
+
+                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+                -----------------------------------------------------
+                ** R.id.settings
+                Intent intent = new Intent(this, SettingsMainActivity.class);
+                startActivity(intent);
+                return true;
+
+
+                                FragmentManager manager = getSupportFragmentManager();
+                                QuickInsertFrag dialog = new QuickInsertFrag();
+                                dialog.setDateId(mDateId);
+                                dialog.setTime(getDefaultTime());
+                                dialog.setMeal(Meals.getMealFromPosition(
+                                        getSupportActionBar().getSelectedNavigationIndex()));
+                                dialog.setDescription(null);
+                                dialog.setValue(getDefaultValue());
+                                dialog.show(manager, QuickInsertFrag.INSERT_TAG);

@@ -3,20 +3,23 @@ package br.com.arndroid.etdiet.journal;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.ActivityCaller;
+import br.com.arndroid.etdiet.action.ActivityActionCaller;
+import br.com.arndroid.etdiet.action.FragmentMenuReplier;
+import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
@@ -30,50 +33,55 @@ import br.com.arndroid.etdiet.util.DateUtil;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
-public class JournalFragment extends Fragment implements VirtualWeek.ViewObserver {
+public class JournalFragment extends Fragment implements
+        VirtualWeek.ViewObserver,
+        DateDialog.OnDateSetListener,
+        IntegerDialog.OnIntegerSetListener,
+        TextDialog.OnTextSetListener,
+        FragmentMenuReplier {
 
     public static final String OWNER_TAG = JournalFragment.class.getSimpleName();
-    public static final String LIQUID_USED_TAG = OWNER_TAG + ".LIQUID_USED_TAG";
-    public static final String OIL_USED_TAG = OWNER_TAG + ".OIL_USED_TAG";
-    public static final String SUPPLEMENT_USED_TAG = OWNER_TAG + ".SUPPLEMENT_USED_TAG";
+    public static final String LIQUID_DONE_TAG = OWNER_TAG + ".LIQUID_DONE_TAG";
+    public static final String OIL_DONE_TAG = OWNER_TAG + ".OIL_DONE_TAG";
+    public static final String SUPPLEMENT_DONE_TAG = OWNER_TAG + ".SUPPLEMENT_DONE_TAG";
     public static final String NOTE_EDIT_TAG = OWNER_TAG + ".NOTE_EDIT_TAG";
+    public static final String DATE_EDIT_TAG = OWNER_TAG + ".DATE_EDIT_TAG";
 
     private String mCurrentDateId;
     private String[] mMonthsShortNameArray;
     private String[] mWeekdaysShortNameArray;
     private VirtualWeek mVirtualWeek;
 
-    // TODO: change all variable names to mXxxx
-    private Button btnDay;
-    private TextView txtMonth;
-    private TextView txtWeekday;
-    private TextView txtPtsDay;
-    private TextView txtPtsWeek;
-    private TextView txtPtsExercise;
-    private TextView txtExerciseGoal;
-    private TextView txtLiquidGoal;
-    private TextView txtOilGoal;
-    private TextView txtSupplementGoal;
-    private TextView txtBreakfastPts;
-    private TextView txtBreakfastTime;
-    private TextView txtBreakfastIdeal;
-    private TextView txtBrunchPts;
-    private TextView txtBrunchTime;
-    private TextView txtBrunchIdeal;
-    private TextView txtLunchPts;
-    private TextView txtLunchTime;
-    private TextView txtLunchIdeal;
-    private TextView txtSneakPts;
-    private TextView txtSneakTime;
-    private TextView txtSneakIdeal;
-    private TextView txtDinnerPts;
-    private TextView txtDinnerTime;
-    private TextView txtDinnerIdeal;
-    private TextView txtSupperPts;
-    private TextView txtSupperTime;
-    private TextView txtSupperIdeal;
-    private TextView txtNotes;
-    private TextView txtEditNotes;
+    private TextView mTxtDay;
+    private TextView mTxtMonth;
+    private TextView mTxtWeekday;
+    private TextView mTxtPtsDay;
+    private TextView mTxtPtsWeek;
+    private TextView mTxtPtsExercise;
+    private TextView mTxtExerciseGoal;
+    private TextView mTxtLiquidGoal;
+    private TextView mTxtOilGoal;
+    private TextView mTxtSupplementGoal;
+    private TextView mTxtBreakfastPts;
+    private TextView mTxtBreakfastTime;
+    private TextView mTxtBreakfastIdeal;
+    private TextView mTxtBrunchPts;
+    private TextView mTxtBrunchTime;
+    private TextView mTxtBrunchIdeal;
+    private TextView mTxtLunchPts;
+    private TextView mTxtLunchTime;
+    private TextView mTxtLunchIdeal;
+    private TextView mTxtSneakPts;
+    private TextView mTxtSneakTime;
+    private TextView mTxtSneakIdeal;
+    private TextView mTxtDinnerPts;
+    private TextView mTxtDinnerTime;
+    private TextView mTxtDinnerIdeal;
+    private TextView mTxtSupperPts;
+    private TextView mTxtSupperTime;
+    private TextView mTxtSupperIdeal;
+    private TextView mTxtNotes;
+    private TextView mTxtEditNotes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,9 +113,9 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(activity instanceof ActivityCaller)) {
+        if (!(activity instanceof ActivityActionCaller)) {
             throw new ClassCastException(activity.toString() + " must implement " +
-                    ActivityCaller.class.getSimpleName());
+                    ActivityActionCaller.class.getSimpleName());
         }
 
     }
@@ -128,40 +136,53 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
     }
 
     private void bindScreen(View rootView) {
-        btnDay = (Button) rootView.findViewById(R.id.btnDay);
-        txtMonth = (TextView) rootView.findViewById(R.id.txtMonth);
-        txtWeekday = (TextView) rootView.findViewById(R.id.txtWeekday);
-        txtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
-        txtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
-        txtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
-        txtExerciseGoal = (TextView) rootView.findViewById(R.id.txtExerciseGoal);
-        txtLiquidGoal = (TextView) rootView.findViewById(R.id.txtLiquidGoal);
-        txtOilGoal = (TextView) rootView.findViewById(R.id.txtOilGoal);
-        txtSupplementGoal = (TextView) rootView.findViewById(R.id.txtSupplementGoal);
-        txtBreakfastPts = (TextView) rootView.findViewById(R.id.txtBreakfastPts);
-        txtBreakfastTime = (TextView) rootView.findViewById(R.id.txtBreakfastTime);
-        txtBreakfastIdeal = (TextView) rootView.findViewById(R.id.txtBreakfastIdeal);
-        txtBrunchPts = (TextView) rootView.findViewById(R.id.txtBrunchPts);
-        txtBrunchTime = (TextView) rootView.findViewById(R.id.txtBrunchTime);
-        txtBrunchIdeal = (TextView) rootView.findViewById(R.id.txtBrunchIdeal);
-        txtLunchPts = (TextView) rootView.findViewById(R.id.txtLunchPts);
-        txtLunchTime = (TextView) rootView.findViewById(R.id.txtLunchTime);
-        txtLunchIdeal = (TextView) rootView.findViewById(R.id.txtLunchIdeal);
-        txtSneakPts = (TextView) rootView.findViewById(R.id.txtSneakPts);
-        txtSneakTime = (TextView) rootView.findViewById(R.id.txtSneakTime);
-        txtSneakIdeal = (TextView) rootView.findViewById(R.id.txtSneakIdeal);
-        txtDinnerPts = (TextView) rootView.findViewById(R.id.txtDinnerPts);
-        txtDinnerTime = (TextView) rootView.findViewById(R.id.txtDinnerTime);
-        txtDinnerIdeal = (TextView) rootView.findViewById(R.id.txtDinnerIdeal);
-        txtSupperPts = (TextView) rootView.findViewById(R.id.txtSupperPts);
-        txtSupperTime = (TextView) rootView.findViewById(R.id.txtSupperTime);
-        txtSupperIdeal = (TextView) rootView.findViewById(R.id.txtSupperIdeal);
-        txtNotes = (TextView) rootView.findViewById(R.id.txtNotes);
-        txtEditNotes = (TextView) rootView.findViewById(R.id.txtEditNotes);
+        mTxtDay = (TextView) rootView.findViewById(R.id.txtDay);
+        mTxtMonth = (TextView) rootView.findViewById(R.id.txtMonth);
+        mTxtWeekday = (TextView) rootView.findViewById(R.id.txtWeekday);
+        mTxtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
+        mTxtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
+        mTxtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
+        mTxtExerciseGoal = (TextView) rootView.findViewById(R.id.txtExerciseGoal);
+        mTxtLiquidGoal = (TextView) rootView.findViewById(R.id.txtLiquidGoal);
+        mTxtOilGoal = (TextView) rootView.findViewById(R.id.txtOilGoal);
+        mTxtSupplementGoal = (TextView) rootView.findViewById(R.id.txtSupplementGoal);
+        mTxtBreakfastPts = (TextView) rootView.findViewById(R.id.txtBreakfastPts);
+        mTxtBreakfastTime = (TextView) rootView.findViewById(R.id.txtBreakfastTime);
+        mTxtBreakfastIdeal = (TextView) rootView.findViewById(R.id.txtBreakfastIdeal);
+        mTxtBrunchPts = (TextView) rootView.findViewById(R.id.txtBrunchPts);
+        mTxtBrunchTime = (TextView) rootView.findViewById(R.id.txtBrunchTime);
+        mTxtBrunchIdeal = (TextView) rootView.findViewById(R.id.txtBrunchIdeal);
+        mTxtLunchPts = (TextView) rootView.findViewById(R.id.txtLunchPts);
+        mTxtLunchTime = (TextView) rootView.findViewById(R.id.txtLunchTime);
+        mTxtLunchIdeal = (TextView) rootView.findViewById(R.id.txtLunchIdeal);
+        mTxtSneakPts = (TextView) rootView.findViewById(R.id.txtSneakPts);
+        mTxtSneakTime = (TextView) rootView.findViewById(R.id.txtSneakTime);
+        mTxtSneakIdeal = (TextView) rootView.findViewById(R.id.txtSneakIdeal);
+        mTxtDinnerPts = (TextView) rootView.findViewById(R.id.txtDinnerPts);
+        mTxtDinnerTime = (TextView) rootView.findViewById(R.id.txtDinnerTime);
+        mTxtDinnerIdeal = (TextView) rootView.findViewById(R.id.txtDinnerIdeal);
+        mTxtSupperPts = (TextView) rootView.findViewById(R.id.txtSupperPts);
+        mTxtSupperTime = (TextView) rootView.findViewById(R.id.txtSupperTime);
+        mTxtSupperIdeal = (TextView) rootView.findViewById(R.id.txtSupperIdeal);
+        mTxtNotes = (TextView) rootView.findViewById(R.id.txtNotes);
+        mTxtEditNotes = (TextView) rootView.findViewById(R.id.txtEditNotes);
     }
 
     private void setupScreen(View rootView) {
-        final RelativeLayout layExerciseGoal = (RelativeLayout) rootView.findViewById(R.id.layExerciseGoal);
+        final LinearLayout layDate = (LinearLayout) rootView.findViewById(R.id.layDate);
+        layDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DateDialog dialog = new DateDialog();
+                dialog.setTitle(getString(R.string.date));
+                dialog.setInitialValue(DateUtil.dateIdToDate(mCurrentDateId));
+                dialog.show(getFragmentManager(), DATE_EDIT_TAG);
+            }
+        });
+
+        final RelativeLayout layExerciseGoal = (RelativeLayout) rootView.findViewById(
+                R.id.layExerciseGoal);
         layExerciseGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,7 +209,8 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
             }
         });
 
-        final RelativeLayout layLiquidGoal = (RelativeLayout) rootView.findViewById(R.id.layLiquidGoal);
+        final RelativeLayout layLiquidGoal = (RelativeLayout) rootView.findViewById(
+                R.id.layLiquidGoal);
         layLiquidGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,7 +231,7 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
                 dialog.setMinValue(0);
                 dialog.setMaxValue(99);
                 dialog.setInitialValue(entity.getLiquidDone());
-                dialog.show(getFragmentManager(), LIQUID_USED_TAG);
+                dialog.show(getFragmentManager(), LIQUID_DONE_TAG);
                 return true;
             }
         });
@@ -235,12 +257,13 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
                 dialog.setMinValue(0);
                 dialog.setMaxValue(99);
                 dialog.setInitialValue(entity.getOilDone());
-                dialog.show(getFragmentManager(), OIL_USED_TAG);
+                dialog.show(getFragmentManager(), OIL_DONE_TAG);
                 return true;
             }
         });
 
-        final RelativeLayout laySupplementGoal = (RelativeLayout) rootView.findViewById(R.id.laySupplementGoal);
+        final RelativeLayout laySupplementGoal = (RelativeLayout) rootView.findViewById(
+                R.id.laySupplementGoal);
         laySupplementGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,7 +284,7 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
                 dialog.setMinValue(0);
                 dialog.setMaxValue(99);
                 dialog.setInitialValue(entity.getSupplementDone());
-                dialog.show(getFragmentManager(), SUPPLEMENT_USED_TAG);
+                dialog.show(getFragmentManager(), SUPPLEMENT_DONE_TAG);
                 return true;
             }
         });
@@ -314,7 +337,7 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
             }
         });
 
-        txtEditNotes.setOnClickListener(new View.OnClickListener() {
+        mTxtEditNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
@@ -328,64 +351,66 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
     }
 
     public void refreshScreen(DaySummary daySummary) {
-        btnDay.setText(String.valueOf(DateUtil.getDayFromDateId(daySummary.getEntity().getDateId())));
+        mTxtDay.setText(String.valueOf(DateUtil.getDayFromDateId(daySummary.getEntity().getDateId())));
         final int month = DateUtil.getMonthFromDateId(daySummary.getEntity().getDateId()) - 1;
-        txtMonth.setText(mMonthsShortNameArray[month]);
+        mTxtMonth.setText(mMonthsShortNameArray[month]);
         final int weekday = DateUtil.getWeekdayFromDateId(daySummary.getEntity().getDateId()) - 1;
-        txtWeekday.setText(mWeekdaysShortNameArray[weekday]);
+        mTxtWeekday.setText(mWeekdaysShortNameArray[weekday]);
 
-        txtPtsDay.setText(String.valueOf(daySummary.getDiaryAllowanceAfterUsage()));
-        txtPtsWeek.setText(String.valueOf(daySummary.getWeeklyAllowanceAfterUsage()));
-        txtPtsExercise.setText(String.valueOf(daySummary.getExerciseAfterUsage()));
+        mTxtPtsDay.setText(String.valueOf(daySummary.getDiaryAllowanceAfterUsage()));
+        mTxtPtsWeek.setText(String.valueOf(daySummary.getWeeklyAllowanceAfterUsage()));
+        mTxtPtsExercise.setText(String.valueOf(daySummary.getExerciseAfterUsage()));
 
-        txtExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
+        mTxtExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
                 + String.valueOf(daySummary.getEntity().getExerciseGoal()));
-        txtLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
+        mTxtLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getLiquidGoal()));
-        txtOilGoal.setText(String.valueOf(daySummary.getEntity().getOilDone()) + "/"
+        mTxtOilGoal.setText(String.valueOf(daySummary.getEntity().getOilDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getOilGoal()));
-        txtSupplementGoal.setText(String.valueOf(daySummary.getEntity().getSupplementDone()) + "/"
+        mTxtSupplementGoal.setText(String.valueOf(daySummary.getEntity().getSupplementDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getSupplementGoal()));
 
-        txtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
-        txtBreakfastTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getBreakfastStartTime())
-                + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime()));
+        mTxtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
+        mTxtBreakfastTime.setText(DateUtil.timeToFormattedString(
+                daySummary.getEntity().getBreakfastStartTime()) + " - " +
+                DateUtil.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime()));
         final String ideal = getResources().getString(R.string.ideal_values) + " ";
-        txtBreakfastIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBreakfastGoal()));
-        txtBrunchPts.setText(String.valueOf(daySummary.getUsage().getBrunchUsed()));
-        txtBrunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getBrunchStartTime())
+        mTxtBreakfastIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBreakfastGoal()));
+        mTxtBrunchPts.setText(String.valueOf(daySummary.getUsage().getBrunchUsed()));
+        mTxtBrunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getBrunchStartTime())
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getBrunchEndTime()));
-        txtBrunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBrunchGoal()));
-        txtLunchPts.setText(String.valueOf(daySummary.getUsage().getLunchUsed()));
-        txtLunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getLunchStartTime())
+        mTxtBrunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBrunchGoal()));
+        mTxtLunchPts.setText(String.valueOf(daySummary.getUsage().getLunchUsed()));
+        mTxtLunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getLunchStartTime())
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getLunchEndTime()));
-        txtLunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getLunchGoal()));
-        txtSneakPts.setText(String.valueOf(daySummary.getUsage().getSneakUsed()));
-        txtSneakTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getSnackStartTime())
+        mTxtLunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getLunchGoal()));
+        mTxtSneakPts.setText(String.valueOf(daySummary.getUsage().getSneakUsed()));
+        mTxtSneakTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getSnackStartTime())
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getSnackEndTime()));
-        txtSneakIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSnackGoal()));
-        txtDinnerPts.setText(String.valueOf(daySummary.getUsage().getDinnerUsed()));
-        txtDinnerTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getDinnerStartTime())
+        mTxtSneakIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSnackGoal()));
+        mTxtDinnerPts.setText(String.valueOf(daySummary.getUsage().getDinnerUsed()));
+        mTxtDinnerTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getDinnerStartTime())
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getDinnerEndTime()));
-        txtDinnerIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getDinnerGoal()));
-        txtSupperPts.setText(String.valueOf(daySummary.getUsage().getSupperUsed()));
-        txtSupperTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getSupperStartTime())
+        mTxtDinnerIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getDinnerGoal()));
+        mTxtSupperPts.setText(String.valueOf(daySummary.getUsage().getSupperUsed()));
+        mTxtSupperTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getSupperStartTime())
                 + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getSupperEndTime()));
-        txtSupperIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSupperGoal()));
+        mTxtSupperIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSupperGoal()));
 
         if (TextUtils.isEmpty(daySummary.getEntity().getNote())) {
-            txtNotes.setText(R.string.note_empty);
-            final Spanned result = Html.fromHtml(getResources().getString((R.string.note_create)));
-            txtEditNotes.setText(result);
+            mTxtNotes.setText(R.string.note_empty);
+            final Spanned result = Html.fromHtml(getResources().getString((
+                    R.string.note_create)));
+            mTxtEditNotes.setText(result);
         } else {
-            txtNotes.setText(daySummary.getEntity().getNote());
-            final Spanned result = Html.fromHtml(getResources().getString((R.string.note_edit)));
-            txtEditNotes.setText(result);
+            mTxtNotes.setText(daySummary.getEntity().getNote());
+            final Spanned result = Html.fromHtml(getResources().getString((
+                    R.string.note_edit)));
+            mTxtEditNotes.setText(result);
         }
     }
 
     public void layMealAction(View view) {
-
         int meal;
         switch (view.getId()) {
             case R.id.layBreakfast:
@@ -417,7 +442,7 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
         data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
         data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, meal);
 
-        ((ActivityCaller)getActivity()).onCallAction(R.id.foods_usage_list_frag,
+        ((ActivityActionCaller)getActivity()).onCallAction(R.id.foods_usage_list_fragment,
                 FoodsUsageActivity.class, null, data);
     }
 
@@ -441,5 +466,66 @@ public class JournalFragment extends Fragment implements VirtualWeek.ViewObserve
     @Override
     public void onSummaryRequested(DaySummary daySummary) {
         refreshScreen(daySummary);
+    }
+
+    @Override
+    public void onDateSet(String tag, Date actualDate) {
+        if (DATE_EDIT_TAG.equals(tag)) {
+            mCurrentDateId = DateUtil.dateToDateId(actualDate);
+            mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
+    }
+
+    @Override
+    public void onIntegerSet(String tag, int actualValue) {
+        final DaysManager manager = new DaysManager(getActivity().getApplicationContext());
+        final DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+        if (LIQUID_DONE_TAG.equals(tag)) {
+            entity.setLiquidDone(actualValue);
+        } else if (OIL_DONE_TAG.equals(tag)) {
+            entity.setOilDone(actualValue);
+        } else if (SUPPLEMENT_DONE_TAG.equals(tag)) {
+            entity.setSupplementDone(actualValue);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
+        manager.refresh(entity);
+    }
+
+    @Override
+    public void onTextSet(String tag, String actualText) {
+        DaysManager manager = new DaysManager(getActivity().getApplicationContext());
+        DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+        entity.setNote(actualText);
+        manager.refresh(entity);
+    }
+
+    @Override
+    public void onReplyMenuFromHolderActivity(int menuItemId) {
+        switch (menuItemId) {
+            case R.id.quick_add:
+                FragmentManager manager = getFragmentManager();
+                QuickInsertFrag dialog = new QuickInsertFrag();
+
+                dialog.setDateId(mCurrentDateId);
+
+                final Date currentDate = DateUtil.dateIdToDate(mCurrentDateId);
+                final int timeHint = DateUtil.dateToTimeAsInt(new Date());
+                final int mealHint = Meals.preferredMealForTimeInDate(
+                        getActivity().getApplicationContext(), timeHint, currentDate);
+                dialog.setMeal(mealHint);
+                dialog.setTime(timeHint);
+
+                final float usageHint = Meals.preferredUsageForMealInDate(
+                        getActivity().getApplicationContext(), mealHint, currentDate);
+                dialog.setValue(usageHint);
+
+                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid menuItemId=" + menuItemId);
+        }
     }
 }

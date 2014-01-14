@@ -14,7 +14,8 @@ import android.widget.TextView;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.action.FragmentActionReplier;
+import br.com.arndroid.etdiet.action.SimpleActivityMenuCaller;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -47,7 +48,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         actionBar.setListNavigationCallbacks(adapter, this);
 
         if(savedInstanceState == null) {
-            Bundle data = getIntent().getExtras().getBundle(FragmentReplier.ACTION_DATA_KEY);
+            Bundle data = getIntent().getExtras().getBundle(FragmentActionReplier.ACTION_DATA_KEY);
             mDateId = data.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
             actionBar.setSelectedNavigationItem(data.getInt(FoodsUsageListFragment.MEAL_ACTION_KEY));
         } else {
@@ -59,7 +60,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         bindScreen();
 
         mFragment = (FoodsUsageListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.foods_usage_list_frag);
+                .findFragmentById(R.id.foods_usage_list_fragment);
     }
 
     @Override
@@ -87,34 +88,25 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        final int itemId = item.getItemId();
+        final Class holderActivityClass;
+        final int fragmentId;
+
+        switch (itemId) {
             case R.id.quick_add:
-                FragmentManager manager = getSupportFragmentManager();
-                QuickInsertFrag dialog = new QuickInsertFrag();
-                dialog.setDateId(mDateId);
-                dialog.setTime(getDefaultTime());
-                dialog.setMeal(Meals.getMealFromPosition(
-                        getSupportActionBar().getSelectedNavigationIndex()));
-                dialog.setDescription(null);
-                dialog.setValue(getDefaultValue());
-                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
-                return true;
+                holderActivityClass = FoodsUsageActivity.class;
+                fragmentId = R.id.foods_usage_list_fragment;
+                break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
 
-    private float getDefaultValue() {
-        return Meals.preferredUsageForMealInDate(getApplicationContext(),
-                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()),
-                DateUtil.dateIdToDate(mDateId));
-    }
-
-    private int getDefaultTime() {
-        return DateUtil.dateToTimeAsInt(new Date());
+        new SimpleActivityMenuCaller().onCallMenu(this, getSupportFragmentManager(), fragmentId,
+                holderActivityClass, itemId);
+        return true;
     }
 
     @Override
@@ -148,7 +140,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         final Bundle data = new Bundle();
         data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, dateId);
         data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, meal);
-        mFragment.onReplyAction(null, data);
+        mFragment.onReplyActionFromOtherFragment(null, data);
     }
 
     private void bindScreen() {

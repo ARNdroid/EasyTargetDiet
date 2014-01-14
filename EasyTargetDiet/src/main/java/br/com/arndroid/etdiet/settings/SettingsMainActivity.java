@@ -7,15 +7,15 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.ActivityCaller;
-import br.com.arndroid.etdiet.action.SimpleActivityCaller;
+import br.com.arndroid.etdiet.action.ActivityActionCaller;
+import br.com.arndroid.etdiet.action.SimpleActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
 
 public class SettingsMainActivity extends ActionBarActivity implements
         PointDialog.OnPointSetListener,
         StringListDialog.OnStringSelectedListener,
-        ActivityCaller {
+        ActivityActionCaller {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
          */
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
             ((PointDialog.OnPointSetListener) getSupportFragmentManager()
-                    .findFragmentById(R.id.settings_fragment)).onPointSet(tag, actualValue);
+                    .findFragmentById(R.id.settings_main_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
@@ -61,7 +61,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
         // We are here against our will...
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
             ((StringListDialog.OnStringSelectedListener) getSupportFragmentManager()
-                    .findFragmentById(R.id.settings_fragment)).onStringSelected(tag, chosenIndex);
+                    .findFragmentById(R.id.settings_main_fragment)).onStringSelected(tag, chosenIndex);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
@@ -71,7 +71,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
     public void onCallAction(int fragmentId, Class holderActivityClass, String actionTag,
                              Bundle actionData) {
 
-        new SimpleActivityCaller().onCallAction(this, getSupportFragmentManager(), fragmentId,
+        new SimpleActivityActionCaller().onCallAction(this, getSupportFragmentManager(), fragmentId,
                 holderActivityClass, actionTag, actionData);
     }
 

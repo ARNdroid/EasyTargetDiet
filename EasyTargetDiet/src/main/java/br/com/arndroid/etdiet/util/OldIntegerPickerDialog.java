@@ -52,7 +52,7 @@ public class OldIntegerPickerDialog extends AlertDialog implements DialogInterfa
 
         LayoutInflater inflater =
                 (LayoutInflater) themeContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.integer_picker_dialog, null);
+        View view = inflater.inflate(R.layout.integer_dialog, null);
         setView(view);
         setTitle(title);
 

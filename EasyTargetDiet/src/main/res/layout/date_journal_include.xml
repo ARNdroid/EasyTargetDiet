@@ -7,16 +7,16 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/default_view_padding"
     android:gravity="center"
-    android:background="@drawable/card_background">
+    android:clickable="true"
+    android:background="@drawable/card_selector">
 
-    <Button
-        android:id="@+id/btnDay"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="@dimen/default_view_size"
-        android:layout_height="@dimen/default_view_big_size"
+<TextView
+        android:id="@+id/txtDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/no_show_two_digits_number"
-        android:onClick="btnDayAction"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/text_very_large" />
 
     <TextView
         android:id="@+id/txtMonth"

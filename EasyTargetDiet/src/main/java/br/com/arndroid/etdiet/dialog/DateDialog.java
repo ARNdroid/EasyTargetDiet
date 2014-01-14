@@ -8,57 +8,54 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.NumberPicker;
 
-import br.com.arndroid.etdiet.R;
+import java.util.Date;
 
-public class IntegerDialog extends DialogFragment {
+import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.util.DateUtil;
+
+public class DateDialog extends DialogFragment {
     /**
-     * The callback used to indicate the user is done filling in the point number.
+     * The callback used to indicate the user is done filling in the date.
      */
-    public interface OnIntegerSetListener {
-        void onIntegerSet(String tag, int actualValue);
+    public interface OnDateSetListener {
+        void onDateSet(String tag, Date actualDate);
     }
 
     private static final String TITLE_KEY = "TITLE_KEY";
-    private static final String MIN_KEY = "MIN_KEY";
-    private static final String MAX_KEY = "MAX_KEY";
     private static final String INITIAL_KEY = "INITIAL_KEY";
     private static final String ACTUAL_KEY = "ACTUAL_KEY";
 
     private String mTitle;
-    private int mMinValue;
-    private int mMaxValue;
-    private int mInitialValue;
-    private NumberPicker mPickerInteger;
+    private Date mInitialValue;
+    private DatePicker mPickerDate;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.integer_dialog, null);
+        View view = inflater.inflate(R.layout.date_dialog, null);
         builder.setView(view);
 
         bindScreen(view);
 
-        int actualValue = getInitialValue();
+        Date actualValue = getInitialValue();
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getString(TITLE_KEY));
-            setMinValue(savedInstanceState.getInt(MIN_KEY));
-            setMaxValue(savedInstanceState.getInt(MAX_KEY));
-            setInitialValue(savedInstanceState.getInt(INITIAL_KEY));
-            actualValue = savedInstanceState.getInt(ACTUAL_KEY);
+            setInitialValue(DateUtil.dateIdToDate(savedInstanceState.getString(INITIAL_KEY)));
+            actualValue = DateUtil.dateIdToDate(savedInstanceState.getString(ACTUAL_KEY));
         }
 
-        setupScreen();
         refreshScreen(actualValue);
 
         builder.setTitle(getTitle());
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                ((OnIntegerSetListener)getActivity()).onIntegerSet(IntegerDialog.this.getTag(),
-                        mPickerInteger.getValue());
+                ((OnDateSetListener)getActivity()).onDateSet(DateDialog.this.getTag(),
+                        DateUtil.dateIdToDate(DateUtil.datePickerToDateId(mPickerDate)));
                 dialog.dismiss();
             }
         });
@@ -71,26 +68,19 @@ public class IntegerDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void refreshScreen(int actualValue) {
-        mPickerInteger.setValue(actualValue);
-    }
-
-    private void setupScreen() {
-        mPickerInteger.setMinValue(getMinValue());
-        mPickerInteger.setMaxValue(getMaxValue());
+    private void refreshScreen(Date actualValue) {
+        DateUtil.initDatePickerWithDateId(mPickerDate, DateUtil.dateToDateId(actualValue));
     }
 
     private void bindScreen(View rootView) {
-        mPickerInteger = (NumberPicker) rootView.findViewById(R.id.integerPicker);
+        mPickerDate = (DatePicker) rootView.findViewById(R.id.datePicker);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
-        outState.putInt(MIN_KEY, getMinValue());
-        outState.putInt(MAX_KEY, getMaxValue());
-        outState.putInt(INITIAL_KEY, getInitialValue());
-        outState.putInt(ACTUAL_KEY, mPickerInteger.getValue());
+        outState.putString(INITIAL_KEY, DateUtil.dateToDateId(getInitialValue()));
+        outState.putString(ACTUAL_KEY, DateUtil.datePickerToDateId(mPickerDate));
         super.onSaveInstanceState(outState);
     }
 
@@ -103,9 +93,9 @@ public class IntegerDialog extends DialogFragment {
            Due to it, the attached activity must implement the interface.
          */
         super.onAttach(activity);
-        if (!(activity instanceof OnIntegerSetListener)) {
+        if (!(activity instanceof OnDateSetListener)) {
             throw new ClassCastException(activity.toString() +
-                    " must implement IntegerDialog.OnIntegerSetListener");
+                    " must implement IntegerDialog.OnDateSetListener");
         }
     }
 
@@ -117,32 +107,16 @@ public class IntegerDialog extends DialogFragment {
         this.mTitle = title;
     }
 
-    public int getMinValue() {
-        return mMinValue;
-    }
-
-    public void setMinValue(int minIntegerValue) {
-        this.mMinValue = minIntegerValue;
-    }
-
-    public int getMaxValue() {
-        return mMaxValue;
-    }
-
-    public void setMaxValue(int maxIntegerValue) {
-        this.mMaxValue = maxIntegerValue;
-    }
-
-    public int getInitialValue() {
+    public Date getInitialValue() {
         return mInitialValue;
     }
 
-    public void setInitialValue(int currentValue) {
-        this.mInitialValue = currentValue;
+    public void setInitialValue(Date currentValue) {
+        mInitialValue = currentValue;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + IntegerDialog.class.getSimpleName();
+    private static final String TAG = "==>ETD/" + DateDialog.class.getSimpleName();
     @SuppressWarnings("UnusedDeclaration")
     private static final boolean isLogEnabled = true;
 }

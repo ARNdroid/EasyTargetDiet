@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.arndroid.etdiet.settings.SettingsMainActivity"
+    tools:context="br.com.arndroid.etdiet.journal.JournalActivity"
     tools:ignore="MergeRootFrame">
 
     <fragment
-        class="br.com.arndroid.etdiet.settings.SettingsMainFragment"
-        android:id="@+id/settings_main_fragment"
+        class="br.com.arndroid.etdiet.journal.JournalFragment"
+        android:id="@+id/journal_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/settings_fragment" />
+        tools:layout="@layout/journal_fragment" />
 
 </FrameLayout>

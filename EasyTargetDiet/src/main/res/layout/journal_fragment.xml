@@ -13,16 +13,18 @@
             android:id="@+id/layDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_margin" />
+            android:layout_margin="@dimen/card_margin"/>
 
-        <include layout="@layout/my_points_journal_include"
+        <include
+            layout="@layout/my_points_journal_include"
             android:id="@+id/layMyPoints"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/card_margin"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/layDate"
             android:layout_alignTop="@id/layDate"
-            android:layout_alignBottom="@id/layDate"/>
+            android:layout_alignBottom="@id/layDate"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"/>
 
         <include layout="@layout/my_goals_journal_include"
             android:id="@+id/layMyGoals"

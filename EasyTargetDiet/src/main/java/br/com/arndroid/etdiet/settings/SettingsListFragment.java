@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
@@ -22,7 +22,7 @@ public class SettingsListFragment extends ListFragment implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
         PointDialog.OnPointSetListener,
         IntegerDialog.OnIntegerSetListener,
-        FragmentReplier,
+        FragmentActionReplier,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String OWNER_TAG = SettingsListFragment.class.getSimpleName();
@@ -257,7 +257,7 @@ public class SettingsListFragment extends ListFragment implements
     }
 
     @Override
-    public void onReplyAction(String actionTag, Bundle actionData) {
+    public void onReplyActionFromOtherFragment(String actionTag, Bundle actionData) {
         mSettingsColumnName = actionTag;
         // If not loaded, load the first instance,
         // otherwise closes current loader e start a new one:

@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="br.com.arndroid.etdiet.journal.JournalAct"
+            android:name=".journal.JournalActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light" >
             <intent-filter>
@@ -27,7 +27,7 @@
         <activity
             android:name=".foodsusage.FoodsUsageActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".journal.JournalAct"
+            android:parentActivityName=".journal.JournalActivity"
             android:theme="@style/Theme.AppCompat.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

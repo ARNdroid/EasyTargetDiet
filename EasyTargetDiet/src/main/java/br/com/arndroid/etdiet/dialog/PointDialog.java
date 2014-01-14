@@ -37,7 +37,7 @@ public class PointDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.point_picker_dialog, null);
+        View view = inflater.inflate(R.layout.point_dialog, null);
         builder.setView(view);
 
         bindScreen(view);

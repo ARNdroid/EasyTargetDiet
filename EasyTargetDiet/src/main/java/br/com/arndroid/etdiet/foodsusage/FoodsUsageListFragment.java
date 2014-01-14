@@ -9,9 +9,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,7 +16,8 @@ import android.widget.ListView;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.FragmentReplier;
+import br.com.arndroid.etdiet.action.FragmentActionReplier;
+import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
@@ -29,8 +27,9 @@ import br.com.arndroid.etdiet.util.DateUtil;
 import br.com.arndroid.etdiet.util.ExposedObservable;
 
 public class FoodsUsageListFragment extends ListFragment implements
-        FragmentReplier,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        FragmentActionReplier,
+        LoaderManager.LoaderCallbacks<Cursor>,
+        FragmentMenuReplier {
 
     public static final String DATE_ID_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
             ".DATE_ID_ACTION_KEY";
@@ -122,12 +121,40 @@ public class FoodsUsageListFragment extends ListFragment implements
     }
 
     @Override
-    public void onReplyAction(String actionTag, Bundle actionData) {
+    public void onReplyActionFromOtherFragment(String actionTag, Bundle actionData) {
         mDateId = actionData.getString(DATE_ID_ACTION_KEY);
         mMeal = actionData.getInt(MEAL_ACTION_KEY);
         // If not loaded, load the first instance,
         // otherwise closes current loader e start a new one:
         getLoaderManager().restartLoader(FOODS_USAGE_LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onReplyMenuFromHolderActivity(int menuItemId) {
+        switch (menuItemId) {
+            case R.id.quick_add:
+                FragmentManager manager = getFragmentManager();
+                QuickInsertFrag dialog = new QuickInsertFrag();
+                dialog.setDateId(mDateId);
+                dialog.setTime(getDefaultTime());
+                dialog.setMeal(Meals.getMealFromPosition(mMeal));
+                dialog.setDescription(null);
+                dialog.setValue(getDefaultValue());
+                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid menuItemId=" + menuItemId);
+        }
+    }
+
+    private float getDefaultValue() {
+        return Meals.preferredUsageForMealInDate(getActivity().getApplicationContext(),
+                Meals.getMealFromPosition(mMeal),
+                DateUtil.dateIdToDate(mDateId));
+    }
+
+    private int getDefaultTime() {
+        return DateUtil.dateToTimeAsInt(new Date());
     }
 
     public interface FoodUsageListFragmentListener {
