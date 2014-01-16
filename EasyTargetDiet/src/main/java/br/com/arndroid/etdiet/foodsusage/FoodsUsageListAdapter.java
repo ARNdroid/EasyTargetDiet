@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class FoodsUsageListAdapter extends CursorAdapter {
 
@@ -22,7 +22,7 @@ public class FoodsUsageListAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
         LayoutInflater inflater =  (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.foods_usage_item, null, true);
+        View view = inflater.inflate(R.layout.foods_usage_list_item, null, true);
 
         ViewHolder holder = new ViewHolder((TextView) view.findViewById(R.id.lblFoodValue),
                 (TextView) view.findViewById(R.id.lblFoodDescription),
@@ -40,7 +40,7 @@ public class FoodsUsageListAdapter extends CursorAdapter {
                 cursor.getColumnIndex(Contract.FoodsUsage.VALUE))));
         holder.description.setText(cursor.getString(
                 cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION)));
-        holder.time.setText(DateUtil.timeToFormattedString(cursor.getInt(
+        holder.time.setText(DateUtils.timeToFormattedString(cursor.getInt(
                 cursor.getColumnIndex(Contract.FoodsUsage.TIME))));
     }
 

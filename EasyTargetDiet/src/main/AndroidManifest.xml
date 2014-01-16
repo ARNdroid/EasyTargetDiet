@@ -31,7 +31,7 @@
             android:theme="@style/Theme.AppCompat.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalAct" />
+                android:value=".journal.JournalActivity" />
         </activity>
         <activity
             android:name=".settings.SettingsMainActivity"
@@ -39,7 +39,7 @@
             android:theme="@style/Theme.AppCompat.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalAct" />
+                android:value=".journal.JournalActivity" />
         </activity>
 
         <activity

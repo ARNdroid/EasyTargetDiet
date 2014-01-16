@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class SettingsWeekdayAdapter extends CursorAdapter {
 
@@ -117,9 +117,9 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
                                                             String goalColumnName) {
         return String.format(resources.getString(R.string.meal_ideal_actual_values),
                 cursor.getFloat(cursor.getColumnIndex(goalColumnName)),
-                DateUtil.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
+                DateUtils.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
                         startTimeColumnName))),
-                DateUtil.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
+                DateUtils.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
                         endTimeColumnName))));
     }
 

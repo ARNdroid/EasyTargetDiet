@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.util;
+package br.com.arndroid.etdiet.utils;
 
 import android.util.Log;
 import android.widget.DatePicker;
@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtil {
+public class DateUtils {
 
     private static final int DATE_ID_YEAR_START_POSITION = 0; // inclusive
     private static final int DATE_ID_YEAR_END_POSITION = 4; // exclusive
@@ -21,7 +21,7 @@ public class DateUtil {
     private static final String TIME_FORMAT_STRING = "hh:mm";
 
     // Utility class.
-    private DateUtil() {
+    private DateUtils() {
 
     }
 
@@ -147,6 +147,6 @@ public class DateUtil {
         return hoursToMillis(cal.get(Calendar.HOUR_OF_DAY)) + minutesToMillis(cal.get(Calendar.MINUTE));
     }
 
-    private static final String TAG = "==>ETD/" + DateUtil.class.getSimpleName();
+    private static final String TAG = "==>ETD/" + DateUtils.class.getSimpleName();
     private static final boolean isLogEnabled = false;
 }

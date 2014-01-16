@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.sk.m217.tests.utils.MockContentResolver2;
+import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.sk.m217.tests.utils.MockContentResolver2;
 
 public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
 
@@ -225,7 +225,7 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
 
     private void swapVirtualWeek(String referenceDateId) {
         unregisterObservers();
-        createVirtualWeekEngineAndRegisterObservers(DateUtil.dateIdToDate(referenceDateId));
+        createVirtualWeekEngineAndRegisterObservers(DateUtils.dateIdToDate(referenceDateId));
     }
 
     public static interface ViewObserver {

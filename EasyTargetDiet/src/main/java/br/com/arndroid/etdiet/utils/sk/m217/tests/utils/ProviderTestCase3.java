@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.util.sk.m217.tests.utils;
+package br.com.arndroid.etdiet.utils.sk.m217.tests.utils;
 /*
  * Copyright (C) 2011 The Android Open Source Project
  *

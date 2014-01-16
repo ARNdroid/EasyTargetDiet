@@ -9,7 +9,7 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.UsageSummary;
 
 public class FoodsUsageManager {
@@ -145,7 +145,7 @@ public class FoodsUsageManager {
 
     private void createDayIfNecessaryForDateId(String dateId) {
         final DaysManager daysManager = new DaysManager(mContext);
-        DaysEntity daysEntity = daysManager.dayFromDate(DateUtil.dateIdToDate(dateId));
+        DaysEntity daysEntity = daysManager.dayFromDate(DateUtils.dateIdToDate(dateId));
         if(daysEntity.getId() == null) daysManager.refresh(daysEntity);
     }
 }

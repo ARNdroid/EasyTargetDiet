@@ -24,7 +24,7 @@ import br.com.arndroid.etdiet.meals.MealsAdapter;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 /*
     TODO: Try a refactor.
@@ -139,9 +139,9 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
             setId(returnedId);
         }
         mDateIdSet = savedInstanceState.getString(DATE_ID_PARAMETER);
-        btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
+        btnDate.setText(DateUtils.dateIdToFormattedString(mDateIdSet));
         mTimeSet = savedInstanceState.getInt(TIME_PARAMETER);
-        btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
+        btnTime.setText(DateUtils.timeToFormattedString(mTimeSet));
         mValueSet = savedInstanceState.getFloat(VALUE_PARAMETER);
         pickerInteger.setValue((int) Math.floor(mValueSet));
         pickerDecimal.setValue(mValueSet % 1 == 0 ? 0 : 1);
@@ -150,9 +150,9 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     private void fillFormWithDataFromDB() {
         FoodsUsageEntity entity = new FoodsUsageManager(getActivity().getApplicationContext()).foodUsageFromId(mId);
         spnMeal.setSelection(entity.getMeal());
-        btnDate.setText(DateUtil.dateIdToFormattedString(entity.getDateId()));
+        btnDate.setText(DateUtils.dateIdToFormattedString(entity.getDateId()));
         mDateIdSet = entity.getDateId();
-        btnTime.setText(DateUtil.timeToFormattedString(entity.getTime()));
+        btnTime.setText(DateUtils.timeToFormattedString(entity.getTime()));
         mTimeSet = entity.getTime();
         edtDescription.setText(entity.getDescription());
         mValueSet = entity.getValue();
@@ -183,14 +183,13 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         pickerDecimal.setMinValue(0);
         pickerDecimal.setMaxValue(1);
         pickerDecimal.setDisplayedValues(new String[]{"0", "5"});
-        pickerDecimal.setWrapSelectorWheel(true);
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(QuickInsertFrag.this.getActivity(),
-                        QuickInsertFrag.this, DateUtil.getYearFromDateId(mDateIdSet),
-                        DateUtil.getMonthFromDateId(mDateIdSet) - 1,
-                        DateUtil.getDayFromDateId(mDateIdSet));
+                        QuickInsertFrag.this, DateUtils.getYearFromDateId(mDateIdSet),
+                        DateUtils.getMonthFromDateId(mDateIdSet) - 1,
+                        DateUtils.getDayFromDateId(mDateIdSet));
                 dialog.show();
             }
         });
@@ -198,8 +197,8 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
             @Override
             public void onClick(View v) {
                 TimePickerDialog dialog = new TimePickerDialog(QuickInsertFrag.this.getActivity(),
-                        QuickInsertFrag.this, DateUtil.getHoursFromTimeAsInt(mTimeSet),
-                        DateUtil.getMinutesFromTimeAsInt(mTimeSet), true);
+                        QuickInsertFrag.this, DateUtils.getHoursFromTimeAsInt(mTimeSet),
+                        DateUtils.getMinutesFromTimeAsInt(mTimeSet), true);
                 dialog.show();
             }
         });
@@ -253,8 +252,8 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
 
     private void fillFormWithDataFromSetters() {
         spnMeal.setSelection(mMealSet);
-        btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
-        btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
+        btnDate.setText(DateUtils.dateIdToFormattedString(mDateIdSet));
+        btnTime.setText(DateUtils.timeToFormattedString(mTimeSet));
         edtDescription.setText(mDescriptionSet);
         pickerInteger.setValue((int) Math.floor(mValueSet));
         pickerDecimal.setValue(mValueSet % 1 == 0 ? 0 : 1);
@@ -282,14 +281,14 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        mDateIdSet = DateUtil.datePickerToDateId(view);
-        btnDate.setText(DateUtil.dateIdToFormattedString(mDateIdSet));
+        mDateIdSet = DateUtils.datePickerToDateId(view);
+        btnDate.setText(DateUtils.dateIdToFormattedString(mDateIdSet));
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        mTimeSet = DateUtil.timePickerToTimeAsInt(view);
-        btnTime.setText(DateUtil.timeToFormattedString(mTimeSet));
+        mTimeSet = DateUtils.timePickerToTimeAsInt(view);
+        btnTime.setText(DateUtils.timeToFormattedString(mTimeSet));
     }
 
     @SuppressWarnings("UnusedDeclaration")

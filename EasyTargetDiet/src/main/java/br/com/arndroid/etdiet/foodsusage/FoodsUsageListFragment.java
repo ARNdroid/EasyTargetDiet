@@ -6,56 +6,43 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.meals.Meals;
-import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
-import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.ExposedObservable;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
-public class FoodsUsageListFragment extends ListFragment implements
-        FragmentActionReplier,
-        LoaderManager.LoaderCallbacks<Cursor>,
-        FragmentMenuReplier {
-
-    public static final String DATE_ID_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
-            ".DATE_ID_ACTION_KEY";
-    public static final String MEAL_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
-            ".MEAL_ACTION_KEY";
-    private static final int FOODS_USAGE_LOADER_ID = 1;
+public class FoodsUsageListFragment extends ListFragment implements FragmentMenuReplier {
 
     private String mDateId;
     private int mMeal;
     private FoodsUsageListAdapter mAdapter;
-    private ExposedObservable<FoodUsageListFragmentListener> mListeners =
-            new ExposedObservable<FoodUsageListFragmentListener>();
+    private TextView mTxtEmpty;
+    private ListView mLstList;
 
-    public void registerListener(FoodUsageListFragmentListener listener) {
-        mListeners.registerObserver(listener);
-    }
-
-    public void unregisterListener(FoodUsageListFragmentListener listener) {
-        mListeners.unregisterObserver(listener);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.foods_usage_list_fragment, container, false);
+        bindScreen(rootView);
+        setupScreen(rootView);
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        setEmptyText(getResources().getText(R.string.list_empty_foods_usage));
 
         mAdapter = new FoodsUsageListAdapter(getActivity());
         setListAdapter(mAdapter);
@@ -95,41 +82,6 @@ public class FoodsUsageListFragment extends ListFragment implements
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch (id) {
-            case FOODS_USAGE_LOADER_ID:
-                return new CursorLoader(getActivity(), Contract.FoodsUsage.CONTENT_URI,
-                        Contract.FoodsUsage.SIMPLE_LIST_PROJECTION,
-                        Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION,
-                        new String[] {String.valueOf(mDateId), String.valueOf(mMeal)}, null);
-            default:
-                throw new IllegalArgumentException("Invalid loader id '" + id + "'");
-        }
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor data) {
-        mAdapter.swapCursor(data);
-        for (FoodUsageListFragmentListener listener : mListeners.getAllObservers()) {
-            listener.onListValuesChanged(data);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        mAdapter.swapCursor(null);
-    }
-
-    @Override
-    public void onReplyActionFromOtherFragment(String actionTag, Bundle actionData) {
-        mDateId = actionData.getString(DATE_ID_ACTION_KEY);
-        mMeal = actionData.getInt(MEAL_ACTION_KEY);
-        // If not loaded, load the first instance,
-        // otherwise closes current loader e start a new one:
-        getLoaderManager().restartLoader(FOODS_USAGE_LOADER_ID, null, this);
-    }
-
-    @Override
     public void onReplyMenuFromHolderActivity(int menuItemId) {
         switch (menuItemId) {
             case R.id.quick_add:
@@ -147,17 +99,39 @@ public class FoodsUsageListFragment extends ListFragment implements
         }
     }
 
+    private void bindScreen(View rootView) {
+        mTxtEmpty = (TextView) rootView.findViewById(android.R.id.empty);
+        mLstList = (ListView) rootView.findViewById(android.R.id.list);
+    }
+
+    private void setupScreen(View rootView) {
+        mTxtEmpty.setText(getResources().getText(R.string.list_empty_foods_usage));
+    }
+
+    private void refreshScreen() {
+        if (mLstList.getAdapter().getCount() == 0) {
+            mTxtEmpty.setVisibility(View.VISIBLE);
+            mLstList.setVisibility(View.GONE);
+        } else {
+            mTxtEmpty.setVisibility(View.GONE);
+            mLstList.setVisibility(View.VISIBLE);
+        }
+    }
+
     private float getDefaultValue() {
         return Meals.preferredUsageForMealInDate(getActivity().getApplicationContext(),
                 Meals.getMealFromPosition(mMeal),
-                DateUtil.dateIdToDate(mDateId));
+                DateUtils.dateIdToDate(mDateId));
     }
 
     private int getDefaultTime() {
-        return DateUtil.dateToTimeAsInt(new Date());
+        return DateUtils.dateToTimeAsInt(new Date());
     }
 
-    public interface FoodUsageListFragmentListener {
-        public void onListValuesChanged(Cursor data);
+    public void onDataChangedFromHolderActivity(String dateId, int meal, Cursor data) {
+        mDateId = dateId;
+        mMeal = meal;
+        mAdapter.swapCursor(data);
+        refreshScreen();
     }
 }

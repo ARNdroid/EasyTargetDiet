@@ -88,7 +88,6 @@ public class PointDialog extends DialogFragment {
         mPickerDecimal.setDisplayedValues(new String[]{"0", "5"});
         mPickerDecimal.setMinValue(0);
         mPickerDecimal.setMaxValue(1);
-        mPickerDecimal.setWrapSelectorWheel(true);
     }
 
     private void bindScreen(View rootView) {

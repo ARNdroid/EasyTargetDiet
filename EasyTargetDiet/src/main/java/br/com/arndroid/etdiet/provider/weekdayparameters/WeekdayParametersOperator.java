@@ -8,7 +8,7 @@ import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.util.UriUtil;
+import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class WeekdayParametersOperator extends BaseProviderOperator {
 
@@ -20,10 +20,10 @@ public class WeekdayParametersOperator extends BaseProviderOperator {
         UriMatcher matcher =  getUriMatcher();
         // Safe change WeekdayParameters.Uri: add line for a new uri.
         matcher.addURI(Contract.WeekdayParameters.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.WeekdayParameters.CONTENT_URI),
+                UrisUtils.pathForUriMatcherFromUri(Contract.WeekdayParameters.CONTENT_URI),
                 WEEKDAY_PARAMETERS_URI_MATCH);
         matcher.addURI(Contract.WeekdayParameters.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.WeekdayParameters.CONTENT_URI) + "/#",
+                UrisUtils.pathForUriMatcherFromUri(Contract.WeekdayParameters.CONTENT_URI) + "/#",
                 WEEKDAY_PARAMETERS_ITEM_URI_MATCH);
     }
 

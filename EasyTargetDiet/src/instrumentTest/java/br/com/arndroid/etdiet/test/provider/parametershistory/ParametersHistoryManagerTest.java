@@ -12,7 +12,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryEntity;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
 
@@ -61,7 +61,7 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         Date tomorrow = calendar.getTime();
         ParametersHistoryEntity yesterdayEntity = new ParametersHistoryEntity(null, Contract.ParametersHistory.TRACKING_WEEKDAY_PARAMETER_TYPE,
-                DateUtil.dateToDateId(yesterday), Calendar.FRIDAY, null, null);
+                DateUtils.dateToDateId(yesterday), Calendar.FRIDAY, null, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, yesterdayEntity.toContentValuesIgnoreNulls());
         int expectedWeekDay = Calendar.FRIDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(yesterday));
@@ -84,10 +84,10 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         Date future = calendar.getTime();
         ParametersHistoryEntity entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.TRACKING_WEEKDAY_PARAMETER_TYPE,
-                DateUtil.dateToDateId(paste), Calendar.FRIDAY, null, null);
+                DateUtils.dateToDateId(paste), Calendar.FRIDAY, null, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
         entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.TRACKING_WEEKDAY_PARAMETER_TYPE,
-                DateUtil.dateToDateId(future), Calendar.SUNDAY, null, null);
+                DateUtils.dateToDateId(future), Calendar.SUNDAY, null, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
 
         // Paste:
@@ -166,10 +166,10 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         final float futureValue = 30.6f;
 
         ParametersHistoryEntity entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.DAILY_ALLOWANCE_PARAMETER_TYPE,
-                DateUtil.dateToDateId(paste), null, pasteValue, null);
+                DateUtils.dateToDateId(paste), null, pasteValue, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
         entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.DAILY_ALLOWANCE_PARAMETER_TYPE,
-                DateUtil.dateToDateId(future), null, futureValue, null);
+                DateUtils.dateToDateId(future), null, futureValue, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
 
         // Paste:

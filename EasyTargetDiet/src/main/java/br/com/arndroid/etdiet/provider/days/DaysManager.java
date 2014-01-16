@@ -13,7 +13,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class DaysManager {
     final private Context mContext;
@@ -23,14 +23,14 @@ public class DaysManager {
     }
 
     public DaysEntity dayFromDateId(String dateId) {
-        return dayFromDate(DateUtil.dateIdToDate(dateId));
+        return dayFromDate(DateUtils.dateIdToDate(dateId));
     }
 
     public DaysEntity dayFromDate(Date date) {
         Cursor cursor = null;
         try {
             cursor = mContext.getContentResolver().query(Contract.Days.CONTENT_URI, null,
-                    Contract.Days.DATE_ID_SELECTION, new String[] {DateUtil.dateToDateId(date)}, null);
+                    Contract.Days.DATE_ID_SELECTION, new String[] {DateUtils.dateToDateId(date)}, null);
             if(cursor.getCount() == 0) {
                 return buildMemoryDayForDate(date);
             } else {
@@ -48,7 +48,7 @@ public class DaysManager {
         WeekdayParametersEntity parameters = new
                 WeekdayParametersManager(mContext).weekdayParametersFromWeekday(calendar.get(Calendar.DAY_OF_WEEK));
         return new DaysEntity(null,
-                DateUtil.dateToDateId(date),
+                DateUtils.dateToDateId(date),
                 new ParametersHistoryManager(mContext).getDailyAllowanceForDate(date),
                 parameters.getBreakfastStartTime(), parameters.getBreakfastEndTime(), parameters.getBreakfastGoal(),
                 parameters.getBrunchStartTime(), parameters.getBrunchEndTime(), parameters.getBrunchGoal(),

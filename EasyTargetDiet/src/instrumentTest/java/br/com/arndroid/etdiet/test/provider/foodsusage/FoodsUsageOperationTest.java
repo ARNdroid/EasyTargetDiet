@@ -7,7 +7,7 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
-import br.com.arndroid.etdiet.util.UriUtil;
+import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
 
@@ -19,7 +19,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         Cursor c = null;
         try {
             String dateId = "20130918";
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getLong(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -39,7 +39,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
             entity = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, 0, "none",
                     0.1f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -52,7 +52,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, 0, "none", 0.2f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -64,7 +64,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, dateId, Meals.DINNER, 0, "none", 0.3f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -76,7 +76,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, dateId, Meals.EXERCISE, 0, "none", 888.8f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -88,7 +88,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, "20130919", Meals.BRUNCH, 0, "none", 999.9f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_USAGE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -102,7 +102,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         Cursor c = null;
         try {
             String dateId = "20130918";
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getLong(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -122,7 +122,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
             entity = new FoodsUsageEntity(null, dateId, Meals.EXERCISE, 0, "none",
                     0.1f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -135,7 +135,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, dateId, Meals.EXERCISE, 0, "none", 0.2f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -147,7 +147,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, dateId, Meals.EXERCISE, 0, "none", 0.3f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -159,7 +159,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, 0, "none", 888.8f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));
@@ -171,7 +171,7 @@ public class FoodsUsageOperationTest extends ProviderTestCase2<Provider> {
         try {
             entity = new FoodsUsageEntity(null, "20130919", Meals.EXERCISE, 0, "none", 999.9f);
             getProvider().insert(Contract.FoodsUsage.CONTENT_URI, entity.toContentValuesIgnoreNulls());
-            c = getProvider().query(UriUtil.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
+            c = getProvider().query(UrisUtils.withAppendedId(Contract.FoodsUsage.SUM_EXERCISE_URI,
                     dateId), null, null, null, null);
             c.moveToFirst();
             float total = c.getFloat(c.getColumnIndex(Contract.FoodsUsage.SUM_VALUE));

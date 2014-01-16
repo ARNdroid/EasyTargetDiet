@@ -9,11 +9,12 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
+import br.com.arndroid.etdiet.action.MenuUtils;
 import br.com.arndroid.etdiet.action.SimpleActivityActionCaller;
-import br.com.arndroid.etdiet.action.SimpleActivityMenuCaller;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
+import br.com.arndroid.etdiet.settings.SettingsListActivity;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 
 public class JournalActivity extends ActionBarActivity implements
@@ -37,25 +38,18 @@ public class JournalActivity extends ActionBarActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemId = item.getItemId();
-        final Class holderActivityClass;
-        final int fragmentId;
 
         switch (itemId) {
             case R.id.quick_add:
-                holderActivityClass = JournalActivity.class;
-                fragmentId = R.id.journal_fragment;
-                break;
+                MenuUtils.callMenuInFragmentByMethod(getSupportFragmentManager(),
+                        R.id.journal_fragment, itemId);
+                return true;
             case R.id.settings:
-                holderActivityClass = SettingsMainActivity.class;
-                fragmentId = R.id.settings_main_fragment;
-                break;
+                MenuUtils.callMenuInFragmentByIntent(this, SettingsMainActivity.class, itemId);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-        new SimpleActivityMenuCaller().onCallMenu(this, getSupportFragmentManager(), fragmentId,
-                holderActivityClass, itemId);
-        return true;
     }
 
     @Override

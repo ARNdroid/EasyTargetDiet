@@ -3,15 +3,8 @@ package br.com.arndroid.etdiet.provider.weekdayparameters;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-
-import java.util.Calendar;
-import java.util.Date;
 
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.days.DaysEntity;
-import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
-import br.com.arndroid.etdiet.util.DateUtil;
 
 public class WeekdayParametersManager {
     final private Context mContext;

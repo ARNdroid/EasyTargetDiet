@@ -9,12 +9,11 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.NumberPicker;
 
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class DateDialog extends DialogFragment {
     /**
@@ -44,8 +43,8 @@ public class DateDialog extends DialogFragment {
         Date actualValue = getInitialValue();
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getString(TITLE_KEY));
-            setInitialValue(DateUtil.dateIdToDate(savedInstanceState.getString(INITIAL_KEY)));
-            actualValue = DateUtil.dateIdToDate(savedInstanceState.getString(ACTUAL_KEY));
+            setInitialValue(DateUtils.dateIdToDate(savedInstanceState.getString(INITIAL_KEY)));
+            actualValue = DateUtils.dateIdToDate(savedInstanceState.getString(ACTUAL_KEY));
         }
 
         refreshScreen(actualValue);
@@ -55,7 +54,7 @@ public class DateDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 ((OnDateSetListener)getActivity()).onDateSet(DateDialog.this.getTag(),
-                        DateUtil.dateIdToDate(DateUtil.datePickerToDateId(mPickerDate)));
+                        DateUtils.dateIdToDate(DateUtils.datePickerToDateId(mPickerDate)));
                 dialog.dismiss();
             }
         });
@@ -69,7 +68,7 @@ public class DateDialog extends DialogFragment {
     }
 
     private void refreshScreen(Date actualValue) {
-        DateUtil.initDatePickerWithDateId(mPickerDate, DateUtil.dateToDateId(actualValue));
+        DateUtils.initDatePickerWithDateId(mPickerDate, DateUtils.dateToDateId(actualValue));
     }
 
     private void bindScreen(View rootView) {
@@ -79,8 +78,8 @@ public class DateDialog extends DialogFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
-        outState.putString(INITIAL_KEY, DateUtil.dateToDateId(getInitialValue()));
-        outState.putString(ACTUAL_KEY, DateUtil.datePickerToDateId(mPickerDate));
+        outState.putString(INITIAL_KEY, DateUtils.dateToDateId(getInitialValue()));
+        outState.putString(ACTUAL_KEY, DateUtils.datePickerToDateId(mPickerDate));
         super.onSaveInstanceState(outState);
     }
 

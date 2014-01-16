@@ -1,8 +1,8 @@
-package br.com.arndroid.etdiet.util;
+package br.com.arndroid.etdiet.utils;
 
 import android.net.Uri;
 
-public class UriUtil {
+public class UrisUtils {
 
     public static Uri withAppendedId(Uri contentUri, String id) {
         return appendId(contentUri.buildUpon(), id).build();

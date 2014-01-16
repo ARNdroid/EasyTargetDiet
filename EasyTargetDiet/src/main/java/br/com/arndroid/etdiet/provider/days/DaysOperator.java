@@ -3,16 +3,14 @@ package br.com.arndroid.etdiet.provider.days;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
-import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.util.UriUtil;
+import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class DaysOperator extends BaseProviderOperator {
 
@@ -24,9 +22,9 @@ public class DaysOperator extends BaseProviderOperator {
         UriMatcher matcher =  getUriMatcher();
         // Safe change Days.Uri: add line for a new uri.
         matcher.addURI(Contract.Days.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.Days.CONTENT_URI), DAYS_URI_MATCH);
+                UrisUtils.pathForUriMatcherFromUri(Contract.Days.CONTENT_URI), DAYS_URI_MATCH);
         matcher.addURI(Contract.Days.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.Days.CONTENT_URI) + "/#", DAYS_ITEM_URI_MATCH);
+                UrisUtils.pathForUriMatcherFromUri(Contract.Days.CONTENT_URI) + "/#", DAYS_ITEM_URI_MATCH);
     }
 
     @Override
@@ -85,7 +83,7 @@ public class DaysOperator extends BaseProviderOperator {
 
         if(resultUri != null) {
             ContentResolver resolver = provider.getContext().getContentResolver();
-            final Uri virtualUri = UriUtil.withAppendedId(Contract.Days.DATE_ID_CONTENT_URI,
+            final Uri virtualUri = UrisUtils.withAppendedId(Contract.Days.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.Days.DATE_ID));
             if (isLogEnabled) {
                 Log.d(TAG, "insert, about to notify virtualUri=" + virtualUri);

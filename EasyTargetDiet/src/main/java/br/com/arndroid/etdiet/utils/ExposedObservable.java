@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.util;
+package br.com.arndroid.etdiet.utils;
 
 import android.database.Observable;
 import android.util.Log;

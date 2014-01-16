@@ -11,7 +11,7 @@ import java.util.Date;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 	/*
@@ -48,7 +48,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            String dateId = DateUtil.dateToDateId(new Date());
+            String dateId = DateUtils.dateToDateId(new Date());
             ParametersHistoryEntity entity;
 
             entity = new ParametersHistoryEntity(null,

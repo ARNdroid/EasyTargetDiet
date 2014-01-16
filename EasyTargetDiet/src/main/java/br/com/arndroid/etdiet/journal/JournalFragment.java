@@ -23,13 +23,12 @@ import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
@@ -91,7 +90,7 @@ public class JournalFragment extends Fragment implements
         if (savedInstanceState != null) {
             mCurrentDateId = savedInstanceState.getString(Contract.Days.DATE_ID);
         } else {
-            mCurrentDateId = DateUtil.dateToDateId(new Date());
+            mCurrentDateId = DateUtils.dateToDateId(new Date());
         }
 
         mMonthsShortNameArray = getResources().getStringArray(R.array.months_short_name_list);
@@ -176,7 +175,7 @@ public class JournalFragment extends Fragment implements
 
                 DateDialog dialog = new DateDialog();
                 dialog.setTitle(getString(R.string.date));
-                dialog.setInitialValue(DateUtil.dateIdToDate(mCurrentDateId));
+                dialog.setInitialValue(DateUtils.dateIdToDate(mCurrentDateId));
                 dialog.show(getFragmentManager(), DATE_EDIT_TAG);
             }
         });
@@ -191,7 +190,7 @@ public class JournalFragment extends Fragment implements
 
                 dialog.setDateId(mCurrentDateId);
 
-                final int timeHint = DateUtil.dateToTimeAsInt(new Date());
+                final int timeHint = DateUtils.dateToTimeAsInt(new Date());
                 dialog.setMeal(Meals.EXERCISE);
                 dialog.setTime(timeHint);
 
@@ -215,7 +214,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 entity.setLiquidDone(entity.getLiquidDone() + 1);
                 manager.refresh(entity);
 
@@ -225,7 +224,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 IntegerDialog dialog = new IntegerDialog();
                 dialog.setTitle(getString(R.string.liquid));
                 dialog.setMinValue(0);
@@ -241,7 +240,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 entity.setOilDone(entity.getOilDone() + 1);
                 manager.refresh(entity);
 
@@ -251,7 +250,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 IntegerDialog dialog = new IntegerDialog();
                 dialog.setTitle(getString(R.string.oil));
                 dialog.setMinValue(0);
@@ -268,7 +267,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 entity.setSupplementDone(entity.getSupplementDone() + 1);
                 manager.refresh(entity);
 
@@ -278,7 +277,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public boolean onLongClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 IntegerDialog dialog = new IntegerDialog();
                 dialog.setTitle(getString(R.string.supplement));
                 dialog.setMinValue(0);
@@ -341,7 +340,7 @@ public class JournalFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-                DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+                DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
                 TextDialog dialog = new TextDialog();
                 dialog.setTitle(getString(R.string.notes));
                 dialog.setInitialText(entity.getNote());
@@ -351,10 +350,10 @@ public class JournalFragment extends Fragment implements
     }
 
     public void refreshScreen(DaySummary daySummary) {
-        mTxtDay.setText(String.valueOf(DateUtil.getDayFromDateId(daySummary.getEntity().getDateId())));
-        final int month = DateUtil.getMonthFromDateId(daySummary.getEntity().getDateId()) - 1;
+        mTxtDay.setText(String.valueOf(DateUtils.getDayFromDateId(daySummary.getEntity().getDateId())));
+        final int month = DateUtils.getMonthFromDateId(daySummary.getEntity().getDateId()) - 1;
         mTxtMonth.setText(mMonthsShortNameArray[month]);
-        final int weekday = DateUtil.getWeekdayFromDateId(daySummary.getEntity().getDateId()) - 1;
+        final int weekday = DateUtils.getWeekdayFromDateId(daySummary.getEntity().getDateId()) - 1;
         mTxtWeekday.setText(mWeekdaysShortNameArray[weekday]);
 
         mTxtPtsDay.setText(String.valueOf(daySummary.getDiaryAllowanceAfterUsage()));
@@ -371,30 +370,30 @@ public class JournalFragment extends Fragment implements
                 + String.valueOf(daySummary.getEntity().getSupplementGoal()));
 
         mTxtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
-        mTxtBreakfastTime.setText(DateUtil.timeToFormattedString(
+        mTxtBreakfastTime.setText(DateUtils.timeToFormattedString(
                 daySummary.getEntity().getBreakfastStartTime()) + " - " +
-                DateUtil.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime()));
+                DateUtils.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime()));
         final String ideal = getResources().getString(R.string.ideal_values) + " ";
         mTxtBreakfastIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBreakfastGoal()));
         mTxtBrunchPts.setText(String.valueOf(daySummary.getUsage().getBrunchUsed()));
-        mTxtBrunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getBrunchStartTime())
-                + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getBrunchEndTime()));
+        mTxtBrunchTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchStartTime())
+                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchEndTime()));
         mTxtBrunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBrunchGoal()));
         mTxtLunchPts.setText(String.valueOf(daySummary.getUsage().getLunchUsed()));
-        mTxtLunchTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getLunchStartTime())
-                + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getLunchEndTime()));
+        mTxtLunchTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getLunchStartTime())
+                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getLunchEndTime()));
         mTxtLunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getLunchGoal()));
         mTxtSneakPts.setText(String.valueOf(daySummary.getUsage().getSneakUsed()));
-        mTxtSneakTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getSnackStartTime())
-                + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getSnackEndTime()));
+        mTxtSneakTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getSnackStartTime())
+                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getSnackEndTime()));
         mTxtSneakIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSnackGoal()));
         mTxtDinnerPts.setText(String.valueOf(daySummary.getUsage().getDinnerUsed()));
-        mTxtDinnerTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getDinnerStartTime())
-                + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getDinnerEndTime()));
+        mTxtDinnerTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerStartTime())
+                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerEndTime()));
         mTxtDinnerIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getDinnerGoal()));
         mTxtSupperPts.setText(String.valueOf(daySummary.getUsage().getSupperUsed()));
-        mTxtSupperTime.setText(DateUtil.timeToFormattedString(daySummary.getEntity().getSupperStartTime())
-                + " - " + DateUtil.timeToFormattedString(daySummary.getEntity().getSupperEndTime()));
+        mTxtSupperTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getSupperStartTime())
+                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getSupperEndTime()));
         mTxtSupperIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSupperGoal()));
 
         if (TextUtils.isEmpty(daySummary.getEntity().getNote())) {
@@ -439,8 +438,8 @@ public class JournalFragment extends Fragment implements
         }
 
         final Bundle data = new Bundle();
-        data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
-        data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, meal);
+        data.putString(FoodsUsageActivity.DATE_ID_ACTION_KEY, mCurrentDateId);
+        data.putInt(FoodsUsageActivity.MEAL_ACTION_KEY, meal);
 
         ((ActivityActionCaller)getActivity()).onCallAction(R.id.foods_usage_list_fragment,
                 FoodsUsageActivity.class, null, data);
@@ -471,7 +470,7 @@ public class JournalFragment extends Fragment implements
     @Override
     public void onDateSet(String tag, Date actualDate) {
         if (DATE_EDIT_TAG.equals(tag)) {
-            mCurrentDateId = DateUtil.dateToDateId(actualDate);
+            mCurrentDateId = DateUtils.dateToDateId(actualDate);
             mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -481,7 +480,7 @@ public class JournalFragment extends Fragment implements
     @Override
     public void onIntegerSet(String tag, int actualValue) {
         final DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-        final DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+        final DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
         if (LIQUID_DONE_TAG.equals(tag)) {
             entity.setLiquidDone(actualValue);
         } else if (OIL_DONE_TAG.equals(tag)) {
@@ -497,7 +496,7 @@ public class JournalFragment extends Fragment implements
     @Override
     public void onTextSet(String tag, String actualText) {
         DaysManager manager = new DaysManager(getActivity().getApplicationContext());
-        DaysEntity entity = manager.dayFromDate(DateUtil.dateIdToDate(mCurrentDateId));
+        DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
         entity.setNote(actualText);
         manager.refresh(entity);
     }
@@ -511,8 +510,8 @@ public class JournalFragment extends Fragment implements
 
                 dialog.setDateId(mCurrentDateId);
 
-                final Date currentDate = DateUtil.dateIdToDate(mCurrentDateId);
-                final int timeHint = DateUtil.dateToTimeAsInt(new Date());
+                final Date currentDate = DateUtils.dateIdToDate(mCurrentDateId);
+                final int timeHint = DateUtils.dateToTimeAsInt(new Date());
                 final int mealHint = Meals.preferredMealForTimeInDate(
                         getActivity().getApplicationContext(), timeHint, currentDate);
                 dialog.setMeal(mealHint);
