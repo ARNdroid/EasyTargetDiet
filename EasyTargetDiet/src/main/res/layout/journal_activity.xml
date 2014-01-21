@@ -1,16 +1,49 @@
-<FrameLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.arndroid.etdiet.journal.JournalActivity"
-    tools:ignore="MergeRootFrame">
+    android:background="@drawable/activity_background"
+    tools:ignore="MergeRootFrame"
+    tools:context="br.com.arndroid.etdiet.journal.JournalActivity">
 
-    <fragment
-        class="br.com.arndroid.etdiet.journal.JournalFragment"
-        android:id="@+id/journal_fragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/journal_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalMyPointsFragment"
+            android:id="@+id/journal_my_points_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_my_points_fragment" />
+
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalMyGoalsFragment"
+            android:id="@+id/journal_my_goals_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_my_goals_fragment" />
+
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalMyMealsFragment"
+            android:id="@+id/journal_my_meals_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_my_meals_fragment" />
+
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalNotesFragment"
+            android:id="@+id/journal_notes_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_notes_fragment" />
+
+    </LinearLayout>
+
+</ScrollView>

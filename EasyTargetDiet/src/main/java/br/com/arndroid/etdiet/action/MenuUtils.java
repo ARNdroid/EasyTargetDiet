@@ -28,12 +28,13 @@ public class MenuUtils {
 
     public static void callMenuInFragmentByMethod(FragmentManager fragmentManager, int fragmentId,
                                                   int menuItemId) {
-        // TODO: we should finish with a NPE here. Check and throw a better exception.
+        // TODO: we may finish with a NPE here. Check and throw a better exception.
         ((FragmentMenuReplier) getFragmentInLayout(fragmentManager, fragmentId))
                 .onReplyMenuFromHolderActivity(menuItemId);
     }
 
-    public static void callMenuInFragmentByIntent(Context context, Class holderActivityClass, int menuItemId) {
+    public static void callMenuInFragmentByIntent(Context context, Class holderActivityClass,
+                                                  int menuItemId) {
         // TODO: if context == holderActivityClass we will be in loop. Throw exception!
         final Intent intent = new Intent(context, holderActivityClass);
         intent.putExtra(FragmentMenuReplier.MENU_ITEM_ID_KEY, menuItemId);

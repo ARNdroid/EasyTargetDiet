@@ -20,15 +20,9 @@ import br.com.arndroid.etdiet.meals.MealsAdapter;
 import br.com.arndroid.etdiet.provider.Contract;
 
 public class FoodsUsageActivity extends ActionBarActivity implements
-        LoaderManager.LoaderCallbacks<Cursor>,
+        FoodsUsageListFragment.FoodsUsageListFragmentListener,
         ActionBar.OnNavigationListener {
 
-    public static final String DATE_ID_ACTION_KEY = FoodsUsageActivity.class.getSimpleName() +
-            ".DATE_ID_ACTION_KEY";
-    public static final String MEAL_ACTION_KEY = FoodsUsageActivity.class.getSimpleName() +
-            ".MEAL_ACTION_KEY";
-    private static final int FOODS_USAGE_LOADER_ID = 1;
-    
     private String mDateId;
     private FoodsUsageHeaderFragment mHeaderFragment;
     private FoodsUsageListFragment mListFragment;
@@ -48,24 +42,38 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
         if(savedInstanceState == null) {
             Bundle data = getIntent().getExtras().getBundle(FragmentActionReplier.ACTION_DATA_KEY);
-            mDateId = data.getString(DATE_ID_ACTION_KEY);
-            actionBar.setSelectedNavigationItem(data.getInt(MEAL_ACTION_KEY));
+            mDateId = data.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
+            actionBar.setSelectedNavigationItem(data.getInt(FoodsUsageListFragment.MEAL_ACTION_KEY));
         } else {
-            mDateId = savedInstanceState.getString(DATE_ID_ACTION_KEY);
-            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(MEAL_ACTION_KEY));
+            mDateId = savedInstanceState.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+                    FoodsUsageListFragment.MEAL_ACTION_KEY));
         }
 
         bindScreen();
-        // This will initialize the screen:
-        getSupportLoaderManager().restartLoader(FOODS_USAGE_LOADER_ID, null, this);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(DATE_ID_ACTION_KEY, mDateId);
-        outState.putInt(MEAL_ACTION_KEY, getSupportActionBar().getSelectedNavigationIndex());
+        outState.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mDateId);
+        outState.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY,
+                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()));
 
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mListFragment.registerListener(this);
+        mListFragment.onDataChangedFromHolderActivity(mDateId,
+                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mListFragment.unregisterListener(this);
     }
 
     @Override
@@ -94,8 +102,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
     @Override
     public boolean onNavigationItemSelected(int position, long itemId) {
-        // This will reload the screen:
-        getSupportLoaderManager().restartLoader(FOODS_USAGE_LOADER_ID, null, this);
+        mListFragment.onDataChangedFromHolderActivity(mDateId, Meals.getMealFromPosition(position));
         return true;
     }
 
@@ -107,32 +114,9 @@ public class FoodsUsageActivity extends ActionBarActivity implements
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch (id) {
-            case FOODS_USAGE_LOADER_ID:
-                final int meal = Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex());
-                return new CursorLoader(this, Contract.FoodsUsage.CONTENT_URI,
-                        Contract.FoodsUsage.SIMPLE_LIST_PROJECTION,
-                        Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION,
-                        new String[] {String.valueOf(mDateId), String.valueOf(meal)}, null);
-            default:
-                throw new IllegalArgumentException("Invalid loader id=" + id);
-        }
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor data) {
+    public void onListValuesChanged(Cursor data) {
         mHeaderFragment.onDataChangedFromHolderActivity(mDateId,
-                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()), data);
-        mListFragment.onDataChangedFromHolderActivity(mDateId,
-                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()), data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        // Header fragment doesn't need reset information...
-        mListFragment.onDataChangedFromHolderActivity(mDateId,
-                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()), null);
+                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()), data);
     }
 
     @SuppressWarnings("UnusedDeclaration")

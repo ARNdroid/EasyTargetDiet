@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.ActionUtils;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
-import br.com.arndroid.etdiet.action.SimpleActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
 
@@ -71,7 +71,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
     public void onCallAction(int fragmentId, Class holderActivityClass, String actionTag,
                              Bundle actionData) {
 
-        new SimpleActivityActionCaller().onCallAction(this, getSupportFragmentManager(), fragmentId,
+        ActionUtils.callActionInFragment(this, getSupportFragmentManager(), fragmentId,
                 holderActivityClass, actionTag, actionData);
     }
 
