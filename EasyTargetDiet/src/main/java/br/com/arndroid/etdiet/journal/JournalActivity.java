@@ -26,6 +26,7 @@ import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
+import br.com.arndroid.etdiet.weights.WeightsActivity;
 
 public class JournalActivity extends ActionBarActivity implements
         JournalMyPointsFragment.JournalFragmentListener,
@@ -100,6 +101,9 @@ public class JournalActivity extends ActionBarActivity implements
             case R.id.quick_add:
                 MenuUtils.callMenuInFragmentByMethod(getSupportFragmentManager(),
                         R.id.journal_my_points_fragment, itemId);
+                return true;
+            case R.id.weight:
+                MenuUtils.callMenuInFragmentByIntent(this, WeightsActivity.class, itemId);
                 return true;
             case R.id.settings:
                 MenuUtils.callMenuInFragmentByIntent(this, SettingsMainActivity.class, itemId);

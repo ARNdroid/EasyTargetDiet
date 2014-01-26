@@ -37,6 +37,7 @@
                 android:id="@+id/txtExerciseGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:text="@string/no_show_done_and_goal_with_decimal"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -64,6 +65,7 @@
                 android:id="@+id/txtLiquidGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:text="@string/no_show_done_and_goal"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -91,6 +93,7 @@
                 android:id="@+id/txtOilGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:text="@string/no_show_done_and_goal"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -118,6 +121,7 @@
                 android:id="@+id/txtSupplementGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:text="@string/no_show_done_and_goal"
                 android:textAppearance="?android:attr/textAppearanceMedium" />

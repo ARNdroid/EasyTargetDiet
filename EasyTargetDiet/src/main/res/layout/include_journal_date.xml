@@ -10,11 +10,12 @@
     android:clickable="true"
     android:background="@drawable/card_selector">
 
-<TextView
+    <TextView
         android:id="@+id/txtDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textStyle="bold"
         android:text="@string/no_show_two_digits_number"
         android:textSize="@dimen/text_very_large" />
 
@@ -30,6 +31,7 @@
         android:id="@+id/txtWeekday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:text="@string/no_show_small_week_day"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

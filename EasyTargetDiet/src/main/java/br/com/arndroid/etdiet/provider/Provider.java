@@ -13,6 +13,7 @@ import br.com.arndroid.etdiet.provider.days.DaysOperator;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageOperator;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryOperator;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersOperator;
+import br.com.arndroid.etdiet.provider.weights.WeightsOperator;
 import br.com.arndroid.etdiet.sqlite.DBOpenHelper;
 
 public class Provider extends ContentProvider {
@@ -25,6 +26,7 @@ public class Provider extends ContentProvider {
         operators.add(new FoodsUsageOperator());
         operators.add(new ParametersHistoryOperator());
         operators.add(new WeekdayParametersOperator());
+        operators.add(new WeightsOperator());
     }
 
     private ProviderOperator providerOperatorForUri(Uri uri) {

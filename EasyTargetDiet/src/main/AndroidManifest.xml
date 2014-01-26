@@ -50,6 +50,14 @@
                 android:value=".settings.SettingsMainActivity" />
         </activity>
 
+        <activity
+            android:name=".weights.WeightsActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".journal.JournalActivity" />
+        </activity>
+
         <provider
             android:name="br.com.arndroid.etdiet.provider.Provider"
             android:authorities="br.com.arndroid.provider.etdiet"

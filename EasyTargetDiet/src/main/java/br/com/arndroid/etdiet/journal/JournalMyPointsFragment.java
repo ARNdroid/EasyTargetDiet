@@ -15,6 +15,7 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.dialog.DateDialog;
+import br.com.arndroid.etdiet.dialog.WeightAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.utils.DateUtils;
@@ -114,25 +115,25 @@ public class JournalMyPointsFragment extends Fragment implements
 
     @Override
     public void onReplyMenuFromHolderActivity(int menuItemId) {
+
         switch (menuItemId) {
             case R.id.quick_add:
                 FragmentManager manager = getFragmentManager();
-                QuickInsertFrag dialog = new QuickInsertFrag();
-
-                dialog.setDateId(mCurrentDateId);
+                QuickInsertFrag quickInsertFrag = new QuickInsertFrag();
+                quickInsertFrag.setDateId(mCurrentDateId);
 
                 final Date currentDate = DateUtils.dateIdToDate(mCurrentDateId);
                 final int timeHint = DateUtils.dateToTimeAsInt(new Date());
                 final int mealHint = Meals.preferredMealForTimeInDate(
                         getActivity().getApplicationContext(), timeHint, currentDate);
-                dialog.setMeal(mealHint);
-                dialog.setTime(timeHint);
+                quickInsertFrag.setMeal(mealHint);
+                quickInsertFrag.setTime(timeHint);
 
                 final float usageHint = Meals.preferredUsageForMealInDate(
                         getActivity().getApplicationContext(), mealHint, currentDate);
-                dialog.setValue(usageHint);
+                quickInsertFrag.setValue(usageHint);
 
-                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+                quickInsertFrag.show(manager, QuickInsertFrag.INSERT_TAG);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid menuItemId=" + menuItemId);

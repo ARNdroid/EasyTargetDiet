@@ -118,5 +118,14 @@
     <string name="no_show_some_food">Food description line 1...\nFood description line 2...\nFood description line 3...</string>
     <string name="no_show_two_digits_with_decimal_number">NN.N</string>
     <string name="no_show_done_and_goal_with_decimal">NN.N/NN.N</string>
+    <string name="note">note</string>
+    <string name="weight_duplicated_message">You have already registered a weight with same date and time</string>
+    <string name="weight">Weight</string>
+    <string name="weight_list">List of weights</string>
+    <string name="no_show_two_digits_with_two_decimal_number">NN.NN</string>
+    <string name="add">Add</string>
+    <string name="delete_weight_msg">Delete weight %1$.2f measured on %2$s - %3$s?</string>
+    <string name="list_empty_weights">Nothing to show yet. Try adding some weights.</string>
+    <string name="no_show_weight_notes">Weight notes line 1.\nWeight notes line 2.\nWeight notes line 3.</string>
 
 </resources>

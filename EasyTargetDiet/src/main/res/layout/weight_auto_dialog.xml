@@ -14,6 +14,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/btnDate"
                 android:layout_width="0dp"
@@ -29,15 +30,11 @@
                 android:text="@string/no_show_time_mask" />
         </LinearLayout>
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spnMeal" />
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edtDescription"
+            android:id="@+id/edtNote"
+            android:hint="@string/note"
             android:layout_gravity="left|center_vertical"
             android:inputType="textMultiLine" />
 
@@ -61,11 +58,14 @@
             <NumberPicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pickerDecimal"
-                android:layout_gravity="right" />
+                android:id="@+id/pickerDecimal1" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pickerDecimal2" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 
