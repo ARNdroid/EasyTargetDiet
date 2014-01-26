@@ -1,0 +1,74 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/activity_background"
+    tools:context="br.com.arndroid.etdiet.journal.JournalActivity">
+
+    <LinearLayout
+        android:id="@+id/layHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalMyPointsFragment"
+            android:id="@+id/journal_my_points_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_my_points_fragment" />
+
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalMyGoalsFragment"
+            android:id="@+id/journal_my_goals_fragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_my_goals_fragment" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layMeals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layHeader"
+        android:baselineAligned="false">
+
+        <fragment
+            class="br.com.arndroid.etdiet.journal.JournalMyMealsFragment"
+            android:id="@+id/journal_my_meals_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@id/layHeader"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/journal_my_meals_fragment" />
+
+        <fragment
+            android:id="@+id/foods_usage_list_fragment"
+            class="br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/card_margin"
+            tools:layout="@layout/foods_usage_list_fragment"/>
+
+    </LinearLayout>
+
+    <fragment
+        class="br.com.arndroid.etdiet.journal.JournalNotesFragment"
+        android:id="@+id/journal_notes_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layMeals"
+        android:layout_margin="@dimen/card_margin"
+        tools:layout="@layout/journal_notes_fragment" />
+
+</RelativeLayout>

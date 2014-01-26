@@ -4,20 +4,17 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Looper;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
-import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.sk.m217.tests.utils.ProviderTestCase3;
+import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.sk.m217.tests.utils.ProviderTestCase3;
 
 public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
 
@@ -38,9 +35,9 @@ public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        final String dateId = DateUtil.dateToDateId(cal.getTime());
+        final String dateId = DateUtils.dateToDateId(cal.getTime());
         cal.add(Calendar.DAY_OF_MONTH, 1);
-        final String otherDateId = DateUtil.dateToDateId(cal.getTime());
+        final String otherDateId = DateUtils.dateToDateId(cal.getTime());
         registerContentObserver(Uri.withAppendedPath(
                 Contract.FoodsUsage.DATE_ID_CONTENT_URI, dateId), true, mObserver);
 
@@ -57,7 +54,7 @@ public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
         final Context context = getMockContext();
         final TestContentObserver mObserver = new TestContentObserver();
 
-        final String dateId = DateUtil.dateToDateId(new Date());
+        final String dateId = DateUtils.dateToDateId(new Date());
 
         registerContentObserver(Uri.withAppendedPath(
                 Contract.FoodsUsage.DATE_ID_CONTENT_URI, dateId), true, mObserver);

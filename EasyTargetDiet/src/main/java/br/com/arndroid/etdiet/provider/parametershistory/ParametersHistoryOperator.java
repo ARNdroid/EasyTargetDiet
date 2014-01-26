@@ -4,12 +4,11 @@ import android.content.UriMatcher;
 import android.net.Uri;
 import android.util.Log;
 
-import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.util.UriUtil;
+import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class ParametersHistoryOperator extends BaseProviderOperator {
 
@@ -21,10 +20,10 @@ public class ParametersHistoryOperator extends BaseProviderOperator {
         UriMatcher matcher =  getUriMatcher();
         // Safe change ParametersHistory.Uri: add line for a new uri.
         matcher.addURI(Contract.ParametersHistory.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.ParametersHistory.CONTENT_URI),
+                UrisUtils.pathForUriMatcherFromUri(Contract.ParametersHistory.CONTENT_URI),
                 PARAMETERS_HISTORY_URI_MATCH);
         matcher.addURI(Contract.ParametersHistory.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.ParametersHistory.CONTENT_URI) + "/#",
+                UrisUtils.pathForUriMatcherFromUri(Contract.ParametersHistory.CONTENT_URI) + "/#",
                 PARAMETERS_HISTORY_ITEM_URI_MATCH);
     }
 

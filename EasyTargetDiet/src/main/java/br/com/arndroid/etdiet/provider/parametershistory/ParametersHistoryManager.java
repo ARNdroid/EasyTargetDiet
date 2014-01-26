@@ -8,7 +8,7 @@ import android.net.Uri;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class ParametersHistoryManager {
 
@@ -82,7 +82,7 @@ public class ParametersHistoryManager {
         // If the value must be modified...
         if(getIntParameter(parameterType, date) != value) {
             ContentResolver resolver = mContext.getContentResolver();
-            final String dateId = DateUtil.dateToDateId(date);
+            final String dateId = DateUtils.dateToDateId(date);
             Cursor c = null;
             try {
                 c = resolver.query(Contract.ParametersHistory.CONTENT_URI, Contract.ParametersHistory.ID_PROJECTION,
@@ -118,11 +118,11 @@ public class ParametersHistoryManager {
                     new String[] {String.valueOf(parameterType)},
                     Contract.ParametersHistory.DATE_DESC_SORT_ORDER);
             if(c.getCount() > 0) {
-                String referenceID = DateUtil.dateToDateId(referenceDate);
+                String referenceID = DateUtils.dateToDateId(referenceDate);
                 c.moveToFirst();
                 do {
                     result = c.getInt(c.getColumnIndex(Contract.ParametersHistory.INTEGRAL_NEW_VALUE));
-                    if(DateUtil.dateIdStartsEqualsOrBefore(c.getString(c.getColumnIndex(Contract.ParametersHistory.DATE)), referenceID)) {
+                    if(DateUtils.dateIdStartsEqualsOrBefore(c.getString(c.getColumnIndex(Contract.ParametersHistory.DATE)), referenceID)) {
                         break;
                     }
                 } while(c.moveToNext());
@@ -140,7 +140,7 @@ public class ParametersHistoryManager {
         // If the value must be modified...
         if(getFloatParameter(parameterType, date) != value) {
             ContentResolver resolver = mContext.getContentResolver();
-            final String dateId = DateUtil.dateToDateId(date);
+            final String dateId = DateUtils.dateToDateId(date);
             Cursor c = null;
             try {
                 c = resolver.query(Contract.ParametersHistory.CONTENT_URI, Contract.ParametersHistory.ID_PROJECTION,
@@ -176,11 +176,11 @@ public class ParametersHistoryManager {
                     new String[] {String.valueOf(parameterType)},
                     Contract.ParametersHistory.DATE_DESC_SORT_ORDER);
             if(c.getCount() > 0) {
-                String referenceID = DateUtil.dateToDateId(referenceDate);
+                String referenceID = DateUtils.dateToDateId(referenceDate);
                 c.moveToFirst();
                 do {
                     result = c.getFloat(c.getColumnIndex(Contract.ParametersHistory.FLOATING_POINT_NEW_VALUE));
-                    if(DateUtil.dateIdStartsEqualsOrBefore(c.getString(c.getColumnIndex(Contract.ParametersHistory.DATE)), referenceID)) {
+                    if(DateUtils.dateIdStartsEqualsOrBefore(c.getString(c.getColumnIndex(Contract.ParametersHistory.DATE)), referenceID)) {
                         break;
                     }
                 } while(c.moveToNext());

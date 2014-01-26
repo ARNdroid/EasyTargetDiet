@@ -14,7 +14,7 @@ import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
 import br.com.arndroid.etdiet.R;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class MealIdealValuesDialog extends DialogFragment {
     /**
@@ -53,7 +53,7 @@ public class MealIdealValuesDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.meal_ideal_values_dialog, null);
         builder.setView(view);
 
-        attachScreen(view);
+        bindScreen(view);
 
         float actualIdealValue = getInitialIdealValue();
         int actualStartTime = getInitialStartTime();
@@ -79,8 +79,8 @@ public class MealIdealValuesDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int id) {
                 ((OnMealIdealValuesSetListener)getActivity()).onMealIdealValuesSet(
                         MealIdealValuesDialog.this.getTag(),
-                        DateUtil.formattedStringToTime(mBtnStartTime.getText().toString()),
-                        DateUtil.formattedStringToTime(mBtnEndTime.getText().toString()),
+                        DateUtils.formattedStringToTime(mBtnStartTime.getText().toString()),
+                        DateUtils.formattedStringToTime(mBtnEndTime.getText().toString()),
                         getActualIdealValueFromPickers());
                 dialog.dismiss();
             }
@@ -102,8 +102,8 @@ public class MealIdealValuesDialog extends DialogFragment {
     private void refreshScreen(float actualIdealValue, int actualStartTime, int actualEndTime) {
         mPickerInteger.setValue((int) Math.floor(actualIdealValue));
         mPickerDecimal.setValue(actualIdealValue % 1 == 0 ? 0 : 1);
-        mBtnStartTime.setText(DateUtil.timeToFormattedString(actualStartTime));
-        mBtnEndTime.setText(DateUtil.timeToFormattedString(actualEndTime));
+        mBtnStartTime.setText(DateUtils.timeToFormattedString(actualStartTime));
+        mBtnEndTime.setText(DateUtils.timeToFormattedString(actualEndTime));
     }
 
     private void setupScreen() {
@@ -112,7 +112,6 @@ public class MealIdealValuesDialog extends DialogFragment {
         mPickerDecimal.setDisplayedValues(new String[]{"0", "5"});
         mPickerDecimal.setMinValue(0);
         mPickerDecimal.setMaxValue(1);
-        mPickerDecimal.setWrapSelectorWheel(true);
         mBtnStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,11 +119,11 @@ public class MealIdealValuesDialog extends DialogFragment {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                                mBtnStartTime.setText(DateUtil.timeToFormattedString(
-                                        DateUtil.hoursToMillis(hours) + DateUtil.minutesToMillis(minutes)));
+                                mBtnStartTime.setText(DateUtils.timeToFormattedString(
+                                        DateUtils.hoursToMillis(hours) + DateUtils.minutesToMillis(minutes)));
                             } },
-                        DateUtil.getHoursFromTimeAsInt(DateUtil.formattedStringToTime(mBtnStartTime.getText().toString())),
-                        DateUtil.getMinutesFromTimeAsInt(DateUtil.formattedStringToTime(mBtnStartTime.getText().toString())),
+                        DateUtils.getHoursFromTimeAsInt(DateUtils.formattedStringToTime(mBtnStartTime.getText().toString())),
+                        DateUtils.getMinutesFromTimeAsInt(DateUtils.formattedStringToTime(mBtnStartTime.getText().toString())),
                         true);
                 dialog.setTitle(getResources().getString(R.string.from));
                 dialog.show();
@@ -137,11 +136,11 @@ public class MealIdealValuesDialog extends DialogFragment {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                                mBtnEndTime.setText(DateUtil.timeToFormattedString(
-                                        DateUtil.hoursToMillis(hours) + DateUtil.minutesToMillis(minutes)));
+                                mBtnEndTime.setText(DateUtils.timeToFormattedString(
+                                        DateUtils.hoursToMillis(hours) + DateUtils.minutesToMillis(minutes)));
                             } },
-                        DateUtil.getHoursFromTimeAsInt(DateUtil.formattedStringToTime(mBtnEndTime.getText().toString())),
-                        DateUtil.getMinutesFromTimeAsInt(DateUtil.formattedStringToTime(mBtnEndTime.getText().toString())),
+                        DateUtils.getHoursFromTimeAsInt(DateUtils.formattedStringToTime(mBtnEndTime.getText().toString())),
+                        DateUtils.getMinutesFromTimeAsInt(DateUtils.formattedStringToTime(mBtnEndTime.getText().toString())),
                         true);
                 dialog.setTitle(getResources().getString(R.string.to));
                 dialog.show();
@@ -149,7 +148,7 @@ public class MealIdealValuesDialog extends DialogFragment {
         });
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mPickerInteger = (NumberPicker) rootView.findViewById(R.id.pickerInteger);
         mPickerDecimal = (NumberPicker) rootView.findViewById(R.id.pickerDecimal);
         mBtnStartTime = (Button) rootView.findViewById(R.id.btnStartTime);
@@ -164,10 +163,10 @@ public class MealIdealValuesDialog extends DialogFragment {
         outState.putFloat(INITIAL_IDEAL_VALUE_KEY, getInitialIdealValue());
         outState.putFloat(ACTUAL_IDEAL_VALUE_KEY, getActualIdealValueFromPickers());
         outState.putInt(INITIAL_START_TIME_KEY, mInitialStartTime);
-        outState.putInt(ACTUAL_START_TIME_KEY, DateUtil.formattedStringToTime(
+        outState.putInt(ACTUAL_START_TIME_KEY, DateUtils.formattedStringToTime(
                 mBtnStartTime.getText().toString()));
         outState.putInt(INITIAL_END_TIME_KEY, mInitialEndTime);
-        outState.putInt(ACTUAL_END_TIME_KEY, DateUtil.formattedStringToTime(
+        outState.putInt(ACTUAL_END_TIME_KEY, DateUtils.formattedStringToTime(
                 mBtnEndTime.getText().toString()));
         super.onSaveInstanceState(outState);
     }
@@ -182,7 +181,8 @@ public class MealIdealValuesDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnMealIdealValuesSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement MealsIdealValuesDialog.OnMealIdealValuesSetListener");
+            throw new ClassCastException(activity.toString() +
+                    " must implement MealsIdealValuesDialog.OnMealIdealValuesSetListener");
         }
     }
 

@@ -10,7 +10,7 @@ import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class VirtualWeekEngine {
 
@@ -147,7 +147,7 @@ public class VirtualWeekEngine {
         }
 
         ParametersHistoryManager parametersHistoryManager = new ParametersHistoryManager(mContext);
-        Date lastWeekday = DateUtil.dateIdToDate(mDaySummaryArray[LAST_WEEKDAY_INDEX].getEntity().getDateId());
+        Date lastWeekday = DateUtils.dateIdToDate(mDaySummaryArray[LAST_WEEKDAY_INDEX].getEntity().getDateId());
         mInitialWeeklyAllowance = parametersHistoryManager.getWeeklyAllowanceForDate(
                 lastWeekday);
         mExerciseUseMode = parametersHistoryManager.getExerciseUseModeForDate(lastWeekday);
@@ -159,7 +159,7 @@ public class VirtualWeekEngine {
     }
 
     public void rebuildAndCalculateDayForIndex(int index) {
-        final Date date = DateUtil.dateIdToDate(mDaySummaryArray[index].getEntity().getDateId());
+        final Date date = DateUtils.dateIdToDate(mDaySummaryArray[index].getEntity().getDateId());
         mDaySummaryArray[index].setEntity(buildDayForDate(date));
         calculateDayAndNextIfNecessary(index);
     }

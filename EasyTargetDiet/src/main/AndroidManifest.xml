@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.arndroid.etdiet"
-    android:versionName="0.3.1"
-    android:versionCode="301">
+    android:versionName="0.4.0"
+    android:versionCode="400">
 
 <uses-sdk
         android:minSdkVersion="11"
@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="br.com.arndroid.etdiet.journal.JournalAct"
+            android:name=".journal.JournalActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light" >
             <intent-filter>
@@ -25,13 +25,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.arndroid.etdiet.foodsusage.FoodsUsageAct"
+            android:name=".foodsusage.FoodsUsageActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".journal.JournalAct"
+            android:parentActivityName=".journal.JournalActivity"
             android:theme="@style/Theme.AppCompat.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalAct" />
+                android:value=".journal.JournalActivity" />
         </activity>
         <activity
             android:name=".settings.SettingsMainActivity"
@@ -39,7 +39,7 @@
             android:theme="@style/Theme.AppCompat.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalAct" />
+                android:value=".journal.JournalActivity" />
         </activity>
 
         <activity
@@ -48,6 +48,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".settings.SettingsMainActivity" />
+        </activity>
+
+        <activity
+            android:name=".weights.WeightsActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".journal.JournalActivity" />
         </activity>
 
         <provider

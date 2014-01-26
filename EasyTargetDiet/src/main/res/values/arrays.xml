@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="meals_name_list">
-        <item>@string/breakfast</item>
-        <item>@string/brunch</item>
-        <item>@string/lunch</item>
-        <item>@string/snack</item>
-        <item>@string/dinner</item>
-        <item>@string/supper</item>
-        <item>@string/exercise</item>
-    </string-array>
-
     <string-array name="months_short_name_list">
         <item>@string/january_short</item>
         <item>@string/february_short</item>

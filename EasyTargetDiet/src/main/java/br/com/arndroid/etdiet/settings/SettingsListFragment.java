@@ -10,17 +10,19 @@ import android.view.View;
 import android.widget.ListView;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentActionReplier;
+import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.dialog.IntegerPickerDialog;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
-import br.com.arndroid.etdiet.dialog.PointPickerDialog;
+import br.com.arndroid.etdiet.dialog.PointDialog;
 
 public class SettingsListFragment extends ListFragment implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
-        PointPickerDialog.OnPointSetListener,
-        IntegerPickerDialog.OnIntegerSetListener,
+        PointDialog.OnPointSetListener,
+        IntegerDialog.OnIntegerSetListener,
+        FragmentActionReplier,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String OWNER_TAG = SettingsListFragment.class.getSimpleName();
@@ -48,13 +50,6 @@ public class SettingsListFragment extends ListFragment implements
 
     private SettingsWeekdayAdapter mAdapter;
 
-    public void refresh(String settingsColumn) {
-        mSettingsColumnName = settingsColumn;
-        // If not loaded, load the first instance,
-        // otherwise closes current loader e start a new one:
-        getLoaderManager().restartLoader(WEEKDAY_PARAMETERS_SETTINGS_LOADER_ID, null, this);
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -81,28 +76,28 @@ public class SettingsListFragment extends ListFragment implements
                 .getApplicationContext()).weekdayParametersFromWeekday(mSelectedWeekday);
 
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            final PointPickerDialog dialog = new PointPickerDialog();
+            final PointDialog dialog = new PointDialog();
             dialog.setTitle(getResources().getString(R.string.exercise_goal));
             dialog.setMinIntegerValue(0);
             dialog.setMaxIntegerValue(99);
             dialog.setInitialValue(entity.getExerciseGoal());
             dialog.show(getFragmentManager(), EXERCISE_GOAL_SETTINGS_TAG);
         } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
-            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            final IntegerDialog dialog = new IntegerDialog();
             dialog.setTitle(getResources().getString(R.string.liquid_goal));
             dialog.setMinValue(0);
             dialog.setMaxValue(99);
             dialog.setInitialValue(entity.getLiquidGoal());
             dialog.show(getFragmentManager(), LIQUID_GOAL_SETTINGS_TAG);
         } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
-            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            final IntegerDialog dialog = new IntegerDialog();
             dialog.setTitle(getResources().getString(R.string.oil_goal));
             dialog.setMinValue(0);
             dialog.setMaxValue(99);
             dialog.setInitialValue(entity.getOilGoal());
             dialog.show(getFragmentManager(), OIL_GOAL_SETTINGS_TAG);
         } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
-            final IntegerPickerDialog dialog = new IntegerPickerDialog();
+            final IntegerDialog dialog = new IntegerDialog();
             dialog.setTitle(getResources().getString(R.string.supplement_goal));
             dialog.setMinValue(0);
             dialog.setMaxValue(99);
@@ -259,5 +254,13 @@ public class SettingsListFragment extends ListFragment implements
         }
 
         manager.refresh(entity);
+    }
+
+    @Override
+    public void onReplyActionFromOtherFragment(String actionTag, Bundle actionData) {
+        mSettingsColumnName = actionTag;
+        // If not loaded, load the first instance,
+        // otherwise closes current loader e start a new one:
+        getLoaderManager().restartLoader(WEEKDAY_PARAMETERS_SETTINGS_LOADER_ID, null, this);
     }
 }

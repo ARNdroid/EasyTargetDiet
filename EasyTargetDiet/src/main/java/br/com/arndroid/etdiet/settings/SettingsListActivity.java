@@ -8,15 +8,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.action.FragmentActionReplier;
+import br.com.arndroid.etdiet.dialog.IntegerDialog;
+import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.dialog.IntegerPickerDialog;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
-import br.com.arndroid.etdiet.dialog.PointPickerDialog;
 
 public class SettingsListActivity extends ActionBarActivity implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
-        PointPickerDialog.OnPointSetListener,
-        IntegerPickerDialog.OnIntegerSetListener {
+        PointDialog.OnPointSetListener,
+        IntegerDialog.OnIntegerSetListener {
 
     public static final String SETTINGS_TYPE_PARAMETER = SettingsListActivity.class.getSimpleName()
             + ".SETTINGS_TYPE_PARAMETER";
@@ -31,18 +32,16 @@ public class SettingsListActivity extends ActionBarActivity implements
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Tells fragment to show foods usage filtered by date and meal inside the intent/bundle
-        // that started this activity:
         if(savedInstanceState == null) {
             Intent intent = getIntent();
-            mSettingsColumnName = intent.getExtras().getString(SETTINGS_TYPE_PARAMETER);
+            mSettingsColumnName = intent.getExtras().getString(FragmentActionReplier.ACTION_TAG_KEY);
         } else {
             mSettingsColumnName = savedInstanceState.getString(SETTINGS_TYPE_PARAMETER);
         }
         actionBar.setTitle(getTitleFromSettingsType(mSettingsColumnName));
         SettingsListFragment fragment = (SettingsListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.settings_list_fragment);
-        fragment.refresh(mSettingsColumnName);
+        fragment.onReplyActionFromOtherFragment(mSettingsColumnName, null);
     }
 
     private String getTitleFromSettingsType(String settingsColumnName) {
@@ -92,7 +91,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onPointSet(String tag, float actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((PointPickerDialog.OnPointSetListener)getSupportFragmentManager().findFragmentById(
+            ((PointDialog.OnPointSetListener)getSupportFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -103,7 +102,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onIntegerSet(String tag, int actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((IntegerPickerDialog.OnIntegerSetListener)getSupportFragmentManager().findFragmentById(
+            ((IntegerDialog.OnIntegerSetListener)getSupportFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onIntegerSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);

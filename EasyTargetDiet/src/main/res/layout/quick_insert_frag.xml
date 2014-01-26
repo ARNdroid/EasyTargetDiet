@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtDescription"
             android:layout_gravity="left|center_vertical"
-            android:inputType="text" />
+            android:inputType="textMultiLine" />
 
         <LinearLayout
             android:orientation="horizontal"

@@ -11,7 +11,7 @@
     <string name="supper">Supper</string>
     <string name="date">Date</string>
     <string name="used">Used</string>
-    <string name="goal">Ideal</string>
+    <string name="ideal_values">Ideal values</string>
     <string name="favorites">Favorites</string>
     <string name="meal">Meal</string>
     <string name="time">Time</string>
@@ -110,7 +110,22 @@
     <string name="snack_ideal_values">Snack ideal values</string>
     <string name="dinner_ideal_values">Dinner ideal values</string>
     <string name="supper_ideal_values">Supper ideal values</string>
-    <string name="note_create"><![CDATA[Add note <strong><u><font color="blue">here</font></u></strong>.]]></string>
-    <string name="note_edit"><![CDATA[Edit note <strong><u><font color="blue">here</font></u></strong>.]]></string>
+    <string name="note_create"><![CDATA[Add note <u><font color="blue">here</font></u>.]]></string>
+    <string name="note_edit"><![CDATA[Edit note <u><font color="blue">here</font></u>.]]></string>
+    <string name="meal_info">Meal information</string>
+    <string name="usage_list">Usage list</string>
+    <string name="total">Total</string>
+    <string name="no_show_some_food">Food description line 1...\nFood description line 2...\nFood description line 3...</string>
+    <string name="no_show_two_digits_with_decimal_number">NN.N</string>
+    <string name="no_show_done_and_goal_with_decimal">NN.N/NN.N</string>
+    <string name="note">note</string>
+    <string name="weight_duplicated_message">You have already registered a weight with same date and time</string>
+    <string name="weight">Weight</string>
+    <string name="weight_list">List of weights</string>
+    <string name="no_show_two_digits_with_two_decimal_number">NN.NN</string>
+    <string name="add">Add</string>
+    <string name="delete_weight_msg">Delete weight %1$.2f measured on %2$s - %3$s?</string>
+    <string name="list_empty_weights">Nothing to show yet. Try adding some weights.</string>
+    <string name="no_show_weight_notes">Weight notes line 1.\nWeight notes line 2.\nWeight notes line 3.</string>
 
 </resources>

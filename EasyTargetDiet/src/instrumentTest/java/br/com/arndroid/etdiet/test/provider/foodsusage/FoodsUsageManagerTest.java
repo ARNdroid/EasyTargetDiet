@@ -12,7 +12,7 @@ import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
 
@@ -33,7 +33,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
     }
 
     public void testRemoveMustDelete() {
-        final String dateId = DateUtil.dateToDateId(new Date());
+        final String dateId = DateUtils.dateToDateId(new Date());
         final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId,
                 1, 2, "some description", 4.0f);
         mManager.refresh(entity);
@@ -59,7 +59,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
    }
 
     public void testRefreshMustInsert() {
-        final String dateId = DateUtil.dateToDateId(new Date());
+        final String dateId = DateUtils.dateToDateId(new Date());
         int totalRecords = -1;
         Cursor c = null;
         try {
@@ -84,7 +84,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
     }
 
     public void testRefreshWithoutDayMustInsertDay() {
-        final String dateId = DateUtil.dateToDateId(new Date());
+        final String dateId = DateUtils.dateToDateId(new Date());
         Cursor c = null;
         try {
             c = getMockContentResolver().query(Contract.Days.CONTENT_URI, null,
@@ -108,7 +108,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
     }
 
     public void testRefreshWithDayMustNotInsertDay() {
-        final String dateId = DateUtil.dateToDateId(new Date());
+        final String dateId = DateUtils.dateToDateId(new Date());
         final DaysEntity daysEntity = new DaysEntity(null, dateId,
                 0.0f, 1, 2, 3.0f, 4, 5, 6.0f, 7, 8, 9.0f, 10, 11, 12.0f, 13, 14, 15.0f, 16, 17, 18.0f,
                 19.0f, 20, 21, 22, 23, 24, 25, "some note");
@@ -139,13 +139,13 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
     public void testRefreshWithDateChangeMustDeleteAndInsertRecord() {
         final Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        final FoodsUsageEntity entity = new FoodsUsageEntity(null, DateUtil.dateToDateId(cal.getTime()),
+        final FoodsUsageEntity entity = new FoodsUsageEntity(null, DateUtils.dateToDateId(cal.getTime()),
                 1, 2, "some description", 3.0f);
         mManager.refresh(entity);
         final Long oldId = entity.getId();
 
         cal.add(Calendar.DAY_OF_MONTH, 1);
-        entity.setDateId(DateUtil.dateToDateId(cal.getTime()));
+        entity.setDateId(DateUtils.dateToDateId(cal.getTime()));
 
         mManager.refresh(entity);
 
@@ -156,7 +156,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
     }
 
     public void testRefreshWithoutDateChangeMustPreserveRecord() {
-        final String dateId = DateUtil.dateToDateId(new Date());
+        final String dateId = DateUtils.dateToDateId(new Date());
         final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, 1, 2, "some description",
                 3.0f);
         mManager.refresh(entity);

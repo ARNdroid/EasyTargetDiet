@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_background">
+
+    <fragment
+        android:id="@+id/foods_usage_header_fragment"
+        class="br.com.arndroid.etdiet.foodsusage.FoodsUsageHeaderFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin"
+        tools:layout="@layout/foods_usage_header_fragment" />
+
+    <fragment
+        android:id="@+id/foods_usage_list_fragment"
+        class="br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin"
+        tools:layout="@layout/foods_usage_list_fragment"/>
+
+</LinearLayout>

@@ -35,7 +35,7 @@ public class TextDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.text_dialog, null);
         builder.setView(view);
 
-        attachScreen(view);
+        bindScreen(view);
 
         String actualText = getInitialText();
         if (savedInstanceState != null) {
@@ -68,7 +68,7 @@ public class TextDialog extends DialogFragment {
         mEdtText.setText(actualText);
     }
 
-    private void attachScreen(View rootView) {
+    private void bindScreen(View rootView) {
         mEdtText = (EditText) rootView.findViewById(R.id.edtText);
     }
 
@@ -90,7 +90,8 @@ public class TextDialog extends DialogFragment {
          */
         super.onAttach(activity);
         if (!(activity instanceof OnTextSetListener)) {
-            throw new ClassCastException(activity.toString() + " must implement TextDialog.OnTextSetListener");
+            throw new ClassCastException(activity.toString() +
+                    " must implement TextDialog.OnTextSetListener");
         }
     }
 

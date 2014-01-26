@@ -11,7 +11,7 @@ import java.util.Date;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 	/*
@@ -19,7 +19,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	 */
 
     private static final String DATA_BASE_NAME = "easy_target_diet_db";
-    private static final int CURRENT_DATABASE_VERSION = 1;
+    private static final int CURRENT_DATABASE_VERSION = 2;
 
     public DBOpenHelper(Context context) {
         super(context, DATA_BASE_NAME, null, CURRENT_DATABASE_VERSION);
@@ -28,11 +28,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        createTables(db);
-        insertDefaultData(db);
+        // Safe change: don't forget to add any new operation here to onUpgrade(...) too!!!
+        createTablesV1(db);
+        insertDefaultDataV1(db);
+        createTablesV2(db);
     }
 
-    private void insertDefaultData(SQLiteDatabase db) {
+    private void insertDefaultDataV1(SQLiteDatabase db) {
         
         insertDefaultDataForWeekdayParameters(db);
         insertDefaultDataForParametersHistory(db);
@@ -48,7 +50,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            String dateId = DateUtil.dateToDateId(new Date());
+            String dateId = DateUtils.dateToDateId(new Date());
             ParametersHistoryEntity entity;
 
             entity = new ParametersHistoryEntity(null,
@@ -157,7 +159,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void createTables(SQLiteDatabase db) {
+    private void createTablesV1(SQLiteDatabase db) {
         db.beginTransaction();
         try {
             // Days:
@@ -244,7 +246,25 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE UNIQUE INDEX " + Contract.ParametersHistory.TABLE_NAME + "_"
                     + Contract.ParametersHistory.TYPE + "_" + Contract.ParametersHistory.DATE + "_idx "
                     + "ON " + Contract.ParametersHistory.TABLE_NAME + " (" + Contract.ParametersHistory.TYPE + ", " + Contract.ParametersHistory.DATE + ");");
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
 
+    private void createTablesV2(SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            // Weights:
+            db.execSQL("CREATE TABLE " + Contract.Weights.TABLE_NAME + " ("
+                    + Contract.Weights._ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                    + Contract.Weights.DATE_ID + " TEXT NOT NULL, "
+                    + Contract.Weights.TIME + " INTEGER NOT NULL, "
+                    + Contract.Weights.WEIGHT + " REAL NOT NULL, "
+                    + Contract.Weights.NOTE + " TEXT);");
+            db.execSQL("CREATE UNIQUE INDEX " + Contract.Weights.TABLE_NAME + "_"
+                    + Contract.Weights.DATE_ID + "_" + Contract.Weights.TIME + "_idx "
+                    + "ON " + Contract.Weights.TABLE_NAME + " (" + Contract.Weights.DATE_ID + ", " + Contract.Weights.TIME + ");");
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -253,12 +273,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion == newVersion) {
-            // Nothing to do (this may be called recursively).
-            return;
-        }
 
-        // This version not admit any upgrade.
-        throw new SQLiteException("Not prepared for database migration between versions " + oldVersion + " and " + newVersion);
+        // Safe change: don't forget to add any new operation here to onCreate() too!!!
+        switch (oldVersion) {
+            case 1:
+                createTablesV2(db);
+            case 2:
+                // Do nothing this is the current version.
+                break;
+            default:
+                throw new SQLiteException("Not prepared for database migration between versions "
+                        + oldVersion + " and " + newVersion);
+        }
     }
 }

@@ -7,12 +7,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
 import br.com.arndroid.etdiet.provider.Provider;
-import br.com.arndroid.etdiet.util.UriUtil;
+import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class FoodsUsageOperator extends BaseProviderOperator {
 
@@ -26,16 +25,16 @@ public class FoodsUsageOperator extends BaseProviderOperator {
         UriMatcher matcher =  getUriMatcher();
         // Safe change FoodsUsage.Uri: add line for a new uri.
         matcher.addURI(Contract.FoodsUsage.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.FoodsUsage.CONTENT_URI),
+                UrisUtils.pathForUriMatcherFromUri(Contract.FoodsUsage.CONTENT_URI),
                 FOODS_USAGE_URI_MATCH);
         matcher.addURI(Contract.FoodsUsage.CONTENT_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.FoodsUsage.CONTENT_URI) + "/#",
+                UrisUtils.pathForUriMatcherFromUri(Contract.FoodsUsage.CONTENT_URI) + "/#",
                 FOODS_USAGE_ITEM_URI_MATCH);
         matcher.addURI(Contract.FoodsUsage.SUM_USAGE_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.FoodsUsage.SUM_USAGE_URI) + "/#",
+                UrisUtils.pathForUriMatcherFromUri(Contract.FoodsUsage.SUM_USAGE_URI) + "/#",
                 FOODS_USAGE_SUM_USAGE_URI_MATCH);
         matcher.addURI(Contract.FoodsUsage.SUM_EXERCISE_URI.getAuthority(),
-                UriUtil.pathForUriMatcherFromUri(Contract.FoodsUsage.SUM_EXERCISE_URI) + "/#",
+                UrisUtils.pathForUriMatcherFromUri(Contract.FoodsUsage.SUM_EXERCISE_URI) + "/#",
                 FOODS_USAGE_SUM_EXERCISE_URI_MATCH);
     }
 
@@ -152,7 +151,7 @@ public class FoodsUsageOperator extends BaseProviderOperator {
         final Uri resultUri = super.insert(uri, values, provider);
 
         if(resultUri != null) {
-            final Uri extraUri = UriUtil.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
+            final Uri extraUri = UrisUtils.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.FoodsUsage.DATE_ID));
             final ContentResolver resolver = provider.getContext().getContentResolver();
             if (isLogEnabled) {
@@ -195,7 +194,7 @@ public class FoodsUsageOperator extends BaseProviderOperator {
                 }
             }
             if(dateId != null) {
-                final Uri extraUri = UriUtil.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
+                final Uri extraUri = UrisUtils.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
                         dateId);
                 resolver.notifyChange(extraUri, null);
             }
@@ -212,7 +211,7 @@ public class FoodsUsageOperator extends BaseProviderOperator {
         try {
             c = resolver.query(uri, null, null, null, null);
             if(c.moveToFirst()) {
-                extraUri = UriUtil.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
+                extraUri = UrisUtils.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
                         c.getString(c.getColumnIndex(Contract.FoodsUsage.DATE_ID)));
             }
         } finally {

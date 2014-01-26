@@ -4,7 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="default_view_size">48dp</dimen>
     <dimen name="default_view_big_size">56dp</dimen>
-    <dimen name="default_view_padding">8dp</dimen>
+    <dimen name="default_view_padding">6dp</dimen>
     <dimen name="micro_font_size">10sp</dimen>
+    <dimen name="card_margin">2dp</dimen>
+    <dimen name="text_very_large">35sp</dimen>
 
 </resources>

@@ -15,12 +15,12 @@ import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
-import br.com.arndroid.etdiet.util.DateUtil;
-import br.com.arndroid.etdiet.util.sk.m217.tests.utils.MockContentResolver2;
+import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.sk.m217.tests.utils.MockContentResolver2;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.virtualweek.WeekPeriod;
-import br.com.arndroid.etdiet.util.sk.m217.tests.utils.ProviderTestCase3;
+import br.com.arndroid.etdiet.utils.sk.m217.tests.utils.ProviderTestCase3;
 
 public class VirtualWeekTest extends ProviderTestCase3<Provider> {
 
@@ -57,7 +57,7 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         daysManager.refresh(daysEntity);
 
         final FoodsUsageManager foodsUsageManager = new FoodsUsageManager(mockContext);
-        FoodsUsageEntity foodsUsageEntity = new FoodsUsageEntity(null, DateUtil.dateToDateId(cal.getTime()),
+        FoodsUsageEntity foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(cal.getTime()),
                 Meals.BREAKFAST, 1, "food to test", 10.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
 
@@ -67,7 +67,7 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         daysEntity = daysManager.dayFromDate(cal.getTime());
         daysManager.refresh(daysEntity);
 
-        foodsUsageEntity = new FoodsUsageEntity(null, DateUtil.dateToDateId(cal.getTime()),
+        foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(cal.getTime()),
                 Meals.BREAKFAST, 1, "food to test", 10.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
         // Refreshing again to update:
@@ -127,13 +127,13 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         daysManager.refresh(daysEntity);
 
         final FoodsUsageManager foodsUsageManager = new FoodsUsageManager(mockContext);
-        FoodsUsageEntity foodsUsageEntity = new FoodsUsageEntity(null, DateUtil.dateToDateId(date0),
+        FoodsUsageEntity foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(date0),
                 Meals.BREAKFAST, 1, "food to test 1", 10.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
-        foodsUsageEntity = new FoodsUsageEntity(null, DateUtil.dateToDateId(date1),
+        foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(date1),
                 Meals.BREAKFAST, 1, "food to test 2", 20.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
-        foodsUsageEntity = new FoodsUsageEntity(null, DateUtil.dateToDateId(date2),
+        foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(date2),
                 Meals.BREAKFAST, 1, "food to test 3", 30.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
         // Refreshing again to update:
@@ -141,8 +141,8 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         // Deleting:
         foodsUsageManager.remove(foodsUsageEntity.getId());
 
-        virtualWeek.requestSummaryForDateId(observer, DateUtil.dateToDateId(date0));
-        virtualWeek.requestSummaryForDateId(observer, DateUtil.dateToDateId(date1));
+        virtualWeek.requestSummaryForDateId(observer, DateUtils.dateToDateId(date0));
+        virtualWeek.requestSummaryForDateId(observer, DateUtils.dateToDateId(date1));
 
         final ParametersHistoryManager parametersHistoryManager = new ParametersHistoryManager(mockContext);
         parametersHistoryManager.setTrackingWeekday(Calendar.MONDAY);
@@ -150,25 +150,25 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         virtualWeek.unregisterViewObserver(observer);
 
         assertEquals(8, observer.summariesOnDayChanged.size());
-        assertEquals(observer.summariesOnDayChanged.get(0).getEntity().getDateId(), DateUtil.dateToDateId(date0));
-        assertEquals(observer.summariesOnDayChanged.get(1).getEntity().getDateId(), DateUtil.dateToDateId(date1));
-        assertEquals(observer.summariesOnDayChanged.get(2).getEntity().getDateId(), DateUtil.dateToDateId(date2));
-        assertEquals(observer.summariesOnDayChanged.get(3).getEntity().getDateId(), DateUtil.dateToDateId(date3));
-        assertEquals(observer.summariesOnDayChanged.get(4).getEntity().getDateId(), DateUtil.dateToDateId(date4));
-        assertEquals(observer.summariesOnDayChanged.get(5).getEntity().getDateId(), DateUtil.dateToDateId(date5));
-        assertEquals(observer.summariesOnDayChanged.get(6).getEntity().getDateId(), DateUtil.dateToDateId(date6));
-        assertEquals(observer.summariesOnDayChanged.get(7).getEntity().getDateId(), DateUtil.dateToDateId(date6));
+        assertEquals(observer.summariesOnDayChanged.get(0).getEntity().getDateId(), DateUtils.dateToDateId(date0));
+        assertEquals(observer.summariesOnDayChanged.get(1).getEntity().getDateId(), DateUtils.dateToDateId(date1));
+        assertEquals(observer.summariesOnDayChanged.get(2).getEntity().getDateId(), DateUtils.dateToDateId(date2));
+        assertEquals(observer.summariesOnDayChanged.get(3).getEntity().getDateId(), DateUtils.dateToDateId(date3));
+        assertEquals(observer.summariesOnDayChanged.get(4).getEntity().getDateId(), DateUtils.dateToDateId(date4));
+        assertEquals(observer.summariesOnDayChanged.get(5).getEntity().getDateId(), DateUtils.dateToDateId(date5));
+        assertEquals(observer.summariesOnDayChanged.get(6).getEntity().getDateId(), DateUtils.dateToDateId(date6));
+        assertEquals(observer.summariesOnDayChanged.get(7).getEntity().getDateId(), DateUtils.dateToDateId(date6));
 
         assertEquals(5, observer.summariesOnFoodsUsageChanged.size());
-        assertEquals(observer.summariesOnFoodsUsageChanged.get(0).getEntity().getDateId(), DateUtil.dateToDateId(date0));
-        assertEquals(observer.summariesOnFoodsUsageChanged.get(1).getEntity().getDateId(), DateUtil.dateToDateId(date1));
-        assertEquals(observer.summariesOnFoodsUsageChanged.get(2).getEntity().getDateId(), DateUtil.dateToDateId(date2));
-        assertEquals(observer.summariesOnFoodsUsageChanged.get(3).getEntity().getDateId(), DateUtil.dateToDateId(date2));
-        assertEquals(observer.summariesOnFoodsUsageChanged.get(4).getEntity().getDateId(), DateUtil.dateToDateId(date2));
+        assertEquals(observer.summariesOnFoodsUsageChanged.get(0).getEntity().getDateId(), DateUtils.dateToDateId(date0));
+        assertEquals(observer.summariesOnFoodsUsageChanged.get(1).getEntity().getDateId(), DateUtils.dateToDateId(date1));
+        assertEquals(observer.summariesOnFoodsUsageChanged.get(2).getEntity().getDateId(), DateUtils.dateToDateId(date2));
+        assertEquals(observer.summariesOnFoodsUsageChanged.get(3).getEntity().getDateId(), DateUtils.dateToDateId(date2));
+        assertEquals(observer.summariesOnFoodsUsageChanged.get(4).getEntity().getDateId(), DateUtils.dateToDateId(date2));
 
         assertEquals(2, observer.summariesOnSummaryRequested.size());
-        assertEquals(observer.summariesOnSummaryRequested.get(0).getEntity().getDateId(), DateUtil.dateToDateId(date0));
-        assertEquals(observer.summariesOnSummaryRequested.get(1).getEntity().getDateId(), DateUtil.dateToDateId(date1));
+        assertEquals(observer.summariesOnSummaryRequested.get(0).getEntity().getDateId(), DateUtils.dateToDateId(date0));
+        assertEquals(observer.summariesOnSummaryRequested.get(1).getEntity().getDateId(), DateUtils.dateToDateId(date1));
 
         assertEquals(1, observer.parametersChangedCount);
     }

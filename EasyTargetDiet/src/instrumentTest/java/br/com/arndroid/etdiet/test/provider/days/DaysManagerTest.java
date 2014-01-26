@@ -12,7 +12,7 @@ import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.util.DateUtil;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class DaysManagerTest extends ProviderTestCase2<Provider> {
 
@@ -41,7 +41,7 @@ public class DaysManagerTest extends ProviderTestCase2<Provider> {
         final WeekdayParametersEntity weekdayParametersEntity = new WeekdayParametersManager(getMockContext())
                 .weekdayParametersFromWeekday(calendar.get(Calendar.DAY_OF_WEEK));
         assertEquals(null, daysEntity.getId());
-        assertEquals(DateUtil.dateToDateId(date), daysEntity.getDateId());
+        assertEquals(DateUtils.dateToDateId(date), daysEntity.getDateId());
         assertEquals(new ParametersHistoryManager(getMockContext()).getDailyAllowanceForDate(date),
                 daysEntity.getAllowed());
         assertEquals(weekdayParametersEntity.getBreakfastStartTime(), daysEntity.getBreakfastStartTime());
@@ -75,7 +75,7 @@ public class DaysManagerTest extends ProviderTestCase2<Provider> {
     public void testDayFromDateWithDataMustReturnsCorrectValues() {
         Date date = new Date();
         DaysEntity insertedEntity = new DaysEntity(null,
-                DateUtil.dateToDateId(date),
+                DateUtils.dateToDateId(date),
                 0.0f, 1, 2, 3.0f, 4, 5, 6.0f, 7, 8, 9.0f, 10, 11, 12.0f, 13, 14, 15.0f, 16, 17, 18.0f,
                 19.0f, 20, 21, 22, 23, 24, 25, "some note");
         mManager.refresh(insertedEntity);
