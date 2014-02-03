@@ -190,7 +190,7 @@ public class JournalMyGoalsFragment extends Fragment implements
 
     public void refreshScreen(DaySummary daySummary) {
         mCurrentDateId = daySummary.getEntity().getDateId();
-        mTxtExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
+        mTxtExerciseGoal.setText(String.valueOf(daySummary.getUsage().getExerciseDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getExerciseGoal()));
         mTxtLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getLiquidGoal()));
