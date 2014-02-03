@@ -382,20 +382,4 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
             if(c != null) c.close();
         }
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private void cursorContentShow(Cursor cursor) {
-        cursor.moveToFirst();
-        do {
-            ParametersHistoryEntity entity = ParametersHistoryEntity.fromCursor(cursor);
-            if(isLogEnabled) {
-                Log.d(TAG, entity.toString());
-            }
-        } while (cursor.moveToNext());
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + ParametersHistoryManagerTest.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

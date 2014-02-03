@@ -6,6 +6,9 @@ import android.content.UriMatcher;
 import android.net.Uri;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
@@ -13,6 +16,8 @@ import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class DaysOperator extends BaseProviderOperator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DaysOperator.class);
 
     // Safe change Days.Uri: add line for a new uri.
     private static final int DAYS_URI_MATCH = 1;
@@ -36,7 +41,7 @@ public class DaysOperator extends BaseProviderOperator {
             case DAYS_ITEM_URI_MATCH:
                 return Contract.Days.CONTENT_ITEM_TYPE;
             default:
-                Log.w(TAG, "Unknown uri in getType(Uri): " + uri);
+                LOG.warn("Unknown uri in getType(Uri):{}", uri);
                 return null;
         }
     }
@@ -85,10 +90,9 @@ public class DaysOperator extends BaseProviderOperator {
             ContentResolver resolver = provider.getContext().getContentResolver();
             final Uri virtualUri = UrisUtils.withAppendedId(Contract.Days.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.Days.DATE_ID));
-            if (isLogEnabled) {
-                Log.d(TAG, "insert, about to notify virtualUri=" + virtualUri);
-            }
+            LOG.trace("insert about to notify virtualUri={}", virtualUri);
             resolver.notifyChange(virtualUri, null);
+            LOG.trace("insert notified virtualUri={}", virtualUri);
         }
 
         return resultUri;

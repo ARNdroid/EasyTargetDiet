@@ -6,6 +6,9 @@ import android.content.UriMatcher;
 import android.net.Uri;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
@@ -13,6 +16,8 @@ import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class WeightsOperator extends BaseProviderOperator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(WeightsOperator.class);
 
     // Safe change Weights.Uri: add line for a new uri.
     private static final int WEIGHTS_URI_MATCH = 1;
@@ -37,7 +42,7 @@ public class WeightsOperator extends BaseProviderOperator {
             case WEIGHTS_ITEM_URI_MATCH:
                 return Contract.Weights.CONTENT_ITEM_TYPE;
             default:
-                Log.w(TAG, "Unknown uri in getType(Uri): " + uri);
+                LOG.trace("Unknown uri in getType(Uri):{}", uri);
                 return null;
         }
     }
@@ -77,8 +82,4 @@ public class WeightsOperator extends BaseProviderOperator {
             parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
         }
     }
-
-    private static final String TAG = "==>ETD/" + WeightsOperator.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;    
 }

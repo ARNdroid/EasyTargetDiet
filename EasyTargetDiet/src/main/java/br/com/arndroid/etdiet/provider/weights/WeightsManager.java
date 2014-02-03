@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,6 +21,9 @@ import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManage
 import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class WeightsManager {
+
+    private static final Logger LOG = LoggerFactory.getLogger(WeightsManager.class);
+
     final private Context mContext;
 
     public WeightsManager(Context context) {
@@ -46,23 +52,15 @@ public class WeightsManager {
 
         final Long id = entity.getId();
         if(id == null) {
-            if (isLogEnabled) {
-                Log.d(TAG, "About to insert entity=" + entity + "with Uri="
-                        + Contract.Weights.CONTENT_URI);
-            }
+            LOG.trace("About to insert entity={} with Uri={}", entity, Contract.Weights.CONTENT_URI);
             final Uri resultUri = mContext.getContentResolver().insert(Contract.Weights.CONTENT_URI,
                     entity.toContentValues());
             entity.setId(Long.parseLong(resultUri.getLastPathSegment()));
-            if (isLogEnabled) {
-                Log.d(TAG, "Returning from insert: entity inserted with id=" + entity.getId()
-                        + " and dateId=" + entity.getDateId());
-            }
+            LOG.trace("Entity inserted with id={} and dateId={}", entity.getId(), entity.getDateId());
         } else {
-            mContext.getContentResolver().update(ContentUris.withAppendedId(Contract.Weights.CONTENT_URI,id),
+            mContext.getContentResolver().update(ContentUris.withAppendedId(Contract.Weights.CONTENT_URI, id),
                     entity.toContentValues(), null, null);
-            if (isLogEnabled) {
-                Log.d(TAG, "Returning from update: entity updated =" + entity);
-            }
+            LOG.trace("Entity updated: {}", entity);
         }
     }
 
@@ -105,10 +103,4 @@ public class WeightsManager {
         }
         return result;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + WeightsManager.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

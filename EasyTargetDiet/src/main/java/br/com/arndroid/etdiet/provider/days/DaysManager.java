@@ -70,26 +70,12 @@ public class DaysManager {
 
         final Long id = entity.getId();
         if(id == null) {
-            if (isLogEnabled) {
-                Log.d(TAG, "About to insert entity=" + entity + "with Uri=" + Contract.Days.CONTENT_URI);
-            }
             final Uri resultUri = mContext.getContentResolver().insert(Contract.Days.CONTENT_URI,
                     entity.toContentValues());
             entity.setId(Long.parseLong(resultUri.getLastPathSegment()));
-            if (isLogEnabled) {
-                Log.d(TAG, "Returning from insert: entity inserted with id=" + entity.getId() + " and dateId=" + entity.getDateId());
-            }
         } else {
             mContext.getContentResolver().update(ContentUris.withAppendedId(Contract.Days.CONTENT_URI,id),
                     entity.toContentValues(), null, null);
-            if (isLogEnabled) {
-                Log.d(TAG, "Returning from update: entity updated =" + entity);
-            }
         }
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + DaysManager.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

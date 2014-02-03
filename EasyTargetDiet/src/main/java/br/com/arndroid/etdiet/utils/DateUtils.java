@@ -38,14 +38,6 @@ public class DateUtils {
     public static int getMinutesFromTimeAsInt(int time) {
         int onlyMinutes = time - hoursToMillis(getHoursFromTimeAsInt(time));
         int result = onlyMinutes / minutesToMillis(1);
-        if(isLogEnabled) {
-            Log.d(TAG,
-                  " ->getMinutesFromTimeAsInt()" +
-                  " ->time = " + time +
-                  " ->onlyMinutes = " + onlyMinutes +
-                  " ->result = " + result
-            );
-        }
 
         return result;
     }
@@ -89,16 +81,6 @@ public class DateUtils {
         cal.set(year, month, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING);
         String result = sdf.format(cal.getTime());
-
-        if(isLogEnabled) {
-            Log.d(TAG,
-                    " ->datePickerToDateId()" +
-                            " ->datePicker.getYear() = " + year +
-                            " ->datePicker.getMonth() = " + month +
-                            " ->datePicker.getDayOfMonth() = " + dayOfMonth +
-                            " ->result = " + result
-            );
-        }
 
         return result;
     }

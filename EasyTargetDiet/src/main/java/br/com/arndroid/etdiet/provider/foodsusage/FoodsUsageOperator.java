@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
@@ -14,6 +17,8 @@ import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class FoodsUsageOperator extends BaseProviderOperator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FoodsUsageOperator.class);
 
     // Safe change FoodsUsage.Uri: add line for a new uri.
     public static final int FOODS_USAGE_URI_MATCH = 1;
@@ -51,7 +56,7 @@ public class FoodsUsageOperator extends BaseProviderOperator {
             case FOODS_USAGE_SUM_EXERCISE_URI_MATCH:
                 return Contract.FoodsUsage.SUM_EXERCISE_TYPE;
             default:
-                Log.w(TAG, "Unknown uri in getType(Uri): " + uri);
+                LOG.warn("Unknown uri in getType(Uri):{}", uri);
                 return null;
         }
     }
@@ -154,10 +159,9 @@ public class FoodsUsageOperator extends BaseProviderOperator {
             final Uri extraUri = UrisUtils.withAppendedId(Contract.FoodsUsage.DATE_ID_CONTENT_URI,
                     values.getAsString(Contract.FoodsUsage.DATE_ID));
             final ContentResolver resolver = provider.getContext().getContentResolver();
-            if (isLogEnabled) {
-                Log.d(TAG, "insert, about to notify extraUri=" + extraUri + " and context=" + provider.getContext());
-            }
+            LOG.trace("insert about to notify extraUri={}", extraUri);
             resolver.notifyChange(extraUri, null);
+            LOG.trace("insert notified extraUri={}", extraUri);
         }
 
         return resultUri;
@@ -226,9 +230,4 @@ public class FoodsUsageOperator extends BaseProviderOperator {
 
         return result;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + FoodsUsageOperator.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }
