@@ -54,7 +54,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 final String errorMessage = String.format(
                         "Invalid baselineVersion=%s with CURRENT_DATABASE_VERSION=%s",
                         baselineVersion, CURRENT_DATABASE_VERSION);
-                LOG.error(errorMessage);
                 throw new SQLiteException(errorMessage);
         }
     }

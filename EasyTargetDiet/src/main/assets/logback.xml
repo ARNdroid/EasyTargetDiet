@@ -1,32 +1,31 @@
 <configuration>
     <property name="LOG_DIR" value="/data/data/br.com.arndroid.etdiet/files/log" />
 
-    <!-- Create a logcat appender -->
+    <!-- The LogCat appender -->
     <appender name="LogCat" class="ch.qos.logback.classic.android.LogcatAppender">
         <encoder>
             <pattern>==>ETD %msg</pattern>
         </encoder>
     </appender>
 
-    <!-- Create a file appender for TRACE-level messages -->
-    <appender name="TraceLog" class="ch.qos.logback.core.FileAppender">
+    <!-- The WarnsAndErrors appender -->
+    <appender name="WarnsAndErrors" class="ch.qos.logback.core.FileAppender">
 
-        <file>${LOG_DIR}/etd_trace.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+
+        <file>${LOG_DIR}/warns_and_errors.log</file>
 
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{dd/MM/yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
 
     </appender>
 
-    <!-- Write DEBUG (and higher-level) messages to logcat -->
-    <root level="DEBUG">
-        <appender-ref ref="LogCat" />
-    </root>
-
-    <!-- Write TRACE (and higher-level) messages to file -->
     <root level="TRACE">
-        <appender-ref ref="TraceLog" />
+        <appender-ref ref="LogCat" />
+        <appender-ref ref="WarnsAndErrors" />
     </root>
 
 </configuration>
