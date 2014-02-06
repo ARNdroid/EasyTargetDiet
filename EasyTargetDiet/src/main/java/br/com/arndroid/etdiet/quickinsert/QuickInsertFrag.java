@@ -27,7 +27,6 @@ import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
 
 /*
-    TODO: Try a refactor.
     We need something like a DialogFragment with a layout that references a Fragment. This fragment
     will have its own layout with all UI bellow.
     The challenge is create the best communication between
@@ -214,7 +213,6 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     }
 
     private boolean insertOrUpdateFoodsUsage() {
-        // TODO: this is intended to be a method, but I have a NullPointerException AVD Genymotion
         FoodsUsageEntity entity = new FoodsUsageEntity(
                 mId,
                 mDateIdSet,
@@ -240,7 +238,10 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     private void constructDialogForError(Contract.TargetException e) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.quick_add);
-        // TODO: construct a better message:
+        /*
+            Message here is NOT friendly but the UI are dealing with the data therefore errors are
+            NOT expected.
+         */
         builder.setMessage(e.getMessage());
         builder.setPositiveButton(android.R.string.ok, null);
         builder.create().show();

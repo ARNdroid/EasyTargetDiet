@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
+@SuppressWarnings("UnusedDeclaration")
 public class MenuUtils {
     // Utility:
     protected MenuUtils() {
@@ -28,14 +29,24 @@ public class MenuUtils {
 
     public static void callMenuInFragmentByMethod(FragmentManager fragmentManager, int fragmentId,
                                                   int menuItemId) {
-        // TODO: we may finish with a NPE here. Check and throw a better exception.
-        ((FragmentMenuReplier) getFragmentInLayout(fragmentManager, fragmentId))
-                .onReplyMenuFromHolderActivity(menuItemId);
+        final FragmentMenuReplier fragmentMenuReplier = ((FragmentMenuReplier)
+                getFragmentInLayout(fragmentManager, fragmentId));
+
+        if (fragmentMenuReplier == null) {
+            throw new IllegalArgumentException("Fragment with fragmentId=" + fragmentId +
+                    " not found in layout.");
+        }
+
+        fragmentMenuReplier.onReplyMenuFromHolderActivity(menuItemId);
     }
 
     public static void callMenuInFragmentByIntent(Context context, Class holderActivityClass,
                                                   int menuItemId) {
-        // TODO: if context == holderActivityClass we will be in loop. Throw exception!
+        if (context.getClass() == holderActivityClass) {
+            throw new IllegalArgumentException("context == holderActivityClass."
+                    + " We will be in loop here. Are you calling a menu performed by the same activity?");
+        }
+
         final Intent intent = new Intent(context, holderActivityClass);
         intent.putExtra(FragmentMenuReplier.MENU_ITEM_ID_KEY, menuItemId);
         context.startActivity(intent);
