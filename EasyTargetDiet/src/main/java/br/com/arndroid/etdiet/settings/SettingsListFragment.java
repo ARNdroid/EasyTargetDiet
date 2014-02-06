@@ -76,90 +76,91 @@ public class SettingsListFragment extends ListFragment implements
                 .getApplicationContext()).weekdayParametersFromWeekday(mSelectedWeekday);
 
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            final PointDialog dialog = new PointDialog();
-            dialog.setTitle(getResources().getString(R.string.exercise_goal));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialValue(entity.getExerciseGoal());
-            dialog.show(getFragmentManager(), EXERCISE_GOAL_SETTINGS_TAG);
+            createAndShowPointDialogWith(getResources().getString(R.string.exercise_goal),
+                    0, 99, entity.getExerciseGoal(), EXERCISE_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
-            final IntegerDialog dialog = new IntegerDialog();
-            dialog.setTitle(getResources().getString(R.string.liquid_goal));
-            dialog.setMinValue(0);
-            dialog.setMaxValue(99);
-            dialog.setInitialValue(entity.getLiquidGoal());
-            dialog.show(getFragmentManager(), LIQUID_GOAL_SETTINGS_TAG);
+            createAndShowIntegerDialogWith(getResources().getString(R.string.liquid_goal),
+                    0, 99, entity.getLiquidGoal(), LIQUID_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
-            final IntegerDialog dialog = new IntegerDialog();
-            dialog.setTitle(getResources().getString(R.string.oil_goal));
-            dialog.setMinValue(0);
-            dialog.setMaxValue(99);
-            dialog.setInitialValue(entity.getOilGoal());
-            dialog.show(getFragmentManager(), OIL_GOAL_SETTINGS_TAG);
+            createAndShowIntegerDialogWith(getResources().getString(R.string.oil_goal), 0, 99,
+                    entity.getOilGoal(), OIL_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
-            final IntegerDialog dialog = new IntegerDialog();
-            dialog.setTitle(getResources().getString(R.string.supplement_goal));
-            dialog.setMinValue(0);
-            dialog.setMaxValue(99);
-            dialog.setInitialValue(entity.getSupplementGoal());
-            dialog.show(getFragmentManager(), SUPPLEMENT_GOAL_SETTINGS_TAG);
+            createAndShowIntegerDialogWith(getResources().getString(R.string.supplement_goal), 0, 99,
+                    entity.getSupplementGoal(), SUPPLEMENT_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(mSettingsColumnName)) {
-            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
-            dialog.setTitle(getResources().getString(R.string.breakfast_ideal_values));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialStartTime(entity.getBreakfastStartTime());
-            dialog.setInitialEndTime(entity.getBreakfastEndTime());
-            dialog.setInitialIdealValue(entity.getBreakfastGoal());
-            dialog.show(getFragmentManager(), BREAKFAST_GOAL_SETTINGS_TAG);
+            createAndShowMealIdealValuesDialogWith(
+                    getResources().getString(R.string.breakfast_ideal_values), 0, 99,
+                    entity.getBreakfastStartTime(), entity.getBreakfastEndTime(),
+                    entity.getBreakfastGoal(), BREAKFAST_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.BRUNCH_GOAL.equals(mSettingsColumnName)) {
-            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
-            dialog.setTitle(getResources().getString(R.string.brunch_ideal_values));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialStartTime(entity.getBrunchStartTime());
-            dialog.setInitialEndTime(entity.getBrunchEndTime());
-            dialog.setInitialIdealValue(entity.getBrunchGoal());
-            dialog.show(getFragmentManager(), BRUNCH_GOAL_SETTINGS_TAG);
+            createAndShowMealIdealValuesDialogWith(
+                    getResources().getString(R.string.brunch_ideal_values), 0, 99,
+                    entity.getBrunchStartTime(), entity.getBrunchEndTime(),
+                    entity.getBrunchGoal(), BRUNCH_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.LUNCH_GOAL.equals(mSettingsColumnName)) {
-            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
-            dialog.setTitle(getResources().getString(R.string.lunch_ideal_values));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialStartTime(entity.getLunchStartTime());
-            dialog.setInitialEndTime(entity.getLunchEndTime());
-            dialog.setInitialIdealValue(entity.getLunchGoal());
-            dialog.show(getFragmentManager(), LUNCH_GOAL_SETTINGS_TAG);
+            createAndShowMealIdealValuesDialogWith(
+                    getResources().getString(R.string.lunch_ideal_values), 0, 99,
+                    entity.getLunchStartTime(), entity.getLunchEndTime(),
+                    entity.getLunchGoal(), LUNCH_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.SNACK_GOAL.equals(mSettingsColumnName)) {
-            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
-            dialog.setTitle(getResources().getString(R.string.snack_ideal_values));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialStartTime(entity.getSnackStartTime());
-            dialog.setInitialEndTime(entity.getSnackEndTime());
-            dialog.setInitialIdealValue(entity.getSnackGoal());
-            dialog.show(getFragmentManager(), SNACK_GOAL_SETTINGS_TAG);
+            createAndShowMealIdealValuesDialogWith(
+                    getResources().getString(R.string.snack_ideal_values), 0, 99,
+                    entity.getSnackStartTime(), entity.getSnackEndTime(),
+                    entity.getSnackGoal(), SNACK_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.DINNER_GOAL.equals(mSettingsColumnName)) {
-            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
-            dialog.setTitle(getResources().getString(R.string.dinner_ideal_values));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialStartTime(entity.getDinnerStartTime());
-            dialog.setInitialEndTime(entity.getDinnerEndTime());
-            dialog.setInitialIdealValue(entity.getDinnerGoal());
-            dialog.show(getFragmentManager(), DINNER_GOAL_SETTINGS_TAG);
+            createAndShowMealIdealValuesDialogWith(
+                    getResources().getString(R.string.dinner_ideal_values), 0, 99,
+                    entity.getDinnerStartTime(), entity.getDinnerEndTime(),
+                    entity.getDinnerGoal(), DINNER_GOAL_SETTINGS_TAG);
+
         } else if (Contract.WeekdayParameters.SUPPER_GOAL.equals(mSettingsColumnName)) {
-            final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
-            dialog.setTitle(getResources().getString(R.string.supper_ideal_values));
-            dialog.setMinIntegerValue(0);
-            dialog.setMaxIntegerValue(99);
-            dialog.setInitialStartTime(entity.getSupperStartTime());
-            dialog.setInitialEndTime(entity.getSupperEndTime());
-            dialog.setInitialIdealValue(entity.getSupperGoal());
-            dialog.show(getFragmentManager(), SUPPER_GOAL_SETTINGS_TAG);
+            createAndShowMealIdealValuesDialogWith(
+                    getResources().getString(R.string.supper_ideal_values), 0, 99,
+                    entity.getSupperStartTime(), entity.getSupperEndTime(),
+                    entity.getSupperGoal(), SUPPER_GOAL_SETTINGS_TAG);
+
         } else {
             throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
+    }
+
+    private void createAndShowMealIdealValuesDialogWith(String title, int minIntegerValue, int maxIntegerValue, Integer initialStartTime, Integer initialEndTime, Float initialIdealValue, String tag) {
+        final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
+        dialog.setTitle(title);
+        dialog.setMinIntegerValue(minIntegerValue);
+        dialog.setMaxIntegerValue(maxIntegerValue);
+        dialog.setInitialStartTime(initialStartTime);
+        dialog.setInitialEndTime(initialEndTime);
+        dialog.setInitialIdealValue(initialIdealValue);
+        dialog.show(getFragmentManager(), tag);
+    }
+
+    private void createAndShowIntegerDialogWith(String title, int minValue, int maxValue,
+                                                Integer initialValue, String tag) {
+        final IntegerDialog dialog = new IntegerDialog();
+        dialog.setTitle(title);
+        dialog.setMinValue(minValue);
+        dialog.setMaxValue(maxValue);
+        dialog.setInitialValue(initialValue);
+        dialog.show(getFragmentManager(), tag);
+    }
+
+    private void createAndShowPointDialogWith(String title, int minIntegerValue, int maxIntegerValue,
+                                              Float initialValue, String tag) {
+        final PointDialog dialog = new PointDialog();
+        dialog.setTitle(title);
+        dialog.setMinIntegerValue(minIntegerValue);
+        dialog.setMaxIntegerValue(maxIntegerValue);
+        dialog.setInitialValue(initialValue);
+        dialog.show(getFragmentManager(), tag);
     }
 
     @Override
