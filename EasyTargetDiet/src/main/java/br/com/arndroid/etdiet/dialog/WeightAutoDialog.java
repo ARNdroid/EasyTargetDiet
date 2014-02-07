@@ -24,7 +24,7 @@ import br.com.arndroid.etdiet.utils.WeightUtils;
 public class WeightAutoDialog extends DialogFragment implements
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     /**
-     * The auto means that the dialog is responsible for data actualization, in others words,
+     * The auto means the dialog is responsible for data actualization, in others words,
      * doesn't need listeners.
      */
 

@@ -56,7 +56,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     private Float mValueSet = null;
     private Button btnDate;
     private Button btnTime;
-    private Spinner spnMeal;
+    private Spinner mSpnMeal;
     private EditText edtDescription;
     private NumberPicker pickerInteger;
     private NumberPicker pickerDecimal;
@@ -71,7 +71,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.quick_insert_frag, null);
+        View view = inflater.inflate(R.layout.quick_insert_auto_dialog, null);
         setFieldsReferenceFromForm(view);
         setupFields();
 
@@ -148,7 +148,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
 
     private void fillFormWithDataFromDB() {
         FoodsUsageEntity entity = new FoodsUsageManager(getActivity().getApplicationContext()).foodUsageFromId(mId);
-        spnMeal.setSelection(entity.getMeal());
+        mSpnMeal.setSelection(entity.getMeal());
         btnDate.setText(DateUtils.dateIdToFormattedString(entity.getDateId()));
         mDateIdSet = entity.getDateId();
         btnTime.setText(DateUtils.timeToFormattedString(entity.getTime()));
@@ -161,8 +161,8 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
 
     private void setupFields() {
         MealsAdapter adapter = new MealsAdapter(getActivity());
-        spnMeal.setAdapter(adapter);
-        spnMeal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpnMeal.setAdapter(adapter);
+        mSpnMeal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (TextUtils.isEmpty(edtDescription.getText())) {
@@ -172,6 +172,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
                     edtDescription.setHint(hint);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do nothing...
@@ -204,7 +205,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     }
 
     private void setFieldsReferenceFromForm(View view) {
-        spnMeal = (Spinner) view.findViewById(R.id.spnMeal);
+        mSpnMeal = (Spinner) view.findViewById(R.id.spnMeal);
         btnDate = (Button) view.findViewById(R.id.btnDate);
         btnTime = (Button) view.findViewById(R.id.btnTime);
         edtDescription = (EditText) view.findViewById(R.id.edtDescription);
@@ -216,7 +217,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         FoodsUsageEntity entity = new FoodsUsageEntity(
                 mId,
                 mDateIdSet,
-                spnMeal.getSelectedItemPosition(),
+                mSpnMeal.getSelectedItemPosition(),
                 mTimeSet,
                 TextUtils.isEmpty(edtDescription.getText().toString()) ? edtDescription.getHint().toString() : edtDescription.getText().toString(),
                 pickerDecimal.getValue() == 0 ? pickerInteger.getValue() : pickerInteger.getValue() + 0.5f);
@@ -252,7 +253,7 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
     }
 
     private void fillFormWithDataFromSetters() {
-        spnMeal.setSelection(mMealSet);
+        mSpnMeal.setSelection(mMealSet);
         btnDate.setText(DateUtils.dateIdToFormattedString(mDateIdSet));
         btnTime.setText(DateUtils.timeToFormattedString(mTimeSet));
         edtDescription.setText(mDescriptionSet);
