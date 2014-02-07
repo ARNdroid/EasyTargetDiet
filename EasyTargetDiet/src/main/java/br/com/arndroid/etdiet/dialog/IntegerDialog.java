@@ -140,9 +140,4 @@ public class IntegerDialog extends DialogFragment {
     public void setInitialValue(int currentValue) {
         this.mInitialValue = currentValue;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + IntegerDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

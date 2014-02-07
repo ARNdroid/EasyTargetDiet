@@ -36,9 +36,4 @@ public class DatabaseChangeObserver extends ContentObserver {
     public interface ChangeListener {
         public void onContentChanged(int changeType, int index);
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + DatabaseChangeObserver.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

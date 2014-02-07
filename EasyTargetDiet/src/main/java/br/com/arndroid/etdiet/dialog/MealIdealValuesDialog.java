@@ -233,9 +233,4 @@ public class MealIdealValuesDialog extends DialogFragment {
     public void setInitialEndTime(int initialEndTime) {
         mInitialEndTime = initialEndTime;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + MealIdealValuesDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

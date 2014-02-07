@@ -97,8 +97,4 @@ public class DaysOperator extends BaseProviderOperator {
 
         return resultUri;
     }
-
-    private static final String TAG = "==>ETD/" + DaysOperator.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;    
 }

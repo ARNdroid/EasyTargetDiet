@@ -291,10 +291,4 @@ public class QuickInsertFrag extends DialogFragment implements DatePickerDialog.
         mTimeSet = DateUtils.timePickerToTimeAsInt(view);
         btnTime.setText(DateUtils.timeToFormattedString(mTimeSet));
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + QuickInsertFrag.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
-
 }

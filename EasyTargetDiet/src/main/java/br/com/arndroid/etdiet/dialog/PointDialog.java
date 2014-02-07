@@ -151,9 +151,4 @@ public class PointDialog extends DialogFragment {
     public void setInitialValue(float currentValue) {
         this.mInitialValue = currentValue;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + PointDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

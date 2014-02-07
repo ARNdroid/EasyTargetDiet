@@ -199,9 +199,4 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
             summariesOnSummaryRequested.add(summary);
         }
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + VirtualWeekTest.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

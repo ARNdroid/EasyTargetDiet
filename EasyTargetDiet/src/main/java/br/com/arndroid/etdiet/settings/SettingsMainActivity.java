@@ -74,10 +74,4 @@ public class SettingsMainActivity extends ActionBarActivity implements
         ActionUtils.callActionInFragment(this, getSupportFragmentManager(), fragmentId,
                 holderActivityClass, actionTag, actionData);
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + SettingsMainActivity.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

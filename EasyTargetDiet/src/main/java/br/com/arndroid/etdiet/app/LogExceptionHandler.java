@@ -11,7 +11,7 @@ public class LogExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(LogExceptionHandler.class);
 
-    private Thread.UncaughtExceptionHandler defaultUEH;
+    private final Thread.UncaughtExceptionHandler defaultUEH;
 
     public LogExceptionHandler() {
         this.defaultUEH = Thread.getDefaultUncaughtExceptionHandler();

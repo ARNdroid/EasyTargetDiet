@@ -204,10 +204,4 @@ public class WeightAutoDialog extends DialogFragment implements
         // We cannot call refreshScreen() here or we will lose other fields changed...
         mBtnTime.setText(DateUtils.timeToFormattedString(mWeightEntity.getTime()));
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + WeightAutoDialog.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

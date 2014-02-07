@@ -40,10 +40,4 @@ public class WeightUtils {
         final String[] split = formatter.format(weight).split("-");
         return split[1];
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + WeightUtils.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

@@ -113,9 +113,4 @@ public class DateDialog extends DialogFragment {
     public void setInitialValue(Date currentValue) {
         mInitialValue = currentValue;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + DateDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }
