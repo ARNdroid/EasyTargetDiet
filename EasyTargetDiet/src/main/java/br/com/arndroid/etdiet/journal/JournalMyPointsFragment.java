@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.journal;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.dialog.DateDialog;
-import br.com.arndroid.etdiet.dialog.WeightAutoDialog;
+import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
-import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
@@ -118,22 +117,17 @@ public class JournalMyPointsFragment extends Fragment implements
 
         switch (menuItemId) {
             case R.id.quick_add:
-                FragmentManager manager = getFragmentManager();
-                QuickInsertFrag quickInsertFrag = new QuickInsertFrag();
-                quickInsertFrag.setDateId(mCurrentDateId);
-
-                final Date currentDate = DateUtils.dateIdToDate(mCurrentDateId);
                 final int timeHint = DateUtils.dateToTimeAsInt(new Date());
+                final Date currentDate = DateUtils.dateIdToDate(mCurrentDateId);
                 final int mealHint = Meals.preferredMealForTimeInDate(
                         getActivity().getApplicationContext(), timeHint, currentDate);
-                quickInsertFrag.setMeal(mealHint);
-                quickInsertFrag.setTime(timeHint);
-
                 final float usageHint = Meals.preferredUsageForMealInDate(
                         getActivity().getApplicationContext(), mealHint, currentDate);
-                quickInsertFrag.setValue(usageHint);
-
-                quickInsertFrag.show(manager, QuickInsertFrag.INSERT_TAG);
+                final FoodsUsageEntity entity = new FoodsUsageEntity(null, mCurrentDateId,
+                        mealHint, timeHint, null, usageHint);
+                final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
+                dialog.setFoodsUsageEntity(entity);
+                dialog.show(getFragmentManager(), null);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid menuItemId=" + menuItemId);

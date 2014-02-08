@@ -13,7 +13,10 @@
         class="br.com.arndroid.etdiet.weights.WeightsListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/card_margin"
+        android:layout_marginTop="@dimen/double_card_margin"
+        android:layout_marginBottom="@dimen/double_card_margin"
+        android:layout_marginLeft="@dimen/double_card_margin"
+        android:layout_marginRight="@dimen/double_card_margin"
         tools:layout="@layout/weights_list_fragment"/>
 
 </LinearLayout>

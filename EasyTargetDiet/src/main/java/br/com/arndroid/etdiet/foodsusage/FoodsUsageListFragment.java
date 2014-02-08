@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -21,11 +20,11 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
+import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
-import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.utils.ExposedObservable;
 
@@ -82,23 +81,24 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
-        QuickInsertFrag dialog = new QuickInsertFrag();
-        dialog.setId(id);
-        dialog.show(getActivity().getSupportFragmentManager(), QuickInsertFrag.UPDATE_TAG);
+        final FoodsUsageManager manager = new FoodsUsageManager(
+                getActivity().getApplicationContext());
+        final FoodsUsageEntity entity = manager.foodUsageFromId(id);
+        final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
+        dialog.setFoodsUsageEntity(entity);
+        dialog.show(getFragmentManager(), null);
     }
 
     @Override
     public void onReplyMenuFromHolderActivity(int menuItemId) {
         switch (menuItemId) {
             case R.id.quick_add:
-                FragmentManager manager = getFragmentManager();
-                QuickInsertFrag dialog = new QuickInsertFrag();
-                dialog.setDateId(mDateId);
-                dialog.setTime(getDefaultTime());
-                dialog.setMeal(Meals.getMealFromPosition(mMeal));
-                dialog.setDescription(null);
-                dialog.setValue(getDefaultValue());
-                dialog.show(manager, QuickInsertFrag.INSERT_TAG);
+                final FoodsUsageEntity entity = new FoodsUsageEntity(null, mDateId,
+                        Meals.getMealFromPosition(mMeal), getDefaultTime(), null,
+                        getDefaultValue());
+                final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
+                dialog.setFoodsUsageEntity(entity);
+                dialog.show(getFragmentManager(), null);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid menuItemId=" + menuItemId);

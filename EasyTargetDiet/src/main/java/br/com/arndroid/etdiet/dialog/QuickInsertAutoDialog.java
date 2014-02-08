@@ -18,6 +18,9 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
@@ -67,6 +70,9 @@ public class QuickInsertAutoDialog extends DialogFragment implements
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 fromScreenToEntity();
+                if (TextUtils.isEmpty(mEdtDescription.getText())) {
+                    mFoodsUsageEntity.setDescription(mEdtDescription.getHint().toString());
+                }
                 mFoodsUsageEntity.validateOrThrow();
                 final FoodsUsageManager manager = new FoodsUsageManager(getActivity().getApplicationContext());
                 manager.refresh(mFoodsUsageEntity);

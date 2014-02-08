@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -16,22 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.dialog.WeightAutoDialog;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageListAdapter;
-import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
-import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.provider.weights.WeightsEntity;
 import br.com.arndroid.etdiet.provider.weights.WeightsManager;
-import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
 import br.com.arndroid.etdiet.utils.DateUtils;
-import br.com.arndroid.etdiet.utils.ExposedObservable;
 
 public class WeightsListFragment extends ListFragment implements FragmentMenuReplier,
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -68,7 +59,7 @@ public class WeightsListFragment extends ListFragment implements FragmentMenuRep
         dialog.setMaxIntegerValue(300);
         final WeightsManager manager = new WeightsManager(getActivity().getApplicationContext());
         dialog.setWeightEntity(manager.weightFromId(id));
-        dialog.show(getActivity().getSupportFragmentManager(), null);
+        dialog.show(getFragmentManager(), null);
     }
 
     @Override
@@ -82,8 +73,7 @@ public class WeightsListFragment extends ListFragment implements FragmentMenuRep
                 final WeightsManager manager = new WeightsManager(getActivity().getApplicationContext());
                 final WeightsEntity entity = manager.getSuggestedNewWeight();
                 dialog.setWeightEntity(entity);
-                FragmentManager fragmentManager = getFragmentManager();
-                dialog.show(fragmentManager, null);
+                dialog.show(getFragmentManager(), null);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid menuItemId=" + menuItemId);
