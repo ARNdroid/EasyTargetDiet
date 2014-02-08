@@ -52,7 +52,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/lblTo"
+        android:id="@+id/lbIdealMealsUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ideal_meal_value"

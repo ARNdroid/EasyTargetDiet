@@ -332,10 +332,4 @@ public class SettingsMainFragment extends Fragment implements
         }
         refreshScreen();
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + SettingsMainFragment.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

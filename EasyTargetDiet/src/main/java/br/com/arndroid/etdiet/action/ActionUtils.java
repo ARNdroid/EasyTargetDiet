@@ -24,7 +24,11 @@ public class ActionUtils {
 
     public static void callActionInFragmentByIntent(Context context, Class holderActivityClass,
                                                      String actionTag, Bundle actionData) {
-        // TODO: if context == holderActivityClass we will be in loop. Throw exception!
+        if (context.getClass() == holderActivityClass) {
+            throw new IllegalArgumentException("context == holderActivityClass."
+                    + " We will be in loop here. Are you calling an action performed by the same activity?");
+        }
+
         Intent intent = new Intent(context, holderActivityClass);
         intent.putExtra(FragmentActionReplier.ACTION_TAG_KEY, actionTag);
         intent.putExtra(FragmentActionReplier.ACTION_DATA_KEY, actionData);
@@ -34,9 +38,15 @@ public class ActionUtils {
     public static void callActionInFragmentByMethod(FragmentManager fragmentManager,
                                                      int fragmentId, String actionTag,
                                                      Bundle actionData) {
-        // TODO: we may finish with a NPE here. Check and throw a better exception.
-        ((FragmentActionReplier) getFragmentInLayout(fragmentManager, fragmentId))
-                .onReplyActionFromOtherFragment(actionTag, actionData);
+        final FragmentActionReplier fragmentActionReplier = ((FragmentActionReplier)
+                getFragmentInLayout(fragmentManager, fragmentId));
+
+        if (fragmentActionReplier == null) {
+            throw new IllegalArgumentException("Fragment with fragmentId=" + fragmentId +
+                    " not found in layout.");
+        }
+
+        fragmentActionReplier.onReplyActionFromOtherFragment(actionTag, actionData);
     }
 
     public static boolean isFragmentInLayout(FragmentManager fragmentManager,

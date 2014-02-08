@@ -120,10 +120,4 @@ public class SettingsListActivity extends ActionBarActivity implements
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + SettingsListActivity.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

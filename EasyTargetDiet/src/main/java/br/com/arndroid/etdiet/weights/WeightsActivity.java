@@ -57,10 +57,4 @@ public class WeightsActivity extends ActionBarActivity {
         inflater.inflate(R.menu.weights, menu);
         return true;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + WeightsActivity.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

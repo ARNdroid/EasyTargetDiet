@@ -3,11 +3,9 @@ package br.com.arndroid.etdiet.journal;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,16 +13,14 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
-import br.com.arndroid.etdiet.action.FragmentMenuReplier;
-import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
-import br.com.arndroid.etdiet.dialog.TextDialog;
+import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
-import br.com.arndroid.etdiet.quickinsert.QuickInsertFrag;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
@@ -78,19 +74,11 @@ public class JournalMyGoalsFragment extends Fragment implements
         layExerciseGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                QuickInsertFrag dialog = new QuickInsertFrag();
-
-                dialog.setDateId(mCurrentDateId);
-
-                final int timeHint = DateUtils.dateToTimeAsInt(new Date());
-                dialog.setMeal(Meals.EXERCISE);
-                dialog.setTime(timeHint);
-
-                dialog.setValue(3.0f);
-
-                dialog.show(getFragmentManager(), QuickInsertFrag.INSERT_TAG);
-
+                final FoodsUsageEntity entity = new FoodsUsageEntity(null, mCurrentDateId,
+                        Meals.EXERCISE, DateUtils.dateToTimeAsInt(new Date()), null, 3.0f);
+                final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
+                dialog.setFoodsUsageEntity(entity);
+                dialog.show(getFragmentManager(), null);
             }
         });
         layExerciseGoal.setOnLongClickListener(new View.OnLongClickListener() {
@@ -190,7 +178,7 @@ public class JournalMyGoalsFragment extends Fragment implements
 
     public void refreshScreen(DaySummary daySummary) {
         mCurrentDateId = daySummary.getEntity().getDateId();
-        mTxtExerciseGoal.setText(String.valueOf(daySummary.getTotalExercise()) + "/"
+        mTxtExerciseGoal.setText(String.valueOf(daySummary.getUsage().getExerciseDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getExerciseGoal()));
         mTxtLiquidGoal.setText(String.valueOf(daySummary.getEntity().getLiquidDone()) + "/"
                 + String.valueOf(daySummary.getEntity().getLiquidGoal()));

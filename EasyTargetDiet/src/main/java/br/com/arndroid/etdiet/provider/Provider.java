@@ -84,10 +84,4 @@ public class Provider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         return providerOperatorForUri(uri).delete(uri, selection, selectionArgs, this);
     }
-
-    // Log
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + Provider.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

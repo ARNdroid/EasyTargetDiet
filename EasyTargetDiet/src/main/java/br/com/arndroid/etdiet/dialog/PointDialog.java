@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.utils.PointUtils;
 
 public class PointDialog extends DialogFragment {
     /**
@@ -59,7 +60,7 @@ public class PointDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 ((OnPointSetListener)getActivity()).onPointSet(PointDialog.this.getTag(),
-                        getActualValueFromPickers());
+                        PointUtils.pickersToValue(mPickerInteger, mPickerDecimal));
                 dialog.dismiss();
             }
         });
@@ -72,22 +73,14 @@ public class PointDialog extends DialogFragment {
         return builder.create();
     }
 
-    private float getActualValueFromPickers() {
-        return mPickerDecimal.getValue() == 0 ?
-                mPickerInteger.getValue() : mPickerInteger.getValue() + 0.5f;
-    }
-
     private void refreshScreen(float actualValue) {
-        mPickerInteger.setValue((int) Math.floor(actualValue));
-        mPickerDecimal.setValue(actualValue % 1 == 0 ? 0 : 1);
+        PointUtils.valueToPickers(actualValue, mPickerInteger, mPickerDecimal);
     }
 
     private void setupScreen() {
         mPickerInteger.setMinValue(getMinIntegerValue());
         mPickerInteger.setMaxValue(getMaxIntegerValue());
-        mPickerDecimal.setDisplayedValues(new String[]{"0", "5"});
-        mPickerDecimal.setMinValue(0);
-        mPickerDecimal.setMaxValue(1);
+        PointUtils.setPickerDecimal(mPickerDecimal);
     }
 
     private void bindScreen(View rootView) {
@@ -101,7 +94,7 @@ public class PointDialog extends DialogFragment {
         outState.putInt(MIN_KEY, getMinIntegerValue());
         outState.putInt(MAX_KEY, getMaxIntegerValue());
         outState.putFloat(INITIAL_KEY, getInitialValue());
-        outState.putFloat(ACTUAL_KEY, getActualValueFromPickers());
+        outState.putFloat(ACTUAL_KEY, PointUtils.pickersToValue(mPickerInteger, mPickerDecimal));
         super.onSaveInstanceState(outState);
     }
 
@@ -151,9 +144,4 @@ public class PointDialog extends DialogFragment {
     public void setInitialValue(float currentValue) {
         this.mInitialValue = currentValue;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + PointDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

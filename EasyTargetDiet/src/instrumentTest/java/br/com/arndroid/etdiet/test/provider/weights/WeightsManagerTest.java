@@ -111,18 +111,4 @@ public class WeightsManagerTest extends ProviderTestCase2<Provider> {
         WeightsEntity entityUpdated = mManager.weightFromId(entity.getId());
         assertEquals(entity, entityUpdated);
     }
-
-    // TODO: we are getting a null with Parcel.obtain();
-//    public void testParcelableMustReturnsCorrectValues() {
-//        WeightsEntity in = new WeightsEntity(null, null, null, null, null);
-//        Parcel parcel = Parcel.obtain();
-//        in.writeToParcel(parcel, 0);
-//        WeightsEntity out = WeightsEntity.CREATOR.createFromParcel(parcel);
-//        assertEquals(in, out);
-//
-//        in = new WeightsEntity(1L, DateUtils.dateToDateId(new Date()), 1, 2.0f, "some note");
-//        in.writeToParcel(parcel, 0);
-//        out = WeightsEntity.CREATOR.createFromParcel(parcel);
-//        assertEquals(in, out);
-//    }
 }

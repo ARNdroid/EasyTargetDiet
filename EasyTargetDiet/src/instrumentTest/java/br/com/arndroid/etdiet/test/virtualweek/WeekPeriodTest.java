@@ -81,9 +81,4 @@ public class WeekPeriodTest extends ProviderTestCase2<Provider>  {
         assertEquals(expectedFinalDate, weekPeriod.getFinalDate());
         assertEquals(calendar.getTime(), weekPeriod.getReferenceDate());
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + WeekPeriod.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

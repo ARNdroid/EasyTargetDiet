@@ -85,9 +85,4 @@ public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
             mCalled = true;
         }
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + ProviderTestCase3Test.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

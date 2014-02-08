@@ -110,9 +110,4 @@ public class TextDialog extends DialogFragment {
     public void setInitialText(String currentText) {
         mInitialText = currentText;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + TextDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

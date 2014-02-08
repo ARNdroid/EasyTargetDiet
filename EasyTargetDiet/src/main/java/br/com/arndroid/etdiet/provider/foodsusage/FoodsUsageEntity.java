@@ -2,13 +2,15 @@ package br.com.arndroid.etdiet.provider.foodsusage;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 
 import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor;
 
-public class FoodsUsageEntity extends AbstractEntity {
+public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
 
     private Long id;
     private String dateId;
@@ -251,6 +253,21 @@ public class FoodsUsageEntity extends AbstractEntity {
         this.value = value;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel destination, int flags) {
+        destination.writeLong(id);
+        destination.writeString(dateId);
+        destination.writeInt(meal);
+        destination.writeInt(time);
+        destination.writeString(description);
+        destination.writeFloat(value);
+    }
+
     /*
      * Factories
      */
@@ -274,6 +291,7 @@ public class FoodsUsageEntity extends AbstractEntity {
                     null : cursor.getFloat(cursor.getColumnIndex(Contract.FoodsUsage.VALUE)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static FoodsUsageEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
         if (principal == null || complement == null) {
             throw new IllegalArgumentException("Principal and complement must be not null.");
@@ -320,6 +338,7 @@ public class FoodsUsageEntity extends AbstractEntity {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static FoodsUsageEntity fromContentValues(ContentValues values) {
         if (values == null) {
             throw new IllegalArgumentException("Values must be not null.");
@@ -333,4 +352,22 @@ public class FoodsUsageEntity extends AbstractEntity {
                 values.getAsString(Contract.FoodsUsage.DESCRIPTION),
                 values.getAsFloat(Contract.FoodsUsage.VALUE));
     }
+
+    public static final Parcelable.Creator<FoodsUsageEntity> CREATOR
+            = new Parcelable.Creator<FoodsUsageEntity>() {
+
+        public FoodsUsageEntity createFromParcel(Parcel in) {
+            final Long id = in.readLong();
+            final String dateId = in.readString();
+            final Integer meal = in.readInt();
+            final Integer time = in.readInt();
+            final String description = in.readString();
+            final Float value = in.readFloat();
+            return new FoodsUsageEntity(id, dateId, meal, time, description, value);
+        }
+
+        public FoodsUsageEntity[] newArray(int size) {
+            return new FoodsUsageEntity[size];
+        }
+    };
 }

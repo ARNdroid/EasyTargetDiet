@@ -136,13 +136,11 @@ public class JournalActivity extends ActionBarActivity implements
 
     @Override
     public void onDayChanged(DaySummary summary) {
-        // TODO: Request summary if necessary.
         mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
     }
 
     @Override
     public void onFoodsUsageChanged(DaySummary summary) {
-        // TODO: Request summary if necessary.
         mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
     }
 
@@ -221,7 +219,7 @@ public class JournalActivity extends ActionBarActivity implements
               has this fragment but if orientation change again, the layout doesn't have BUT
               mFoodsUsageFragment != null wherever you check it. The addition check for isInLayout()
               solved the problem.
-              At this point a have a 7'' layout only to proof our design for Activities and Fragments
+              At this point we have a 7'' layout only to proof our design for Activities and Fragments
               and we believe in final design for tablets we need don't remove content (fragment) if
               the orientation changes (It's a design philosophy by Android Developers).
              */
@@ -232,7 +230,7 @@ public class JournalActivity extends ActionBarActivity implements
                         actionData);
             }
         } else {
-            // For all other tags do the best we can do...
+            // For all other tags that's the best we can do...
             ActionUtils.callActionInFragment(this, getSupportFragmentManager(), fragmentId,
                     holderActivityClass, actionTag, actionData);
         }

@@ -7,6 +7,7 @@
     <dimen name="default_view_padding">6dp</dimen>
     <dimen name="micro_font_size">10sp</dimen>
     <dimen name="card_margin">2dp</dimen>
+    <dimen name="double_card_margin">4dp</dimen>
     <dimen name="text_very_large">35sp</dimen>
 
 </resources>

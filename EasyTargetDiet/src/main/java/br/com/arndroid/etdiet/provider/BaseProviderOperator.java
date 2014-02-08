@@ -9,7 +9,12 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class BaseProviderOperator implements ProviderOperator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BaseProviderOperator.class);
 
     public static final int QUERY_OPERATION = 0;
     public static final int INSERT_OPERATION = 1;
@@ -120,14 +125,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         }
 
         Uri resultUri = Uri.withAppendedPath(uri, String.valueOf(idInserted));
-        if (isLogEnabled) {
-            Log.d(TAG, "insert, about to notify uri=" + resultUri);
-        }
+        LOG.trace("insert about to notify uri={}", resultUri);
         doNotifyOperations(INSERT_OPERATION, resultUri, null, provider);
-
-        if(isLogEnabled) {
-            Log.d(TAG, " ->insert()->idInserted = " + idInserted);
-        }
+        LOG.trace("insert notified uri={}", resultUri);
         return resultUri;
     }
 
@@ -180,10 +180,9 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         }
 
         if (rowsUpdated > FAIL) {
-            if (isLogEnabled) {
-                Log.d(TAG, "update, about to notify uri=" + uri);
-            }
+            LOG.trace("update about to notify uri={}", uri);
             doNotifyOperations(UPDATE_OPERATION, uri, null, provider);
+            LOG.trace("update notified uri={}", uri);
         }
         return rowsUpdated;
     }
@@ -202,16 +201,10 @@ public abstract class BaseProviderOperator implements ProviderOperator {
         SQLiteDatabase db = provider.getOpenHelper().getWritableDatabase();
         int rowsDeleted = db.delete(tableName(), parameters.getSelection(), parameters.getSelectionArgs());
         if (rowsDeleted > FAIL) {
-            if (isLogEnabled) {
-                Log.d(TAG, "delete, about to notify uri=" + uri);
-            }
+            LOG.trace("delete about to notify uri={}", uri);
             doNotifyOperations(DELETE_OPERATION, uri, null, provider);
+            LOG.trace("delete notified uri={}", uri);
         }
         return rowsDeleted;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + BaseProviderOperator.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

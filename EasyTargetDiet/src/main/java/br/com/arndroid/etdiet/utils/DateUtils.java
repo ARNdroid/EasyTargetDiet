@@ -18,7 +18,6 @@ public class DateUtils {
     private static final int DATE_ID_DAY_START_POSITION = 6; // inclusive
     private static final String DATE_ID_FORMAT_STRING = "yyyyMMdd";
     private static final String DATE_FORMAT_STRING = "dd/MM/yyyy";
-    private static final String TIME_FORMAT_STRING = "hh:mm";
 
     // Utility class.
     private DateUtils() {
@@ -29,25 +28,9 @@ public class DateUtils {
         picker.init(getYearFromDateId(dateId), getMonthFromDateId(dateId) - 1, getDayFromDateId(dateId), null);
     }
 
-    public static void initTimePickerWithTimeAsInt(TimePicker picker, int time) {
-        picker.setCurrentHour(getHoursFromTimeAsInt(time));
-        picker.setCurrentMinute(getMinutesFromTimeAsInt(time));
-
-    }
-
     public static int getMinutesFromTimeAsInt(int time) {
         int onlyMinutes = time - hoursToMillis(getHoursFromTimeAsInt(time));
-        int result = onlyMinutes / minutesToMillis(1);
-        if(isLogEnabled) {
-            Log.d(TAG,
-                  " ->getMinutesFromTimeAsInt()" +
-                  " ->time = " + time +
-                  " ->onlyMinutes = " + onlyMinutes +
-                  " ->result = " + result
-            );
-        }
-
-        return result;
+        return onlyMinutes / minutesToMillis(1);
     }
 
     public static int getHoursFromTimeAsInt(int time) {
@@ -88,19 +71,8 @@ public class DateUtils {
         //noinspection MagicConstant
         cal.set(year, month, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING);
-        String result = sdf.format(cal.getTime());
 
-        if(isLogEnabled) {
-            Log.d(TAG,
-                    " ->datePickerToDateId()" +
-                            " ->datePicker.getYear() = " + year +
-                            " ->datePicker.getMonth() = " + month +
-                            " ->datePicker.getDayOfMonth() = " + dayOfMonth +
-                            " ->result = " + result
-            );
-        }
-
-        return result;
+        return sdf.format(cal.getTime());
     }
 
     public static String dateToDateId(Date date) {
@@ -146,7 +118,4 @@ public class DateUtils {
         cal.setTime(date);
         return hoursToMillis(cal.get(Calendar.HOUR_OF_DAY)) + minutesToMillis(cal.get(Calendar.MINUTE));
     }
-
-    private static final String TAG = "==>ETD/" + DateUtils.class.getSimpleName();
-    private static final boolean isLogEnabled = false;
 }

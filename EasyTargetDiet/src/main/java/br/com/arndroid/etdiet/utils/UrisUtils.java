@@ -8,8 +8,11 @@ public class UrisUtils {
         return appendId(contentUri.buildUpon(), id).build();
     }
 
-    // TODO: this methods may be not necessary. For example I suppose that appendId may be replaced by Uri.withAppendedPath(...)
-    public static Uri.Builder appendId(Uri.Builder builder, String id) {
+    private static Uri.Builder appendId(Uri.Builder builder, String id) {
+        /*
+            This methods may be not necessary.
+            For example I suppose that appendId may be replaced by Uri.withAppendedPath(...)
+         */
         return builder.appendEncodedPath(id);
     }
 

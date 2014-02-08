@@ -118,10 +118,4 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         mHeaderFragment.onDataChangedFromHolderActivity(mDateId,
                 Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()), data);
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + FoodsUsageActivity.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

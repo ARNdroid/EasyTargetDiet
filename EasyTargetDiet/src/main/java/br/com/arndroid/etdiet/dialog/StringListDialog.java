@@ -113,9 +113,4 @@ public class StringListDialog extends DialogFragment {
     public void setStringListId(int stringListId) {
         mStringListId = stringListId;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + StringListDialog.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

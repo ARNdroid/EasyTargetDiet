@@ -24,7 +24,7 @@ import br.com.arndroid.etdiet.utils.WeightUtils;
 public class WeightAutoDialog extends DialogFragment implements
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     /**
-     * The auto means that the dialog is responsible for data actualization, in others words,
+     * The auto means the dialog is responsible for data actualization, in others words,
      * doesn't need listeners.
      */
 
@@ -204,10 +204,4 @@ public class WeightAutoDialog extends DialogFragment implements
         // We cannot call refreshScreen() here or we will lose other fields changed...
         mBtnTime.setText(DateUtils.timeToFormattedString(mWeightEntity.getTime()));
     }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + WeightAutoDialog.class.getSimpleName();
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

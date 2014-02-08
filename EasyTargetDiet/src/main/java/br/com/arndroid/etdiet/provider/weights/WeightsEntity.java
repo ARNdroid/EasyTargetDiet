@@ -8,7 +8,7 @@ import android.os.Parcelable;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 
-public class WeightsEntity extends AbstractEntity implements Parcelable{
+public class WeightsEntity extends AbstractEntity implements Parcelable {
 
     private Long id;
     private String dateId;
@@ -256,6 +256,7 @@ public class WeightsEntity extends AbstractEntity implements Parcelable{
                     null : cursor.getString(cursor.getColumnIndex(Contract.Weights.NOTE)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static WeightsEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
         if (principal == null || complement == null) {
             throw new IllegalArgumentException("Principal and complement must be not null.");
@@ -301,6 +302,7 @@ public class WeightsEntity extends AbstractEntity implements Parcelable{
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static WeightsEntity fromContentValues(ContentValues values) {
         if (values == null) {
             throw new IllegalArgumentException("Values must be not null.");

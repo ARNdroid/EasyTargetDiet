@@ -238,10 +238,4 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
 
         public void onSummaryRequested(DaySummary daySummary);
     }
-
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "==>ETD/" + VirtualWeek.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
 }

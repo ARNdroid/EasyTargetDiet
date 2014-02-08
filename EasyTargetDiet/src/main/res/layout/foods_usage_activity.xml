@@ -13,7 +13,10 @@
         class="br.com.arndroid.etdiet.foodsusage.FoodsUsageHeaderFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/card_margin"
+        android:layout_marginTop="@dimen/double_card_margin"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/double_card_margin"
+        android:layout_marginRight="@dimen/double_card_margin"
         tools:layout="@layout/foods_usage_header_fragment" />
 
     <fragment
@@ -21,7 +24,10 @@
         class="br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/card_margin"
+        android:layout_marginTop="@dimen/card_margin"
+        android:layout_marginBottom="@dimen/double_card_margin"
+        android:layout_marginLeft="@dimen/double_card_margin"
+        android:layout_marginRight="@dimen/double_card_margin"
         tools:layout="@layout/foods_usage_list_fragment"/>
 
 </LinearLayout>

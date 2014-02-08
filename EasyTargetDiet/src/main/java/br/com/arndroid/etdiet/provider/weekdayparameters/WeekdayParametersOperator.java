@@ -4,6 +4,9 @@ import android.content.UriMatcher;
 import android.net.Uri;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdiet.provider.BaseProviderOperator;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.OperationParameters;
@@ -11,6 +14,8 @@ import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.utils.UrisUtils;
 
 public class WeekdayParametersOperator extends BaseProviderOperator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(WeekdayParametersOperator.class);
 
     // Safe change WeekdayParameters.Uri: add line for a new uri.
     public static final int WEEKDAY_PARAMETERS_URI_MATCH = 1;
@@ -36,7 +41,7 @@ public class WeekdayParametersOperator extends BaseProviderOperator {
             case WEEKDAY_PARAMETERS_ITEM_URI_MATCH:
                 return Contract.WeekdayParameters.CONTENT_ITEM_TYPE;
             default:
-                Log.w(TAG, "Unknown uri in getType(Uri): " + uri);
+                LOG.warn("Unknown uri in getType(Uri):{}", uri);
                 return null;
         }
     }
@@ -76,9 +81,4 @@ public class WeekdayParametersOperator extends BaseProviderOperator {
             parameters.setSelectionArgs(new String[] {uri.getLastPathSegment()});
         }
     }
-
-    private static final String TAG = "==>ETD/" + WeekdayParametersOperator.class.getSimpleName();
-    @SuppressWarnings("UnusedDeclaration")
-    private static final boolean isLogEnabled = true;
-
 }
