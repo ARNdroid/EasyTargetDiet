@@ -82,8 +82,10 @@ public class JournalMyPointsFragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-                DateDialog dialog = new DateDialog();
+                final DateDialog dialog = new DateDialog();
                 dialog.setTitle(getString(R.string.date));
+                dialog.setCalendarViewShown(true);
+                dialog.setSpinnerShown(false);
                 dialog.setInitialValue(DateUtils.dateIdToDate(mCurrentDateId));
                 dialog.show(getFragmentManager(), DATE_EDIT_TAG);
             }

@@ -26,10 +26,14 @@ public class DateDialog extends DialogFragment {
     private static final String TITLE_KEY = "TITLE_KEY";
     private static final String INITIAL_KEY = "INITIAL_KEY";
     private static final String ACTUAL_KEY = "ACTUAL_KEY";
+    private static final String CALENDAR_VIEW_SHOWN = "CALENDAR_VIEW_SHOWN";
+    private static final String SPINNER_SHOWN = "SPINNER_SHOWN";
 
     private String mTitle;
     private Date mInitialValue;
     private DatePicker mPickerDate;
+    private boolean mCalendarViewShown = true;
+    private boolean mSpinnerShown = false;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,8 +48,12 @@ public class DateDialog extends DialogFragment {
         if (savedInstanceState != null) {
             setTitle(savedInstanceState.getString(TITLE_KEY));
             setInitialValue(DateUtils.dateIdToDate(savedInstanceState.getString(INITIAL_KEY)));
+            setCalendarViewShown(savedInstanceState.getBoolean(CALENDAR_VIEW_SHOWN));
+            setSpinnerShown(savedInstanceState.getBoolean(SPINNER_SHOWN));
             actualValue = DateUtils.dateIdToDate(savedInstanceState.getString(ACTUAL_KEY));
         }
+
+        setupScreen();
 
         refreshScreen(actualValue);
 
@@ -67,6 +75,11 @@ public class DateDialog extends DialogFragment {
         return builder.create();
     }
 
+    private void setupScreen() {
+        mPickerDate.setCalendarViewShown(mCalendarViewShown);
+        mPickerDate.setSpinnersShown(mSpinnerShown);
+    }
+
     private void refreshScreen(Date actualValue) {
         DateUtils.initDatePickerWithDateId(mPickerDate, DateUtils.dateToDateId(actualValue));
     }
@@ -79,6 +92,8 @@ public class DateDialog extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
         outState.putString(INITIAL_KEY, DateUtils.dateToDateId(getInitialValue()));
+        outState.putBoolean(CALENDAR_VIEW_SHOWN, getCalendarViewShown());
+        outState.putBoolean(SPINNER_SHOWN, getSpinnerShown());
         outState.putString(ACTUAL_KEY, DateUtils.datePickerToDateId(mPickerDate));
         super.onSaveInstanceState(outState);
     }
@@ -112,5 +127,21 @@ public class DateDialog extends DialogFragment {
 
     public void setInitialValue(Date currentValue) {
         mInitialValue = currentValue;
+    }
+
+    public boolean getCalendarViewShown() {
+        return mCalendarViewShown;
+    }
+
+    public void setCalendarViewShown(boolean calendarViewShown) {
+        mCalendarViewShown = calendarViewShown;
+    }
+
+    public boolean getSpinnerShown() {
+        return mSpinnerShown;
+    }
+
+    public void setSpinnerShown(boolean spinnerShown) {
+        mSpinnerShown = spinnerShown;
     }
 }
