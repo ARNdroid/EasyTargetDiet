@@ -29,4 +29,64 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="Card">
+        <item name="android:padding">6dp</item>
+        <item name="android:background">@drawable/card_background</item>
+    </style>
+
+    <style name="CardFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+    </style>
+    
+    <style name="CardFont.Header">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/accent_dark</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="CardFont.Section">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CardFont.Section.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CardFont.Data">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="CardFont.Data.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CardFont.Data.Large">
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="CardFont.Data.XLarge">
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="CardFont.Item">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CardFont.Item.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CardFont.Item.Large">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="CardFont.Item.XLarge">
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="ButtonFont">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
