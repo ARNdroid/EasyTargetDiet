@@ -5,18 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <include layout="@layout/include_journal_date"
+    <include
+        style="@style/Card"
+        layout="@layout/include_journal_date"
         android:id="@+id/layDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+
+        />
 
     <include
+        style="@style/Card"
         layout="@layout/include_journal_my_points"
         android:id="@+id/layMyPoints"
+        android:layout_marginLeft="@dimen/card_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/layDate"
         android:layout_alignTop="@id/layDate"
-        android:layout_alignBottom="@id/layDate"/>
+        android:layout_alignBottom="@id/layDate" />
 
 </RelativeLayout>

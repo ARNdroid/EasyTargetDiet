@@ -1,8 +1,8 @@
 package br.com.arndroid.etdiet.settings;
 
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -12,7 +12,7 @@ import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
 
-public class SettingsMainActivity extends ActionBarActivity implements
+public class SettingsMainActivity extends Activity implements
         PointDialog.OnPointSetListener,
         StringListDialog.OnStringSelectedListener,
         ActivityActionCaller {
@@ -22,7 +22,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.settings_main_activity);
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
@@ -49,7 +49,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
          The following code send the event to original Fragment again.
          */
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
-            ((PointDialog.OnPointSetListener) getSupportFragmentManager()
+            ((PointDialog.OnPointSetListener) getFragmentManager()
                     .findFragmentById(R.id.settings_main_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -60,7 +60,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
     public void onStringSelected(String tag, int chosenIndex) {
         // We are here against our will...
         if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
-            ((StringListDialog.OnStringSelectedListener) getSupportFragmentManager()
+            ((StringListDialog.OnStringSelectedListener) getFragmentManager()
                     .findFragmentById(R.id.settings_main_fragment)).onStringSelected(tag, chosenIndex);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -71,7 +71,7 @@ public class SettingsMainActivity extends ActionBarActivity implements
     public void onCallAction(int fragmentId, Class holderActivityClass, String actionTag,
                              Bundle actionData) {
 
-        ActionUtils.callActionInFragment(this, getSupportFragmentManager(), fragmentId,
+        ActionUtils.callActionInFragment(this, getFragmentManager(), fragmentId,
                 holderActivityClass, actionTag, actionData);
     }
 }

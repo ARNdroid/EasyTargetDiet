@@ -3,7 +3,7 @@ package br.com.arndroid.etdiet.settings;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
+import android.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +27,10 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        View view = mInflater.inflate(android.R.layout.simple_list_item_2, null, true);
+        View view = mInflater.inflate(R.layout.settings_list_item_2, null, true);
 
-        mHolder = new ViewHolder((TextView) view.findViewById(android.R.id.text1),
-                (TextView) view.findViewById(android.R.id.text2));
+        mHolder = new ViewHolder((TextView) view.findViewById(R.id.txtLine_1),
+                (TextView) view.findViewById(R.id.txtLine_2));
 
         view.setTag(mHolder);
 

@@ -13,20 +13,20 @@
         android:orientation="horizontal">
 
         <TextView
+            style="@style/CardFont.Header.Dialog"
             android:id="@+id/lblFrom"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/from"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/from" />
 
         <TextView
+            style="@style/CardFont.Header.Dialog"
             android:id="@+id/lblTo"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/to"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/to" />
 
     </LinearLayout>
 
@@ -36,6 +36,7 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/CardButton.Dialog"
             android:id="@+id/btnStartTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
             android:text="@string/no_show_time_mask"/>
 
         <Button
+            style="@style/CardButton.Dialog"
             android:id="@+id/btnEndTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,11 +54,12 @@
     </LinearLayout>
 
     <TextView
+        style="@style/CardFont.Header.Dialog"
         android:id="@+id/lbIdealMealsUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ideal_meal_value"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:paddingTop="@dimen/padding_after_dialog_item_divider"
+        android:text="@string/ideal_meal_value" />
 
     <include layout="@layout/point_dialog" />
 

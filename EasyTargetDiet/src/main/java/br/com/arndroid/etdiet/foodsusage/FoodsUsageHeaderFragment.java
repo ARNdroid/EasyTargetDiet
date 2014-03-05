@@ -2,7 +2,7 @@ package br.com.arndroid.etdiet.foodsusage;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +38,7 @@ public class FoodsUsageHeaderFragment extends Fragment {
 
     private void refreshScreen(String dateId, int meal, float used) {
         mTxtDate.setText(DateUtils.dateIdToFormattedString(dateId));
-        mTxtUsed.setText(String.format(getString(R.string.units_actual_value), used));
+        mTxtUsed.setText(String.valueOf(used));
 
         DaysEntity entity = new DaysManager(getActivity().getApplicationContext())
                 .dayFromDateId(dateId);

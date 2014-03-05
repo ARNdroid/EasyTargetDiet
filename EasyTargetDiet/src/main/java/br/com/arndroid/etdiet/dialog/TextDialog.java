@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -73,7 +73,7 @@ public class TextDialog extends DialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
         outState.putString(INITIAL_KEY, getInitialText());
         outState.putString(ACTUAL_KEY, mEdtText.getText().toString());

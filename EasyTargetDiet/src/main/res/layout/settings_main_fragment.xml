@@ -5,375 +5,455 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
+        style="@style/Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_view_padding"
         android:orientation="vertical" >
 
         <TextView
+            style="@style/SettingsFont.Header"
             android:id="@+id/lblMyPlan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_plan"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/my_plan" />
 
-        <View style="@style/DividerHorizontal" />
+        <View style="@style/HeaderDivider" />
 
         <RelativeLayout
             android:id="@+id/layDailyAllowance"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_selector"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblDailyAllowance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/daily_allowance"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/daily_allowance" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:id="@+id/txtDailyAllowanceActualValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblDailyAllowance"
-                android:text="@string/units_actual_value"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/units_actual_value" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layWeeklyAllowance"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblWeeklyAllowance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/weekly_allowance"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/weekly_allowance" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:id="@+id/txtWeeklyAllowanceActualValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblWeeklyAllowance"
-                android:text="@string/units_actual_value"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/units_actual_value" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layTrackingWeekday"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblTrackingWeekday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tracking_weekday"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/tracking_weekday" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:id="@+id/txtTrackingWeekdayActualValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblTrackingWeekday"
-                android:text="@string/no_show_tracking_weekday"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/no_show_tracking_weekday" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layExerciseUseMode"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblExerciseUseMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/exercise_use_mode"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/exercise_use_mode" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:id="@+id/txtExerciseUseModeActualValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblExerciseUseMode"
-                android:text="@string/no_show_exercise_use_mode"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/no_show_exercise_use_mode" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layExerciseUseOrder"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblExerciseUseOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/exercise_use_order"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/exercise_use_order" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:id="@+id/txtExerciseUseOrderActualValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblExerciseUseOrder"
-                android:text="@string/no_show_exercise_use_order"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/no_show_exercise_use_order" />
+
         </RelativeLayout>
 
         <TextView
+            style="@style/SettingsFont.Header"
             android:id="@+id/lblMyGoals"
-            android:paddingTop="@dimen/default_view_padding"
+            android:paddingTop="@dimen/padding_before_settings_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_goals"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/my_goals" />
 
-        <View style="@style/DividerHorizontal" />
+        <View style="@style/HeaderDivider" />
 
         <RelativeLayout
             android:id="@+id/layExerciseGoal"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblExerciseGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/exercise"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/exercise" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblExerciseGoal"
-                android:text="@string/choose_exercise_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_exercise_goal" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layLiquidGoal"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblLiquidGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/liquid"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/liquid" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblLiquidGoal"
-                android:text="@string/choose_liquid_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_liquid_goal" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layOilGoal"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblOilGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/oil"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/oil" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblOilGoal"
-                android:text="@string/choose_oil_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_oil_goal" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/laySupplementGoal"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblSupplementGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/supplement"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/supplement" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblSupplementGoal"
-                android:text="@string/choose_supplement_goal"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_supplement_goal" />
+
         </RelativeLayout>
 
         <TextView
+            style="@style/SettingsFont.Header"
             android:id="@+id/lblMyMealsIdealValues"
-            android:paddingTop="@dimen/default_view_padding"
+            android:paddingTop="@dimen/padding_before_settings_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_meals_ideal_values"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/my_meals_ideal_values" />
 
-        <View style="@style/DividerHorizontal" />
+        <View style="@style/HeaderDivider" />
 
         <RelativeLayout
             android:id="@+id/layBreakfastIdealValues"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblBreakfast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/breakfast"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/breakfast" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblBreakfast"
-                android:text="@string/choose_breakfast_ideal_values"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_breakfast_ideal_values" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layBrunchIdealValues"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblBrunch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/brunch"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/brunch" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblBrunch"
-                android:text="@string/choose_brunch_ideal_values"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_brunch_ideal_values" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layLunchIdealValues"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblLunch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lunch"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/lunch" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblLunch"
-                android:text="@string/choose_lunch_ideal_values"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_lunch_ideal_values" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/laySnackIdealValues"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblSnack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/snack"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/snack" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblSnack"
-                android:text="@string/choose_snack_ideal_values"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_snack_ideal_values" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/layDinnerIdealValues"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblDinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dinner"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/dinner" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblDinner"
-                android:text="@string/choose_dinner_ideal_values"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_dinner_ideal_values" />
+
         </RelativeLayout>
+
+        <View
+            style="@style/ItemDividerHorizontal" />
 
         <RelativeLayout
             android:id="@+id/laySupperIdealValues"
             android:clickable="true"
-            android:background="@android:drawable/list_selector_background"
+            android:background="@drawable/card_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
 
             <TextView
+                style="@style/SettingsFont"
                 android:id="@+id/lblSupper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/supper"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/supper" />
 
             <TextView
+                style="@style/SettingsFont.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblSupper"
-                android:text="@string/choose_supper_ideal_values"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="@string/choose_supper_ideal_values" />
+
         </RelativeLayout>
 
     </LinearLayout>

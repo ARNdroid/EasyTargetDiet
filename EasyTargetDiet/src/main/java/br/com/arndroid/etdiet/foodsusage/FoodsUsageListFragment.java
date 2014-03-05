@@ -4,10 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +63,8 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
     private ListView mLstList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@SuppressWarnings("NullableProblems") LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.foods_usage_list_fragment, container, false);
         bindScreen(rootView);
         setupScreen(rootView);

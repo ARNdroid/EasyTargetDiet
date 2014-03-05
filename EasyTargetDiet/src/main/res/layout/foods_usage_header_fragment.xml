@@ -1,80 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    style="@style/Card"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/card_background">
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_after_header_divider">
 
     <TextView
+        style="@style/CardFont.Header"
         android:id="@+id/lblMealInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/meal_info"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:text="@string/meal_info" />
 
     <View
-        style="@style/DividerHorizontal" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/lblTotal"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/total"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/no_show_date_mask"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/txtUsed"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/units_actual_value" />
-
-    </LinearLayout>
+        style="@style/HeaderDivider"
+        android:id="@+id/divHeader"
+        android:layout_below="@id/lblMealInfo"/>
 
     <TextView
-        android:id="@+id/lblGoal"
+        style="@style/CardFont.Data.Large"
+        android:id="@+id/txtUsed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/ideal_values" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/divHeader"
+        android:text="@string/no_show_two_digits_with_decimal_number" />
 
     <TextView
+        style="@style/CardFont.Data"
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/txtUsed"
+        android:text="@string/no_show_date_mask" />
+
+    <TextView
+        style="@style/CardFont.Data.Small"
         android:id="@+id/txtGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/meal_ideal_actual_values"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_below="@id/txtDate"
+        android:text="@string/meal_ideal_actual_values" />
 
-</LinearLayout>
+</RelativeLayout>

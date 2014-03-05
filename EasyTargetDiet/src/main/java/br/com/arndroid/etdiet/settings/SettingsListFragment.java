@@ -2,11 +2,13 @@ package br.com.arndroid.etdiet.settings;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import br.com.arndroid.etdiet.R;
@@ -49,6 +51,12 @@ public class SettingsListFragment extends ListFragment implements
     private int mSelectedWeekday;
 
     private SettingsWeekdayAdapter mAdapter;
+
+    @Override
+    public View onCreateView(@SuppressWarnings("NullableProblems") LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.settings_list_fragment, container, false);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

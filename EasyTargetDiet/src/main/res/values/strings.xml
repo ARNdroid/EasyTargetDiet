@@ -20,21 +20,20 @@
     <string name="list_empty_foods_usage">Nothing to show yet. Try adding some values.</string>
     <string name="delete_food_usage_msg">Delete %1$s from %2$s?</string>
     <string name="no_show_two_digits_number">NN</string>
-    <string name="no_show_small_month">Sep</string>
-    <string name="no_show_small_week_day">Mon</string>
-    <string name="my_points">My points</string>
+    <string name="no_show_small_month_and_year">Sep 2007</string>
+    <string name="no_show_week_day">MONDAY</string>
+    <string name="my_points">MY POINTS</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
     <string name="exercise">Exercise</string>
-    <string name="my_goals">My goals</string>
+    <string name="my_goals">MY GOALS</string>
     <string name="no_show_done_and_goal">NN/NN</string>
     <string name="liquid">Liquids</string>
     <string name="oil">Oils</string>
     <string name="supplement">Supplements</string>
-    <string name="my_meals">My meals</string>
-    <string name="no_show_time_interval">hh:mm - hh:mm</string>
-    <string name="no_show_ideal_usage">ideal NN</string>
-    <string name="notes">Notes</string>
+    <string name="my_meals">MY MEALS</string>
+    <string name="no_show_ideal_values">Ideal N.NN points from hh:mm to hh:mm</string>
+    <string name="notes">NOTES</string>
     <string name="note_empty">You have no note for current date</string>
     <string name="january_short">Jan</string>
     <string name="february_short">Fev</string>
@@ -79,7 +78,7 @@
     <string name="liquid_goal">Liquid Goal</string>
     <string name="oil_goal">Oil goal</string>
     <string name="supplement_goal">Supplement goal</string>
-    <string name="my_plan">My plan</string>
+    <string name="my_plan">MY PLAN</string>
     <string name="daily_allowance">Daily allowance</string>
     <string name="weekly_allowance">Weekly allowance</string>
     <string name="no_show_exercise_use_mode">Exercise use mode description</string>
@@ -93,13 +92,13 @@
     <string name="exercise_use_order_use_weekly_allowance_first">Use weekly allowance first</string>
     <string name="tracking_weekday">Tracking weekday</string>
     <string name="no_show_tracking_weekday">A tracking weekday</string>
-    <string name="to">To</string>
-    <string name="from">From</string>
-    <string name="ideal_meal_value">Ideal meal units</string>
-    <string name="my_meals_ideal_values">My meals ideal values</string>
+    <string name="to">TO</string>
+    <string name="from">FROM</string>
+    <string name="ideal_meal_value">IDEAL MEAL UNITS</string>
+    <string name="my_meals_ideal_values">MY MEALS IDEAL VALUES</string>
     <string name="choose_breakfast_ideal_values">Choose breakfast ideal values for weekday</string>
     <string name="breakfast_ideal_values">Breakfast ideal values</string>
-    <string name="meal_ideal_actual_values">%1$.1f units, from %2$s to %3$s</string>
+    <string name="meal_ideal_actual_values">Ideal %1$.1f units, from %2$s to %3$s</string>
     <string name="choose_brunch_ideal_values">Choose brunch ideal values for weekday</string>
     <string name="choose_lunch_ideal_values">Choose lunch ideal values for weekday</string>
     <string name="choose_snack_ideal_values">Choose snack ideal values for weekday</string>
@@ -110,10 +109,8 @@
     <string name="snack_ideal_values">Snack ideal values</string>
     <string name="dinner_ideal_values">Dinner ideal values</string>
     <string name="supper_ideal_values">Supper ideal values</string>
-    <string name="note_create"><![CDATA[Add note <u><font color="blue">here</font></u>.]]></string>
-    <string name="note_edit"><![CDATA[Edit note <u><font color="blue">here</font></u>.]]></string>
-    <string name="meal_info">Meal information</string>
-    <string name="usage_list">Usage list</string>
+    <string name="meal_info">MEAL INFORMATION</string>
+    <string name="usage_list">FOOD LIST</string>
     <string name="total">Total</string>
     <string name="no_show_some_food">Food description line 1...\nFood description line 2...\nFood description line 3...</string>
     <string name="no_show_two_digits_with_decimal_number">NN.N</string>
@@ -121,11 +118,18 @@
     <string name="note">note</string>
     <string name="weight_duplicated_message">You have already registered a weight with same date and time</string>
     <string name="weight">Weight</string>
-    <string name="weight_list">List of weights</string>
+    <string name="weight_list">WEIGHT LIST</string>
     <string name="no_show_two_digits_with_two_decimal_number">NN.NN</string>
-    <string name="add">Add</string>
+    <string name="add">ADD</string>
     <string name="delete_weight_msg">Delete weight %1$.2f measured on %2$s - %3$s?</string>
     <string name="list_empty_weights">Nothing to show yet. Try adding some weights.</string>
     <string name="no_show_weight_notes">Weight notes line 1.\nWeight notes line 2.\nWeight notes line 3.</string>
+    <string name="no_show_today">TODAY</string>
+    <string name="note_add">ADD</string>
+    <string name="note_edit">EDIT</string>
+    <string name="today">TODAY</string>
+    <string name="not_today">NOT today</string>
+    <string name="no_show_line_1">Line 1</string>
+    <string name="no_show_line_2">Line 2</string>
 
 </resources>

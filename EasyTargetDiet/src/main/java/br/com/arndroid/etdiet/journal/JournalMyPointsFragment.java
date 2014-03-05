@@ -2,7 +2,7 @@ package br.com.arndroid.etdiet.journal;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
+import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -24,6 +25,8 @@ public class JournalMyPointsFragment extends Fragment implements
         DateDialog.OnDateSetListener,
         FragmentMenuReplier {
 
+    private static final String MONTH_AND_YEAR_FORMAT = "%s %s";
+
     public interface JournalFragmentListener {
         public void onDateChanged(Date newDate);
     }
@@ -34,11 +37,13 @@ public class JournalMyPointsFragment extends Fragment implements
 
     private String mCurrentDateId;
     private String[] mMonthsShortNameArray;
-    private String[] mWeekdaysShortNameArray;
+    private String[] mWeekdaysNameArray;
 
+    private LinearLayout mLayDate;
     private TextView mTxtDay;
-    private TextView mTxtMonth;
+    private TextView mTxtMonthAndYear;
     private TextView mTxtWeekday;
+    private TextView mTxtToday;
     private TextView mTxtPtsDay;
     private TextView mTxtPtsWeek;
     private TextView mTxtPtsExercise;
@@ -49,10 +54,10 @@ public class JournalMyPointsFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.journal_my_points_fragment, container, false);
 
         mMonthsShortNameArray = getResources().getStringArray(R.array.months_short_name_list);
-        mWeekdaysShortNameArray = getResources().getStringArray(R.array.weekdays_short_name_list);
+        mWeekdaysNameArray = getResources().getStringArray(R.array.weekdays_name_list);
 
         bindScreen(rootView);
-        setupScreen(rootView);
+        setupScreen();
 
         return rootView;
     }
@@ -68,22 +73,25 @@ public class JournalMyPointsFragment extends Fragment implements
     }
 
     private void bindScreen(View rootView) {
+        mLayDate = (LinearLayout) rootView.findViewById(R.id.layDate);
         mTxtDay = (TextView) rootView.findViewById(R.id.txtDay);
-        mTxtMonth = (TextView) rootView.findViewById(R.id.txtMonth);
+        mTxtMonthAndYear = (TextView) rootView.findViewById(R.id.txtMonthAndYear);
         mTxtWeekday = (TextView) rootView.findViewById(R.id.txtWeekday);
+        mTxtToday = (TextView) rootView.findViewById(R.id.txtToday);
         mTxtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
         mTxtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
         mTxtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
     }
 
-    private void setupScreen(View rootView) {
-        final LinearLayout layDate = (LinearLayout) rootView.findViewById(R.id.layDate);
-        layDate.setOnClickListener(new View.OnClickListener() {
+    private void setupScreen() {
+        mLayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DateDialog dialog = new DateDialog();
+                final DateDialog dialog = new DateDialog();
                 dialog.setTitle(getString(R.string.date));
+                dialog.setCalendarViewShown(true);
+                dialog.setSpinnerShown(false);
                 dialog.setInitialValue(DateUtils.dateIdToDate(mCurrentDateId));
                 dialog.show(getFragmentManager(), DATE_EDIT_TAG);
             }
@@ -91,12 +99,31 @@ public class JournalMyPointsFragment extends Fragment implements
     }
 
     public void refreshScreen(DaySummary daySummary) {
-        mCurrentDateId = daySummary.getEntity().getDateId();
-        mTxtDay.setText(String.valueOf(DateUtils.getDayFromDateId(daySummary.getEntity().getDateId())));
-        final int month = DateUtils.getMonthFromDateId(daySummary.getEntity().getDateId()) - 1;
-        mTxtMonth.setText(mMonthsShortNameArray[month]);
-        final int weekday = DateUtils.getWeekdayFromDateId(daySummary.getEntity().getDateId()) - 1;
-        mTxtWeekday.setText(mWeekdaysShortNameArray[weekday]);
+        final String dateId = daySummary.getEntity().getDateId();
+        mCurrentDateId = dateId;
+        mTxtDay.setText(DateUtils.getFormattedDayFromDateId(dateId));
+        final int month = DateUtils.getMonthFromDateId(dateId) - 1;
+        mTxtMonthAndYear.setText(String.format(MONTH_AND_YEAR_FORMAT, mMonthsShortNameArray[month],
+                DateUtils.getFormattedYearFromDateId(dateId)));
+        final int weekday = DateUtils.getWeekdayFromDateId(dateId) - 1;
+        mTxtWeekday.setText(mWeekdaysNameArray[weekday].toUpperCase());
+        final int textColor;
+        final Compatibility compatibility = Compatibility.getInstance();
+        if (DateUtils.isDateIdCurrentDate(dateId)) {
+            textColor = getResources().getColor(R.color.accent_dark);
+            compatibility.setBackground(mLayDate,
+                    getResources().getDrawable(R.drawable.card_selector));
+            mTxtToday.setText(getString(R.string.today));
+        } else {
+            textColor = getResources().getColor(R.color.card_old_style_foreground);
+            compatibility.setBackground(mLayDate,
+                    getResources().getDrawable(R.drawable.card_old_style_selector));
+            mTxtToday.setText(getString(R.string.not_today));
+        }
+        mTxtWeekday.setTextColor(textColor);
+        mTxtDay.setTextColor(textColor);
+        mTxtMonthAndYear.setTextColor(textColor);
+        mTxtToday.setTextColor(textColor);
 
         mTxtPtsDay.setText(String.valueOf(daySummary.getDiaryAllowanceAfterUsage()));
         mTxtPtsWeek.setText(String.valueOf(daySummary.getWeeklyAllowanceAfterUsage()));

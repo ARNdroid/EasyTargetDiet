@@ -3,8 +3,8 @@ package br.com.arndroid.etdiet.settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
@@ -14,7 +14,7 @@ import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
 
-public class SettingsListActivity extends ActionBarActivity implements
+public class SettingsListActivity extends Activity implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
         PointDialog.OnPointSetListener,
         IntegerDialog.OnIntegerSetListener {
@@ -29,7 +29,7 @@ public class SettingsListActivity extends ActionBarActivity implements
 
         setContentView(R.layout.settings_list_activity);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if(savedInstanceState == null) {
@@ -39,7 +39,7 @@ public class SettingsListActivity extends ActionBarActivity implements
             mSettingsColumnName = savedInstanceState.getString(SETTINGS_TYPE_PARAMETER);
         }
         actionBar.setTitle(getTitleFromSettingsType(mSettingsColumnName));
-        SettingsListFragment fragment = (SettingsListFragment) getSupportFragmentManager()
+        SettingsListFragment fragment = (SettingsListFragment) getFragmentManager()
                 .findFragmentById(R.id.settings_list_fragment);
         fragment.onReplyActionFromOtherFragment(mSettingsColumnName, null);
     }
@@ -71,7 +71,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(SETTINGS_TYPE_PARAMETER, mSettingsColumnName);
         super.onSaveInstanceState(outState);
     }
@@ -91,7 +91,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onPointSet(String tag, float actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((PointDialog.OnPointSetListener)getSupportFragmentManager().findFragmentById(
+            ((PointDialog.OnPointSetListener)getFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onPointSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -102,7 +102,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onIntegerSet(String tag, int actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((IntegerDialog.OnIntegerSetListener)getSupportFragmentManager().findFragmentById(
+            ((IntegerDialog.OnIntegerSetListener)getFragmentManager().findFragmentById(
                     R.id.settings_list_fragment)).onIntegerSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -113,7 +113,7 @@ public class SettingsListActivity extends ActionBarActivity implements
     public void onMealIdealValuesSet(String tag, int actualStartTime, int actualEndTime, float actualValue) {
         // We are here against our will...
         if (tag.startsWith(SettingsListFragment.OWNER_TAG)) {
-            ((MealIdealValuesDialog.OnMealIdealValuesSetListener)getSupportFragmentManager()
+            ((MealIdealValuesDialog.OnMealIdealValuesSetListener)getFragmentManager()
                     .findFragmentById(R.id.settings_list_fragment)).onMealIdealValuesSet(
                     tag, actualStartTime, actualEndTime, actualValue);
         } else {

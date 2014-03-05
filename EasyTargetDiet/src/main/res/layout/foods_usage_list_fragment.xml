@@ -3,30 +3,34 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Card"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/card_background">
+    android:layout_height="match_parent">
 
     <TextView
+        style="@style/CardFont.Header"
         android:id="@+id/lblUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/usage_list"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:text="@string/usage_list" />
 
     <View
-        style="@style/DividerHorizontal" />
+        style="@style/HeaderDivider" />
 
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@color/item_divider"
+        android:dividerHeight="@dimen/item_divider_height"
         tools:listitem="@layout/foods_usage_list_item" />
 
     <TextView
+        style="@style/CardFont.Item"
         android:id="@id/android:empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/padding_after_header_divider"/>
 
 </LinearLayout>

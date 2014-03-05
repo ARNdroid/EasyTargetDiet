@@ -2,13 +2,13 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_view_padding"
-    android:background="@drawable/card_background">
+    android:layout_height="wrap_content">
 
     <TextView
+        style="@style/CardFont.Header"
         android:id="@+id/lblMyMeals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,264 +16,236 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View
-        style="@style/DividerHorizontal" />
+        style="@style/HeaderDivider" />
 
 
     <RelativeLayout
         android:id="@+id/layBreakfast"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/card_selector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_header_divider"
+        android:paddingBottom="@dimen/padding_before_item_divider">
 
         <TextView
+            style="@style/CardFont.Item"
             android:id="@+id/lblBreakfastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/breakfast"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/breakfast" />
 
         <TextView
+            style="@style/CardFont.Item.Large"
             android:id="@+id/txtBreakfastPts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/no_show_two_digits_number" />
 
         <TextView
-            android:id="@+id/txtBreakfastTime"
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/txtBreakfastIdealValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblBreakfastName"
             android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtBreakfastIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBreakfastPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal" />
 
     <RelativeLayout
         android:id="@+id/layBrunch"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/card_selector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_item_divider"
+        android:paddingBottom="@dimen/padding_before_item_divider">
 
         <TextView
+            style="@style/CardFont.Item"
             android:id="@+id/lblBrunchName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/brunch"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/brunch" />
 
         <TextView
+            style="@style/CardFont.Item.Large"
             android:id="@+id/txtBrunchPts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/no_show_two_digits_number" />
 
         <TextView
-            android:id="@+id/txtBrunchTime"
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/txtBrunchIdealValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblBrunchName"
             android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtBrunchIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtBrunchPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal" />
 
     <RelativeLayout
         android:id="@+id/layLunch"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/card_selector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_item_divider"
+        android:paddingBottom="@dimen/padding_before_item_divider">
 
         <TextView
+            style="@style/CardFont.Item"
             android:id="@+id/lblLunchName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/lunch"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/lunch" />
 
         <TextView
+            style="@style/CardFont.Item.Large"
             android:id="@+id/txtLunchPts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/no_show_two_digits_number" />
 
         <TextView
-            android:id="@+id/txtLunchTime"
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/txtLunchIdealValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblLunchName"
             android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtLunchIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtLunchPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal" />
 
     <RelativeLayout
         android:id="@+id/laySnack"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/card_selector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_item_divider"
+        android:paddingBottom="@dimen/padding_before_item_divider">
 
         <TextView
+            style="@style/CardFont.Item"
             android:id="@+id/lblSnackName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/snack"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/snack" />
 
         <TextView
+            style="@style/CardFont.Item.Large"
             android:id="@+id/txtSneakPts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/no_show_two_digits_number" />
 
         <TextView
-            android:id="@+id/txtSneakTime"
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/txtSneakIdealValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblSnackName"
             android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtSneakIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtSneakPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal" />
 
     <RelativeLayout
         android:id="@+id/layDinner"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/card_selector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_item_divider"
+        android:paddingBottom="@dimen/padding_before_item_divider">
 
         <TextView
+            style="@style/CardFont.Item"
             android:id="@+id/lblDinnerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/dinner"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/dinner" />
 
         <TextView
+            style="@style/CardFont.Item.Large"
             android:id="@+id/txtDinnerPts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/no_show_two_digits_number" />
 
         <TextView
-            android:id="@+id/txtDinnerTime"
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/txtDinnerIdealValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblDinnerName"
             android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtDinnerIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtDinnerPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal" />
 
     <RelativeLayout
         android:id="@+id/laySupper"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/card_selector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_item_divider">
 
         <TextView
+            style="@style/CardFont.Item"
             android:id="@+id/lblSupperName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/supper"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/supper" />
 
         <TextView
+            style="@style/CardFont.Item.Large"
             android:id="@+id/txtSupperPts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/no_show_two_digits_number" />
 
         <TextView
-            android:id="@+id/txtSupperTime"
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/txtSupperIdealValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lblSupperName"
             android:layout_alignParentLeft="true"
-            android:text="@string/no_show_time_interval"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/txtSupperIdeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtSupperPts"
-            android:layout_alignParentRight="true"
-            android:text="@string/no_show_ideal_usage"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
 
