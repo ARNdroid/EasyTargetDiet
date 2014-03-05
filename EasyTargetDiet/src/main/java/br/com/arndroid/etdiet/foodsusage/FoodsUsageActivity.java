@@ -2,12 +2,12 @@ package br.com.arndroid.etdiet.foodsusage;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
+import android.app.LoaderManager;
 import android.support.v4.app.NavUtils;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +19,7 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
 import br.com.arndroid.etdiet.provider.Contract;
 
-public class FoodsUsageActivity extends ActionBarActivity implements
+public class FoodsUsageActivity extends Activity implements
         FoodsUsageListFragment.FoodsUsageListFragmentListener,
         ActionBar.OnNavigationListener {
 
@@ -33,7 +33,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
         setContentView(R.layout.foods_usage_activity);
 
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle("");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -54,10 +54,10 @@ public class FoodsUsageActivity extends ActionBarActivity implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mDateId);
         outState.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY,
-                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()));
+                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()));
 
         super.onSaveInstanceState(outState);
     }
@@ -67,7 +67,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
         super.onStart();
         mListFragment.registerListener(this);
         mListFragment.onDataChangedFromHolderActivity(mDateId,
-                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()));
+                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class FoodsUsageActivity extends ActionBarActivity implements
 
         switch (itemId) {
             case R.id.quick_add:
-                MenuUtils.callMenuInFragmentByMethod(getSupportFragmentManager(),
+                MenuUtils.callMenuInFragmentByMethod(getFragmentManager(),
                         R.id.foods_usage_list_fragment, itemId);
                 return true;
             case android.R.id.home:
@@ -107,15 +107,15 @@ public class FoodsUsageActivity extends ActionBarActivity implements
     }
 
     private void bindScreen() {
-        mHeaderFragment = (FoodsUsageHeaderFragment) getSupportFragmentManager()
+        mHeaderFragment = (FoodsUsageHeaderFragment) getFragmentManager()
                 .findFragmentById(R.id.foods_usage_header_fragment);
-        mListFragment = (FoodsUsageListFragment) getSupportFragmentManager()
+        mListFragment = (FoodsUsageListFragment) getFragmentManager()
                 .findFragmentById(R.id.foods_usage_list_fragment);
     }
 
     @Override
     public void onListValuesChanged(Cursor data) {
         mHeaderFragment.onDataChangedFromHolderActivity(mDateId,
-                Meals.getMealFromPosition(getSupportActionBar().getSelectedNavigationIndex()), data);
+                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()), data);
     }
 }

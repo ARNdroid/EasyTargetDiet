@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 
 public class StringListDialog extends DialogFragment {
     /**
@@ -63,7 +63,7 @@ public class StringListDialog extends DialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
         outState.putInt(INITIAL_INDEX_KEY, getInitialIndex());
         outState.putInt(ACTUAL_INDEX_KEY, getActualIndex());

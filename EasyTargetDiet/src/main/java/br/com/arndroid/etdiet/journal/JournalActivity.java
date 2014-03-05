@@ -2,10 +2,10 @@ package br.com.arndroid.etdiet.journal;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBarActivity;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,7 +28,7 @@ import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.weights.WeightsActivity;
 
-public class JournalActivity extends ActionBarActivity implements
+public class JournalActivity extends Activity implements
         JournalMyPointsFragment.JournalFragmentListener,
         VirtualWeek.ViewObserver,
         DateDialog.OnDateSetListener,
@@ -66,7 +66,7 @@ public class JournalActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(Contract.Days.DATE_ID, mCurrentDateId);
         outState.putInt(Contract.FoodsUsage.MEAL, mCurrentMeal);
         super.onSaveInstanceState(outState);
@@ -99,7 +99,7 @@ public class JournalActivity extends ActionBarActivity implements
 
         switch (itemId) {
             case R.id.quick_add:
-                MenuUtils.callMenuInFragmentByMethod(getSupportFragmentManager(),
+                MenuUtils.callMenuInFragmentByMethod(getFragmentManager(),
                         R.id.journal_my_points_fragment, itemId);
                 return true;
             case R.id.weight:
@@ -114,15 +114,15 @@ public class JournalActivity extends ActionBarActivity implements
     }
 
     private void bindScreen() {
-        mJournalMyPointsFragment = (JournalMyPointsFragment) getSupportFragmentManager()
+        mJournalMyPointsFragment = (JournalMyPointsFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_my_points_fragment);
-        mJournalMyGoalsFragment = (JournalMyGoalsFragment) getSupportFragmentManager()
+        mJournalMyGoalsFragment = (JournalMyGoalsFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_my_goals_fragment);
-        mJournalMyMealsFragment = (JournalMyMealsFragment) getSupportFragmentManager()
+        mJournalMyMealsFragment = (JournalMyMealsFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_my_meals_fragment);
-        mJournalNotesFragment = (JournalNotesFragment) getSupportFragmentManager()
+        mJournalNotesFragment = (JournalNotesFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_notes_fragment);
-        mFoodsUsageListFragment = (FoodsUsageListFragment) getSupportFragmentManager()
+        mFoodsUsageListFragment = (FoodsUsageListFragment) getFragmentManager()
                 .findFragmentById(R.id.foods_usage_list_fragment);
     }
 
@@ -165,7 +165,7 @@ public class JournalActivity extends ActionBarActivity implements
          The following code send the event to original Fragment again.
          */
         if (tag.startsWith(JournalMyPointsFragment.OWNER_TAG)) {
-            ((DateDialog.OnDateSetListener) getSupportFragmentManager()
+            ((DateDialog.OnDateSetListener) getFragmentManager()
                     .findFragmentById(R.id.journal_my_points_fragment)).onDateSet(tag, actualDate);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -183,7 +183,7 @@ public class JournalActivity extends ActionBarActivity implements
          The following code send the event to original Fragment again.
          */
         if (tag.startsWith(JournalMyGoalsFragment.OWNER_TAG)) {
-            ((IntegerDialog.OnIntegerSetListener) getSupportFragmentManager()
+            ((IntegerDialog.OnIntegerSetListener) getFragmentManager()
                     .findFragmentById(R.id.journal_my_goals_fragment)).onIntegerSet(tag, actualValue);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -201,7 +201,7 @@ public class JournalActivity extends ActionBarActivity implements
          The following code send the event to original Fragment again.
          */
         if (tag.startsWith(JournalNotesFragment.OWNER_TAG)) {
-            ((TextDialog.OnTextSetListener) getSupportFragmentManager()
+            ((TextDialog.OnTextSetListener) getFragmentManager()
                     .findFragmentById(R.id.journal_notes_fragment)).onTextSet(tag, actualText);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
@@ -231,7 +231,7 @@ public class JournalActivity extends ActionBarActivity implements
             }
         } else {
             // For all other tags that's the best we can do...
-            ActionUtils.callActionInFragment(this, getSupportFragmentManager(), fragmentId,
+            ActionUtils.callActionInFragment(this, getFragmentManager(), fragmentId,
                     holderActivityClass, actionTag, actionData);
         }
     }

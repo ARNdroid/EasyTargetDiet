@@ -38,7 +38,11 @@ public class DateUtils {
     }
 
     public static int getYearFromDateId(String dateId) {
-        return Integer.parseInt(dateId.substring(DATE_ID_YEAR_START_POSITION, DATE_ID_YEAR_END_POSITION));
+        return Integer.parseInt(getFormattedYearFromDateId(dateId));
+    }
+
+    public static String getFormattedYearFromDateId(String dateId) {
+        return dateId.substring(DATE_ID_YEAR_START_POSITION, DATE_ID_YEAR_END_POSITION);
     }
 
     public static int getMonthFromDateId(String dateId) {
@@ -46,13 +50,21 @@ public class DateUtils {
     }
 
     public static int getDayFromDateId(String dateId) {
-        return Integer.parseInt(dateId.substring(DATE_ID_DAY_START_POSITION));
+        return Integer.parseInt(getFormattedDayFromDateId(dateId));
+    }
+
+    public static String getFormattedDayFromDateId(String dateId) {
+        return dateId.substring(DATE_ID_DAY_START_POSITION);
     }
 
     public static int getWeekdayFromDateId(String dateId) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateIdToDate(dateId));
         return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public static boolean isDateIdCurrentDate(String dateId) {
+        return dateToDateId(new Date()).equals(dateId);
     }
 
     public static int hoursToMillis(int hours) {

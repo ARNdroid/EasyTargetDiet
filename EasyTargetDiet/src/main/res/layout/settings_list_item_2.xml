@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_before_item_divider"
+    android:paddingBottom="@dimen/padding_after_item_divider"
+    android:background="@drawable/card_selector"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/SettingsFont"
+        android:id="@+id/txtLine_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_show_line_1" />
+
+    <TextView
+        style="@style/SettingsFont.Small"
+        android:id="@+id/txtLine_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_after_item_field"
+        android:text="@string/no_show_line_2" />
+
+</LinearLayout>

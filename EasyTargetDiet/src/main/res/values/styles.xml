@@ -4,7 +4,8 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -12,21 +13,42 @@
         -->
     </style>
 
-    <!-- Application theme. -->
+    <!-- Application theme: -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:windowBackground">@color/activity_background</item>
     </style>
 
-    <style name="DividerHorizontal">
+    <!-- Styles: -->
+    <style name="ActionBarStyle"
+        parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/accent_light</item>
+        <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+
+    <style name="ActionBarTitleText"
+        parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/card_background</item>
+    </style>
+
+
+    <style name="HeaderDivider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">?android:attr/listDivider</item>
+        <item name="android:background">@color/accent_dark</item>
     </style>
 
-    <style name="DividerVertical">
-        <item name="android:layout_width">1dp</item>
+    <style name="ItemDividerHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/item_divider_height</item>
+        <item name="android:background">@color/item_divider</item>
+    </style>
+
+    <style name="ItemDividerVertical">
+        <item name="android:layout_width">@dimen/item_divider_height</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">?android:attr/listDivider</item>
+        <item name="android:background">@color/item_divider</item>
     </style>
 
     <style name="Card">
@@ -36,13 +58,17 @@
 
     <style name="CardFont" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/card_foreground</item>
     </style>
     
     <style name="CardFont.Header">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/accent_dark</item>
         <item name="android:paddingLeft">4dp</item>
-        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="CardFont.Header.Dialog">
+        <item name="android:paddingLeft">0dp</item>
     </style>
 
     <style name="CardFont.Section">
@@ -61,12 +87,20 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="CardFont.Data.Small.AccentDark">
+        <item name="android:textColor">@color/accent_dark</item>
+    </style>
+
     <style name="CardFont.Data.Large">
         <item name="android:textSize">35sp</item>
     </style>
 
     <style name="CardFont.Data.XLarge">
         <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="CardFont.Data.XLarge.AccentDark">
+        <item name="android:textColor">@color/accent_dark</item>
     </style>
 
     <style name="CardFont.Item">
@@ -85,8 +119,37 @@
         <item name="android:textSize">26sp</item>
     </style>
 
-    <style name="ButtonFont">
-        <item name="android:textSize">12sp</item>
+    <style name="CardButton">
+        <item name="android:minHeight">30dp</item>
+        <item name="android:minWidth">68dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/card_background</item>
+        <item name="android:background">@drawable/button_selector</item>
+    </style>
+
+    <style name="CardButton.Dialog">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="Settings">
+        <item name="android:padding">6dp</item>
+        <item name="android:background">@drawable/settings_background</item>
+    </style>
+
+    <style name="SettingsFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/card_foreground</item>
+    </style>
+
+    <style name="SettingsFont.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SettingsFont.Header">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/accent_dark</item>
     </style>
 
 </resources>

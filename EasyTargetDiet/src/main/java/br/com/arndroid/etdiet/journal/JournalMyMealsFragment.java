@@ -2,7 +2,7 @@ package br.com.arndroid.etdiet.journal;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +22,17 @@ public class JournalMyMealsFragment extends Fragment {
     private String mCurrentDateId;
 
     private TextView mTxtBreakfastPts;
-    private TextView mTxtBreakfastTime;
-    private TextView mTxtBreakfastIdeal;
+    private TextView mTxtBreakfastIdealValues;
     private TextView mTxtBrunchPts;
-    private TextView mTxtBrunchTime;
-    private TextView mTxtBrunchIdeal;
+    private TextView mTxtBrunchIdealValues;
     private TextView mTxtLunchPts;
-    private TextView mTxtLunchTime;
-    private TextView mTxtLunchIdeal;
-    private TextView mTxtSneakPts;
-    private TextView mTxtSneakTime;
-    private TextView mTxtSneakIdeal;
+    private TextView mTxtLunchIdealValues;
+    private TextView mTxtSnackPts;
+    private TextView mTxtSnackIdealValues;
     private TextView mTxtDinnerPts;
-    private TextView mTxtDinnerTime;
-    private TextView mTxtDinnerIdeal;
+    private TextView mTxtDinnerIdealValues;
     private TextView mTxtSupperPts;
-    private TextView mTxtSupperTime;
-    private TextView mTxtSupperIdeal;
+    private TextView mTxtSupperIdealValues;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,23 +58,17 @@ public class JournalMyMealsFragment extends Fragment {
 
     private void bindScreen(View rootView) {
         mTxtBreakfastPts = (TextView) rootView.findViewById(R.id.txtBreakfastPts);
-        mTxtBreakfastTime = (TextView) rootView.findViewById(R.id.txtBreakfastTime);
-        mTxtBreakfastIdeal = (TextView) rootView.findViewById(R.id.txtBreakfastIdeal);
+        mTxtBreakfastIdealValues = (TextView) rootView.findViewById(R.id.txtBreakfastIdealValues);
         mTxtBrunchPts = (TextView) rootView.findViewById(R.id.txtBrunchPts);
-        mTxtBrunchTime = (TextView) rootView.findViewById(R.id.txtBrunchTime);
-        mTxtBrunchIdeal = (TextView) rootView.findViewById(R.id.txtBrunchIdeal);
+        mTxtBrunchIdealValues = (TextView) rootView.findViewById(R.id.txtBrunchIdealValues);
         mTxtLunchPts = (TextView) rootView.findViewById(R.id.txtLunchPts);
-        mTxtLunchTime = (TextView) rootView.findViewById(R.id.txtLunchTime);
-        mTxtLunchIdeal = (TextView) rootView.findViewById(R.id.txtLunchIdeal);
-        mTxtSneakPts = (TextView) rootView.findViewById(R.id.txtSneakPts);
-        mTxtSneakTime = (TextView) rootView.findViewById(R.id.txtSneakTime);
-        mTxtSneakIdeal = (TextView) rootView.findViewById(R.id.txtSneakIdeal);
+        mTxtLunchIdealValues = (TextView) rootView.findViewById(R.id.txtLunchIdealValues);
+        mTxtSnackPts = (TextView) rootView.findViewById(R.id.txtSneakPts);
+        mTxtSnackIdealValues = (TextView) rootView.findViewById(R.id.txtSneakIdealValues);
         mTxtDinnerPts = (TextView) rootView.findViewById(R.id.txtDinnerPts);
-        mTxtDinnerTime = (TextView) rootView.findViewById(R.id.txtDinnerTime);
-        mTxtDinnerIdeal = (TextView) rootView.findViewById(R.id.txtDinnerIdeal);
+        mTxtDinnerIdealValues = (TextView) rootView.findViewById(R.id.txtDinnerIdealValues);
         mTxtSupperPts = (TextView) rootView.findViewById(R.id.txtSupperPts);
-        mTxtSupperTime = (TextView) rootView.findViewById(R.id.txtSupperTime);
-        mTxtSupperIdeal = (TextView) rootView.findViewById(R.id.txtSupperIdeal);
+        mTxtSupperIdealValues = (TextView) rootView.findViewById(R.id.txtSupperIdealValues);
     }
 
     private void setupScreen(View rootView) {
@@ -135,32 +123,43 @@ public class JournalMyMealsFragment extends Fragment {
 
     public void refreshScreen(DaySummary daySummary) {
         mCurrentDateId = daySummary.getEntity().getDateId();
+        final String idealFormat = getResources().getString(R.string.meal_ideal_actual_values);
         mTxtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
-        mTxtBreakfastTime.setText(DateUtils.timeToFormattedString(
-                daySummary.getEntity().getBreakfastStartTime()) + " - " +
-                DateUtils.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime()));
-        final String ideal = getResources().getString(R.string.ideal_values) + " ";
-        mTxtBreakfastIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBreakfastGoal()));
+        mTxtBreakfastIdealValues.setText(String.format(
+                idealFormat,
+                daySummary.getEntity().getBreakfastGoal(),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getBreakfastStartTime()),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime())));
         mTxtBrunchPts.setText(String.valueOf(daySummary.getUsage().getBrunchUsed()));
-        mTxtBrunchTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchStartTime())
-                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchEndTime()));
-        mTxtBrunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getBrunchGoal()));
+        mTxtBrunchIdealValues.setText(String.format(
+                idealFormat,
+                daySummary.getEntity().getBrunchGoal(),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchStartTime()),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchEndTime())));
         mTxtLunchPts.setText(String.valueOf(daySummary.getUsage().getLunchUsed()));
-        mTxtLunchTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getLunchStartTime())
-                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getLunchEndTime()));
-        mTxtLunchIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getLunchGoal()));
-        mTxtSneakPts.setText(String.valueOf(daySummary.getUsage().getSneakUsed()));
-        mTxtSneakTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getSnackStartTime())
-                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getSnackEndTime()));
-        mTxtSneakIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSnackGoal()));
+        mTxtLunchIdealValues.setText(String.format(
+                idealFormat,
+                daySummary.getEntity().getLunchGoal(),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getLunchStartTime()),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getLunchEndTime())));
+        mTxtSnackPts.setText(String.valueOf(daySummary.getUsage().getSneakUsed()));
+        mTxtSnackIdealValues.setText(String.format(
+                idealFormat,
+                daySummary.getEntity().getSnackGoal(),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getSnackStartTime()),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getSnackEndTime())));
         mTxtDinnerPts.setText(String.valueOf(daySummary.getUsage().getDinnerUsed()));
-        mTxtDinnerTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerStartTime())
-                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerEndTime()));
-        mTxtDinnerIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getDinnerGoal()));
+        mTxtDinnerIdealValues.setText(String.format(
+                idealFormat,
+                daySummary.getEntity().getDinnerGoal(),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerStartTime()),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerEndTime())));
         mTxtSupperPts.setText(String.valueOf(daySummary.getUsage().getSupperUsed()));
-        mTxtSupperTime.setText(DateUtils.timeToFormattedString(daySummary.getEntity().getSupperStartTime())
-                + " - " + DateUtils.timeToFormattedString(daySummary.getEntity().getSupperEndTime()));
-        mTxtSupperIdeal.setText(ideal + String.valueOf(daySummary.getEntity().getSupperGoal()));
+        mTxtSupperIdealValues.setText(String.format(
+                idealFormat,
+                daySummary.getEntity().getSupperGoal(),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getSupperStartTime()),
+                DateUtils.timeToFormattedString(daySummary.getEntity().getSupperEndTime())));
     }
 
     public void layMealAction(View view) {

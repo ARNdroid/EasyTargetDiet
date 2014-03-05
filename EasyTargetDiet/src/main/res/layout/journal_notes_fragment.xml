@@ -2,33 +2,36 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_view_padding"
     android:background="@drawable/card_background">
 
     <TextView
+        style="@style/CardFont.Header"
         android:id="@+id/lblNotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/notes"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:text="@string/notes" />
 
     <View
-        style="@style/DividerHorizontal" />
+        style="@style/HeaderDivider" />
 
     <TextView
+        style="@style/CardFont"
         android:id="@+id/txtNotes"
+        android:paddingTop="@dimen/padding_after_header_divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/note_empty" />
 
-    <TextView
-        android:id="@+id/txtEditNotes"
-        android:layout_width="match_parent"
+    <Button
+        style="@style/CardButton"
+        android:id="@+id/btnEditNotes"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="@string/note_create" />
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/note_add" />
 
 </LinearLayout>

@@ -1,13 +1,14 @@
 package br.com.arndroid.etdiet.journal;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
@@ -26,7 +27,7 @@ public class JournalNotesFragment extends Fragment implements
     private String mCurrentDateId;
 
     private TextView mTxtNotes;
-    private TextView mTxtEditNotes;
+    private Button mBtnEditNotes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +42,11 @@ public class JournalNotesFragment extends Fragment implements
 
     private void bindScreen(View rootView) {
         mTxtNotes = (TextView) rootView.findViewById(R.id.txtNotes);
-        mTxtEditNotes = (TextView) rootView.findViewById(R.id.txtEditNotes);
+        mBtnEditNotes = (Button) rootView.findViewById(R.id.btnEditNotes);
     }
 
     private void setupScreen() {
-        mTxtEditNotes.setOnClickListener(new View.OnClickListener() {
+        mBtnEditNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaysManager manager = new DaysManager(getActivity().getApplicationContext());
@@ -63,14 +64,10 @@ public class JournalNotesFragment extends Fragment implements
 
         if (TextUtils.isEmpty(daySummary.getEntity().getNote())) {
             mTxtNotes.setText(R.string.note_empty);
-            final Spanned result = Html.fromHtml(getResources().getString((
-                    R.string.note_create)));
-            mTxtEditNotes.setText(result);
+            mBtnEditNotes.setText(getString(R.string.note_add));
         } else {
             mTxtNotes.setText(daySummary.getEntity().getNote());
-            final Spanned result = Html.fromHtml(getResources().getString((
-                    R.string.note_edit)));
-            mTxtEditNotes.setText(result);
+            mBtnEditNotes.setText(getString(R.string.note_edit));
         }
     }
 

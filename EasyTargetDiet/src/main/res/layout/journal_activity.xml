@@ -2,10 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/activity_background"
-    tools:ignore="MergeRootFrame"
-    tools:context="br.com.arndroid.etdiet.journal.JournalActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,10 +14,9 @@
             android:id="@+id/journal_my_points_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_card_margin"
-            android:layout_marginBottom="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/double_card_margin"
-            android:layout_marginRight="@dimen/double_card_margin"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
             tools:layout="@layout/journal_my_points_fragment" />
 
         <fragment
@@ -29,9 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/double_card_margin"
-            android:layout_marginRight="@dimen/double_card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
             tools:layout="@layout/journal_my_goals_fragment" />
 
         <fragment
@@ -40,9 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/double_card_margin"
-            android:layout_marginRight="@dimen/double_card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
             tools:layout="@layout/journal_my_meals_fragment" />
 
         <fragment
@@ -51,9 +45,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/double_card_margin"
-            android:layout_marginLeft="@dimen/double_card_margin"
-            android:layout_marginRight="@dimen/double_card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"
             tools:layout="@layout/journal_notes_fragment" />
 
     </LinearLayout>

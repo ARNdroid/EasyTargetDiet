@@ -2,6 +2,7 @@ buildscript {
     repositories {
         mavenCentral()
     }
+    //noinspection GroovyAssignabilityCheck
     dependencies {
         classpath 'com.android.tools.build:gradle:0.6.+'
     }
@@ -22,9 +23,9 @@ android {
     }
 }
 
+//noinspection GroovyAssignabilityCheck
 dependencies {
     compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.android.support:gridlayout-v7:19.0.0'
     compile 'com.android.support:support-v4:19.0.0'
     compile group: 'com.github.tony19', name: 'logback-android-core', version: '1.0.10-2'
     compile group: 'com.github.tony19', name: 'logback-android-classic', version: '1.0.10-2'

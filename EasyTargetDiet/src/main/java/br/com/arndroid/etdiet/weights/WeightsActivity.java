@@ -3,8 +3,8 @@ package br.com.arndroid.etdiet.weights;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +17,7 @@ import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
 
-public class WeightsActivity extends ActionBarActivity {
+public class WeightsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,11 @@ public class WeightsActivity extends ActionBarActivity {
 
         setContentView(R.layout.weights_activity);
 
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setTitle(getString(R.string.weight));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        final WeightsListFragment fragment = (WeightsListFragment) getSupportFragmentManager()
+        final WeightsListFragment fragment = (WeightsListFragment) getFragmentManager()
                 .findFragmentById(R.id.weights_list_fragment);
         fragment.onReplyActionFromOtherFragment(null, null);
     }
@@ -40,7 +40,7 @@ public class WeightsActivity extends ActionBarActivity {
 
         switch (itemId) {
             case R.id.add:
-                MenuUtils.callMenuInFragmentByMethod(getSupportFragmentManager(),
+                MenuUtils.callMenuInFragmentByMethod(getFragmentManager(),
                         R.id.weights_list_fragment, itemId);
                 return true;
             case android.R.id.home:

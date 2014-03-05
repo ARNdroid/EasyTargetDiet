@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:etdiet="http://schemas.android.com/apk/res-auto" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/quick_add"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/quick_add"
-        etdiet:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom" />
 
     <item android:id="@+id/weight"
         android:title="@string/weight"
-        etdiet:showAsAction="never" />
+        android:showAsAction="never" />
 
     <item android:id="@+id/settings"
         android:title="@string/settings"
-        etdiet:showAsAction="never" />
+        android:showAsAction="never" />
 
 </menu>

@@ -5,18 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/activity_background">
+    android:layout_height="match_parent">
 
     <fragment
         android:id="@+id/weights_list_fragment"
         class="br.com.arndroid.etdiet.weights.WeightsListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_card_margin"
-        android:layout_marginBottom="@dimen/double_card_margin"
-        android:layout_marginLeft="@dimen/double_card_margin"
-        android:layout_marginRight="@dimen/double_card_margin"
+        android:layout_marginTop="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin"
+        android:layout_marginBottom="@dimen/card_margin"
         tools:layout="@layout/weights_list_fragment"/>
 
 </LinearLayout>

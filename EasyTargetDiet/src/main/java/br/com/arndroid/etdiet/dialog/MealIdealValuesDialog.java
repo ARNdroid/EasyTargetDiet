@@ -6,7 +6,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -156,7 +156,7 @@ public class MealIdealValuesDialog extends DialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
         outState.putInt(MIN_KEY, getMinIntegerValue());
         outState.putInt(MAX_KEY, getMaxIntegerValue());

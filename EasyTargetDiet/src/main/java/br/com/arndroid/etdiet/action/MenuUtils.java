@@ -2,8 +2,8 @@ package br.com.arndroid.etdiet.action;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.widget.Toast;
 
 @SuppressWarnings("UnusedDeclaration")
