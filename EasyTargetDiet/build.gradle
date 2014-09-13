@@ -2,12 +2,13 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    //noinspection GroovyAssignabilityCheck
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
-apply plugin: 'android'
+
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
@@ -15,7 +16,7 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19"
+    buildToolsVersion "20"
 
     defaultConfig {
         minSdkVersion 11
@@ -23,10 +24,9 @@ android {
     }
 }
 
-//noinspection GroovyAssignabilityCheck
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support:support-v4:20.0.0'
     compile group: 'com.github.tony19', name: 'logback-android-core', version: '1.0.10-2'
     compile group: 'com.github.tony19', name: 'logback-android-classic', version: '1.0.10-2'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'
