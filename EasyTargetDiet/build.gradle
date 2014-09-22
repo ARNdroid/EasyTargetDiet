@@ -14,13 +14,56 @@ repositories {
     mavenCentral()
 }
 
+def validateVersionPropertiesOrThrow() {
+
+    int major = Integer.parseInt(version_major);
+    int minor = Integer.parseInt(version_minor);
+    int hotfix = Integer.parseInt(version_hotfix);
+    logger.debug("Version: major = ${major}, minor = ${minor} and hotfix = ${hotfix}");
+
+    if (major < 0) {
+        throw new InvalidUserDataException("Version major = ${major}. Must be a positive integer");
+    }
+    if (minor < 0 || minor > 99) {
+        throw new InvalidUserDataException("Version minor = ${minor}. Must be between 0 and 99.");
+    }
+    if (hotfix < 0 || hotfix > 99) {
+        throw new InvalidUserDataException("Version hotfix = ${hotfix}. Must be between 0 and 99.");
+    }
+}
+
+def etdVersionCode() {
+    validateVersionPropertiesOrThrow();
+
+    int major = Integer.parseInt(version_major);
+    int minor = Integer.parseInt(version_minor);
+    int hotfix = Integer.parseInt(version_hotfix);
+    logger.debug("Version: major = ${major}, minor = ${minor} and hotfix = ${hotfix}");
+
+    return 10000 * major + 100 * minor + hotfix;
+}
+
+def etdVersionName() {
+    validateVersionPropertiesOrThrow();
+    return "${version_major}.${version_minor}.${version_hotfix}";
+}
+
 android {
     compileSdkVersion 19
-    buildToolsVersion "20"
+    buildToolsVersion '20'
 
     defaultConfig {
+        applicationId 'br.com.arndroid.etdiet'
         minSdkVersion 11
         targetSdkVersion 19
+        versionName etdVersionName()
+        versionCode etdVersionCode()
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+        }
     }
 }
 
