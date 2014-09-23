@@ -48,14 +48,15 @@ def etdVersionName() {
     return "${gradle_version_major}.${gradle_version_minor}.${gradle_version_hotfix}"
 }
 
-def etdTestConsole() {
-    String value = System.console().readLine('\nETD ==> Enter a value: ')
-    String password = System.console().readPassword('\nETD ==> Enter a password: ')
-    println "Value = ${value}, password = ${password.toString()}"
+def etdTest() {
+    //String value = System.console().readLine('\nETD ==> Enter a value: ')
+    //String password = System.console().readPassword('\nETD ==> Enter a password: ')
+    //println "Value = ${value}, password = ${password.toString()}"
+    println "Allow release = ${local_allow_release}, store file = ${local_store_file}, key alias = ${local_key_alias}"
 }
 
 logger.lifecycle "ETD ==> Current version is ${etdVersionName()} (${etdVersionCode()})"
-//etdTestConsole()
+etdTest()
 
 android {
     compileSdkVersion 19
