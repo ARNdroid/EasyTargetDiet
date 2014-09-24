@@ -16,19 +16,19 @@ repositories {
 
 def validateVersionPropertiesOrThrow() {
 
-    int major = Integer.parseInt(gradle_version_major);
-    int minor = Integer.parseInt(gradle_version_minor);
-    int hotfix = Integer.parseInt(gradle_version_hotfix);
-    logger.debug("Version: major = ${major}, minor = ${minor} and hotfix = ${hotfix}");
+    int major = Integer.parseInt(gradle_version_major)
+    int minor = Integer.parseInt(gradle_version_minor)
+    int hotfix = Integer.parseInt(gradle_version_hotfix)
+    logger.debug "Version: major = ${major}, minor = ${minor} and hotfix = ${hotfix}"
 
     if (major < 0) {
-        throw new InvalidUserDataException("Version major = ${major}. Must be a positive integer");
+        throw new InvalidUserDataException("Version major = ${major}. Must be a positive integer")
     }
     if (minor < 0 || minor > 99) {
-        throw new InvalidUserDataException("Version minor = ${minor}. Must be between 0 and 99.");
+        throw new InvalidUserDataException("Version minor = ${minor}. Must be between 0 and 99.")
     }
     if (hotfix < 0 || hotfix > 99) {
-        throw new InvalidUserDataException("Version hotfix = ${hotfix}. Must be between 0 and 99.");
+        throw new InvalidUserDataException("Version hotfix = ${hotfix}. Must be between 0 and 99.")
     }
 }
 
@@ -48,15 +48,53 @@ def etdVersionName() {
     return "${gradle_version_major}.${gradle_version_minor}.${gradle_version_hotfix}"
 }
 
-def etdTest() {
-    //String value = System.console().readLine('\nETD ==> Enter a value: ')
-    //String password = System.console().readPassword('\nETD ==> Enter a password: ')
-    //println "Value = ${value}, password = ${password.toString()}"
-    println "Allow release = ${local_allow_release}, store file = ${local_store_file}, key alias = ${local_key_alias}"
+def etdStoreFile() {
+    Properties properties = new Properties()
+    properties.load(project.file('local.properties').newDataInputStream())
+    return properties.getProperty('local_store_file')
+}
+
+def etdKeyAlias() {
+    Properties properties = new Properties()
+    properties.load(project.file('local.properties').newDataInputStream())
+    return properties.getProperty('local_key_alias')
+}
+
+def etdAllowRelease() {
+    Properties properties = new Properties()
+    properties.load(project.file('local.properties').newDataInputStream())
+    return properties.getProperty('local_allow_release')
+}
+
+def etdConfirmVersionOrThrow() {
+    logger.lifecycle "ETD ==> Current version is ${etdVersionName()} (${etdVersionCode()})"
+    String answer = System.console().readLine('\nETD ==> Enter yEs to accept this version: ')
+    if (!'yEs'.equals(answer)) {
+        logger.lifecycle "ETD ==> User entered ${answer}. Build will fail (stop)."
+        throw new InvalidUserDataException("Current version ${etdVersionName()} (${etdVersionCode()}) NOT accepted.");
+    }
 }
 
 logger.lifecycle "ETD ==> Current version is ${etdVersionName()} (${etdVersionCode()})"
-etdTest()
+
+android.applicationVariants.all { variant ->
+    println "*********" + variant.description + "**********";
+    println "variant.baseName = ${variant.baseName}"
+    def variants = variant.baseName.split("-");
+    def apkName = "EasyTargetDiet-";
+    apkName += variants[0];
+    apkName += "-v" + android.defaultConfig.versionName;
+    if (!variant.zipAlign) {
+        apkName += "-unaligned";
+    }
+    if (variant.buildType.name == "release") {
+        apkName += "-RELEASE.apk";
+    } else {
+        apkName += "-SNAPSHOT.apk";
+    }
+    println "*********" + "$project.buildDir/outputs/apk/" + apkName + "**********";
+    variant.outputFile = file("$project.buildDir/outputs/apk/" + apkName)
+}
 
 android {
     compileSdkVersion 19
@@ -70,11 +108,24 @@ android {
         versionCode etdVersionCode()
     }
 
+    signingConfigs {
+        release {
+            storeFile file(etdStoreFile())
+            storePassword System.console().readLine('\nETD ==> Enter storePassword: ')
+            keyAlias etdKeyAlias()
+            keyPassword System.console().readLine('\nETD ==> Enter keyPassword: ')
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
         }
+        release {
+            signingConfig signingConfigs.release
+        }
     }
+
 }
 
 dependencies {
