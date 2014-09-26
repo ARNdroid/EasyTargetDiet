@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 import java.io.Serializable;
 
+import br.com.arndroid.etdiet.BuildConfig;
 import br.com.arndroid.etdiet.meals.Meals;
 
 public class Contract {
@@ -16,7 +17,7 @@ public class Contract {
 	 * Global Definitions
 	 */
 
-    public static final String AUTHORITY = "br.com.arndroid.provider.etdiet";
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID_PLUS_AUTHORITY;
 
     public static final int FIELD_TYPE_INTEGER = 1;
     public static final int FIELD_TYPE_LONG = 2;

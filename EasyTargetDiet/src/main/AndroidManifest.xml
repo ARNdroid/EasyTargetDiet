@@ -53,8 +53,8 @@
         </activity>
 
         <provider
-            android:name="br.com.arndroid.etdiet.provider.Provider"
-            android:authorities="br.com.arndroid.provider.etdiet"
+            android:name=".provider.Provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false" />
 
     </application>
