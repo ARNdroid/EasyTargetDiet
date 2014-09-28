@@ -24,13 +24,13 @@ android {
         variant.outputFile = file("$project.buildDir/outputs/apk/" + buildProfile.getAPKNameForVariant(variant.baseName))
     }
 
-    compileSdkVersion 19
+    compileSdkVersion 20
     buildToolsVersion '20'
 
     defaultConfig {
         applicationId 'br.com.arndroid.etdiet'
         minSdkVersion 11
-        targetSdkVersion 19
+        targetSdkVersion 20
         versionName buildProfile.getVersionName()
         versionCode buildProfile.getVersionCode()
     }
