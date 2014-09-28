@@ -47,13 +47,11 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-            buildConfigField "String", "APPLICATION_ID_PLUS_AUTHORITY", "\"br.com.arndroid.etdiet.debug.provider\""
         }
 
         release {
             // noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release
-            buildConfigField "String", "APPLICATION_ID_PLUS_AUTHORITY", "\"br.com.arndroid.etdiet.provider\""
         }
     }
 }
