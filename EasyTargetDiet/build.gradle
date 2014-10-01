@@ -100,8 +100,8 @@ class ETDBuildProfile {
         if (minor < 0 || minor > 99) {
             throw new InvalidUserDataException("Version minor = ${minor}. Must be between 0 and 99.")
         }
-        if (hotfix < 0 || hotfix > 99) {
-            throw new InvalidUserDataException("Version hotfix = ${hotfix}. Must be between 0 and 99.")
+        if (hotfix < 0 || hotfix > 999) {
+            throw new InvalidUserDataException("Version hotfix = ${hotfix}. Must be between 0 and 999.")
         }
     }
 
@@ -124,7 +124,7 @@ class ETDBuildProfile {
     }
 
     int getVersionCode() {
-        return 10000 * major + 100 * minor + hotfix
+        return 100000 * major + 1000 * minor + hotfix
     }
 
     public String getVersionName() {
