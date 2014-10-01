@@ -6,6 +6,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,6 +24,7 @@ import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
+import br.com.arndroid.etdiet.utils.CurrentDateId;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
@@ -37,7 +39,7 @@ public class JournalActivity extends Activity implements
         ActivityActionCaller {
 
     private VirtualWeek mVirtualWeek;
-    private String mCurrentDateId;
+    private CurrentDateId mCurrentDateId = new CurrentDateId();
     private int mCurrentMeal;
     private JournalMyPointsFragment mJournalMyPointsFragment;
     private JournalMyGoalsFragment mJournalMyGoalsFragment;
@@ -51,12 +53,11 @@ public class JournalActivity extends Activity implements
 
         setContentView(R.layout.journal_activity);
 
+        mCurrentDateId.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-            mCurrentDateId = savedInstanceState.getString(Contract.Days.DATE_ID);
             mCurrentMeal = savedInstanceState.getInt(Contract.FoodsUsage.MEAL);
         } else {
             final Date currentDate = new Date();
-            mCurrentDateId = DateUtils.dateToDateId(currentDate);
             mCurrentMeal = Meals.preferredMealForTimeInDate(this,
                     DateUtils.dateToTimeAsInt(currentDate), currentDate);
         }
@@ -66,8 +67,8 @@ public class JournalActivity extends Activity implements
     }
 
     @Override
-    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
-        outState.putString(Contract.Days.DATE_ID, mCurrentDateId);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        mCurrentDateId.onSaveInstanceState(outState);
         outState.putInt(Contract.FoodsUsage.MEAL, mCurrentMeal);
         super.onSaveInstanceState(outState);
     }
@@ -77,7 +78,7 @@ public class JournalActivity extends Activity implements
         super.onResume();
         mVirtualWeek = VirtualWeek.getInstance(getApplicationContext());
         mVirtualWeek.registerViewObserver(this);
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
@@ -136,17 +137,17 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onDayChanged(DaySummary summary) {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
     public void onFoodsUsageChanged(DaySummary summary) {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
     public void onParametersChanged() {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
@@ -224,7 +225,8 @@ public class JournalActivity extends Activity implements
               the orientation changes (It's a design philosophy by Android Developers).
              */
             if (mFoodsUsageListFragment != null && mFoodsUsageListFragment.isInLayout()) {
-                mFoodsUsageListFragment.onDataChangedFromHolderActivity(mCurrentDateId, mCurrentMeal);
+                mFoodsUsageListFragment.onDataChangedFromHolderActivity(mCurrentDateId.getCurrentDateId(),
+                        mCurrentMeal);
             } else {
                 ActionUtils.callActionInFragmentByIntent(this, holderActivityClass, actionTag,
                         actionData);
@@ -238,7 +240,7 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onDateChanged(Date newDate) {
-        mCurrentDateId = DateUtils.dateToDateId(newDate);
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mCurrentDateId.setCurrentDateId(DateUtils.dateToDateId(newDate));
+        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
     }
 }
