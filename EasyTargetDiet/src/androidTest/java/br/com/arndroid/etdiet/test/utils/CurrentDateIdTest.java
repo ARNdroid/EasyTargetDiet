@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.test.util;
+package br.com.arndroid.etdiet.test.utils;
 
 import junit.framework.TestCase;
 

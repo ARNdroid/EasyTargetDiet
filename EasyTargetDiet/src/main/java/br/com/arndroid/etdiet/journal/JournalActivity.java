@@ -1,10 +1,6 @@
 package br.com.arndroid.etdiet.journal;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -19,7 +15,6 @@ import br.com.arndroid.etdiet.action.MenuUtils;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -59,7 +54,7 @@ public class JournalActivity extends Activity implements
         } else {
             final Date currentDate = new Date();
             mCurrentMeal = Meals.preferredMealForTimeInDate(this,
-                    DateUtils.dateToTimeAsInt(currentDate), currentDate);
+                    DateUtils.dateToTimeAsInt(currentDate), currentDate, false);
         }
 
         bindScreen();
@@ -78,7 +73,7 @@ public class JournalActivity extends Activity implements
         super.onResume();
         mVirtualWeek = VirtualWeek.getInstance(getApplicationContext());
         mVirtualWeek.registerViewObserver(this);
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
@@ -137,17 +132,17 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onDayChanged(DaySummary summary) {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
     public void onFoodsUsageChanged(DaySummary summary) {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
     public void onParametersChanged() {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
@@ -241,6 +236,6 @@ public class JournalActivity extends Activity implements
     @Override
     public void onDateChanged(Date newDate) {
         mCurrentDateId.setCurrentDateId(DateUtils.dateToDateId(newDate));
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId.getCurrentDateId());
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 }

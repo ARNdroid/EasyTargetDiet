@@ -77,7 +77,7 @@ public class FoodsUsageManager {
             resultUsage.setBreakfastUsed(breakfastUsed);
             resultUsage.setBrunchUsed(brunchUsed);
             resultUsage.setLunchUsed(lunchUsed);
-            resultUsage.setSneakUsed(sneakUsed);
+            resultUsage.setSnackUsed(sneakUsed);
             resultUsage.setDinnerUsed(dinnerUsed);
             resultUsage.setSupperUsed(supperUsed);
             return resultUsage;

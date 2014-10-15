@@ -141,8 +141,8 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         // Deleting:
         foodsUsageManager.remove(foodsUsageEntity.getId());
 
-        virtualWeek.requestSummaryForDateId(observer, DateUtils.dateToDateId(date0));
-        virtualWeek.requestSummaryForDateId(observer, DateUtils.dateToDateId(date1));
+        virtualWeek.requestSummaryForObserverAndDateId(observer, DateUtils.dateToDateId(date0));
+        virtualWeek.requestSummaryForObserverAndDateId(observer, DateUtils.dateToDateId(date1));
 
         final ParametersHistoryManager parametersHistoryManager = new ParametersHistoryManager(mockContext);
         parametersHistoryManager.setTrackingWeekday(Calendar.MONDAY);

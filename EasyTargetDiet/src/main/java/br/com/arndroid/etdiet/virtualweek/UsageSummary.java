@@ -25,7 +25,7 @@ public class UsageSummary {
         return getBreakfastUsed()
                 + getBrunchUsed()
                 + getLunchUsed()
-                + getSneakUsed()
+                + getSnackUsed()
                 + getDinnerUsed()
                 + getSupperUsed();
     }
@@ -62,11 +62,11 @@ public class UsageSummary {
         this.lunchUsed = lunchUsed;
     }
 
-    public float getSneakUsed() {
+    public float getSnackUsed() {
         return sneakUsed;
     }
 
-    public void setSneakUsed(float sneakUsed) {
+    public void setSnackUsed(float sneakUsed) {
         this.sneakUsed = sneakUsed;
     }
 

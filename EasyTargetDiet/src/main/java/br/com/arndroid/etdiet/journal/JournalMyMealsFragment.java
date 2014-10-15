@@ -142,7 +142,7 @@ public class JournalMyMealsFragment extends Fragment {
                 daySummary.getEntity().getLunchGoal(),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getLunchStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getLunchEndTime())));
-        mTxtSnackPts.setText(String.valueOf(daySummary.getUsage().getSneakUsed()));
+        mTxtSnackPts.setText(String.valueOf(daySummary.getUsage().getSnackUsed()));
         mTxtSnackIdealValues.setText(String.format(
                 idealFormat,
                 daySummary.getEntity().getSnackGoal(),

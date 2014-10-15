@@ -23,6 +23,8 @@ import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.provider.days.DaysEntity;
+import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
@@ -156,7 +158,25 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
     }
 
     private int getDefaultTime() {
-        return DateUtils.dateToTimeAsInt(new Date());
+        DaysEntity entity = new DaysManager(getActivity().getApplicationContext()).dayFromDate(DateUtils.dateIdToDate(mDateId));
+        switch (mMeal) {
+            case Meals.BREAKFAST:
+                return entity.getBreakfastStartTime();
+            case Meals.BRUNCH:
+                return entity.getBrunchStartTime();
+            case Meals.LUNCH:
+                return entity.getLunchStartTime();
+            case Meals.SNACK:
+                return entity.getSnackStartTime();
+            case Meals.DINNER:
+                return entity.getDinnerStartTime();
+            case Meals.SUPPER:
+                return entity.getSupperStartTime();
+            case Meals.EXERCISE:
+                return DateUtils.dateToTimeAsInt(new Date());
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + mMeal + ".");
+        }
     }
 
     public void onDataChangedFromHolderActivity(String dateId, int meal) {

@@ -1,10 +1,7 @@
-package br.com.arndroid.etdiet.test.util;
+package br.com.arndroid.etdiet.test.utils;
 
 import junit.framework.TestCase;
 
-import java.util.Calendar;
-
-import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.utils.WeightUtils;
 
 public class WeightUtilsTest extends TestCase {

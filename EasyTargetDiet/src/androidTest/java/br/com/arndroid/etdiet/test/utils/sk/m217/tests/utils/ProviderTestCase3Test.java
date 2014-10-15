@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.test.util.sk.m217.tests.utils;
+package br.com.arndroid.etdiet.test.utils.sk.m217.tests.utils;
 
 import android.content.Context;
 import android.database.ContentObserver;

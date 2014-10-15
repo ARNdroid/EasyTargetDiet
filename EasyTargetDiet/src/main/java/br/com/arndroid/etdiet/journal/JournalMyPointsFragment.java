@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
@@ -17,7 +18,10 @@ import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
+import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
@@ -144,10 +148,48 @@ public class JournalMyPointsFragment extends Fragment implements
 
         switch (menuItemId) {
             case R.id.quick_add:
-                final int timeHint = DateUtils.dateToTimeAsInt(new Date());
-                final Date currentDate = DateUtils.dateIdToDate(mCurrentDateId);
-                final int mealHint = Meals.preferredMealForTimeInDate(
-                        getActivity().getApplicationContext(), timeHint, currentDate);
+
+                final Date now = new Date();
+                final boolean isCurrentDateToday = DateUtils.dateToDateId(now).equals(mCurrentDateId);
+
+                final int timeHint, mealHint;
+                final Date currentDate;
+                if (isCurrentDateToday) {
+                    currentDate = now;
+                    timeHint = DateUtils.dateToTimeAsInt(currentDate);
+                    mealHint = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(),
+                            timeHint, currentDate, false);
+                } else {
+                    final Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(DateUtils.dateIdToDate(mCurrentDateId));
+                    currentDate = calendar.getTime();
+                    mealHint = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(),
+                            -1, currentDate, true);
+                    final WeekdayParametersEntity entity = new WeekdayParametersManager(getActivity().getApplicationContext()).weekdayParametersFromWeekday(calendar.get(Calendar.DAY_OF_WEEK));
+                    switch (mealHint) {
+                        case Meals.BREAKFAST:
+                            timeHint = entity.getBreakfastStartTime();
+                            break;
+                        case Meals.BRUNCH:
+                            timeHint = entity.getBrunchStartTime();
+                            break;
+                        case Meals.LUNCH:
+                            timeHint = entity.getLunchStartTime();
+                            break;
+                        case Meals.SNACK:
+                            timeHint = entity.getSnackStartTime();
+                            break;
+                        case Meals.DINNER:
+                            timeHint = entity.getDinnerStartTime();
+                            break;
+                        case Meals.SUPPER:
+                            timeHint = entity.getSupperStartTime();
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Invalid meal=" + mealHint + ".");
+                    }
+                }
+
                 final float usageHint = Meals.preferredUsageForMealInDate(
                         getActivity().getApplicationContext(), mealHint, currentDate);
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mCurrentDateId,
