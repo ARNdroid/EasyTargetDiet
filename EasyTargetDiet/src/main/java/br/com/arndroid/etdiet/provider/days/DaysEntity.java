@@ -3,6 +3,7 @@ package br.com.arndroid.etdiet.provider.days;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 
@@ -696,6 +697,63 @@ public class DaysEntity extends AbstractEntity {
                 + Contract.Days.SUPPLEMENT_GOAL + "=" + supplementGoal + ", "
                 + Contract.Days.NOTE + "=" + note
                 + "]";
+    }
+
+    public int getStartTimeForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastStartTime();
+            case Meals.BRUNCH:
+                return getBrunchStartTime();
+            case Meals.LUNCH:
+                return getLunchStartTime();
+            case Meals.SNACK:
+                return getSnackStartTime();
+            case Meals.DINNER:
+                return getDinnerStartTime();
+            case Meals.SUPPER:
+                return getSupperStartTime();
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public int getEndTimeForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastEndTime();
+            case Meals.BRUNCH:
+                return getBrunchEndTime();
+            case Meals.LUNCH:
+                return getLunchEndTime();
+            case Meals.SNACK:
+                return getSnackEndTime();
+            case Meals.DINNER:
+                return getDinnerEndTime();
+            case Meals.SUPPER:
+                return getSupperEndTime();
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public float getGoalForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastGoal();
+            case Meals.BRUNCH:
+                return getBrunchGoal();
+            case Meals.LUNCH:
+                return getLunchGoal();
+            case Meals.SNACK:
+                return getSnackGoal();
+            case Meals.DINNER:
+                return getDinnerGoal();
+            case Meals.SUPPER:
+                return getSupperGoal();
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
     }
 
     public Long getId() {

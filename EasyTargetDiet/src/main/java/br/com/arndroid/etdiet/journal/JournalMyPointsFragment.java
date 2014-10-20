@@ -180,29 +180,10 @@ public class JournalMyPointsFragment extends Fragment implements
                     currentDate = calendar.getTime();
                     mealHint = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(),
                             -1, currentDate, true);
-                    final WeekdayParametersEntity entity = new WeekdayParametersManager(getActivity().getApplicationContext()).weekdayParametersFromWeekday(calendar.get(Calendar.DAY_OF_WEEK));
-                    switch (mealHint) {
-                        case Meals.BREAKFAST:
-                            timeHint = entity.getBreakfastStartTime();
-                            break;
-                        case Meals.BRUNCH:
-                            timeHint = entity.getBrunchStartTime();
-                            break;
-                        case Meals.LUNCH:
-                            timeHint = entity.getLunchStartTime();
-                            break;
-                        case Meals.SNACK:
-                            timeHint = entity.getSnackStartTime();
-                            break;
-                        case Meals.DINNER:
-                            timeHint = entity.getDinnerStartTime();
-                            break;
-                        case Meals.SUPPER:
-                            timeHint = entity.getSupperStartTime();
-                            break;
-                        default:
-                            throw new IllegalArgumentException("Invalid meal=" + mealHint + ".");
-                    }
+                    final WeekdayParametersEntity entity = new WeekdayParametersManager(
+                            getActivity().getApplicationContext()).weekdayParametersFromWeekday(
+                            calendar.get(Calendar.DAY_OF_WEEK));
+                    timeHint = entity.getStartTimeForMeal(mealHint);
                 }
 
                 final float usageHint = Meals.preferredUsageForMealInDate(

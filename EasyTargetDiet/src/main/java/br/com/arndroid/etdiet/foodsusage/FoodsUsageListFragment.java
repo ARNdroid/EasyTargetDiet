@@ -159,23 +159,10 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
 
     private int getDefaultTime() {
         DaysEntity entity = new DaysManager(getActivity().getApplicationContext()).dayFromDate(DateUtils.dateIdToDate(mDateId));
-        switch (mMeal) {
-            case Meals.BREAKFAST:
-                return entity.getBreakfastStartTime();
-            case Meals.BRUNCH:
-                return entity.getBrunchStartTime();
-            case Meals.LUNCH:
-                return entity.getLunchStartTime();
-            case Meals.SNACK:
-                return entity.getSnackStartTime();
-            case Meals.DINNER:
-                return entity.getDinnerStartTime();
-            case Meals.SUPPER:
-                return entity.getSupperStartTime();
-            case Meals.EXERCISE:
-                return DateUtils.dateToTimeAsInt(new Date());
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + mMeal + ".");
+        if (mMeal == Meals.EXERCISE) {
+            return DateUtils.dateToTimeAsInt(new Date());
+        } else {
+            return entity.getStartTimeForMeal(mMeal);
         }
     }
 

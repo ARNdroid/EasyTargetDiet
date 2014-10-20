@@ -13,8 +13,8 @@ public class MealsAdvisorHelper {
         result.clear();
 
         for (Integer meal : candidates) {
-            if (time >= getStartTimeInDaysEntityForMeal(daysEntity, meal) &&
-                    time <= getEndTimeInDaysEntityForMeal(daysEntity, meal)) {
+            if (time >= daysEntity.getStartTimeForMeal(meal) &&
+                    time <= daysEntity.getEndTimeForMeal(meal)) {
                 result.add(meal);
             }
         }
@@ -26,7 +26,7 @@ public class MealsAdvisorHelper {
         result.clear();
 
         for (Integer meal : candidates) {
-            if (getMealUsageInSummaryForMeal(usageSummary, meal) == 0) {
+            if (usageSummary.getUsageForMeal(meal) == 0) {
                 result.add(meal);
             }
         }
@@ -38,8 +38,8 @@ public class MealsAdvisorHelper {
         result.clear();
 
         for (Integer meal : candidates) {
-            if (getMealUsageInSummaryForMeal(usageSummary, meal)
-                    < getGoalInDaysEntityForMeal(daysEntity, meal)) {
+            if (usageSummary.getUsageForMeal(meal)
+                    < daysEntity.getGoalForMeal(meal)) {
                 result.add(meal);
             }
         }
@@ -53,11 +53,11 @@ public class MealsAdvisorHelper {
 
         if (!candidates.isEmpty()) {
             result.add(candidates.get(0));
-            int minorInterval = getEndTimeInDaysEntityForMeal(daysEntity, candidates.get(0)) -
-                    getStartTimeInDaysEntityForMeal(daysEntity, candidates.get(0));
+            int minorInterval = daysEntity.getEndTimeForMeal(candidates.get(0)) -
+                    daysEntity.getStartTimeForMeal(candidates.get(0));
             for (int i = 1; i < candidates.size(); i++) {
-                final int currentInterval = getEndTimeInDaysEntityForMeal(daysEntity, candidates.get(i)) -
-                        getStartTimeInDaysEntityForMeal(daysEntity, candidates.get(i));
+                final int currentInterval = daysEntity.getEndTimeForMeal(candidates.get(i)) -
+                        daysEntity.getStartTimeForMeal(candidates.get(i));
                 if (currentInterval < minorInterval) {
                     result.clear();
                     result.add(candidates.get(i));
@@ -76,12 +76,12 @@ public class MealsAdvisorHelper {
         if (!candidates.isEmpty()) {
             result.add(candidates.get(0));
             for (int i = 1; i < candidates.size(); i++) {
-                if (getStartTimeInDaysEntityForMeal(daysEntity, candidates.get(i))
-                        < getStartTimeInDaysEntityForMeal(daysEntity, result.get(0))) {
+                if (daysEntity.getStartTimeForMeal(candidates.get(i))
+                        < daysEntity.getStartTimeForMeal(result.get(0))) {
                     result.clear();
                     result.add(candidates.get(i));
-                } else if (getStartTimeInDaysEntityForMeal(daysEntity, candidates.get(i))
-                        == getStartTimeInDaysEntityForMeal(daysEntity, result.get(0))) {
+                } else if (daysEntity.getStartTimeForMeal(candidates.get(i))
+                        == daysEntity.getStartTimeForMeal(result.get(0))) {
                     result.add(candidates.get(i));
                 }
             }
@@ -93,7 +93,7 @@ public class MealsAdvisorHelper {
         result.clear();
 
         for (Integer meal : candidates) {
-            if (getEndTimeInDaysEntityForMeal(daysEntity, meal) < time) {
+            if (daysEntity.getEndTimeForMeal(meal) < time) {
                 result.add(meal);
             }
         }
@@ -108,12 +108,12 @@ public class MealsAdvisorHelper {
         if (!tempResult.isEmpty()) {
             result.add(tempResult.get(0));
             for (int i = 1; i < tempResult.size(); i++) {
-                if (getEndTimeInDaysEntityForMeal(daysEntity, tempResult.get(i))
-                        > getEndTimeInDaysEntityForMeal(daysEntity, result.get(0))) {
+                if (daysEntity.getEndTimeForMeal(tempResult.get(i))
+                        > daysEntity.getEndTimeForMeal(result.get(0))) {
                     result.clear();
                     result.add(tempResult.get(i));
-                } else if (getEndTimeInDaysEntityForMeal(daysEntity, tempResult.get(i))
-                        == getEndTimeInDaysEntityForMeal(daysEntity, result.get(0))) {
+                } else if (daysEntity.getEndTimeForMeal(tempResult.get(i))
+                        == daysEntity.getEndTimeForMeal(result.get(0))) {
                     result.add(tempResult.get(i));
                 }
             }
@@ -125,7 +125,7 @@ public class MealsAdvisorHelper {
         result.clear();
 
         for (Integer meal : candidates) {
-            if (getStartTimeInDaysEntityForMeal(daysEntity, meal) > time) {
+            if (daysEntity.getStartTimeForMeal(meal) > time) {
                 result.add(meal);
             }
         }
@@ -140,12 +140,12 @@ public class MealsAdvisorHelper {
         if (!tempResult.isEmpty()) {
             result.add(tempResult.get(0));
             for (int i = 1; i < tempResult.size(); i++) {
-                if (getStartTimeInDaysEntityForMeal(daysEntity, tempResult.get(i))
-                        < getStartTimeInDaysEntityForMeal(daysEntity, result.get(0))) {
+                if (daysEntity.getStartTimeForMeal(tempResult.get(i))
+                        < daysEntity.getStartTimeForMeal(result.get(0))) {
                     result.clear();
                     result.add(tempResult.get(i));
-                } else if (getStartTimeInDaysEntityForMeal(daysEntity, tempResult.get(i))
-                        == getStartTimeInDaysEntityForMeal(daysEntity, result.get(0))) {
+                } else if (daysEntity.getStartTimeForMeal(tempResult.get(i))
+                        == daysEntity.getStartTimeForMeal(result.get(0))) {
                     result.add(tempResult.get(i));
                 }
             }
@@ -163,8 +163,8 @@ public class MealsAdvisorHelper {
 
         int minorDelta = Integer.MAX_VALUE;
         for (Integer meal : candidates) {
-            final int startTime = getStartTimeInDaysEntityForMeal(daysEntity, meal);
-            final int endTime = getEndTimeInDaysEntityForMeal(daysEntity, meal);
+            final int startTime = daysEntity.getStartTimeForMeal(meal);
+            final int endTime = daysEntity.getEndTimeForMeal(meal);
             boolean isNeighbor = false;
             int currentDelta = -1;
             if (endTime < time) {
@@ -192,82 +192,6 @@ public class MealsAdvisorHelper {
         }
         if (candidates == result) {
             throw new IllegalArgumentException("candidates and result must be different lists.");
-        }
-    }
-
-    private int getStartTimeInDaysEntityForMeal(DaysEntity entity, int meal) {
-        switch (meal) {
-            case Meals.BREAKFAST:
-                return entity.getBreakfastStartTime();
-            case Meals.BRUNCH:
-                return entity.getBrunchStartTime();
-            case Meals.LUNCH:
-                return entity.getLunchStartTime();
-            case Meals.SNACK:
-                return entity.getSnackStartTime();
-            case Meals.DINNER:
-                return entity.getDinnerStartTime();
-            case Meals.SUPPER:
-                return entity.getSupperStartTime();
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
-        }
-    }
-
-    private int getEndTimeInDaysEntityForMeal(DaysEntity entity, int meal) {
-        switch (meal) {
-            case Meals.BREAKFAST:
-                return entity.getBreakfastEndTime();
-            case Meals.BRUNCH:
-                return entity.getBrunchEndTime();
-            case Meals.LUNCH:
-                return entity.getLunchEndTime();
-            case Meals.SNACK:
-                return entity.getSnackEndTime();
-            case Meals.DINNER:
-                return entity.getDinnerEndTime();
-            case Meals.SUPPER:
-                return entity.getSupperEndTime();
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
-        }
-    }
-
-    private float getGoalInDaysEntityForMeal(DaysEntity entity, int meal) {
-        switch (meal) {
-            case Meals.BREAKFAST:
-                return entity.getBreakfastGoal();
-            case Meals.BRUNCH:
-                return entity.getBrunchGoal();
-            case Meals.LUNCH:
-                return entity.getLunchGoal();
-            case Meals.SNACK:
-                return entity.getSnackGoal();
-            case Meals.DINNER:
-                return entity.getDinnerGoal();
-            case Meals.SUPPER:
-                return entity.getSupperGoal();
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
-        }
-    }
-
-    private float getMealUsageInSummaryForMeal(UsageSummary summary, Integer meal) {
-        switch (meal) {
-            case Meals.BREAKFAST:
-                return summary.getBreakfastUsed();
-            case Meals.BRUNCH:
-                return summary.getBrunchUsed();
-            case Meals.LUNCH:
-                return summary.getLunchUsed();
-            case Meals.SNACK:
-                return summary.getSnackUsed();
-            case Meals.DINNER:
-                return summary.getDinnerUsed();
-            case Meals.SUPPER:
-                return summary.getSupperUsed();
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 }

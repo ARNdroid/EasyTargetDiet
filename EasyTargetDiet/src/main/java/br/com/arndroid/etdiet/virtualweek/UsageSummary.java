@@ -1,5 +1,7 @@
 package br.com.arndroid.etdiet.virtualweek;
 
+import br.com.arndroid.etdiet.meals.Meals;
+
 public class UsageSummary {
     private float exerciseDone;
     private float breakfastUsed;
@@ -19,6 +21,27 @@ public class UsageSummary {
         sneakUsed = toClone.sneakUsed;
         dinnerUsed = toClone.dinnerUsed;
         supperUsed = toClone.supperUsed;
+    }
+
+    public float getUsageForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastUsed();
+            case Meals.BRUNCH:
+                return getBrunchUsed();
+            case Meals.LUNCH:
+                return getLunchUsed();
+            case Meals.SNACK:
+                return getSnackUsed();
+            case Meals.DINNER:
+                return getDinnerUsed();
+            case Meals.SUPPER:
+                return getSupperUsed();
+            case Meals.EXERCISE:
+                return getExerciseDone();
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
     }
 
     public float getTotalUsed() {
