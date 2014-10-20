@@ -19,4 +19,10 @@
     <color name="activity_background">#ededed</color>
     <color name="item_divider">@color/accent_light</color>
 
+    <color name="forecast_straight_to_goal">#669900</color>
+    <color name="forecast_going_to_goal_with_help">#3333cc</color>
+    <color name="forecast_out_of_goal_but_can_return">#ffff66</color>
+    <color name="forecast_out_of_goal">#ff0000</color>
+    <color name="forecast_background">#cccccc</color>
+
 </resources>

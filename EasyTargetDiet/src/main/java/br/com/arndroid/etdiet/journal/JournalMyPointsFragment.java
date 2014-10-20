@@ -17,12 +17,14 @@ import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
+import br.com.arndroid.etdiet.foodsusage.FoodsUsageForecast;
+import br.com.arndroid.etdiet.foodsusage.FoodsUsageForecaster;
 import br.com.arndroid.etdiet.meals.Meals;
-import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.views.ForecastMeterView;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class JournalMyPointsFragment extends Fragment implements
@@ -30,20 +32,23 @@ public class JournalMyPointsFragment extends Fragment implements
         FragmentMenuReplier {
 
     private static final String MONTH_AND_YEAR_FORMAT = "%s %s";
+    private static final int TWENTY_THREE_HOURS = 82800000;
+    private static final int FIFTY_NINE_MINUTES = 3540000;
 
     public interface JournalFragmentListener {
+
         public void onDateChanged(Date newDate);
     }
-
-
     public static final String OWNER_TAG = JournalMyPointsFragment.class.getSimpleName();
-    public static final String DATE_EDIT_TAG = OWNER_TAG + ".DATE_EDIT_TAG";
 
+
+    public static final String DATE_EDIT_TAG = OWNER_TAG + ".DATE_EDIT_TAG";
     private String mCurrentDateId;
+
     private String[] mMonthsShortNameArray;
     private String[] mWeekdaysNameArray;
-
     private LinearLayout mLayDate;
+
     private TextView mTxtDay;
     private TextView mTxtMonthAndYear;
     private TextView mTxtWeekday;
@@ -51,6 +56,7 @@ public class JournalMyPointsFragment extends Fragment implements
     private TextView mTxtPtsDay;
     private TextView mTxtPtsWeek;
     private TextView mTxtPtsExercise;
+    private ForecastMeterView mForecastMeter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +91,7 @@ public class JournalMyPointsFragment extends Fragment implements
         mTxtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
         mTxtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
         mTxtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
+        mForecastMeter = (ForecastMeterView) rootView.findViewById(R.id.forecastMeter);
     }
 
     private void setupScreen() {
@@ -113,17 +120,25 @@ public class JournalMyPointsFragment extends Fragment implements
         mTxtWeekday.setText(mWeekdaysNameArray[weekday].toUpperCase());
         final int textColor;
         final Compatibility compatibility = Compatibility.getInstance();
+        final FoodsUsageForecast forecast;
         if (DateUtils.isDateIdCurrentDate(dateId)) {
             textColor = getResources().getColor(R.color.accent_dark);
             compatibility.setBackground(mLayDate,
                     getResources().getDrawable(R.drawable.card_selector));
             mTxtToday.setText(getString(R.string.today));
+            forecast = FoodsUsageForecaster.getInstance().forecast(new Date(), daySummary);
         } else {
             textColor = getResources().getColor(R.color.card_old_style_foreground);
             compatibility.setBackground(mLayDate,
                     getResources().getDrawable(R.drawable.card_old_style_selector));
             mTxtToday.setText(getString(R.string.not_today));
+            forecast = FoodsUsageForecaster.getInstance().forecast(new Date(
+                    DateUtils.dateIdToDate(mCurrentDateId).getTime()
+                    + TWENTY_THREE_HOURS + FIFTY_NINE_MINUTES), daySummary);
         }
+        mForecastMeter.setForecastType(forecast.getForecastType());
+        final float percentage = 1.0f - forecast.getToUse() / forecast.getForecastUsed();
+        mForecastMeter.setPercentage(percentage);
         mTxtWeekday.setTextColor(textColor);
         mTxtDay.setTextColor(textColor);
         mTxtMonthAndYear.setTextColor(textColor);

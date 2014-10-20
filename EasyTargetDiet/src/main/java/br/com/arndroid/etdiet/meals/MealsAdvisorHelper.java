@@ -252,7 +252,7 @@ public class MealsAdvisorHelper {
         }
     }
 
-    private double getMealUsageInSummaryForMeal(UsageSummary summary, Integer meal) {
+    private float getMealUsageInSummaryForMeal(UsageSummary summary, Integer meal) {
         switch (meal) {
             case Meals.BREAKFAST:
                 return summary.getBreakfastUsed();

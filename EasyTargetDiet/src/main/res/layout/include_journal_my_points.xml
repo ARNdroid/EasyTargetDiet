@@ -2,6 +2,8 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:etdview="http://schemas.android.com/apk/res-auto"
+
     style="@style/Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,6 +27,13 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/padding_after_header_divider"
         android:baselineAligned="false">
+
+        <br.com.arndroid.etdiet.views.ForecastMeterView
+            android:id="@+id/forecastMeter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            etdview:percentage="0.6"
+            etdview:forecastType="0"/>
 
         <LinearLayout
             android:layout_width="0dp"
