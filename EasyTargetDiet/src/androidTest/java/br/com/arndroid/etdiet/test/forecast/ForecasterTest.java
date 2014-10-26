@@ -1,18 +1,17 @@
-package br.com.arndroid.etdiet.test.foodsusage;
+package br.com.arndroid.etdiet.test.forecast;
 
 import junit.framework.TestCase;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageForecast;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageForecaster;
-import br.com.arndroid.etdiet.meals.MealsAdvisorHelper;
+import br.com.arndroid.etdiet.forecast.ForecastEntity;
+import br.com.arndroid.etdiet.forecast.Forecaster;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.UsageSummary;
 
-public class FoodsUsageForecasterTest extends TestCase {
+public class ForecasterTest extends TestCase {
 
     private static final int EIGHT_HOURS = 28800000;
     private static final int TEN_HOURS = 36000000;
@@ -22,12 +21,12 @@ public class FoodsUsageForecasterTest extends TestCase {
     private static final int EIGHTEEN_HOURS = 64800000;
     private static final int TWENTY_HOURS = 72000000;
 
-    private FoodsUsageForecaster mForecaster;
+    private Forecaster mForecaster;
 
     @Override
     protected void setUp() throws Exception {
         // Gets the advisor helper for this test.
-        mForecaster = FoodsUsageForecaster.getInstance();
+        mForecaster = Forecaster.getInstance();
     }
 
     public void testForecastWithEmptyDayMustBeGreen() {
@@ -55,8 +54,8 @@ public class FoodsUsageForecasterTest extends TestCase {
         summary.setEntity(commonDaysEntity);
         summary.setUsage(emptyUsageSummary);
 
-        final FoodsUsageForecast forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.STRAIGHT_TO_GOAL, forecast.getForecastType());
+        final ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
     }
 
     public void testForecastGreenUseMustBeGreen() {
@@ -84,13 +83,13 @@ public class FoodsUsageForecasterTest extends TestCase {
         summary.setEntity(commonDaysEntity);
         summary.setUsage(greenSummary);
 
-        FoodsUsageForecast forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.STRAIGHT_TO_GOAL, forecast.getForecastType());
+        ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
 
         greenSummary.setDinnerUsed(8.0f);
         greenSummary.setSupperUsed(1.5f);
-        forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.STRAIGHT_TO_GOAL, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
     }
 
     public void testForecastBlueUseMustBeBlue() {
@@ -118,12 +117,12 @@ public class FoodsUsageForecasterTest extends TestCase {
         summary.setEntity(commonDaysEntity);
         summary.setUsage(blueSummary);
 
-        FoodsUsageForecast forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.GOING_TO_GOAL_WITH_HELP, forecast.getForecastType());
+        ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.GOING_TO_GOAL_WITH_HELP, forecastEntity.getForecastType());
 
         blueSummary.setSupperUsed(6.5f);
-        forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.GOING_TO_GOAL_WITH_HELP, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.GOING_TO_GOAL_WITH_HELP, forecastEntity.getForecastType());
     }
 
     public void testForecastRedUseMustBeRed() {
@@ -151,12 +150,12 @@ public class FoodsUsageForecasterTest extends TestCase {
         summary.setEntity(commonDaysEntity);
         summary.setUsage(redSummary);
 
-        FoodsUsageForecast forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.OUT_OF_GOAL, forecast.getForecastType());
+        ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL, forecastEntity.getForecastType());
 
         redSummary.setSupperUsed(999f);
-        forecast = mForecaster.forecast(new Date(), summary);
-        assertEquals(FoodsUsageForecast.OUT_OF_GOAL, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(new Date(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL, forecastEntity.getForecastType());
     }
 
     public void testForecastYellowUseMustReturnCorrectValues() {
@@ -188,29 +187,29 @@ public class FoodsUsageForecasterTest extends TestCase {
         calendar.setTime(new Date());
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 12);
-        FoodsUsageForecast forecast = mForecaster.forecast(calendar.getTime(), summary);
-        assertEquals(FoodsUsageForecast.OUT_OF_GOAL_BUT_CAN_RETURN, forecast.getForecastType());
+        ForecastEntity forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN, forecastEntity.getForecastType());
 
         calendar.set(Calendar.HOUR_OF_DAY, 14);
-        forecast = mForecaster.forecast(calendar.getTime(), summary);
-        assertEquals(FoodsUsageForecast.STRAIGHT_TO_GOAL, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
 
         yellowSummary.setLunchUsed(10.0f);
-        forecast = mForecaster.forecast(calendar.getTime(), summary);
-        assertEquals(FoodsUsageForecast.OUT_OF_GOAL_BUT_CAN_RETURN, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN, forecastEntity.getForecastType());
 
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         yellowSummary.setSnackUsed(2.0f);
         yellowSummary.setDinnerUsed(8.0f);
-        forecast = mForecaster.forecast(calendar.getTime(), summary);
-        assertEquals(FoodsUsageForecast.OUT_OF_GOAL_BUT_CAN_RETURN, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN, forecastEntity.getForecastType());
 
         calendar.set(Calendar.HOUR_OF_DAY, 20);
-        forecast = mForecaster.forecast(calendar.getTime(), summary);
-        assertEquals(FoodsUsageForecast.STRAIGHT_TO_GOAL, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
 
         yellowSummary.setSupperUsed(1.5f);
-        forecast = mForecaster.forecast(calendar.getTime(), summary);
-        assertEquals(FoodsUsageForecast.OUT_OF_GOAL, forecast.getForecastType());
+        forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL, forecastEntity.getForecastType());
     }
 }

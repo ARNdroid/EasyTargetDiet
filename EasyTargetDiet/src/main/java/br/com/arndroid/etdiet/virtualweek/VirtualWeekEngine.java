@@ -200,14 +200,17 @@ public class VirtualWeekEngine {
         return mDaySummaryArray[index].getDiaryAllowanceAfterUsage();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Date getInitialDateForPeriod() {
         return mWeekPeriod.getInitialDate();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Date getFinalDateForPeriod() {
         return mWeekPeriod.getFinalDate();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Date getReferenceDateForPeriod() {
         return mWeekPeriod.getReferenceDate();
     }

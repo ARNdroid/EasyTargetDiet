@@ -26,7 +26,7 @@ import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.weights.WeightsActivity;
 
 public class JournalActivity extends Activity implements
-        JournalMyPointsFragment.JournalFragmentListener,
+        JournalDateFragment.JournalFragmentListener,
         VirtualWeek.ViewObserver,
         DateDialog.OnDateSetListener,
         IntegerDialog.OnIntegerSetListener,
@@ -36,6 +36,7 @@ public class JournalActivity extends Activity implements
     private VirtualWeek mVirtualWeek;
     private CurrentDateId mCurrentDateId = new CurrentDateId();
     private int mCurrentMeal;
+    private JournalDateFragment mJournalDateFragment;
     private JournalMyPointsFragment mJournalMyPointsFragment;
     private JournalMyGoalsFragment mJournalMyGoalsFragment;
     private JournalMyMealsFragment mJournalMyMealsFragment;
@@ -58,7 +59,7 @@ public class JournalActivity extends Activity implements
         }
 
         bindScreen();
-
+        setupScreen();
     }
 
     @Override
@@ -110,6 +111,8 @@ public class JournalActivity extends Activity implements
     }
 
     private void bindScreen() {
+        mJournalDateFragment = (JournalDateFragment) getFragmentManager()
+                .findFragmentById(R.id.journal_date_fragment);
         mJournalMyPointsFragment = (JournalMyPointsFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_my_points_fragment);
         mJournalMyGoalsFragment = (JournalMyGoalsFragment) getFragmentManager()
@@ -122,7 +125,13 @@ public class JournalActivity extends Activity implements
                 .findFragmentById(R.id.foods_usage_list_fragment);
     }
 
+    private void setupScreen() {
+        mJournalMyPointsFragment.setTitle(getResources().getString(R.string.my_points));
+        mJournalMyPointsFragment.setForecastMeterCanTouch(true);
+    }
+
     private void refreshScreen(DaySummary daySummary) {
+        mJournalDateFragment.refreshScreen(daySummary);
         mJournalMyPointsFragment.refreshScreen(daySummary);
         mJournalMyGoalsFragment.refreshScreen(daySummary);
         mJournalMyMealsFragment.refreshScreen(daySummary);
@@ -160,9 +169,9 @@ public class JournalActivity extends Activity implements
          Activity.
          The following code send the event to original Fragment again.
          */
-        if (tag.startsWith(JournalMyPointsFragment.OWNER_TAG)) {
+        if (tag.startsWith(JournalDateFragment.OWNER_TAG)) {
             ((DateDialog.OnDateSetListener) getFragmentManager()
-                    .findFragmentById(R.id.journal_my_points_fragment)).onDateSet(tag, actualDate);
+                    .findFragmentById(R.id.journal_date_fragment)).onDateSet(tag, actualDate);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }

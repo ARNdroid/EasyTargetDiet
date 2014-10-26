@@ -7,9 +7,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
+
+import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.dialog.DateDialog;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class ForecastMeterView extends View {
 
@@ -69,7 +76,7 @@ public class ForecastMeterView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         int DEFAULT_BAR_WIDTH_WITHOUT_PADDING_IN_ACCOUNT = 60;
-        int DEFAULT_BAR_HEIGHT_WITHOUT_PADDING_IN_ACCOUNT = 270;
+        int DEFAULT_BAR_HEIGHT_WITHOUT_PADDING_IN_ACCOUNT = 260;
 
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -133,6 +140,7 @@ public class ForecastMeterView extends View {
         canvas.drawRect(mForegroundBarRect, mForegroundPaint);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public float getPercentage() {
         return mPercentage;
     }
@@ -142,6 +150,7 @@ public class ForecastMeterView extends View {
         invalidate();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public int getForecastType() {
         return mForecastType;
     }

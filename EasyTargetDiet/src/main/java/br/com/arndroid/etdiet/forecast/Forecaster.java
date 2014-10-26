@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.foodsusage;
+package br.com.arndroid.etdiet.forecast;
 
 import java.util.Date;
 
@@ -7,27 +7,26 @@ import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.UsageSummary;
-import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 
-public class FoodsUsageForecaster {
+public class Forecaster {
 
-    private static FoodsUsageForecaster mInstance;
+    private static Forecaster mInstance;
 
-    public static FoodsUsageForecaster getInstance() {
+    public static Forecaster getInstance() {
         /*
          We don't worry about lost of one or two instances in a multi-threaded scenario (which will
          be very rare).
          */
         if (mInstance == null) {
-            mInstance = new FoodsUsageForecaster();
+            mInstance = new Forecaster();
         }
         return mInstance;
     }
 
-    protected FoodsUsageForecaster() {
+    protected Forecaster() {
     }
 
-    public FoodsUsageForecast forecast(Date referenceDate, DaySummary summary) {
+    public ForecastEntity forecast(Date referenceDate, DaySummary summary) {
         final int time = DateUtils.dateToTimeAsInt(referenceDate);
         final DaysEntity daysEntity = summary.getEntity();
         final UsageSummary usageSummary = summary.getUsage();
@@ -43,20 +42,21 @@ public class FoodsUsageForecaster {
         }
         final float forecast = used + toUse;
 
-        final FoodsUsageForecast result = new FoodsUsageForecast();
+        final ForecastEntity result = new ForecastEntity();
         if (forecast <= daysEntity.getAllowed()) {
-            result.setForecastType(FoodsUsageForecast.STRAIGHT_TO_GOAL);
+            result.setForecastType(ForecastEntity.STRAIGHT_TO_GOAL);
         } else if (forecast <= daysEntity.getAllowed() + summary.getWeeklyAllowanceBeforeUsage() + summary.getTotalExercise()) {
-            result.setForecastType(FoodsUsageForecast.GOING_TO_GOAL_WITH_HELP);
+            result.setForecastType(ForecastEntity.GOING_TO_GOAL_WITH_HELP);
         } else if (used <= daysEntity.getAllowed() + summary.getWeeklyAllowanceBeforeUsage() + summary.getTotalExercise()) {
-            result.setForecastType(FoodsUsageForecast.OUT_OF_GOAL_BUT_CAN_RETURN);
+            result.setForecastType(ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN);
         } else {
-            result.setForecastType(FoodsUsageForecast.OUT_OF_GOAL);
+            result.setForecastType(ForecastEntity.OUT_OF_GOAL);
         }
         result.setReferenceDate(referenceDate);
         result.setUsed(used);
         result.setToUse(toUse);
         result.setForecastUsed(forecast);
+        result.setBalanceFromDailyAllowance(daysEntity.getAllowed() - forecast);
 
         return result;
     }

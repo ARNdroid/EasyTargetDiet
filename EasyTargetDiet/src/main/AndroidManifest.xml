@@ -16,7 +16,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,6 +46,14 @@
 
         <activity
             android:name=".weights.WeightsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".journal.JournalActivity" />
+        </activity>
+
+        <activity
+            android:name=".forecast.ForecastActivity"
+            android:parentActivityName=".journal.JournalActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".journal.JournalActivity" />
