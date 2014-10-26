@@ -132,7 +132,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, null);
-                builder.setMessage(String.format(getResources().getString(R.string.delete_food_usage_msg),
+                builder.setMessage(String.format(getString(R.string.delete_food_usage_msg),
                         entity.getDescription(), mealName));
                 builder.create().show();
                 return true;

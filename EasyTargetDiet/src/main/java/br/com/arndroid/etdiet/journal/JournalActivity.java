@@ -126,7 +126,7 @@ public class JournalActivity extends Activity implements
     }
 
     private void setupScreen() {
-        mJournalMyPointsFragment.setTitle(getResources().getString(R.string.my_points));
+        mJournalMyPointsFragment.setTitle(getString(R.string.my_points));
         mJournalMyPointsFragment.setForecastMeterCanTouch(true);
     }
 

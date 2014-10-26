@@ -24,7 +24,7 @@ public class MealsAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         final int mealId = Meals.getMealFromPosition(position);
-        return mContext.getResources().getString(Meals.getMealResourceNameIdFromMealId(mealId));
+        return mContext.getString(Meals.getMealResourceNameIdFromMealId(mealId));
     }
 
     @Override

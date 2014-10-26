@@ -48,11 +48,11 @@ public class FoodsUsageHeaderFragment extends Fragment {
         final int endTime = entity.getEndTimeForMeal(meal);
 
         if (startTime >= 0) {
-            mTxtGoal.setText(String.format(getResources().getString(R.string.meal_ideal_actual_values),
+            mTxtGoal.setText(String.format(getString(R.string.meal_ideal_actual_values),
                     goal, DateUtils.timeToFormattedString(startTime),
                     DateUtils.timeToFormattedString(endTime)));
         } else {
-            mTxtGoal.setText(String.format(getResources().getString(R.string.units_actual_value), goal));
+            mTxtGoal.setText(String.format(getString(R.string.units_actual_value), goal));
         }
     }
 

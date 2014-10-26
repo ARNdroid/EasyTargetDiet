@@ -84,54 +84,54 @@ public class SettingsListFragment extends ListFragment implements
                 .getApplicationContext()).weekdayParametersFromWeekday(mSelectedWeekday);
 
         if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            createAndShowPointDialogWith(getResources().getString(R.string.exercise_goal),
+            createAndShowPointDialogWith(getString(R.string.exercise_goal),
                     0, 99, entity.getExerciseGoal(), EXERCISE_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
-            createAndShowIntegerDialogWith(getResources().getString(R.string.liquid_goal),
+            createAndShowIntegerDialogWith(getString(R.string.liquid_goal),
                     0, 99, entity.getLiquidGoal(), LIQUID_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
-            createAndShowIntegerDialogWith(getResources().getString(R.string.oil_goal), 0, 99,
+            createAndShowIntegerDialogWith(getString(R.string.oil_goal), 0, 99,
                     entity.getOilGoal(), OIL_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
-            createAndShowIntegerDialogWith(getResources().getString(R.string.supplement_goal), 0, 99,
+            createAndShowIntegerDialogWith(getString(R.string.supplement_goal), 0, 99,
                     entity.getSupplementGoal(), SUPPLEMENT_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(mSettingsColumnName)) {
             createAndShowMealIdealValuesDialogWith(
-                    getResources().getString(R.string.breakfast_ideal_values), 0, 99,
+                    getString(R.string.breakfast_ideal_values), 0, 99,
                     entity.getBreakfastStartTime(), entity.getBreakfastEndTime(),
                     entity.getBreakfastGoal(), BREAKFAST_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.BRUNCH_GOAL.equals(mSettingsColumnName)) {
             createAndShowMealIdealValuesDialogWith(
-                    getResources().getString(R.string.brunch_ideal_values), 0, 99,
+                    getString(R.string.brunch_ideal_values), 0, 99,
                     entity.getBrunchStartTime(), entity.getBrunchEndTime(),
                     entity.getBrunchGoal(), BRUNCH_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.LUNCH_GOAL.equals(mSettingsColumnName)) {
             createAndShowMealIdealValuesDialogWith(
-                    getResources().getString(R.string.lunch_ideal_values), 0, 99,
+                    getString(R.string.lunch_ideal_values), 0, 99,
                     entity.getLunchStartTime(), entity.getLunchEndTime(),
                     entity.getLunchGoal(), LUNCH_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.SNACK_GOAL.equals(mSettingsColumnName)) {
             createAndShowMealIdealValuesDialogWith(
-                    getResources().getString(R.string.snack_ideal_values), 0, 99,
+                    getString(R.string.snack_ideal_values), 0, 99,
                     entity.getSnackStartTime(), entity.getSnackEndTime(),
                     entity.getSnackGoal(), SNACK_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.DINNER_GOAL.equals(mSettingsColumnName)) {
             createAndShowMealIdealValuesDialogWith(
-                    getResources().getString(R.string.dinner_ideal_values), 0, 99,
+                    getString(R.string.dinner_ideal_values), 0, 99,
                     entity.getDinnerStartTime(), entity.getDinnerEndTime(),
                     entity.getDinnerGoal(), DINNER_GOAL_SETTINGS_TAG);
 
         } else if (Contract.WeekdayParameters.SUPPER_GOAL.equals(mSettingsColumnName)) {
             createAndShowMealIdealValuesDialogWith(
-                    getResources().getString(R.string.supper_ideal_values), 0, 99,
+                    getString(R.string.supper_ideal_values), 0, 99,
                     entity.getSupperStartTime(), entity.getSupperEndTime(),
                     entity.getSupperGoal(), SUPPER_GOAL_SETTINGS_TAG);
 

@@ -134,7 +134,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
                 if (TextUtils.isEmpty(mEdtDescription.getText())) {
                     final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
                             Meals.getMealFromPosition(position)));
-                    final String hint = String.format(getResources().getString(R.string.quick_insert_description), mealName.toLowerCase());
+                    final String hint = String.format(getString(R.string.quick_insert_description), mealName.toLowerCase());
                     mEdtDescription.setHint(hint);
                 }
             }

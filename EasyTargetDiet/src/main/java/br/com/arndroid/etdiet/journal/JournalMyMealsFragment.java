@@ -123,7 +123,7 @@ public class JournalMyMealsFragment extends Fragment {
 
     public void refreshScreen(DaySummary daySummary) {
         mCurrentDateId = daySummary.getEntity().getDateId();
-        final String idealFormat = getResources().getString(R.string.meal_ideal_actual_values);
+        final String idealFormat = getString(R.string.meal_ideal_actual_values);
         mTxtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
         mTxtBreakfastIdealValues.setText(String.format(
                 idealFormat,

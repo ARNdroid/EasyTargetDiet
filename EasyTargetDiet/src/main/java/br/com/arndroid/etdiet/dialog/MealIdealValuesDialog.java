@@ -125,7 +125,7 @@ public class MealIdealValuesDialog extends DialogFragment {
                         DateUtils.getHoursFromTimeAsInt(DateUtils.formattedStringToTime(mBtnStartTime.getText().toString())),
                         DateUtils.getMinutesFromTimeAsInt(DateUtils.formattedStringToTime(mBtnStartTime.getText().toString())),
                         true);
-                dialog.setTitle(getResources().getString(R.string.from));
+                dialog.setTitle(getString(R.string.from));
                 dialog.show();
             }
         });
@@ -142,7 +142,7 @@ public class MealIdealValuesDialog extends DialogFragment {
                         DateUtils.getHoursFromTimeAsInt(DateUtils.formattedStringToTime(mBtnEndTime.getText().toString())),
                         DateUtils.getMinutesFromTimeAsInt(DateUtils.formattedStringToTime(mBtnEndTime.getText().toString())),
                         true);
-                dialog.setTitle(getResources().getString(R.string.to));
+                dialog.setTitle(getString(R.string.to));
                 dialog.show();
             }
         });
