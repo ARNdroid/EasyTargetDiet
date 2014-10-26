@@ -9,6 +9,8 @@ import br.com.arndroid.etdiet.provider.Contract;
 
 public class DaysEntity extends AbstractEntity {
 
+    public static final int NO_TIME = -1;
+
     private Long id;
     private String dateId;
     private Float allowed;
@@ -713,6 +715,8 @@ public class DaysEntity extends AbstractEntity {
                 return getDinnerStartTime();
             case Meals.SUPPER:
                 return getSupperStartTime();
+            case Meals.EXERCISE:
+                return NO_TIME;
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
@@ -732,6 +736,8 @@ public class DaysEntity extends AbstractEntity {
                 return getDinnerEndTime();
             case Meals.SUPPER:
                 return getSupperEndTime();
+            case Meals.EXERCISE:
+                return NO_TIME;
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
@@ -751,6 +757,8 @@ public class DaysEntity extends AbstractEntity {
                 return getDinnerGoal();
             case Meals.SUPPER:
                 return getSupperGoal();
+            case Meals.EXERCISE:
+                return getExerciseGoal();
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
@@ -1057,6 +1065,7 @@ public class DaysEntity extends AbstractEntity {
                     null : cursor.getString(cursor.getColumnIndex(Contract.Days.NOTE)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static DaysEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
         if (principal == null || complement == null) {
             throw new IllegalArgumentException("Principal and complement must be not null.");
@@ -1242,6 +1251,7 @@ public class DaysEntity extends AbstractEntity {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static DaysEntity fromContentValues(ContentValues values) {
         if (values == null) {
             throw new IllegalArgumentException("Values must be not null.");
