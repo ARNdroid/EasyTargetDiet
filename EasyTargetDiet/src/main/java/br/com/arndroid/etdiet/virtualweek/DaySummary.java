@@ -6,6 +6,7 @@ public class DaySummary {
 
     private DaysEntity entity;
     private UsageSummary usage;
+    private SettingsValues settingsValues;
     private float exerciseAfterUsage;
     private float exerciseToCarry;
     private float totalExercise; // Exercise done + (if allowed) exercise to carry from previous day
@@ -18,6 +19,7 @@ public class DaySummary {
     public DaySummary(DaySummary toClone) {
         entity = new DaysEntity(toClone.entity);
         usage = new UsageSummary(toClone.usage);
+        settingsValues = new SettingsValues(toClone.settingsValues);
         exerciseAfterUsage = toClone.exerciseAfterUsage;
         exerciseToCarry = toClone.exerciseToCarry;
         totalExercise = toClone.totalExercise;
@@ -89,5 +91,13 @@ public class DaySummary {
 
     public float getWeeklyAllowanceAfterUsage() {
         return weeklyAllowanceAfterUsage;
+    }
+
+    public SettingsValues getSettingsValues() {
+        return settingsValues;
+    }
+
+    public void setSettingsValues(SettingsValues settingsValues) {
+        this.settingsValues = settingsValues;
     }
 }

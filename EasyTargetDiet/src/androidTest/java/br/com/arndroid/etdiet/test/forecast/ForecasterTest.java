@@ -7,8 +7,10 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.forecast.ForecastEntity;
 import br.com.arndroid.etdiet.forecast.Forecaster;
+import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
+import br.com.arndroid.etdiet.virtualweek.SettingsValues;
 import br.com.arndroid.etdiet.virtualweek.UsageSummary;
 
 public class ForecasterTest extends TestCase {
@@ -53,8 +55,11 @@ public class ForecasterTest extends TestCase {
         summary.setTotalExercise(0.0f);
         summary.setEntity(commonDaysEntity);
         summary.setUsage(emptyUsageSummary);
+        summary.setSettingsValues(new SettingsValues(
+                Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE,
+                Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST));
 
-        final ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
+        ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
         assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
     }
 
@@ -82,6 +87,9 @@ public class ForecasterTest extends TestCase {
         summary.setTotalExercise(0.0f);
         summary.setEntity(commonDaysEntity);
         summary.setUsage(greenSummary);
+        summary.setSettingsValues(new SettingsValues(
+                Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE,
+                Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST));
 
         ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
         assertEquals(ForecastEntity.STRAIGHT_TO_GOAL, forecastEntity.getForecastType());
@@ -116,6 +124,9 @@ public class ForecasterTest extends TestCase {
         summary.setTotalExercise(2.0f);
         summary.setEntity(commonDaysEntity);
         summary.setUsage(blueSummary);
+        summary.setSettingsValues(new SettingsValues(
+                Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE,
+                Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST));
 
         ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
         assertEquals(ForecastEntity.GOING_TO_GOAL_WITH_HELP, forecastEntity.getForecastType());
@@ -149,6 +160,9 @@ public class ForecasterTest extends TestCase {
         summary.setTotalExercise(2.0f);
         summary.setEntity(commonDaysEntity);
         summary.setUsage(redSummary);
+        summary.setSettingsValues(new SettingsValues(
+                Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE,
+                Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST));
 
         ForecastEntity forecastEntity = mForecaster.forecast(new Date(), summary);
         assertEquals(ForecastEntity.OUT_OF_GOAL, forecastEntity.getForecastType());
@@ -182,6 +196,9 @@ public class ForecasterTest extends TestCase {
         summary.setTotalExercise(0.0f);
         summary.setEntity(commonDaysEntity);
         summary.setUsage(yellowSummary);
+        summary.setSettingsValues(new SettingsValues(
+                Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE,
+                Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST));
 
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -211,5 +228,44 @@ public class ForecasterTest extends TestCase {
         yellowSummary.setSupperUsed(1.5f);
         forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
         assertEquals(ForecastEntity.OUT_OF_GOAL, forecastEntity.getForecastType());
+    }
+
+    public void testWithExerciseSettingsMustReturnCorrectValues() {
+        final DaysEntity commonDaysEntity = new DaysEntity(null, null, 26.0f,
+                EIGHT_HOURS, TEN_HOURS, 4.0f,
+                TEN_HOURS, TWELVE_HOURS, 0.5f,
+                TWELVE_HOURS, FOURTEEN_HOURS, 10.0f,
+                FOURTEEN_HOURS, SIXTEEN_HOURS, 2.0f,
+                SIXTEEN_HOURS, EIGHTEEN_HOURS, 8.0f,
+                EIGHTEEN_HOURS, TWENTY_HOURS, 1.5f,
+                null, null, null, null, null, null, null, null);
+
+        final UsageSummary someSummary = new UsageSummary();
+        someSummary.setBreakfastUsed(5.0f);
+        someSummary.setBrunchUsed(0.0f);
+        someSummary.setLunchUsed(0.0f);
+        someSummary.setSnackUsed(0.0f);
+        someSummary.setDinnerUsed(0.0f);
+        someSummary.setSupperUsed(0.0f);
+
+        final DaySummary summary = new DaySummary();
+        summary.setWeeklyAllowanceBeforeUsage(0.0f);
+        summary.setTotalExercise(10.0f);
+        summary.setEntity(commonDaysEntity);
+        summary.setUsage(someSummary);
+        summary.setSettingsValues(new SettingsValues(
+                Contract.ParametersHistory.EXERCISE_USE_MODE_USE_DONT_ACCUMULATE,
+                Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST));
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        ForecastEntity forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.GOING_TO_GOAL_WITH_HELP, forecastEntity.getForecastType());
+
+        summary.getSettingsValues().setExerciseUseMode(Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE);
+        forecastEntity = mForecaster.forecast(calendar.getTime(), summary);
+        assertEquals(ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN, forecastEntity.getForecastType());
     }
 }

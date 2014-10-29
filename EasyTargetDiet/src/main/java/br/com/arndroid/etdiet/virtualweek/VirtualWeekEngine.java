@@ -24,8 +24,6 @@ public class VirtualWeekEngine {
     private WeekPeriod mWeekPeriod;
     final private DaySummary[] mDaySummaryArray = new DaySummary[DAYS_IN_A_WEEK];
     private float mInitialWeeklyAllowance;
-    private int mExerciseUseMode;
-    private int mExerciseUseOrder;
 
     public VirtualWeekEngine(Context context, Date referenceDate) {
         mContext = context;
@@ -75,9 +73,11 @@ public class VirtualWeekEngine {
         boolean exerciseAfterUsageComputed = false;
         boolean weeklyAllowanceAfterUsageComputed = false;
 
+        final int exerciseUseMode = currentSummary.getSettingsValues().getExerciseUseMode();
+        final int exerciseUseOrder = currentSummary.getSettingsValues().getExerciseUseOrder();
         if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
-                && mExerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
-                && mExerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST) {
+                && exerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
+                && exerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST) {
             currentSummary.setDiaryAllowanceAfterUsage(
                     currentSummary.getDiaryAllowanceAfterUsage()
                             + currentSummary.getTotalExercise());
@@ -103,8 +103,8 @@ public class VirtualWeekEngine {
         }
 
         if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
-                && mExerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
-                && mExerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST) {
+                && exerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
+                && exerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST) {
             currentSummary.setDiaryAllowanceAfterUsage(currentSummary.getDiaryAllowanceAfterUsage()
                 + currentSummary.getTotalExercise());
             currentSummary.setExerciseAfterUsage(FLOAT_ZERO);
@@ -123,7 +123,7 @@ public class VirtualWeekEngine {
             currentSummary.setExerciseAfterUsage(currentSummary.getTotalExercise());
         }
 
-        if(mExerciseUseMode == Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE) {
+        if(exerciseUseMode == Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE) {
             currentSummary.setExerciseToCarry(currentSummary.getExerciseAfterUsage());
         } else {
             currentSummary.setExerciseToCarry(FLOAT_ZERO);
@@ -150,8 +150,11 @@ public class VirtualWeekEngine {
         Date lastWeekday = DateUtils.dateIdToDate(mDaySummaryArray[LAST_WEEKDAY_INDEX].getEntity().getDateId());
         mInitialWeeklyAllowance = parametersHistoryManager.getWeeklyAllowanceForDate(
                 lastWeekday);
-        mExerciseUseMode = parametersHistoryManager.getExerciseUseModeForDate(lastWeekday);
-        mExerciseUseOrder = parametersHistoryManager.getExerciseUseOrderForDate(lastWeekday);
+        final int exerciseUseMode = parametersHistoryManager.getExerciseUseModeForDate(lastWeekday);
+        final int exerciseUseOrder = parametersHistoryManager.getExerciseUseOrderForDate(lastWeekday);
+        for(int i = FIRST_WEEKDAY_INDEX; i < DAYS_IN_A_WEEK; i++) {
+            mDaySummaryArray[i].setSettingsValues(new SettingsValues(exerciseUseMode, exerciseUseOrder));
+        }
     }
 
     private DaysEntity buildDayForDate(Date date) {

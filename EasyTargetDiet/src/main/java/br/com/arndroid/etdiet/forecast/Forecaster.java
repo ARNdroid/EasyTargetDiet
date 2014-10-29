@@ -3,6 +3,7 @@ package br.com.arndroid.etdiet.forecast;
 import java.util.Date;
 
 import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
@@ -42,12 +43,17 @@ public class Forecaster {
         }
         final float forecast = used + toUse;
 
+        float reserve = summary.getWeeklyAllowanceBeforeUsage();
+        if (summary.getSettingsValues().getExerciseUseMode() != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE) {
+            reserve += summary.getTotalExercise();
+        }
+
         final ForecastEntity result = new ForecastEntity();
         if (forecast <= daysEntity.getAllowed()) {
             result.setForecastType(ForecastEntity.STRAIGHT_TO_GOAL);
-        } else if (forecast <= daysEntity.getAllowed() + summary.getWeeklyAllowanceBeforeUsage() + summary.getTotalExercise()) {
+        } else if (forecast <= daysEntity.getAllowed() + reserve) {
             result.setForecastType(ForecastEntity.GOING_TO_GOAL_WITH_HELP);
-        } else if (used <= daysEntity.getAllowed() + summary.getWeeklyAllowanceBeforeUsage() + summary.getTotalExercise()) {
+        } else if (used <= daysEntity.getAllowed() + reserve) {
             result.setForecastType(ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN);
         } else {
             result.setForecastType(ForecastEntity.OUT_OF_GOAL);
