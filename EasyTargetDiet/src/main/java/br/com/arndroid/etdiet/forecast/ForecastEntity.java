@@ -7,8 +7,12 @@ import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
-public class ForecastEntity implements Parcelable {
+public class ForecastEntity {
+
+    private static final int TWENTY_THREE_HOURS = 82800000;
+    private static final int FIFTY_NINE_MINUTES = 3540000;
 
     public static final int STRAIGHT_TO_GOAL = 0;
     public static final int GOING_TO_GOAL_WITH_HELP = 1;
@@ -86,39 +90,14 @@ public class ForecastEntity implements Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel destination, int flags) {
-        destination.writeString(DateUtils.dateToDateId(mReferenceDate));
-        destination.writeFloat(mUsed);
-        destination.writeFloat(mToUse);
-        destination.writeFloat(mForecastUsed);
-        destination.writeFloat(mBalanceFromDailyAllowance);
-        destination.writeInt(mForecastType);
-    }
-
-    public static final Parcelable.Creator<ForecastEntity> CREATOR
-            = new Parcelable.Creator<ForecastEntity>() {
-
-        public ForecastEntity createFromParcel(Parcel in) {
-            final ForecastEntity result = new ForecastEntity();
-
-            result.setReferenceDate(DateUtils.dateIdToDate(in.readString()));
-            result.setUsed(in.readFloat());
-            result.setToUse(in.readFloat());
-            result.setForecastUsed(in.readFloat());
-            result.setBalanceFromDailyAllowance(in.readFloat());
-            result.setForecastType(in.readInt());
-
-            return result;
+    public static ForecastEntity getInstanceForDaySummary(DaySummary daySummary) {
+        final String dateId = daySummary.getEntity().getDateId();
+        if (DateUtils.isDateIdCurrentDate(dateId)) {
+            return Forecaster.getInstance().forecast(new Date(), daySummary);
+        } else {
+            return Forecaster.getInstance().forecast(new Date(
+                    DateUtils.dateIdToDate(dateId).getTime()
+                            + TWENTY_THREE_HOURS + FIFTY_NINE_MINUTES), daySummary);
         }
-
-        public ForecastEntity[] newArray(int size) {
-            return new ForecastEntity[size];
-        }
-    };
+    }
 }

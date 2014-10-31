@@ -67,71 +67,81 @@ public class VirtualWeekEngine {
 
         }
 
-        currentSummary.setDiaryAllowanceAfterUsage(currentSummary.getEntity().getAllowed()
-                - currentUsage.getTotalUsed());
-
-        boolean exerciseAfterUsageComputed = false;
-        boolean weeklyAllowanceAfterUsageComputed = false;
-
-        final int exerciseUseMode = currentSummary.getSettingsValues().getExerciseUseMode();
-        final int exerciseUseOrder = currentSummary.getSettingsValues().getExerciseUseOrder();
-        if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
-                && exerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
-                && exerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST) {
-            currentSummary.setDiaryAllowanceAfterUsage(
-                    currentSummary.getDiaryAllowanceAfterUsage()
-                            + currentSummary.getTotalExercise());
-            currentSummary.setExerciseAfterUsage(FLOAT_ZERO);
-            exerciseAfterUsageComputed = true;
-            if(currentSummary.getDiaryAllowanceAfterUsage() > FLOAT_ZERO) {
-                currentSummary.setExerciseAfterUsage(
-                        currentSummary.getDiaryAllowanceAfterUsage());
-                currentSummary.setDiaryAllowanceAfterUsage(FLOAT_ZERO);
-            }
-        }
-
-        if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO) {
-            currentSummary.setDiaryAllowanceAfterUsage(
-                    currentSummary.getDiaryAllowanceAfterUsage()
-                            + currentSummary.getWeeklyAllowanceBeforeUsage());
-            currentSummary.setWeeklyAllowanceAfterUsage(FLOAT_ZERO);
-            weeklyAllowanceAfterUsageComputed = true;
-            if(currentSummary.getDiaryAllowanceAfterUsage() > FLOAT_ZERO) {
-                currentSummary.setWeeklyAllowanceAfterUsage(currentSummary.getDiaryAllowanceAfterUsage());
-                currentSummary.setDiaryAllowanceAfterUsage(FLOAT_ZERO);
-            }
-        }
-
-        if(currentSummary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
-                && exerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
-                && exerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST) {
-            currentSummary.setDiaryAllowanceAfterUsage(currentSummary.getDiaryAllowanceAfterUsage()
-                + currentSummary.getTotalExercise());
-            currentSummary.setExerciseAfterUsage(FLOAT_ZERO);
-            exerciseAfterUsageComputed = true;
-            if(currentSummary.getDiaryAllowanceAfterUsage() > FLOAT_ZERO) {
-                currentSummary.setExerciseAfterUsage(currentSummary.getDiaryAllowanceAfterUsage());
-                currentSummary.setDiaryAllowanceAfterUsage(FLOAT_ZERO);
-            }
-        }
-
-        if(!weeklyAllowanceAfterUsageComputed) {
-            currentSummary.setWeeklyAllowanceAfterUsage(currentSummary.getWeeklyAllowanceBeforeUsage());
-        }
-
-        if(!exerciseAfterUsageComputed) {
-            currentSummary.setExerciseAfterUsage(currentSummary.getTotalExercise());
-        }
-
-        if(exerciseUseMode == Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE) {
-            currentSummary.setExerciseToCarry(currentSummary.getExerciseAfterUsage());
-        } else {
-            currentSummary.setExerciseToCarry(FLOAT_ZERO);
-        }
+        computeSummary(currentSummary);
 
         if(oldWeeklyAllowanceAfterUsage != currentSummary.getWeeklyAllowanceAfterUsage()
                 || oldExerciseToCarry != currentSummary.getExerciseToCarry()) {
             if(index != LAST_WEEKDAY_INDEX) calculateDayAndNextIfNecessary(index + 1);
+        }
+    }
+
+    public static void computeSummary(DaySummary summary) {
+        /*
+            We have extracted this method to be used for VirtualWeekEngine internal calculations
+            and as a helper to forecast the value of my points at end of day.
+         */
+
+        final UsageSummary usage = summary.getUsage();
+        summary.setDiaryAllowanceAfterUsage(summary.getEntity().getAllowed()
+                - usage.getTotalUsed());
+
+        boolean exerciseAfterUsageComputed = false;
+        boolean weeklyAllowanceAfterUsageComputed = false;
+
+        final int exerciseUseMode = summary.getSettingsValues().getExerciseUseMode();
+        final int exerciseUseOrder = summary.getSettingsValues().getExerciseUseOrder();
+        if(summary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
+                && exerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
+                && exerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST) {
+            summary.setDiaryAllowanceAfterUsage(
+                    summary.getDiaryAllowanceAfterUsage()
+                            + summary.getTotalExercise());
+            summary.setExerciseAfterUsage(FLOAT_ZERO);
+            exerciseAfterUsageComputed = true;
+            if(summary.getDiaryAllowanceAfterUsage() > FLOAT_ZERO) {
+                summary.setExerciseAfterUsage(
+                        summary.getDiaryAllowanceAfterUsage());
+                summary.setDiaryAllowanceAfterUsage(FLOAT_ZERO);
+            }
+        }
+
+        if(summary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO) {
+            summary.setDiaryAllowanceAfterUsage(
+                    summary.getDiaryAllowanceAfterUsage()
+                            + summary.getWeeklyAllowanceBeforeUsage());
+            summary.setWeeklyAllowanceAfterUsage(FLOAT_ZERO);
+            weeklyAllowanceAfterUsageComputed = true;
+            if(summary.getDiaryAllowanceAfterUsage() > FLOAT_ZERO) {
+                summary.setWeeklyAllowanceAfterUsage(summary.getDiaryAllowanceAfterUsage());
+                summary.setDiaryAllowanceAfterUsage(FLOAT_ZERO);
+            }
+        }
+
+        if(summary.getDiaryAllowanceAfterUsage() < FLOAT_ZERO
+                && exerciseUseMode != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE
+                && exerciseUseOrder == Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST) {
+            summary.setDiaryAllowanceAfterUsage(summary.getDiaryAllowanceAfterUsage()
+                + summary.getTotalExercise());
+            summary.setExerciseAfterUsage(FLOAT_ZERO);
+            exerciseAfterUsageComputed = true;
+            if(summary.getDiaryAllowanceAfterUsage() > FLOAT_ZERO) {
+                summary.setExerciseAfterUsage(summary.getDiaryAllowanceAfterUsage());
+                summary.setDiaryAllowanceAfterUsage(FLOAT_ZERO);
+            }
+        }
+
+        if(!weeklyAllowanceAfterUsageComputed) {
+            summary.setWeeklyAllowanceAfterUsage(summary.getWeeklyAllowanceBeforeUsage());
+        }
+
+        if(!exerciseAfterUsageComputed) {
+            summary.setExerciseAfterUsage(summary.getTotalExercise());
+        }
+
+        if(exerciseUseMode == Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE) {
+            summary.setExerciseToCarry(summary.getExerciseAfterUsage());
+        } else {
+            summary.setExerciseToCarry(FLOAT_ZERO);
         }
     }
 

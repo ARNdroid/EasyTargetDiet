@@ -28,7 +28,7 @@
     <string name="no_show_week_day">MONDAY</string>
     <string name="no_show_card_title">SOME TITLE</string>
     <string name="my_points">MY POINTS</string>
-    <string name="my_points_at_end_of_day">MY POINTS AT END OF DAY</string>
+    <string name="my_points_at_end_of_day">FORECAST MY POINTS AT END OF DAY</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
     <string name="exercise">Exercise</string>
@@ -141,7 +141,7 @@
     <string name="to_use">To Use</string>
     <string name="plus_signal">+</string>
     <string name="forecast">Forecast</string>
-    <string name="balance">Balance</string>
+    <string name="balance">Balance (from Daily Allowance)</string>
     <string name="no_show_forecast_description">Some interesting description here!</string>
 
 </resources>

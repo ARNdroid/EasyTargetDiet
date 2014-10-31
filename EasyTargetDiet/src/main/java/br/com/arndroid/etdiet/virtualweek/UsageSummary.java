@@ -1,13 +1,18 @@
 package br.com.arndroid.etdiet.virtualweek;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import br.com.arndroid.etdiet.meals.Meals;
 
-public class UsageSummary {
+public class UsageSummary implements Parcelable {
+
+    // Attention: it's a Parcelable. The order and the number of fields matter.
     private float exerciseDone;
     private float breakfastUsed;
     private float brunchUsed;
     private float lunchUsed;
-    private float sneakUsed;
+    private float snackUsed;
     private float dinnerUsed;
     private float supperUsed;
 
@@ -18,7 +23,7 @@ public class UsageSummary {
         breakfastUsed = toClone.breakfastUsed;
         brunchUsed = toClone.brunchUsed;
         lunchUsed = toClone.lunchUsed;
-        sneakUsed = toClone.sneakUsed;
+        snackUsed = toClone.snackUsed;
         dinnerUsed = toClone.dinnerUsed;
         supperUsed = toClone.supperUsed;
     }
@@ -86,11 +91,11 @@ public class UsageSummary {
     }
 
     public float getSnackUsed() {
-        return sneakUsed;
+        return snackUsed;
     }
 
-    public void setSnackUsed(float sneakUsed) {
-        this.sneakUsed = sneakUsed;
+    public void setSnackUsed(float snackUsed) {
+        this.snackUsed = snackUsed;
     }
 
     public float getDinnerUsed() {
@@ -108,4 +113,42 @@ public class UsageSummary {
     public void setSupperUsed(float supperUsed) {
         this.supperUsed = supperUsed;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel destination, int flags) {
+        destination.writeFloat(exerciseDone);
+        destination.writeFloat(breakfastUsed);
+        destination.writeFloat(brunchUsed);
+        destination.writeFloat(lunchUsed);
+        destination.writeFloat(snackUsed);
+        destination.writeFloat(dinnerUsed);
+        destination.writeFloat(supperUsed);
+    }
+
+    public static final Parcelable.Creator<UsageSummary> CREATOR
+            = new Parcelable.Creator<UsageSummary>() {
+
+        public UsageSummary createFromParcel(Parcel in) {
+            final UsageSummary result = new UsageSummary();
+
+            result.setExerciseDone(in.readFloat());
+            result.setBreakfastUsed(in.readFloat());
+            result.setBrunchUsed(in.readFloat());
+            result.setLunchUsed(in.readFloat());
+            result.setSnackUsed(in.readFloat());
+            result.setDinnerUsed(in.readFloat());
+            result.setSupperUsed(in.readFloat());
+
+            return result;
+        }
+
+        public UsageSummary[] newArray(int size) {
+            return new UsageSummary[size];
+        }
+    };
 }

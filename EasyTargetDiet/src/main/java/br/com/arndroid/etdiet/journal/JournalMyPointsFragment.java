@@ -14,14 +14,10 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
-import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.forecast.ForecastActivity;
 import br.com.arndroid.etdiet.forecast.ForecastBalanceFragment;
 import br.com.arndroid.etdiet.forecast.ForecastEntity;
-import br.com.arndroid.etdiet.forecast.Forecaster;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
@@ -32,9 +28,6 @@ import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class JournalMyPointsFragment extends Fragment implements FragmentMenuReplier {
 
-    private static final int TWENTY_THREE_HOURS = 82800000;
-    private static final int FIFTY_NINE_MINUTES = 3540000;
-
     private String mCurrentDateId;
 
     private TextView mTxtTitle;
@@ -44,9 +37,9 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
     private ForecastMeterView mForecastMeter;
     private boolean mForecastMeterCanTouch;
 
-    // We need to save the last ForecastEntity used in refreshScreen() to use
+    // We need to save the last DaySummary used in refreshScreen() to use
     // with ForecastActivity.
-    ForecastEntity mForecastEntity;
+    private DaySummary mDaySummary;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,16 +76,15 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
                             v.setBackgroundColor(getResources().getColor(R.color.card_background));
 
                             final Bundle data = new Bundle();
-                            data.putParcelable(ForecastActivity.FORECAST_ENTITY_ACTION_KEY, mForecastEntity);
+                            data.putParcelable(ForecastActivity.DAY_SUMMARY_ACTION_KEY, mDaySummary);
 
                             ((ActivityActionCaller)getActivity()).onCallAction(R.id.forecast_balance_fragment,
                                     ForecastActivity.class, ForecastBalanceFragment.FORECAST_METER_SELECTED_ACTION_TAG, data);
-
-
                             return true;
                         default:
                             return false;
                     }
+
                 } else {
                     return false;
                 }
@@ -101,22 +93,16 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
     }
 
     public void refreshScreen(DaySummary daySummary) {
-        final String dateId = daySummary.getEntity().getDateId();
-        mCurrentDateId = dateId;
-        if (DateUtils.isDateIdCurrentDate(dateId)) {
-            mForecastEntity = Forecaster.getInstance().forecast(new Date(), daySummary);
-        } else {
-            mForecastEntity = Forecaster.getInstance().forecast(new Date(
-                    DateUtils.dateIdToDate(mCurrentDateId).getTime()
-                    + TWENTY_THREE_HOURS + FIFTY_NINE_MINUTES), daySummary);
-        }
-        mForecastMeter.setForecastType(mForecastEntity.getForecastType());
-        final float percentage = 1.0f - mForecastEntity.getToUse() / mForecastEntity.getForecastUsed();
+        mDaySummary = daySummary;
+        mCurrentDateId = mDaySummary.getEntity().getDateId();
+        final ForecastEntity forecastEntity = ForecastEntity.getInstanceForDaySummary(mDaySummary);
+        mForecastMeter.setForecastType(forecastEntity.getForecastType());
+        final float percentage = 1.0f - forecastEntity.getToUse() / forecastEntity.getForecastUsed();
         mForecastMeter.setPercentage(percentage);
 
-        mTxtPtsDay.setText(String.valueOf(daySummary.getDiaryAllowanceAfterUsage()));
-        mTxtPtsWeek.setText(String.valueOf(daySummary.getWeeklyAllowanceAfterUsage()));
-        mTxtPtsExercise.setText(String.valueOf(daySummary.getExerciseAfterUsage()));
+        mTxtPtsDay.setText(String.valueOf(mDaySummary.getDiaryAllowanceAfterUsage()));
+        mTxtPtsWeek.setText(String.valueOf(mDaySummary.getWeeklyAllowanceAfterUsage()));
+        mTxtPtsExercise.setText(String.valueOf(mDaySummary.getExerciseAfterUsage()));
     }
 
     @Override
