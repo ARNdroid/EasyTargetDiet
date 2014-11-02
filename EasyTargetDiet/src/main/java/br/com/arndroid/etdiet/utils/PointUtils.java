@@ -21,7 +21,15 @@ public class PointUtils {
 
     public static void valueToPickers(float value, NumberPicker pickerInteger,
                                       NumberPicker pickerDecimal) {
-        pickerInteger.setValue((int) Math.floor(value));
-        pickerDecimal.setValue(value % 1 == 0 ? 0 : 1);
+        pickerInteger.setValue(integerPositionFromPoint(value));
+        pickerDecimal.setValue(decimalPositionFromPoint(value));
+    }
+
+    public static int integerPositionFromPoint(float point) {
+        return (int) Math.floor(point);
+    }
+
+    public static int decimalPositionFromPoint(float point) {
+        return point % 1 == 0 ? 0 : 1;
     }
 }

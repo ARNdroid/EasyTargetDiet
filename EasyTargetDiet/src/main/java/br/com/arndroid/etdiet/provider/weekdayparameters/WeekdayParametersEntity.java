@@ -3,9 +3,12 @@ package br.com.arndroid.etdiet.provider.weekdayparameters;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.Date;
+
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class WeekdayParametersEntity extends AbstractEntity {
 
@@ -570,11 +573,14 @@ public class WeekdayParametersEntity extends AbstractEntity {
                 return getDinnerStartTime();
             case Meals.SUPPER:
                 return getSupperStartTime();
+            case Meals.EXERCISE:
+                return DateUtils.dateToTimeAsInt(new Date());
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public int getEndTimeForMeal(int meal) {
         switch (meal) {
             case Meals.BREAKFAST:
@@ -589,11 +595,14 @@ public class WeekdayParametersEntity extends AbstractEntity {
                 return getDinnerEndTime();
             case Meals.SUPPER:
                 return getSupperEndTime();
+            case Meals.EXERCISE:
+                return DateUtils.dateToTimeAsInt(new Date());
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public float getGoalForMeal(int meal) {
         switch (meal) {
             case Meals.BREAKFAST:
@@ -608,6 +617,8 @@ public class WeekdayParametersEntity extends AbstractEntity {
                 return getDinnerGoal();
             case Meals.SUPPER:
                 return getSupperGoal();
+            case Meals.EXERCISE:
+                return getExerciseGoal();
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
@@ -846,6 +857,7 @@ public class WeekdayParametersEntity extends AbstractEntity {
                     null : cursor.getInt(cursor.getColumnIndex(Contract.WeekdayParameters.SUPPLEMENT_GOAL)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static WeekdayParametersEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
         if (principal == null || complement == null) {
             throw new IllegalArgumentException("Principal and complement must be not null.");
@@ -995,6 +1007,7 @@ public class WeekdayParametersEntity extends AbstractEntity {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static WeekdayParametersEntity fromContentValues(ContentValues values) {
         if (values == null) {
             throw new IllegalArgumentException("Values must be not null.");

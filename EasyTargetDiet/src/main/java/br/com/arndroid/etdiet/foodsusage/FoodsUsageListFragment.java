@@ -20,7 +20,7 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
-import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
+import br.com.arndroid.etdiet.dialog.quickinsert.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
@@ -88,6 +88,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         final FoodsUsageEntity entity = manager.foodUsageFromId(id);
         final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
         dialog.setFoodsUsageEntity(entity);
+        dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
         dialog.show(getFragmentManager(), null);
     }
 
@@ -96,10 +97,10 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         switch (menuItemId) {
             case R.id.quick_add:
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mDateId,
-                        Meals.getMealFromPosition(mMeal), getDefaultTime(), null,
-                        getDefaultValue());
+                        Meals.getMealFromPosition(mMeal), null, null, null);
                 final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
                 dialog.setFoodsUsageEntity(entity);
+                dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
                 dialog.show(getFragmentManager(), null);
                 break;
             default:
@@ -148,21 +149,6 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         } else {
             mTxtEmpty.setVisibility(View.GONE);
             mLstList.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private float getDefaultValue() {
-        return Meals.preferredUsageForMealInDate(getActivity().getApplicationContext(),
-                Meals.getMealFromPosition(mMeal),
-                DateUtils.dateIdToDate(mDateId));
-    }
-
-    private int getDefaultTime() {
-        DaysEntity entity = new DaysManager(getActivity().getApplicationContext()).dayFromDate(DateUtils.dateIdToDate(mDateId));
-        if (mMeal == Meals.EXERCISE) {
-            return DateUtils.dateToTimeAsInt(new Date());
-        } else {
-            return entity.getStartTimeForMeal(mMeal);
         }
     }
 

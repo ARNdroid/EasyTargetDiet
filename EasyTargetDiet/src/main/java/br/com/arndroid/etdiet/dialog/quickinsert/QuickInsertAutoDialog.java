@@ -1,4 +1,4 @@
-package br.com.arndroid.etdiet.dialog;
+package br.com.arndroid.etdiet.dialog.quickinsert;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -30,17 +30,27 @@ import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.utils.PointUtils;
 
 public class QuickInsertAutoDialog extends DialogFragment implements
-        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
+        NumberPicker.OnValueChangeListener {
     /**
      * The auto means the dialog is responsible for data actualization, in others words,
      * doesn't need listeners.
      */
 
-    private static final String TITLE_KEY = "TITLE_KEY";
-    private static final String FOODS_USAGE_KEY = "FOODS_USAGE_KEY";
+    private static final Logger LOG = LoggerFactory.getLogger(QuickInsertAutoDialog.class);
+
+    public static final int ADD_MODE_JOURNAL = 0;
+    public static final int ADD_MODE_USAGE_LIST = 1;
+
+    private static final String STATE_KEY_TITLE = "STATE_KEY_TITLE";
+    private static final String STATE_KEY_ADD_MODE = "STATE_KEY_ADD_MODE";
+    private static final String STATE_KEY_FOODS_USAGE = "STATE_KEY_FOODS_USAGE";
 
     private String mTitle;
+    private int mAddMode;
     private FoodsUsageEntity mFoodsUsageEntity;
+
+    private BaseHintStrategy mHintStrategy;
     private Button mBtnDate;
     private Spinner mSpnMeal;
     private Button mBtnTime;
@@ -58,9 +68,22 @@ public class QuickInsertAutoDialog extends DialogFragment implements
         bindScreen(view);
 
         if (savedInstanceState != null) {
-            setTitle(savedInstanceState.getString(TITLE_KEY));
-            setFoodsUsageEntity((FoodsUsageEntity) savedInstanceState.getParcelable(FOODS_USAGE_KEY));
+            setTitle(savedInstanceState.getString(STATE_KEY_TITLE));
+            setAddMode(savedInstanceState.getInt(STATE_KEY_ADD_MODE));
+            setFoodsUsageEntity((FoodsUsageEntity) savedInstanceState.getParcelable(STATE_KEY_FOODS_USAGE));
         }
+
+        mHintStrategy = new SimpleHintStrategy();
+        final boolean isNew = mFoodsUsageEntity.getId() == null;
+        mHintStrategy.setDateAHint(isNew);
+        mHintStrategy.setTimeAHint(isNew);
+        if (mAddMode == ADD_MODE_JOURNAL) {
+            mHintStrategy.setMealAHint(isNew);
+        } else {
+            mHintStrategy.setMealAHint(mFoodsUsageEntity.getMeal() == null);
+        }
+        mHintStrategy.setValueAHint(isNew);
+        mHintStrategy.initialize(getActivity().getApplicationContext(), mFoodsUsageEntity);
 
         setupScreen();
         refreshScreen();
@@ -91,8 +114,9 @@ public class QuickInsertAutoDialog extends DialogFragment implements
     @Override
     public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         fromScreenToEntity();
-        outState.putString(TITLE_KEY, getTitle());
-        outState.putParcelable(FOODS_USAGE_KEY, getFoodsUsageEntity());
+        outState.putString(STATE_KEY_TITLE, getTitle());
+        outState.putInt(STATE_KEY_ADD_MODE, getAddMode());
+        outState.putParcelable(STATE_KEY_FOODS_USAGE, getFoodsUsageEntity());
         super.onSaveInstanceState(outState);
     }
 
@@ -131,12 +155,31 @@ public class QuickInsertAutoDialog extends DialogFragment implements
         mSpnMeal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                LOG.trace("Entering mSpnMeal.onItemSelected: position={}", position);
+                LOG.trace("Inside mSpnMeal.onItemSelected: mHintStrategy={} isMealAProgrammaticSelection()={}",
+                        mHintStrategy, isMealAProgrammaticSelection(position));
+
+                mFoodsUsageEntity.setMeal(Meals.getMealFromPosition(position));
+
+                if (!isMealAProgrammaticSelection(position)) {
+                    if (mHintStrategy.onMealChanged(getActivity().getApplicationContext(), mFoodsUsageEntity)) {
+                        fromEntityToScreen();
+                    }
+                }
+
+                // Reset programmatic selection control variable:
+                setIsMealAProgrammaticSelection(position);
+
                 if (TextUtils.isEmpty(mEdtDescription.getText())) {
                     final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
                             Meals.getMealFromPosition(position)));
                     final String hint = String.format(getString(R.string.quick_insert_description), mealName.toLowerCase());
                     mEdtDescription.setHint(hint);
                 }
+
+                LOG.trace("Inside mSpnMeal.onItemSelected: mHintStrategy{}", mHintStrategy);
+                LOG.trace("Leaving mSpnMeal.onItemSelected: position={}", position);
             }
 
             @Override
@@ -145,10 +188,28 @@ public class QuickInsertAutoDialog extends DialogFragment implements
             }
         });
 
+        mPickerInteger.setOnValueChangedListener(this);
+        mPickerDecimal.setOnValueChangedListener(this);
         mPickerInteger.setMinValue(0);
         mPickerInteger.setMaxValue(99);
-
         PointUtils.setPickerDecimal(mPickerDecimal);
+    }
+
+    private void setIsMealAProgrammaticSelection(int position) {
+        mSpnMeal.setTag(position);
+    }
+
+    private boolean isMealAProgrammaticSelection(int selection) {
+        return selection == mSpnMeal.getTag();
+    }
+
+    private void setIsPointAProgrammaticSelection(int integerValue, int decimalValue) {
+        mPickerInteger.setTag(integerValue);
+        mPickerDecimal.setTag(decimalValue);
+    }
+
+    private boolean isPointAProgrammaticSelection(int integerValue, int decimalValue) {
+        return integerValue == mPickerInteger.getTag() && decimalValue == mPickerDecimal.getTag();
     }
 
     private void refreshScreen() {
@@ -156,11 +217,27 @@ public class QuickInsertAutoDialog extends DialogFragment implements
     }
 
     private void fromEntityToScreen() {
+        LOG.trace("Entering fromEntityToScreen");
+        LOG.trace("Inside fromEntityToScreen: mHintStrategy={}", mHintStrategy);
+
         mBtnDate.setText(DateUtils.dateIdToFormattedString(mFoodsUsageEntity.getDateId()));
-        mSpnMeal.setSelection(mFoodsUsageEntity.getMeal());
+        doMealProgrammaticSelection(mFoodsUsageEntity.getMeal());
         mBtnTime.setText(DateUtils.timeToFormattedString(mFoodsUsageEntity.getTime()));
         mEdtDescription.setText(mFoodsUsageEntity.getDescription());
+        doPointProgrammaticSelection();
+
+        LOG.trace("Leaving fromEntityToScreen");
+    }
+
+    private void doPointProgrammaticSelection() {
+        setIsPointAProgrammaticSelection(PointUtils.integerPositionFromPoint(mFoodsUsageEntity.getValue()),
+                PointUtils.decimalPositionFromPoint(mFoodsUsageEntity.getValue()));
         PointUtils.valueToPickers(mFoodsUsageEntity.getValue(), mPickerInteger, mPickerDecimal);
+    }
+
+    private void doMealProgrammaticSelection(Integer position) {
+        setIsMealAProgrammaticSelection(position);
+        mSpnMeal.setSelection(position);
     }
 
     private void fromScreenToEntity() {
@@ -186,17 +263,34 @@ public class QuickInsertAutoDialog extends DialogFragment implements
         this.mFoodsUsageEntity = foodsUsageEntity;
     }
 
+    public int getAddMode() {
+        return mAddMode;
+    }
+
+    public void setAddMode(int addMode) {
+        mAddMode = addMode;
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         mFoodsUsageEntity.setDateId(DateUtils.datePickerToDateId(view));
-        // We cannot call refreshScreen() here or we will lose other fields changed...
-        mBtnDate.setText(DateUtils.dateIdToFormattedString(mFoodsUsageEntity.getDateId()));
+        mHintStrategy.onDateChanged(getActivity().getApplicationContext(), mFoodsUsageEntity);
+        fromEntityToScreen();
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mFoodsUsageEntity.setTime(DateUtils.timePickerToTimeAsInt(view));
-        // We cannot call refreshScreen() here or we will lose other fields changed...
-        mBtnTime.setText(DateUtils.timeToFormattedString(mFoodsUsageEntity.getTime()));
+        mHintStrategy.onTimeChanged(getActivity().getApplicationContext(), mFoodsUsageEntity);
+        fromEntityToScreen();
+    }
+
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        mFoodsUsageEntity.setValue(PointUtils.pickersToValue(mPickerInteger, mPickerDecimal));
+        if (!isPointAProgrammaticSelection(mPickerInteger.getValue(), mPickerDecimal.getValue())) {
+            mHintStrategy.onValueChanged(getActivity().getApplicationContext(), mFoodsUsageEntity);
+            fromEntityToScreen();
+        }
     }
 }

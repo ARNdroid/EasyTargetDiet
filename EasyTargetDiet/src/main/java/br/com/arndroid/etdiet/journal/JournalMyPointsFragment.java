@@ -14,7 +14,7 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
-import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
+import br.com.arndroid.etdiet.dialog.quickinsert.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.forecast.ForecastActivity;
 import br.com.arndroid.etdiet.forecast.ForecastBalanceFragment;
 import br.com.arndroid.etdiet.forecast.ForecastEntity;
@@ -110,35 +110,11 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
 
         switch (menuItemId) {
             case R.id.quick_add:
-
-                final Date now = new Date();
-                final boolean isCurrentDateToday = DateUtils.dateToDateId(now).equals(mCurrentDateId);
-
-                final int timeHint, mealHint;
-                final Date currentDate;
-                if (isCurrentDateToday) {
-                    currentDate = now;
-                    timeHint = DateUtils.dateToTimeAsInt(currentDate);
-                    mealHint = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(),
-                            timeHint, currentDate, false);
-                } else {
-                    final Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(DateUtils.dateIdToDate(mCurrentDateId));
-                    currentDate = calendar.getTime();
-                    mealHint = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(),
-                            -1, currentDate, true);
-                    final WeekdayParametersEntity entity = new WeekdayParametersManager(
-                            getActivity().getApplicationContext()).weekdayParametersFromWeekday(
-                            calendar.get(Calendar.DAY_OF_WEEK));
-                    timeHint = entity.getStartTimeForMeal(mealHint);
-                }
-
-                final float usageHint = Meals.preferredUsageForMealInDate(
-                        getActivity().getApplicationContext(), mealHint, currentDate);
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mCurrentDateId,
-                        mealHint, timeHint, null, usageHint);
+                        null, null, null, null);
                 final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
                 dialog.setFoodsUsageEntity(entity);
+                dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_JOURNAL);
                 dialog.show(getFragmentManager(), null);
                 break;
             default:

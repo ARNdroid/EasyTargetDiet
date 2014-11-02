@@ -12,7 +12,8 @@ import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDesc
 
 public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
 
-    // Attention: it's a Parcelable. The order and the number of fields matter.
+    // Mind the Bug:
+    // It's a Parcelable. The order and the number of fields matter.
     private Long id;
     private String dateId;
     private Integer meal;
