@@ -1,11 +1,8 @@
 package br.com.arndroid.etdiet.journal;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,18 +15,18 @@ import br.com.arndroid.etdiet.action.MenuUtils;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
-import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
+import br.com.arndroid.etdiet.utils.CurrentDateId;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.weights.WeightsActivity;
 
 public class JournalActivity extends Activity implements
-        JournalMyPointsFragment.JournalFragmentListener,
+        JournalDateFragment.JournalFragmentListener,
         VirtualWeek.ViewObserver,
         DateDialog.OnDateSetListener,
         IntegerDialog.OnIntegerSetListener,
@@ -37,8 +34,9 @@ public class JournalActivity extends Activity implements
         ActivityActionCaller {
 
     private VirtualWeek mVirtualWeek;
-    private String mCurrentDateId;
+    private CurrentDateId mCurrentDateId = new CurrentDateId();
     private int mCurrentMeal;
+    private JournalDateFragment mJournalDateFragment;
     private JournalMyPointsFragment mJournalMyPointsFragment;
     private JournalMyGoalsFragment mJournalMyGoalsFragment;
     private JournalMyMealsFragment mJournalMyMealsFragment;
@@ -51,23 +49,22 @@ public class JournalActivity extends Activity implements
 
         setContentView(R.layout.journal_activity);
 
+        mCurrentDateId.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-            mCurrentDateId = savedInstanceState.getString(Contract.Days.DATE_ID);
             mCurrentMeal = savedInstanceState.getInt(Contract.FoodsUsage.MEAL);
         } else {
             final Date currentDate = new Date();
-            mCurrentDateId = DateUtils.dateToDateId(currentDate);
             mCurrentMeal = Meals.preferredMealForTimeInDate(this,
-                    DateUtils.dateToTimeAsInt(currentDate), currentDate);
+                    DateUtils.dateToTimeAsInt(currentDate), currentDate, false);
         }
 
         bindScreen();
-
+        setupScreen();
     }
 
     @Override
-    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
-        outState.putString(Contract.Days.DATE_ID, mCurrentDateId);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        mCurrentDateId.onSaveInstanceState(outState);
         outState.putInt(Contract.FoodsUsage.MEAL, mCurrentMeal);
         super.onSaveInstanceState(outState);
     }
@@ -77,7 +74,7 @@ public class JournalActivity extends Activity implements
         super.onResume();
         mVirtualWeek = VirtualWeek.getInstance(getApplicationContext());
         mVirtualWeek.registerViewObserver(this);
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
@@ -114,6 +111,8 @@ public class JournalActivity extends Activity implements
     }
 
     private void bindScreen() {
+        mJournalDateFragment = (JournalDateFragment) getFragmentManager()
+                .findFragmentById(R.id.journal_date_fragment);
         mJournalMyPointsFragment = (JournalMyPointsFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_my_points_fragment);
         mJournalMyGoalsFragment = (JournalMyGoalsFragment) getFragmentManager()
@@ -126,7 +125,13 @@ public class JournalActivity extends Activity implements
                 .findFragmentById(R.id.foods_usage_list_fragment);
     }
 
+    private void setupScreen() {
+        mJournalMyPointsFragment.setTitle(getString(R.string.my_points));
+        mJournalMyPointsFragment.setForecastMeterCanTouch(true);
+    }
+
     private void refreshScreen(DaySummary daySummary) {
+        mJournalDateFragment.refreshScreen(daySummary);
         mJournalMyPointsFragment.refreshScreen(daySummary);
         mJournalMyGoalsFragment.refreshScreen(daySummary);
         mJournalMyMealsFragment.refreshScreen(daySummary);
@@ -136,17 +141,17 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onDayChanged(DaySummary summary) {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
     public void onFoodsUsageChanged(DaySummary summary) {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
     public void onParametersChanged() {
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 
     @Override
@@ -164,9 +169,9 @@ public class JournalActivity extends Activity implements
          Activity.
          The following code send the event to original Fragment again.
          */
-        if (tag.startsWith(JournalMyPointsFragment.OWNER_TAG)) {
+        if (tag.startsWith(JournalDateFragment.OWNER_TAG)) {
             ((DateDialog.OnDateSetListener) getFragmentManager()
-                    .findFragmentById(R.id.journal_my_points_fragment)).onDateSet(tag, actualDate);
+                    .findFragmentById(R.id.journal_date_fragment)).onDateSet(tag, actualDate);
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }
@@ -224,7 +229,8 @@ public class JournalActivity extends Activity implements
               the orientation changes (It's a design philosophy by Android Developers).
              */
             if (mFoodsUsageListFragment != null && mFoodsUsageListFragment.isInLayout()) {
-                mFoodsUsageListFragment.onDataChangedFromHolderActivity(mCurrentDateId, mCurrentMeal);
+                mFoodsUsageListFragment.onDataChangedFromHolderActivity(mCurrentDateId.getCurrentDateId(),
+                        mCurrentMeal);
             } else {
                 ActionUtils.callActionInFragmentByIntent(this, holderActivityClass, actionTag,
                         actionData);
@@ -238,7 +244,7 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onDateChanged(Date newDate) {
-        mCurrentDateId = DateUtils.dateToDateId(newDate);
-        mVirtualWeek.requestSummaryForDateId(this, mCurrentDateId);
+        mCurrentDateId.setCurrentDateId(DateUtils.dateToDateId(newDate));
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 }

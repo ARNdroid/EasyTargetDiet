@@ -10,6 +10,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 
 public class WeightsEntity extends AbstractEntity implements Parcelable {
 
+    // Attention: it's a Parcelable. The order and the number of fields matter.
     private Long id;
     private String dateId;
     private Integer time;

@@ -2,11 +2,16 @@ package br.com.arndroid.etdiet.meals;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
+import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.virtualweek.UsageSummary;
 
 public final class Meals {
 
@@ -75,47 +80,183 @@ public final class Meals {
                 throw new IllegalArgumentException("Invalid mealId=" + mealId);
         }
     }
-    public static int preferredMealForTimeInDate(Context context, int time, Date date) {
-        final DaysManager manager = new DaysManager(context);
-        DaysEntity entity = manager.dayFromDate(date);
 
-        if (time >= entity.getBreakfastStartTime() && time <= entity.getBreakfastEndTime()) {
-            return BREAKFAST;
-        } else if (time >= entity.getBrunchStartTime() && time <= entity.getBrunchEndTime()) {
-            return BRUNCH;
-        } else if (time >= entity.getLunchStartTime() && time <= entity.getLunchEndTime()) {
-            return LUNCH;
-        } else if (time >= entity.getSnackStartTime() && time <= entity.getSnackEndTime()) {
-            return SNACK;
-        } else if (time >= entity.getDinnerStartTime() && time <= entity.getDinnerEndTime()) {
-            return DINNER;
-        } else if (time >= entity.getSupperStartTime() && time <= entity.getSupperEndTime()) {
-            return SUPPER;
-        } else {
-            return BREAKFAST;
+    public static int preferredMealForTimeInDate(Context context, int time, Date date, boolean fillMode) {
+        return fillMode ? adviceMealFillMode(context, date) : adviceMeal(context, time, date);
+    }
+
+    private static int adviceMealFillMode(Context context, Date date) {
+        final DaysEntity daysEntity = new DaysManager(context).dayFromDate(date);
+        final UsageSummary usageSummary = new FoodsUsageManager(context).usageSummaryForDateId(
+                DateUtils.dateToDateId(date));
+
+        final MealsAdvisorHelper advisorHelper = new MealsAdvisorHelper();
+
+        final int onlyMeals = getMealsCount() - 1;
+        List<Integer> found = new ArrayList<Integer>(onlyMeals);
+        List<Integer> candidates = new ArrayList<Integer>(onlyMeals);
+        List<Integer> temp;
+        for (int candidate = 0; candidate < onlyMeals; candidate++) {
+            candidates.add(candidate);
         }
+
+        // First of all, find meals with points < goal.
+        advisorHelper.findMealsWithPointsMinorGoal(daysEntity, usageSummary, candidates, found);
+        if (found.size() == 1) { return found.get(0); }
+        if (found.isEmpty()) {
+            // No meals with points < goal. Try to find meals with NO points.
+            advisorHelper.findMealsWithNoPoints(usageSummary, candidates, found);
+            if (found.size() == 1) { return found.get(0); }
+            if (found.isEmpty()) { return candidates.get(candidates.size() - 1); }
+            if (found.size() > 1) { return found.get(0); }
+        }
+        if (found.size() > 1) {
+            // Many meals with points < goal. Try to find meals with NO points.
+            temp = candidates; candidates = found; found = temp;
+            advisorHelper.findMealsWithNoPoints(usageSummary, candidates, found);
+            if (found.size() == 1) { return found.get(0); }
+            if (found.isEmpty()) { return candidates.get(0); }
+            if (found.size() > 1) { return found.get(0); }
+        }
+
+        throw new IllegalStateException("here we must have returned smt before.");
+    }
+
+    private static int adviceMeal(Context context, int time, Date date) {
+        final DaysEntity daysEntity = new DaysManager(context).dayFromDate(date);
+        final UsageSummary usageSummary = new FoodsUsageManager(context).usageSummaryForDateId(
+                DateUtils.dateToDateId(date));
+
+        final MealsAdvisorHelper advisorHelper = new MealsAdvisorHelper();
+
+        final int onlyMeals = getMealsCount() - 1;
+        List<Integer> found = new ArrayList<Integer>(onlyMeals);
+        List<Integer> candidates = new ArrayList<Integer>(onlyMeals);
+        List<Integer> temp;
+        for (int candidate = 0; candidate < onlyMeals; candidate++) {
+            candidates.add(candidate);
+        }
+
+        // First of all, find meals in period
+        advisorHelper.findMealsInPeriod(time, daysEntity, candidates, found);
+        if (found.size() == 1) { return found.get(0); }
+        if (found.isEmpty()) {
+            // No meals in period.
+
+            // Try to find a union of closest meals ending before and closest meals starting after that
+            final List<Integer> closestUnion = new ArrayList<Integer>(onlyMeals);
+            advisorHelper.findClosestMealsEndingBeforeTime(time, daysEntity, candidates, found);
+            closestUnion.addAll(found);
+            advisorHelper.findClosestMealsStartingAfterTime(time, daysEntity, candidates, found);
+            closestUnion.addAll(found);
+
+            // From union of closest meals, try to find meals with no points
+            advisorHelper.findMealsWithNoPoints(usageSummary, closestUnion, found);
+            if (found.size() == 1) { return found.get(0); }
+            if (found.isEmpty()) {
+                // Meals from union of closest only with points. Find the closest one from that union
+                advisorHelper.findClosestNeighborsForTime(time, daysEntity, closestUnion, found);
+                if (found.size() == 1) { return found.get(0); }
+                if (found.size() > 1) { return found.get(found.size() - 1); }
+                if (found.isEmpty()) { throw new IllegalStateException("here we must have found smt."); }
+            } else {
+                // Some meals from union of closest with no points. Find the closest one from this set
+                temp = candidates; candidates = found; found = temp;
+                advisorHelper.findClosestNeighborsForTime(time, daysEntity, candidates, found);
+                if (found.size() == 1) { return found.get(0); }
+                if (found.size() > 1) { return found.get(0); }
+                if (found.isEmpty()) { throw new IllegalStateException("here we must have found smt."); }
+            }
+        } else {
+            // Some meals in period. Try to find meals without points.
+            temp = candidates; candidates = found; found = temp;
+            advisorHelper.findMealsWithNoPoints(usageSummary, candidates, found);
+            if (found.size() == 1) { return found.get(0); }
+            if (found.isEmpty()) {
+                // Meals in period only with points. Find meals with minor interval
+                advisorHelper.findMealsWithMinorInterval(daysEntity, candidates, found);
+                if (found.size() == 1) { return found.get(0); }
+                if (found.size() > 1) { return found.get(found.size() - 1); }
+                if (found.isEmpty()) { throw new IllegalStateException("here we must have found smt."); }
+            } else {
+                // Some meals in period without points. Find meals starting early.
+                temp = candidates; candidates = found; found = temp;
+                advisorHelper.findMealsStartingEarly(daysEntity, candidates, found);
+                if (found.size() == 1) { return found.get(0); }
+                if (found.size() > 1) {
+                    // Some meal in period without points and starting at same time.
+                    // Find meals with minor interval.
+                    temp = candidates; candidates = found; found = temp;
+                    advisorHelper.findMealsWithMinorInterval(daysEntity, candidates, found);
+                    if (found.size() == 1) { return found.get(0); }
+                    if (found.size() > 1) { return found.get(0); }
+                    if (found.isEmpty()) { throw new IllegalStateException("here we must have found smt."); }
+                }
+                if (found.isEmpty()) { throw new IllegalStateException("here we must have found smt."); }
+            }
+        }
+
+        throw new IllegalStateException("here we must have returned smt before.");
     }
 
     public static float preferredUsageForMealInDate(Context context, int meal, Date date) {
-        final DaysManager manager = new DaysManager(context);
-        DaysEntity entity = manager.dayFromDate(date);
+        DaysEntity entity = new DaysManager(context).dayFromDate(date);
+        UsageSummary summary = new FoodsUsageManager(context).usageSummaryForDateId(DateUtils.dateToDateId(date));
+
+        float mealGoal, mealUsed;
         switch (meal) {
             case BREAKFAST:
-                return entity.getBreakfastGoal();
+                mealGoal = entity.getBreakfastGoal();
+                break;
             case BRUNCH:
-                return entity.getBrunchGoal();
+                mealGoal = entity.getBrunchGoal();
+                break;
             case LUNCH:
-                return entity.getLunchGoal();
+                mealGoal = entity.getLunchGoal();
+                break;
             case SNACK:
-                return entity.getSnackGoal();
+                mealGoal = entity.getSnackGoal();
+                break;
             case DINNER:
-                return entity.getDinnerGoal();
+                mealGoal = entity.getDinnerGoal();
+                break;
             case SUPPER:
-                return entity.getSupperGoal();
+                mealGoal = entity.getSupperGoal();
+                break;
             case EXERCISE:
-                return entity.getExerciseGoal();
+                mealGoal = entity.getExerciseGoal();
+                break;
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal);
         }
+
+        switch (meal) {
+            case BREAKFAST:
+                mealUsed = summary.getBreakfastUsed();
+                break;
+            case BRUNCH:
+                mealUsed = summary.getBrunchUsed();
+                break;
+            case LUNCH:
+                mealUsed = summary.getLunchUsed();
+                break;
+            case SNACK:
+                mealUsed = summary.getSnackUsed();
+                break;
+            case DINNER:
+                mealUsed = summary.getDinnerUsed();
+                break;
+            case SUPPER:
+                mealUsed = summary.getSupperUsed();
+                break;
+            case EXERCISE:
+                mealUsed = summary.getExerciseDone();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal);
+        }
+
+        final float preferredUsage = mealGoal - mealUsed;
+        return preferredUsage < 0 ? 0 : preferredUsage;
     }
 }

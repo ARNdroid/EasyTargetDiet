@@ -68,7 +68,7 @@ public class SettingsMainFragment extends Fragment implements
     private void refreshScreen() {
         final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
                 .getApplicationContext());
-        final String unitsActualValueFormat = getResources().getString(R.string.units_actual_value);
+        final String unitsActualValueFormat = getString(R.string.units_actual_value);
         mTxtDailyAllowanceActualValue.setText(String.format(unitsActualValueFormat,
                 manager.getDailyAllowanceForDate(new Date())));
         mTxtWeeklyAllowanceActualValue.setText(String.format(unitsActualValueFormat,
@@ -84,19 +84,19 @@ public class SettingsMainFragment extends Fragment implements
     private String trackingWeekdayDescription(int trackingWeekday) {
         switch (trackingWeekday) {
             case Calendar.SUNDAY:
-                return getResources().getString(R.string.sunday);
+                return getString(R.string.sunday);
             case Calendar.MONDAY:
-                return getResources().getString(R.string.monday);
+                return getString(R.string.monday);
             case Calendar.TUESDAY:
-                return getResources().getString(R.string.tuesday);
+                return getString(R.string.tuesday);
             case Calendar.WEDNESDAY:
-                return getResources().getString(R.string.wednesday);
+                return getString(R.string.wednesday);
             case Calendar.THURSDAY:
-                return getResources().getString(R.string.thursday);
+                return getString(R.string.thursday);
             case Calendar.FRIDAY:
-                return getResources().getString(R.string.friday);
+                return getString(R.string.friday);
             case Calendar.SATURDAY:
-                return getResources().getString(R.string.saturday);
+                return getString(R.string.saturday);
             default:
                 throw new IllegalArgumentException("Invalid trackingWeekday=" + trackingWeekday);
         }
@@ -105,9 +105,9 @@ public class SettingsMainFragment extends Fragment implements
     private String exerciseUseOrderDescription(int exerciseUseOrder) {
         switch (exerciseUseOrder) {
             case Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_EXERCISES_FIRST:
-                return getResources().getString(R.string.exercise_use_order_use_exercises_first);
+                return getString(R.string.exercise_use_order_use_exercises_first);
             case Contract.ParametersHistory.EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST:
-                return getResources().getString(R.string.exercise_use_order_use_weekly_allowance_first);
+                return getString(R.string.exercise_use_order_use_weekly_allowance_first);
             default:
                 throw new IllegalArgumentException("Invalid exerciseUseOrder=" + exerciseUseOrder);
         }
@@ -116,11 +116,11 @@ public class SettingsMainFragment extends Fragment implements
     private String exerciseUseModeDescription(int exerciseUseMode) {
         switch (exerciseUseMode) {
             case Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE:
-                return getResources().getString(R.string.exercise_use_mode_dont_use);
+                return getString(R.string.exercise_use_mode_dont_use);
             case Contract.ParametersHistory.EXERCISE_USE_MODE_USE_DONT_ACCUMULATE:
-                return getResources().getString(R.string.exercise_use_mode_use_dont_accumulate);
+                return getString(R.string.exercise_use_mode_use_dont_accumulate);
             case Contract.ParametersHistory.EXERCISE_USE_MODE_USE_AND_ACCUMULATE:
-                return getResources().getString(R.string.exercise_use_mode_use_and_accumulate);
+                return getString(R.string.exercise_use_mode_use_and_accumulate);
             default:
                 throw new IllegalArgumentException("Invalid exerciseUseMode=" + exerciseUseMode);
         }
@@ -145,7 +145,7 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final PointDialog dialog = new PointDialog();
-                dialog.setTitle(getResources().getString(R.string.daily_allowance));
+                dialog.setTitle(getString(R.string.daily_allowance));
                 dialog.setMinIntegerValue(0);
                 dialog.setMaxIntegerValue(99);
                 final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
@@ -160,7 +160,7 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final PointDialog dialog = new PointDialog();
-                dialog.setTitle(getResources().getString(R.string.weekly_allowance));
+                dialog.setTitle(getString(R.string.weekly_allowance));
                 dialog.setMinIntegerValue(0);
                 dialog.setMaxIntegerValue(99);
                 final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
@@ -175,7 +175,7 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final StringListDialog dialog = new StringListDialog();
-                dialog.setTitle(getResources().getString(R.string.exercise_use_mode));
+                dialog.setTitle(getString(R.string.exercise_use_mode));
                 dialog.setStringListId(R.array.exercise_use_mode_list);
                 final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
                         .getApplicationContext());
@@ -189,7 +189,7 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final StringListDialog dialog = new StringListDialog();
-                dialog.setTitle(getResources().getString(R.string.exercise_use_order));
+                dialog.setTitle(getString(R.string.exercise_use_order));
                 dialog.setStringListId(R.array.exercise_use_order_list);
                 final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
                         .getApplicationContext());
@@ -203,7 +203,7 @@ public class SettingsMainFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final StringListDialog dialog = new StringListDialog();
-                dialog.setTitle(getResources().getString(R.string.tracking_weekday));
+                dialog.setTitle(getString(R.string.tracking_weekday));
                 dialog.setStringListId(R.array.weekdays_name_list);
                 final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
                         .getApplicationContext());

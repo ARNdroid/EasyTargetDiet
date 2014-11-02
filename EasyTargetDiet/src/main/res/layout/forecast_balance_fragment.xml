@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        style="@style/CardFont.Header"
+        android:id="@+id/lblBalanceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/balance_title" />
+
+    <View
+        style="@style/HeaderDivider" />
+
+    <LinearLayout
+        android:id="@+id/used_to_use_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/padding_after_header_divider"
+        android:paddingBottom="@dimen/padding_after_header_divider"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/default_view_padding">
+
+            <TextView
+                style="@style/CardFont.Item.XLarge"
+                android:id="@+id/txtUsed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_show_two_digits_with_decimal_number" />
+
+            <TextView
+                style="@style/CardFont.Item.Small"
+                android:id="@+id/lblUsed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/used" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/CardFont.Data.Large"
+            android:id="@+id/lblPlusSignal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_view_padding"
+            android:text="@string/plus_signal" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/default_view_padding">
+
+            <TextView
+                style="@style/CardFont.Item.XLarge"
+                android:id="@+id/txtToUse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_show_two_digits_with_decimal_number" />
+
+            <TextView
+                style="@style/CardFont.Item.Small"
+                android:id="@+id/lblToUse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/to_use" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal"
+        android:id="@+id/divForecast"
+        android:layout_width="200dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/padding_after_header_divider">
+
+        <TextView
+            style="@style/CardFont.Data.Large"
+            android:id="@+id/txtForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_show_two_digits_with_decimal_number" />
+
+        <TextView
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/lblForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forecast" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/HeaderDivider" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/padding_after_header_divider">
+
+        <TextView
+            style="@style/CardFont.Data.XLarge"
+            android:id="@+id/txtBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_show_two_digits_with_decimal_number" />
+
+        <TextView
+            style="@style/CardFont.Item.Small"
+            android:id="@+id/lblBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/ItemDividerHorizontal"
+        android:id="@+id/divForecastDescription"
+        android:layout_width="200dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        style="@style/CardFont.Item"
+        android:id="@+id/txtForecastDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/padding_after_header_divider"
+        android:text="@string/no_show_forecast_description" />
+
+</LinearLayout>

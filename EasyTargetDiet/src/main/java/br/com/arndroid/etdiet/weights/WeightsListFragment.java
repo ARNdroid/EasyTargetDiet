@@ -103,14 +103,14 @@ public class WeightsListFragment extends ListFragment implements FragmentMenuRep
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, null);
-                builder.setMessage(String.format(getResources().getString(R.string.delete_weight_msg),
+                builder.setMessage(String.format(getString(R.string.delete_weight_msg),
                         entity.getWeight(), DateUtils.dateIdToFormattedString(entity.getDateId()),
                         DateUtils.timeToFormattedString(entity.getTime())));
                 builder.create().show();
                 return true;
             }
         });
-        mTxtEmpty.setText(getResources().getText(R.string.list_empty_weights));
+        mTxtEmpty.setText(getString(R.string.list_empty_weights));
     }
 
     private void refreshScreen() {

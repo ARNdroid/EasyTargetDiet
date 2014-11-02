@@ -212,13 +212,17 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
         viewObservers.remove(observer);
     }
 
-    public void requestSummaryForDateId(ViewObserver observer, String dateId) {
+    public void requestSummaryForObserverAndDateId(ViewObserver observer, String dateId) {
+        observer.onSummaryRequested(requestSummaryForDateId(dateId));
+    }
+
+    public DaySummary requestSummaryForDateId(String dateId) {
         final DaySummary summary = mVirtualWeekEngine.daySummaryForDateId(dateId);
         if (summary != null) {
-            observer.onSummaryRequested(summary);
+            return summary;
         } else {
             swapVirtualWeek(dateId);
-            requestSummaryForDateId(observer, dateId);
+            return requestSummaryForDateId(dateId);
         }
     }
 

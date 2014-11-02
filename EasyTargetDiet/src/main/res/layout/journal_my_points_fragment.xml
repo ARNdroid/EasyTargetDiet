@@ -1,28 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:etdview="http://schemas.android.com/apk/res-auto"
 
-    <include
-        style="@style/Card"
-        layout="@layout/include_journal_date"
-        android:id="@+id/layDate"
+    style="@style/Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/CardFont.Header"
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/no_show_card_title" />
 
-        />
+    <View
+        style="@style/HeaderDivider" />
 
-    <include
-        style="@style/Card"
-        layout="@layout/include_journal_my_points"
-        android:id="@+id/layMyPoints"
-        android:layout_marginLeft="@dimen/card_margin"
+    <LinearLayout
+        android:id="@+id/used_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/layDate"
-        android:layout_alignTop="@id/layDate"
-        android:layout_alignBottom="@id/layDate" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/padding_after_header_divider"
+        android:baselineAligned="false">
 
-</RelativeLayout>
+        <br.com.arndroid.etdiet.views.ForecastMeterView
+            android:id="@+id/forecastMeter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding ="@dimen/default_view_padding"
+            etdview:percentage="0.6"
+            etdview:forecastType="0"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/default_view_padding">
+
+            <TextView
+                style="@style/CardFont.Data.XLarge"
+                android:id="@+id/txtPtsDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_show_two_digits_with_decimal_number" />
+
+            <TextView
+                style="@style/CardFont.Section.Large"
+                android:id="@+id/lblPtsDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/day" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/default_view_padding">
+
+            <TextView
+                style="@style/CardFont.Data"
+                android:id="@+id/txtPtsWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_show_two_digits_with_decimal_number" />
+
+            <TextView
+                style="@style/CardFont.Section"
+                android:id="@+id/lblPtsWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/week" />
+
+            <TextView
+                style="@style/CardFont.Data"
+                android:id="@+id/txtPtsExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_view_padding"
+                android:text="@string/no_show_two_digits_with_decimal_number" />
+
+            <TextView
+                style="@style/CardFont.Section"
+                android:id="@+id/lblPtsExercises"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exercise" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

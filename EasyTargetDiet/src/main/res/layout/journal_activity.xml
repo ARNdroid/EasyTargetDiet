@@ -9,15 +9,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <fragment
-            class="br.com.arndroid.etdiet.journal.JournalMyPointsFragment"
-            android:id="@+id/journal_my_points_fragment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            tools:layout="@layout/journal_my_points_fragment" />
+            android:orientation="horizontal">
+
+            <fragment
+                class="br.com.arndroid.etdiet.journal.JournalDateFragment"
+                android:id="@+id/journal_date_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                tools:layout="@layout/journal_date_fragment" />
+
+            <fragment
+                class="br.com.arndroid.etdiet.journal.JournalMyPointsFragment"
+                android:id="@+id/journal_my_points_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                tools:layout="@layout/journal_my_points_fragment" />
+
+
+        </LinearLayout>
 
         <fragment
             class="br.com.arndroid.etdiet.journal.JournalMyGoalsFragment"

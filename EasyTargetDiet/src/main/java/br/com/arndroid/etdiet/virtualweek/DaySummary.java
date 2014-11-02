@@ -1,11 +1,16 @@
 package br.com.arndroid.etdiet.virtualweek;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 
-public class DaySummary {
+public class DaySummary implements Parcelable {
 
-    private DaysEntity entity;
-    private UsageSummary usage;
+    // Attention: it's a Parcelable. The order and the number of fields matter.
+    private DaysEntity daysEntity;
+    private UsageSummary usageSummary;
+    private SettingsValues settingsValues;
     private float exerciseAfterUsage;
     private float exerciseToCarry;
     private float totalExercise; // Exercise done + (if allowed) exercise to carry from previous day
@@ -16,8 +21,9 @@ public class DaySummary {
     public DaySummary() {}
 
     public DaySummary(DaySummary toClone) {
-        entity = new DaysEntity(toClone.entity);
-        usage = new UsageSummary(toClone.usage);
+        daysEntity = new DaysEntity(toClone.daysEntity);
+        usageSummary = new UsageSummary(toClone.usageSummary);
+        settingsValues = new SettingsValues(toClone.settingsValues);
         exerciseAfterUsage = toClone.exerciseAfterUsage;
         exerciseToCarry = toClone.exerciseToCarry;
         totalExercise = toClone.totalExercise;
@@ -27,11 +33,11 @@ public class DaySummary {
     }
 
     public UsageSummary getUsage() {
-        return usage;
+        return usageSummary;
     }
 
     public void setUsage(UsageSummary usage) {
-        this.usage = usage;
+        this.usageSummary = usage;
     }
 
 
@@ -44,11 +50,11 @@ public class DaySummary {
     }
 
     public DaysEntity getEntity() {
-        return entity;
+        return daysEntity;
     }
 
     public void setEntity(DaysEntity entity) {
-        this.entity = entity;
+        this.daysEntity = entity;
     }
 
     public void setTotalExercise(float totalExercise) {
@@ -90,4 +96,53 @@ public class DaySummary {
     public float getWeeklyAllowanceAfterUsage() {
         return weeklyAllowanceAfterUsage;
     }
+
+    public SettingsValues getSettingsValues() {
+        return settingsValues;
+    }
+
+    public void setSettingsValues(SettingsValues settingsValues) {
+        this.settingsValues = settingsValues;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel destination, int flags) {
+        destination.writeParcelable(daysEntity, flags);
+        destination.writeParcelable(usageSummary, flags);
+        destination.writeParcelable(settingsValues,flags);
+        destination.writeFloat(exerciseAfterUsage);
+        destination.writeFloat(exerciseToCarry);
+        destination.writeFloat(totalExercise);
+        destination.writeFloat(diaryAllowanceAfterUsage);
+        destination.writeFloat(weeklyAllowanceBeforeUsage);
+        destination.writeFloat(weeklyAllowanceAfterUsage);
+    }
+
+    public static final Parcelable.Creator<DaySummary> CREATOR
+            = new Parcelable.Creator<DaySummary>() {
+
+        public DaySummary createFromParcel(Parcel in) {
+            final DaySummary result = new DaySummary();
+            result.setEntity((DaysEntity) in.readParcelable(DaysEntity.class.getClassLoader()));
+            result.setUsage((UsageSummary) in.readParcelable(UsageSummary.class.getClassLoader()));
+            result.setSettingsValues((SettingsValues) in.readParcelable(SettingsValues.class.getClassLoader()));
+            result.setExerciseAfterUsage(in.readFloat());
+            result.setExerciseToCarry(in.readFloat());
+            result.setTotalExercise(in.readFloat());
+            result.setDiaryAllowanceAfterUsage(in.readFloat());
+            result.setWeeklyAllowanceBeforeUsage(in.readFloat());
+            result.setWeeklyAllowanceAfterUsage(in.readFloat());
+
+            return result;
+        }
+
+        public DaySummary[] newArray(int size) {
+            return new DaySummary[size];
+        }
+    };
 }

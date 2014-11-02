@@ -2,12 +2,18 @@ package br.com.arndroid.etdiet.provider.days;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 
-public class DaysEntity extends AbstractEntity {
+public class DaysEntity extends AbstractEntity implements Parcelable {
 
+    public static final int NO_TIME = -1;
+
+    // Attention: it's a Parcelable. The order and the number of fields matter.
     private Long id;
     private String dateId;
     private Float allowed;
@@ -41,6 +47,8 @@ public class DaysEntity extends AbstractEntity {
 	/*
 	 * Implementation
 	 */
+
+    protected DaysEntity() {}
 
     public DaysEntity(Long id, String dateId, Float allowed, Integer breakfastStartTime, Integer breakfastEndTime,
                       Float breakfastGoal, Integer brunchStartTime, Integer brunchEndTime, Float brunchGoal,
@@ -698,6 +706,69 @@ public class DaysEntity extends AbstractEntity {
                 + "]";
     }
 
+    public int getStartTimeForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastStartTime();
+            case Meals.BRUNCH:
+                return getBrunchStartTime();
+            case Meals.LUNCH:
+                return getLunchStartTime();
+            case Meals.SNACK:
+                return getSnackStartTime();
+            case Meals.DINNER:
+                return getDinnerStartTime();
+            case Meals.SUPPER:
+                return getSupperStartTime();
+            case Meals.EXERCISE:
+                return NO_TIME;
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public int getEndTimeForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastEndTime();
+            case Meals.BRUNCH:
+                return getBrunchEndTime();
+            case Meals.LUNCH:
+                return getLunchEndTime();
+            case Meals.SNACK:
+                return getSnackEndTime();
+            case Meals.DINNER:
+                return getDinnerEndTime();
+            case Meals.SUPPER:
+                return getSupperEndTime();
+            case Meals.EXERCISE:
+                return NO_TIME;
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public float getGoalForMeal(int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                return getBreakfastGoal();
+            case Meals.BRUNCH:
+                return getBrunchGoal();
+            case Meals.LUNCH:
+                return getLunchGoal();
+            case Meals.SNACK:
+                return getSnackGoal();
+            case Meals.DINNER:
+                return getDinnerGoal();
+            case Meals.SUPPER:
+                return getSupperGoal();
+            case Meals.EXERCISE:
+                return getExerciseGoal();
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
     public Long getId() {
         return id;
     }
@@ -999,6 +1070,7 @@ public class DaysEntity extends AbstractEntity {
                     null : cursor.getString(cursor.getColumnIndex(Contract.Days.NOTE)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static DaysEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
         if (principal == null || complement == null) {
             throw new IllegalArgumentException("Principal and complement must be not null.");
@@ -1184,6 +1256,7 @@ public class DaysEntity extends AbstractEntity {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static DaysEntity fromContentValues(ContentValues values) {
         if (values == null) {
             throw new IllegalArgumentException("Values must be not null.");
@@ -1220,4 +1293,86 @@ public class DaysEntity extends AbstractEntity {
                 values.getAsInteger(Contract.Days.SUPPLEMENT_GOAL),
                 values.getAsString(Contract.Days.NOTE));
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel destination, int flags) {
+        destination.writeLong(id);
+        destination.writeString(dateId);
+        destination.writeFloat(allowed);
+        destination.writeInt(breakfastStartTime);
+        destination.writeInt(breakfastEndTime);
+        destination.writeFloat(breakfastGoal);
+        destination.writeInt(brunchStartTime);
+        destination.writeInt(brunchEndTime);
+        destination.writeFloat(brunchGoal);
+        destination.writeInt(lunchStartTime);
+        destination.writeInt(lunchEndTime);
+        destination.writeFloat(lunchGoal);
+        destination.writeInt(snackStartTime);
+        destination.writeInt(snackEndTime);
+        destination.writeFloat(snackGoal);
+        destination.writeInt(dinnerStartTime);
+        destination.writeInt(dinnerEndTime);
+        destination.writeFloat(dinnerGoal);
+        destination.writeInt(supperStartTime);
+        destination.writeInt(supperEndTime);
+        destination.writeFloat(supperGoal);
+        destination.writeFloat(exerciseGoal);
+        destination.writeInt(liquidDone);
+        destination.writeInt(liquidGoal);
+        destination.writeInt(oilDone);
+        destination.writeInt(oilGoal);
+        destination.writeInt(supplementDone);
+        destination.writeInt(supplementGoal);
+        destination.writeString(note);
+    }
+
+    public static final Parcelable.Creator<DaysEntity> CREATOR
+            = new Parcelable.Creator<DaysEntity>() {
+
+        public DaysEntity createFromParcel(Parcel in) {
+            final DaysEntity result = new DaysEntity();
+
+            result.setId(in.readLong());
+            result.setDateId(in.readString());
+            result.setAllowed(in.readFloat());
+            result.setBreakfastStartTime(in.readInt());
+            result.setBreakfastEndTime(in.readInt());
+            result.setBreakfastGoal(in.readFloat());
+            result.setBrunchStartTime(in.readInt());
+            result.setBrunchEndTime(in.readInt());
+            result.setBrunchGoal(in.readFloat());
+            result.setLunchStartTime(in.readInt());
+            result.setLunchEndTime(in.readInt());
+            result.setLunchGoal(in.readFloat());
+            result.setSnackStartTime(in.readInt());
+            result.setSnackEndTime(in.readInt());
+            result.setSnackGoal(in.readFloat());
+            result.setDinnerStartTime(in.readInt());
+            result.setDinnerEndTime(in.readInt());
+            result.setDinnerGoal(in.readFloat());
+            result.setSupperStartTime(in.readInt());
+            result.setSupperEndTime(in.readInt());
+            result.setSupperGoal(in.readFloat());
+            result.setExerciseGoal(in.readFloat());
+            result.setLiquidDone(in.readInt());
+            result.setLiquidGoal(in.readInt());
+            result.setOilDone(in.readInt());
+            result.setOilGoal(in.readInt());
+            result.setSupplementDone(in.readInt());
+            result.setSupplementGoal(in.readInt());
+            result.setNote(in.readString());
+
+            return result;
+        }
+
+        public DaysEntity[] newArray(int size) {
+            return new DaysEntity[size];
+        }
+    };
 }

@@ -20,9 +20,11 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
-import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
+import br.com.arndroid.etdiet.dialog.quickinsert.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.provider.days.DaysEntity;
+import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
@@ -86,6 +88,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         final FoodsUsageEntity entity = manager.foodUsageFromId(id);
         final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
         dialog.setFoodsUsageEntity(entity);
+        dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
         dialog.show(getFragmentManager(), null);
     }
 
@@ -94,10 +97,10 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         switch (menuItemId) {
             case R.id.quick_add:
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mDateId,
-                        Meals.getMealFromPosition(mMeal), getDefaultTime(), null,
-                        getDefaultValue());
+                        Meals.getMealFromPosition(mMeal), null, null, null);
                 final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
                 dialog.setFoodsUsageEntity(entity);
+                dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
                 dialog.show(getFragmentManager(), null);
                 break;
             default:
@@ -130,7 +133,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, null);
-                builder.setMessage(String.format(getResources().getString(R.string.delete_food_usage_msg),
+                builder.setMessage(String.format(getString(R.string.delete_food_usage_msg),
                         entity.getDescription(), mealName));
                 builder.create().show();
                 return true;
@@ -147,16 +150,6 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
             mTxtEmpty.setVisibility(View.GONE);
             mLstList.setVisibility(View.VISIBLE);
         }
-    }
-
-    private float getDefaultValue() {
-        return Meals.preferredUsageForMealInDate(getActivity().getApplicationContext(),
-                Meals.getMealFromPosition(mMeal),
-                DateUtils.dateIdToDate(mDateId));
-    }
-
-    private int getDefaultTime() {
-        return DateUtils.dateToTimeAsInt(new Date());
     }
 
     public void onDataChangedFromHolderActivity(String dateId, int meal) {

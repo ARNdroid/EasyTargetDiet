@@ -42,53 +42,17 @@ public class FoodsUsageHeaderFragment extends Fragment {
 
         DaysEntity entity = new DaysManager(getActivity().getApplicationContext())
                 .dayFromDateId(dateId);
-        float ideal;
-        int startTime, endTime;
-        switch (meal) {
-            case Meals.BREAKFAST:
-                ideal = entity.getBreakfastGoal();
-                startTime = entity.getBreakfastStartTime();
-                endTime = entity.getBreakfastEndTime();
-                break;
-            case Meals.BRUNCH:
-                ideal = entity.getBrunchGoal();
-                startTime = entity.getBrunchStartTime();
-                endTime = entity.getBrunchEndTime();
-                break;
-            case Meals.LUNCH:
-                ideal = entity.getLunchGoal();
-                startTime = entity.getLunchStartTime();
-                endTime = entity.getLunchEndTime();
-                break;
-            case Meals.SNACK:
-                ideal = entity.getSnackGoal();
-                startTime = entity.getSnackStartTime();
-                endTime = entity.getSnackEndTime();
-                break;
-            case Meals.DINNER:
-                ideal = entity.getDinnerGoal();
-                startTime = entity.getDinnerStartTime();
-                endTime = entity.getDinnerEndTime();
-                break;
-            case Meals.SUPPER:
-                ideal = entity.getSupperGoal();
-                startTime = entity.getSupperStartTime();
-                endTime = entity.getSupperEndTime();
-                break;
-            case Meals.EXERCISE:
-                ideal = entity.getExerciseGoal();
-                startTime = -1;
-                endTime = -1;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + meal);
-        }
+
+        final float goal = entity.getGoalForMeal(meal);
+        final int startTime = entity.getStartTimeForMeal(meal);
+        final int endTime = entity.getEndTimeForMeal(meal);
+
         if (startTime >= 0) {
-            mTxtGoal.setText(String.format(getResources().getString(R.string.meal_ideal_actual_values),
-                    ideal, DateUtils.timeToFormattedString(startTime),
+            mTxtGoal.setText(String.format(getString(R.string.meal_ideal_actual_values),
+                    goal, DateUtils.timeToFormattedString(startTime),
                     DateUtils.timeToFormattedString(endTime)));
         } else {
-            mTxtGoal.setText(String.format(getResources().getString(R.string.units_actual_value), ideal));
+            mTxtGoal.setText(String.format(getString(R.string.units_actual_value), goal));
         }
     }
 

@@ -14,7 +14,7 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
-import br.com.arndroid.etdiet.dialog.QuickInsertAutoDialog;
+import br.com.arndroid.etdiet.dialog.quickinsert.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -75,9 +75,10 @@ public class JournalMyGoalsFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mCurrentDateId,
-                        Meals.EXERCISE, DateUtils.dateToTimeAsInt(new Date()), null, 3.0f);
+                        Meals.EXERCISE, null, null, null);
                 final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
                 dialog.setFoodsUsageEntity(entity);
+                dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
                 dialog.show(getFragmentManager(), null);
             }
         });
