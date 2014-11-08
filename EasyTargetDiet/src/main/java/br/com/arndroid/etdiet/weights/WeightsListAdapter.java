@@ -23,7 +23,7 @@ public class WeightsListAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
         LayoutInflater inflater =  (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.weights_list_item, null, true);
+        View view = inflater.inflate(R.layout.weights_list_item, viewGroup, false);
 
         ViewHolder holder = new ViewHolder(
                 (TextView) view.findViewById(R.id.lblDate),

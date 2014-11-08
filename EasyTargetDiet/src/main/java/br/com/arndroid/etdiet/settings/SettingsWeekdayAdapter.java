@@ -27,7 +27,7 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        View view = mInflater.inflate(R.layout.settings_list_item_2, null, true);
+        View view = mInflater.inflate(R.layout.settings_list_item_2, viewGroup, false);
 
         mHolder = new ViewHolder((TextView) view.findViewById(R.id.txtLine_1),
                 (TextView) view.findViewById(R.id.txtLine_2));
