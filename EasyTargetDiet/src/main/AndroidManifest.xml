@@ -33,21 +33,27 @@
 
         <activity
             android:name=".settings.SettingsMainActivity"
-            android:label="@string/settings">
+            android:label="@string/settings"
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".journal.JournalActivity" />
         </activity>
 
         <activity
-            android:name=".settings.SettingsListActivity">
+            android:name=".settings.SettingsListActivity"
+            android:parentActivityName=".settings.SettingsMainActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".settings.SettingsMainActivity" />
         </activity>
 
         <activity
-            android:name=".weights.WeightsActivity">
+            android:name=".weights.WeightsActivity"
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".journal.JournalActivity" />
