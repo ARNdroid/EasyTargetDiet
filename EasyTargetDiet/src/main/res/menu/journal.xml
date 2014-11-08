@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item android:id="@+id/quick_add"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/quick_add"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource" />
 
     <item android:id="@+id/weight"
         android:title="@string/weight"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        tools:ignore="AppCompatResource" />
 
     <item android:id="@+id/settings"
         android:title="@string/settings"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        tools:ignore="AppCompatResource" />
 
 </menu>
