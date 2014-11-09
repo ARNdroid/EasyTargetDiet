@@ -8,6 +8,7 @@
       <entry_point TYPE="class" FQNAME="br.com.arndroid.etdiet.app.ETDApp" />
       <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.utils.PointUtils PointUtils()" />
       <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.utils.WeightUtils WeightUtils()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.provider.AbstractEntity void validateOrThrow()" />
     </entry_points>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
