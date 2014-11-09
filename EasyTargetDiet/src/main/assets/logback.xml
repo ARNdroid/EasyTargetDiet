@@ -1,3 +1,4 @@
+<!--suppress XmlUnboundNsPrefix -->
 <configuration>
     <property name="LOG_DIR" value="/data/data/br.com.arndroid.etdiet/files/log" />
 
