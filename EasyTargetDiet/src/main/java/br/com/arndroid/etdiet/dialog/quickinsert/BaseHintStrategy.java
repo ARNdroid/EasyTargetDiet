@@ -56,13 +56,13 @@ public abstract class BaseHintStrategy {
         return false;
     }
 
-    @SuppressWarnings({"SameReturnValue", "UnusedParameters"})
+    @SuppressWarnings({"SameReturnValue", "UnusedParameters", "UnusedReturnValue"})
     public boolean onTimeChanged(Context context, FoodsUsageEntity foodsUsageEntity) {
         setTimeAHint(false);
         return false;
     }
 
-    @SuppressWarnings({"SameReturnValue", "UnusedParameters"})
+    @SuppressWarnings({"SameReturnValue", "UnusedParameters", "UnusedReturnValue"})
     public boolean onValueChanged(Context context, FoodsUsageEntity foodsUsageEntity) {
         setValueAHint(false);
         return false;
