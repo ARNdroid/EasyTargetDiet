@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import android.database.ContentObserver;
 import android.net.Uri;
 
+/*
+    This implementation was a copy/past one.
+    A few points throws Lint Warnings.
+    We are suppressing them for entirely class.
+ */
+@SuppressWarnings({"UnusedAssignment", "UnusedDeclaration"})
 public final class MockObserverNode {
     private class MockObserverEntry {
         public final ContentObserver observer;
@@ -33,11 +39,8 @@ public final class MockObserverNode {
         }
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public static final int INSERT_TYPE = 0;
-    @SuppressWarnings("UnusedDeclaration")
     public static final int UPDATE_TYPE = 1;
-    @SuppressWarnings("UnusedDeclaration")
     public static final int DELETE_TYPE = 2;
 
     final private String mName;
@@ -85,7 +88,6 @@ public final class MockObserverNode {
         if (segment == null) {
             throw new IllegalArgumentException("Invalid Uri (" + uri + ") used for observer");
         }
-        @SuppressWarnings("UnusedDeclaration")
         int N = mChildren.size();
         for (MockObserverNode node : mChildren) {
             if (node.mName.equals(segment)) {
@@ -125,7 +127,6 @@ public final class MockObserverNode {
 
     private void notifyMyObservers(boolean leaf, ContentObserver observer,
             boolean selfNotify) {
-        @SuppressWarnings("UnusedDeclaration")
         int N = mObservers.size();
         for (MockObserverEntry entry : mObservers) {
             // Don't notify the observer if it sent the notification and isn't interesed
@@ -154,7 +155,6 @@ public final class MockObserverNode {
             notifyMyObservers(false, observer, selfNotify);
         }
 
-        @SuppressWarnings("UnusedDeclaration")
         int N = mChildren.size();
         for (MockObserverNode node : mChildren) {
             if (segment == null || node.mName.equals(segment)) {
