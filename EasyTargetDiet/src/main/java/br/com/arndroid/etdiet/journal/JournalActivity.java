@@ -34,7 +34,7 @@ public class JournalActivity extends Activity implements
         ActivityActionCaller {
 
     private VirtualWeek mVirtualWeek;
-    private CurrentDateId mCurrentDateId = new CurrentDateId();
+    private final CurrentDateId mCurrentDateId = new CurrentDateId();
     private int mCurrentMeal;
     private JournalDateFragment mJournalDateFragment;
     private JournalMyPointsFragment mJournalMyPointsFragment;

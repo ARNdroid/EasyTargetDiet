@@ -20,8 +20,8 @@ import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class ForecastMeterView extends View {
 
-    private Rect mForegroundBarRect = new Rect();
-    private Rect mBackgroundBarRect = new Rect();
+    private final Rect mForegroundBarRect = new Rect();
+    private final Rect mBackgroundBarRect = new Rect();
     private int mCurrentWidth;
     private int mCurrentHeight;
 
