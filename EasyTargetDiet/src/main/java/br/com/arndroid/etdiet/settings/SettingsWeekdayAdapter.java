@@ -99,6 +99,7 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
         mHolder.text2.setText(formattedValue);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private String getFormattedUnitsActualValueFromColumnName(Cursor cursor, Resources resources,
                                                               String goalColumnName) {
         return String.format(resources.getString(R.string.units_actual_value),

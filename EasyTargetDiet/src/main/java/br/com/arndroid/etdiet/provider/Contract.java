@@ -50,6 +50,7 @@ public class Contract {
             final private String mColumnName;
             final private Object mValue;
 
+            @SuppressWarnings("SameParameterValue")
             public FieldDescriptor(String tableName, String columnName, Object value) {
                 mTableName = tableName;
                 mColumnName = columnName;
@@ -81,6 +82,7 @@ public class Contract {
         private final FieldDescriptor[] mFieldDescriptorArray;
         private String mDetailMessage;
 
+        @SuppressWarnings("SameParameterValue")
         public TargetException(int errorCode, FieldDescriptor[] fieldDescriptorArray, Throwable cause) {
             super(cause);
             mErrorCode = errorCode;

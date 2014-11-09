@@ -100,6 +100,7 @@ public class VirtualWeekEngineTest extends ProviderTestCase2<Provider> {
         assertComputedValuesForIndex(virtualWeekEngine, 6, 26.0f, 0.0f, 0.0f, 0.0f, 26.0f, 0.0f, 0.0f);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void assertComputedValuesForIndex(VirtualWeekEngine virtualWeekEngine, int index, float allowed,
                                               float totalUsed, float totalExercise, float weeklyAllowanceBeforeUsage,
                                               float diaryAllowanceAfterUsage, float exerciseAfterUsage,

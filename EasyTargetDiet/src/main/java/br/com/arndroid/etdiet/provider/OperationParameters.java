@@ -12,6 +12,7 @@ public class OperationParameters {
     private String sortOrder;
     private ContentValues values;
 
+    @SuppressWarnings("SameParameterValue")
     public OperationParameters(String[] projection, String selection, String[] selectionArgs,
                                String groupBy, String having, String sortOrder, ContentValues values) {
         this.projection = projection;
@@ -43,6 +44,7 @@ public class OperationParameters {
         return projection;
     }
 
+    @SuppressWarnings("SameParameterValue")
     public void setProjection(String[] projection) {
         this.projection = projection;
     }
