@@ -132,6 +132,7 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     private boolean continueOnConstraintViolation(@SuppressWarnings("UnusedDeclaration") int operation,
                                                   @SuppressWarnings("UnusedDeclaration") Uri uri,
                                                   @SuppressWarnings("UnusedDeclaration") OperationParameters parameters,

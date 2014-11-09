@@ -56,11 +56,13 @@ public abstract class BaseHintStrategy {
         return false;
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean onTimeChanged(Context context, FoodsUsageEntity foodsUsageEntity) {
         setTimeAHint(false);
         return false;
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean onValueChanged(@SuppressWarnings("UnusedDeclaration") Context context,
                                   @SuppressWarnings("UnusedDeclaration") FoodsUsageEntity foodsUsageEntity) {
         setValueAHint(false);

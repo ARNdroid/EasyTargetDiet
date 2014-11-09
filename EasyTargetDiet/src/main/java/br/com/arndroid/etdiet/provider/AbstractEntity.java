@@ -12,5 +12,6 @@ public abstract class AbstractEntity {
 
     abstract public String getTableName();
 
+    @SuppressWarnings("SameReturnValue")
     abstract public String getIdColumnName();
 }
