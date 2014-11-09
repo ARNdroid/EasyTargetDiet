@@ -188,6 +188,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
                 "]";
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Long getId() {
         return id;
     }
@@ -196,6 +197,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
         this.id = id;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Integer getType() {
         return type;
     }
@@ -204,6 +206,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
         this.type = type;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public String getDate() {
         return date;
     }
@@ -212,6 +215,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
         this.date = date;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Integer getIntegralNewValue() {
         return integralNewValue;
     }
@@ -220,6 +224,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
         this.integralNewValue = integralNewValue;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Float getFloatingPointNewValue() {
         return floatingPointNewValue;
     }
@@ -228,6 +233,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
         this.floatingPointNewValue = floatingPointNewValue;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public String getTextNewValue() {
         return textNewValue;
     }
@@ -239,6 +245,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
     /*
      * Factories
      */
+    @SuppressWarnings("UnusedDeclaration")
     public static ParametersHistoryEntity fromCursor(Cursor cursor) {
         if(cursor == null) {
             throw new IllegalArgumentException("Cursor must be not null.");
@@ -259,6 +266,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
                     null : cursor.getString(cursor.getColumnIndex(Contract.ParametersHistory.TEXT_NEW_VALUE)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static ParametersHistoryEntity fromJoinInContentValues(ContentValues principal, ContentValues complement) {
         if (principal == null || complement == null) {
             throw new IllegalArgumentException("Principal and complement must be not null.");
@@ -305,6 +313,7 @@ public class ParametersHistoryEntity extends AbstractEntity {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static ParametersHistoryEntity fromContentValues(ContentValues values) {
         if (values == null) {
             throw new IllegalArgumentException("Values must be not null.");

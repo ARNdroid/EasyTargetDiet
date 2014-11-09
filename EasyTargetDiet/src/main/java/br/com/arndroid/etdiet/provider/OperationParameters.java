@@ -28,6 +28,7 @@ public class OperationParameters {
         return groupBy;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setGroupBy(String groupBy) {
         this.groupBy = groupBy;
     }
@@ -36,6 +37,7 @@ public class OperationParameters {
         return having;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setHaving(String having) {
         this.having = having;
     }
@@ -69,6 +71,7 @@ public class OperationParameters {
         return sortOrder;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
     }
@@ -77,6 +80,7 @@ public class OperationParameters {
         return values;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setValues(ContentValues values) {
         this.values = values;
     }
