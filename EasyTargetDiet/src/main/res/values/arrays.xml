@@ -16,16 +16,6 @@
         <item>@string/december_short</item>
     </string-array>
 
-    <string-array name="weekdays_short_name_list" >
-        <item>@string/sunday_short</item>
-        <item>@string/monday_short</item>
-        <item>@string/tuesday_short</item>
-        <item>@string/wednesday_short</item>
-        <item>@string/thursday_short</item>
-        <item>@string/friday_short</item>
-        <item>@string/saturday_short</item>
-    </string-array>
-
     <string-array name="weekdays_name_list" >
         <item>@string/sunday</item>
         <item>@string/monday</item>

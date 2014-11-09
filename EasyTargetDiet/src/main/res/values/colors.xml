@@ -13,8 +13,6 @@
     <color name="card_old_style_pressed">#cc9999</color>
 
     <color name="settings_background">@color/card_background</color>
-    <color name="settings_foreground">@color/card_foreground</color>
-    <color name="settings_pressed">@color/card_pressed</color>
 
     <color name="activity_background">#ededed</color>
     <color name="item_divider">@color/accent_light</color>
