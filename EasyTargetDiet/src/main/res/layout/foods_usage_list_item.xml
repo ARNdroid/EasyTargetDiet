@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:text="@string/no_show_two_digits_number" />
 
     <TextView
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/lblFoodValue"
+        android:layout_toStartOf="@id/lblFoodValue"
         android:text="@string/no_show_some_food" />
 
     <TextView
@@ -31,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/lblFoodValue"
+        android:layout_toStartOf="@id/lblFoodValue"
         android:layout_below="@id/lblFoodDescription"
         android:text="@string/no_show_time_mask" />
 
