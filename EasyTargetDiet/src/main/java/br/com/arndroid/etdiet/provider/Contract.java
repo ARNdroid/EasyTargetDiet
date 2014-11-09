@@ -406,8 +406,8 @@ public class Contract {
         public static final int EXERCISE_USE_MODE_PARAMETER_TYPE = 3;
         public static final int EXERCISE_USE_ORDER_PARAMETER_TYPE = 4;
 
-        public static final int UNDEFINED_INTEGRAL_PARAMATER_VALUE = -1;
-        public static final float UNDEFINED_FLOATING_POINT_PARAMATER_VALUE = -1.0f;
+        public static final int UNDEFINED_INTEGRAL_PARAMETER_VALUE = -1;
+        public static final float UNDEFINED_FLOATING_POINT_PARAMETER_VALUE = -1.0f;
 
         public static final int EXERCISE_USE_ORDER_USE_EXERCISES_FIRST = 0;
         public static final int EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST = 1;

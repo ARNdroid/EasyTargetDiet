@@ -110,7 +110,7 @@ public class ParametersHistoryManager {
     private int getIntParameter(int parameterType, Date referenceDate) {
         ContentResolver resolver = mContext.getContentResolver();
         Cursor c = null;
-        int result = Contract.ParametersHistory.UNDEFINED_INTEGRAL_PARAMATER_VALUE;
+        int result = Contract.ParametersHistory.UNDEFINED_INTEGRAL_PARAMETER_VALUE;
         try {
             c = resolver.query(Contract.ParametersHistory.CONTENT_URI,
                     Contract.ParametersHistory.INTEGRAL_PROJECTION,
@@ -168,7 +168,7 @@ public class ParametersHistoryManager {
     private float getFloatParameter(int parameterType, Date referenceDate) {
         ContentResolver resolver = mContext.getContentResolver();
         Cursor c = null;
-        float result = Contract.ParametersHistory.UNDEFINED_FLOATING_POINT_PARAMATER_VALUE;
+        float result = Contract.ParametersHistory.UNDEFINED_FLOATING_POINT_PARAMETER_VALUE;
         try {
             c = resolver.query(Contract.ParametersHistory.CONTENT_URI,
                     Contract.ParametersHistory.FLOATING_POINT_PROJECTION,

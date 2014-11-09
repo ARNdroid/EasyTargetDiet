@@ -163,9 +163,9 @@ public abstract class ProviderTestCase3<T extends ContentProvider> extends Andro
 		return mProviderContext;
 	}
 
-	public void registerContentObserver(Uri uri, boolean notifyForDescendents,
+	public void registerContentObserver(Uri uri, boolean notifyForDescendants,
 			ContentObserver observer) {
-		mResolver.safeRegisterContentObserver(uri, notifyForDescendents, observer);
+		mResolver.safeRegisterContentObserver(uri, notifyForDescendants, observer);
 	}
 
     public void unregisterContentObserver(ContentObserver observer) {

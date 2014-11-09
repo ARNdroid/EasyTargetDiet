@@ -31,11 +31,11 @@ import android.net.Uri;
 public final class MockObserverNode {
     private class MockObserverEntry {
         public final ContentObserver observer;
-        public final boolean notifyForDescendents;
+        public final boolean notifyForDescendants;
 
         public MockObserverEntry(ContentObserver o, boolean n) {
             observer = o;
-            notifyForDescendents = n;
+            notifyForDescendants = n;
         }
     }
 
@@ -71,15 +71,15 @@ public final class MockObserverNode {
     }
 
     public void addObserver(Uri uri, ContentObserver observer,
-            boolean notifyForDescendents) {
-        addObserver(uri, 0, observer, notifyForDescendents);
+            boolean notifyForDescendants) {
+        addObserver(uri, 0, observer, notifyForDescendants);
     }
 
     private void addObserver(Uri uri, int index, ContentObserver observer,
-            boolean notifyForDescendents) {
+            boolean notifyForDescendants) {
         // If this is the leaf node add the observer
         if (index == countUriSegments(uri)) {
-            mObservers.add(new MockObserverEntry(observer, notifyForDescendents));
+            mObservers.add(new MockObserverEntry(observer, notifyForDescendants));
             return;
         }
 
@@ -91,7 +91,7 @@ public final class MockObserverNode {
         int N = mChildren.size();
         for (MockObserverNode node : mChildren) {
             if (node.mName.equals(segment)) {
-                node.addObserver(uri, index + 1, observer, notifyForDescendents);
+                node.addObserver(uri, index + 1, observer, notifyForDescendants);
                 return;
             }
         }
@@ -99,7 +99,7 @@ public final class MockObserverNode {
         // No child found, create one
         MockObserverNode node = new MockObserverNode(segment);
         mChildren.add(node);
-        node.addObserver(uri, index + 1, observer, notifyForDescendents);
+        node.addObserver(uri, index + 1, observer, notifyForDescendants);
     }
 
     public boolean removeObserver(ContentObserver observer) {
@@ -129,14 +129,14 @@ public final class MockObserverNode {
             boolean selfNotify) {
         int N = mObservers.size();
         for (MockObserverEntry entry : mObservers) {
-            // Don't notify the observer if it sent the notification and isn't interesed
+            // Don't notify the observer if it sent the notification and isn't interested
             // in self notifications
             if (entry.observer == observer && !selfNotify) {
                 continue;
             }
 
             // Make sure the observer is interested in the notification
-            if (leaf || (!leaf && entry.notifyForDescendents)) {
+            if (leaf || (!leaf && entry.notifyForDescendants)) {
                 entry.observer.onChange(selfNotify);
             }
         }
@@ -151,7 +151,7 @@ public final class MockObserverNode {
             notifyMyObservers(true, observer, selfNotify);
         } else if (index < segmentCount){
             segment = getUriSegment(uri, index);
-            // Notify any observers at this level who are interested in descendents
+            // Notify any observers at this level who are interested in descendants
             notifyMyObservers(false, observer, selfNotify);
         }
 
