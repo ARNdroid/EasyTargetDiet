@@ -17,15 +17,7 @@ public class Contract {
 	 * Global Definitions
 	 */
 
-    /*
-        This constant is intended to be equals applicationId.
-        Android decoupled applicationId and packageName from build config
-        but in BuildConfig class the name remains PACKAGE_NAME for applicationId
-        value.
-        There is issue (71736) in Android AOSP to create the constant with
-        the new name and deprecate the old one.
-     */
-    public static final String AUTHORITY = BuildConfig.PACKAGE_NAME + ".provider";
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     public static final int FIELD_TYPE_INTEGER = 1;
     public static final int FIELD_TYPE_LONG = 2;
