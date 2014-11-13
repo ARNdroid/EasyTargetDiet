@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.ProviderTestCase2;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +18,8 @@ import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManage
 import br.com.arndroid.etdiet.utils.DateUtils;
 
 public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ParametersHistoryManagerTest.class);
 
     private ParametersHistoryManager mManager;
     private SQLiteDatabase mDb;
@@ -79,10 +84,14 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_MONTH, -10);
         Date paste = calendar.getTime();
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): paste={}", paste);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         Date present = calendar.getTime();
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present={}", present);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         Date future = calendar.getTime();
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future={}", future);
+
         ParametersHistoryEntity entity = new ParametersHistoryEntity(null, Contract.ParametersHistory.TRACKING_WEEKDAY_PARAMETER_TYPE,
                 DateUtils.dateToDateId(paste), Calendar.FRIDAY, null, null);
         mDb.insert(Contract.ParametersHistory.TABLE_NAME, null, entity.toContentValuesIgnoreNulls());
@@ -93,56 +102,69 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         // Paste:
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, -5);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): paste - 5d={}", calendar.getTime());
         int expectedWeekDay = Calendar.FRIDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): paste - 1d={}", calendar.getTime());
         expectedWeekDay = Calendar.FRIDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): paste + 1d={}", calendar.getTime());
         expectedWeekDay = Calendar.FRIDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, 5);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): paste + 5d={}", calendar.getTime());
         expectedWeekDay = Calendar.FRIDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
 
         // Present:
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present - 1d={}", calendar.getTime());
         expectedWeekDay = Calendar.FRIDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(present);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present + 0d={}", calendar.getTime());
         expectedWeekDay = Calendar.SATURDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present + 1d={}", calendar.getTime());
         expectedWeekDay = Calendar.SATURDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, 5);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present + 5d={}", calendar.getTime());
         expectedWeekDay = Calendar.SATURDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
 
         // Future:
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future - 1d={}", calendar.getTime());
         expectedWeekDay = Calendar.SATURDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(future);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 0d={}", calendar.getTime());
         expectedWeekDay = Calendar.SUNDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 1d={}", calendar.getTime());
         expectedWeekDay = Calendar.SUNDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 10d={}", calendar.getTime());
         expectedWeekDay = Calendar.SUNDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 1000);
+        LOG.trace("Inside testGetTrackingWeekDayForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 1000d={}", calendar.getTime());
         expectedWeekDay = Calendar.SUNDAY;
         assertEquals(expectedWeekDay, mManager.getTrackingWeekdayForDate(calendar.getTime()));
     }
@@ -156,10 +178,13 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         calendar.setTime(new Date());
         calendar.add(Calendar.DAY_OF_MONTH, -10);
         Date paste = calendar.getTime();
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): paste={}", paste);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         Date present = calendar.getTime();
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present={}", present);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
         Date future = calendar.getTime();
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future={}", future);
 
         final float pasteValue = 20.4f;
         final float presentValue = 26.0f;
@@ -175,56 +200,69 @@ public class ParametersHistoryManagerTest extends ProviderTestCase2<Provider> {
         // Paste:
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, -5);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): past - 5d={}", calendar.getTime());
         float expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): past - 1d={}", calendar.getTime());
         expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): past + 1d={}", calendar.getTime());
         expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(paste);
         calendar.add(Calendar.DAY_OF_MONTH, 5);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): past + 5d={}", calendar.getTime());
         expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
 
         // Present:
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present - 1d={}", calendar.getTime());
         expectedDailyAllowance = pasteValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(present);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): preset + 0d={}", calendar.getTime());
         expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present + 1d={}", calendar.getTime());
         expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(present);
         calendar.add(Calendar.DAY_OF_MONTH, 5);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): present + 5d={}", calendar.getTime());
         expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
 
         // Future:
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future - 1d={}", calendar.getTime());
         expectedDailyAllowance = presentValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         expectedDailyAllowance = futureValue;
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 0d={}", calendar.getTime());
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 1d={}", calendar.getTime());
         expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 10);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 10d={}", calendar.getTime());
         expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
         calendar.setTime(future);
         calendar.add(Calendar.DAY_OF_MONTH, 1000);
+        LOG.trace("Inside testGetDailyAllowanceForDateWithThreeSpacedDbRowMustReturnCorrectValue(): future + 1000d={}", calendar.getTime());
         expectedDailyAllowance = futureValue;
         assertEquals(expectedDailyAllowance, mManager.getDailyAllowanceForDate(calendar.getTime()));
     }
