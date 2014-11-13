@@ -28,11 +28,11 @@ public class ParcelUtils {
         return valueRead == nullSentinel ? null : valueRead;
     }
 
-    public static void safeFromNullWriteInt(Parcel destination, Integer value, int alternativeValue) {
+    public static void safeFromNullWriteInteger(Parcel destination, Integer value, int alternativeValue) {
         destination.writeInt(value == null ? alternativeValue : value);
     }
 
-    public static Integer safeFromNullReadInt(Parcel in, int nullSentinel) {
+    public static Integer safeFromNullReadInteger(Parcel in, int nullSentinel) {
         final int valueRead = in.readInt();
         return valueRead == nullSentinel ? null : valueRead;
     }

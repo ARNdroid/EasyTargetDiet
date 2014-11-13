@@ -15,11 +15,11 @@ public class ParcelUtilsTest extends AndroidTestCase {
         final Parcel parcel = Parcel.obtain();
 
         try {
-            ParcelUtils.safeFromNullWriteInt(parcel, null, INT_SENTINEL);
+            ParcelUtils.safeFromNullWriteInteger(parcel, null, INT_SENTINEL);
             ParcelUtils.safeFromNullWriteLong(parcel, null, LONG_SENTINEL);
             ParcelUtils.safeFromNullWriteFloat(parcel, null, FLOAT_SENTINEL);
             parcel.setDataPosition(0);
-            assertEquals(null, ParcelUtils.safeFromNullReadInt(parcel, INT_SENTINEL));
+            assertEquals(null, ParcelUtils.safeFromNullReadInteger(parcel, INT_SENTINEL));
             assertEquals(null, ParcelUtils.safeFromNullReadLong(parcel, LONG_SENTINEL));
             assertEquals(null, ParcelUtils.safeFromNullReadFloat(parcel, FLOAT_SENTINEL));
         } finally {
@@ -34,11 +34,11 @@ public class ParcelUtilsTest extends AndroidTestCase {
         final Parcel parcel = Parcel.obtain();
 
         try {
-            ParcelUtils.safeFromNullWriteInt(parcel, INT_VALUE, INT_SENTINEL);
+            ParcelUtils.safeFromNullWriteInteger(parcel, INT_VALUE, INT_SENTINEL);
             ParcelUtils.safeFromNullWriteLong(parcel, LONG_VALUE, LONG_SENTINEL);
             ParcelUtils.safeFromNullWriteFloat(parcel, FLOAT_VALUE, FLOAT_SENTINEL);
             parcel.setDataPosition(0);
-            assertEquals(Integer.valueOf(INT_VALUE), ParcelUtils.safeFromNullReadInt(parcel, INT_SENTINEL));
+            assertEquals(Integer.valueOf(INT_VALUE), ParcelUtils.safeFromNullReadInteger(parcel, INT_SENTINEL));
             assertEquals(Long.valueOf(LONG_VALUE), ParcelUtils.safeFromNullReadLong(parcel, LONG_SENTINEL));
             assertEquals(FLOAT_VALUE, ParcelUtils.safeFromNullReadFloat(parcel, FLOAT_SENTINEL));
         } finally {

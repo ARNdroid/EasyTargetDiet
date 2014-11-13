@@ -7,10 +7,15 @@ import android.os.Parcelable;
 
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.utils.ParcelUtils;
 
 import static br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor;
 
 public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
+
+    private static final long SENTINEL_ID = -1L;
+    private static final float SENTINEL_FLOAT_VALUE = -1.0f;
+    private static final int SENTINEL_INT_VALUE = -1;
 
     // Mind the Bug:
     // It's a Parcelable. The order and the number of fields matter.
@@ -262,12 +267,12 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel destination, int flags) {
-        destination.writeLong(id);
+        ParcelUtils.safeFromNullWriteLong(destination, id, SENTINEL_ID);
         destination.writeString(dateId);
-        destination.writeInt(meal);
-        destination.writeInt(time);
+        ParcelUtils.safeFromNullWriteInteger(destination, meal, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, time, SENTINEL_INT_VALUE);
         destination.writeString(description);
-        destination.writeFloat(value);
+        ParcelUtils.safeFromNullWriteFloat(destination, value, SENTINEL_FLOAT_VALUE);
     }
 
     /*
@@ -359,12 +364,13 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
             = new Parcelable.Creator<FoodsUsageEntity>() {
 
         public FoodsUsageEntity createFromParcel(Parcel in) {
-            final Long id = in.readLong();
+
+            final Long id = ParcelUtils.safeFromNullReadLong(in, SENTINEL_ID);
             final String dateId = in.readString();
-            final Integer meal = in.readInt();
-            final Integer time = in.readInt();
+            final Integer meal = ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE);
+            final Integer time = ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE);
             final String description = in.readString();
-            final Float value = in.readFloat();
+            final Float value = ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE);
             return new FoodsUsageEntity(id, dateId, meal, time, description, value);
         }
 

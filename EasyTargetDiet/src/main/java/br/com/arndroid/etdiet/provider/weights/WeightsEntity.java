@@ -7,8 +7,13 @@ import android.os.Parcelable;
 
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.utils.ParcelUtils;
 
 public class WeightsEntity extends AbstractEntity implements Parcelable {
+
+    private static final long SENTINEL_ID = -1L;
+    private static final float SENTINEL_FLOAT_VALUE = -1.0f;
+    private static final int SENTINEL_INT_VALUE = -1;
 
     // Attention: it's a Parcelable. The order and the number of fields matter.
     private Long id;
@@ -229,10 +234,10 @@ public class WeightsEntity extends AbstractEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel destination, int flags) {
-        destination.writeLong(id);
+        ParcelUtils.safeFromNullWriteLong(destination, id, SENTINEL_ID);
         destination.writeString(dateId);
-        destination.writeInt(time);
-        destination.writeFloat(weight);
+        ParcelUtils.safeFromNullWriteInteger(destination, time, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, weight, SENTINEL_FLOAT_VALUE);
         destination.writeString(note);
     }
 
@@ -321,10 +326,11 @@ public class WeightsEntity extends AbstractEntity implements Parcelable {
             = new Parcelable.Creator<WeightsEntity>() {
 
         public WeightsEntity createFromParcel(Parcel in) {
-            final Long id = in.readLong();
+
+            final Long id = ParcelUtils.safeFromNullReadLong(in, SENTINEL_ID);
             final String dateId = in.readString();
-            final Integer time = in.readInt();
-            final Float weight = in.readFloat();
+            final Integer time = ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE);
+            final Float weight = ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE);
             final String note = in.readString();
             return new WeightsEntity(id, dateId, time, weight, note);
         }
