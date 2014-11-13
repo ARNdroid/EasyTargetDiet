@@ -71,10 +71,10 @@ public class QuickInsertAutoDialog extends DialogFragment implements
         bindScreen(view);
 
         if (savedInstanceState != null) {
+            LOG.trace("Inside onCreateDialog: restoring state from savedInstanceState");
             setTitle(savedInstanceState.getString(STATE_KEY_TITLE));
             setAddMode(savedInstanceState.getInt(STATE_KEY_ADD_MODE));
             setFoodsUsageEntity((FoodsUsageEntity) savedInstanceState.getParcelable(STATE_KEY_FOODS_USAGE));
-            LOG.debug("Inside onCreateDialog: restored mFoodsUsageEntity={}", mFoodsUsageEntity);
         }
 
         mHintStrategy = new SimpleHintStrategy();
@@ -117,10 +117,10 @@ public class QuickInsertAutoDialog extends DialogFragment implements
 
     @Override
     public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+        LOG.trace("Inside onSaveInstanceState: saving state to outState");
         fromScreenToEntity();
         outState.putString(STATE_KEY_TITLE, getTitle());
         outState.putInt(STATE_KEY_ADD_MODE, getAddMode());
-        LOG.debug("Inside onSaveInstanceState: mFoodsUsageEntity={}", mFoodsUsageEntity);
         outState.putParcelable(STATE_KEY_FOODS_USAGE, getFoodsUsageEntity());
         super.onSaveInstanceState(outState);
     }
