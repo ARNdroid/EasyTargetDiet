@@ -11,7 +11,9 @@ import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class ForecastEntity {
 
+    private static final int ZERO_HOURS = 0;
     private static final int TWENTY_THREE_HOURS = 82800000;
+    private static final int ZERO_MINUTES = 0;
     private static final int FIFTY_NINE_MINUTES = 3540000;
 
     public static final int STRAIGHT_TO_GOAL = 0;
@@ -92,12 +94,20 @@ public class ForecastEntity {
 
     public static ForecastEntity getInstanceForDaySummary(DaySummary daySummary) {
         final String dateId = daySummary.getEntity().getDateId();
-        if (DateUtils.isDateIdCurrentDate(dateId)) {
+        final int resultCompareDateId = DateUtils.compareDateId(dateId, DateUtils.dateToDateId(new Date()));
+        if (resultCompareDateId == 0) {
+            // Present date:
             return Forecaster.getInstance().forecast(new Date(), daySummary);
-        } else {
+        } else if (resultCompareDateId < 0) {
+            // Paste date:
             return Forecaster.getInstance().forecast(new Date(
                     DateUtils.dateIdToDate(dateId).getTime()
                             + TWENTY_THREE_HOURS + FIFTY_NINE_MINUTES), daySummary);
+        } else {
+            // Future date:
+            return Forecaster.getInstance().forecast(new Date(
+                    DateUtils.dateIdToDate(dateId).getTime()
+                            + ZERO_HOURS + ZERO_MINUTES), daySummary);
         }
     }
 }

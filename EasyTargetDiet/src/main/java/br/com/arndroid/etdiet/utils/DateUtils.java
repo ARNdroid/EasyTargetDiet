@@ -64,7 +64,11 @@ public class DateUtils {
     }
 
     public static boolean isDateIdCurrentDate(String dateId) {
-        return dateToDateId(new Date()).equals(dateId);
+        return compareDateId(dateToDateId(new Date()), dateId) == 0;
+    }
+
+    public static int compareDateId(String dateId, String compareToDateId) {
+        return dateId.compareTo(compareToDateId);
     }
 
     public static int hoursToMillis(int hours) {
