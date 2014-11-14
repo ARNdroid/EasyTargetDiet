@@ -273,8 +273,7 @@ public class Contract {
 		 * Sort order
 		 */
 
-        @SuppressWarnings("UnusedDeclaration")
-        public static final String TIME_ASC_SORT_ORDER = TIME + " ASC";
+        public static final String TIME_DESC_SORT_ORDER = TIME + " DESC";
 
 		/*
 		 * Utility methods

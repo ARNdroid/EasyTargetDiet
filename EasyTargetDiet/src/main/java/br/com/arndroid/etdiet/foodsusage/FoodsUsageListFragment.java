@@ -173,7 +173,9 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
                 return new CursorLoader(getActivity(), Contract.FoodsUsage.CONTENT_URI,
                         Contract.FoodsUsage.SIMPLE_LIST_PROJECTION,
                         Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION,
-                        new String[] {String.valueOf(mDateId), String.valueOf(mMeal)}, null);
+                        new String[] {String.valueOf(mDateId), String.valueOf(mMeal)},
+                        Contract.FoodsUsage.TIME_DESC_SORT_ORDER);
+
             default:
                 throw new IllegalArgumentException("Invalid loader id=" + id);
         }
