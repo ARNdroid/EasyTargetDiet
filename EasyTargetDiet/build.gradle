@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId 'br.com.arndroid.etdiet'
-        minSdkVersion 11
+        minSdkVersion 15
         targetSdkVersion 21
         versionName buildProfile.getVersionName()
         versionCode buildProfile.getVersionCode()
