@@ -30,7 +30,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <activity
@@ -40,7 +40,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <activity
@@ -49,7 +49,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".settings.SettingsMainActivity" />
+                android:value="br.com.arndroid.etdiet.settings.SettingsMainActivity" />
         </activity>
 
         <activity
@@ -58,7 +58,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <activity
@@ -67,7 +67,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <provider
