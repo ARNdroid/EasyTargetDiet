@@ -25,8 +25,10 @@ public class ForecastMeterView extends View {
     private int mCurrentWidth;
     private int mCurrentHeight;
 
-    private float mPercentage;
     private int mForecastType;
+    private float mPercentage;
+    private final int mBarWidthInDp;
+    private final int mBarHeightInDp;
     private int[] mForegroundColorsArray;
     private Paint mForegroundPaint;
     private Paint mBackgroundPaint;
@@ -40,6 +42,8 @@ public class ForecastMeterView extends View {
         try {
             mPercentage = attrsArray.getFloat(R.styleable.ForecastMeterView_percentage, 0.0f);
             mForecastType = attrsArray.getInteger(R.styleable.ForecastMeterView_forecastType, 0);
+            mBarWidthInDp = attrsArray.getInteger(R.styleable.ForecastMeterView_barWidthInDp, 10);
+            mBarHeightInDp = attrsArray.getInteger(R.styleable.ForecastMeterView_barHeightInDp, 60);
         } finally {
             attrsArray.recycle();
         }
@@ -75,15 +79,16 @@ public class ForecastMeterView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int DEFAULT_BAR_WIDTH_WITHOUT_PADDING_IN_ACCOUNT = 60;
-        int DEFAULT_BAR_HEIGHT_WITHOUT_PADDING_IN_ACCOUNT = 260;
+        final float density = getResources().getDisplayMetrics().density;
+        final int barWidthInPx = (int) (mBarWidthInDp * density);
+        final int barHeightInPx = (int) (mBarHeightInDp * density);
 
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         final int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        final int desiredWidth = DEFAULT_BAR_WIDTH_WITHOUT_PADDING_IN_ACCOUNT + getPaddingLeft() + getPaddingRight();
-        final int desiredHeight = DEFAULT_BAR_HEIGHT_WITHOUT_PADDING_IN_ACCOUNT + getPaddingTop() + getPaddingBottom();
+        final int desiredWidth = barWidthInPx + getPaddingLeft() + getPaddingRight();
+        final int desiredHeight = barHeightInPx + getPaddingTop() + getPaddingBottom();
 
         // Measure width:
         int resultWidth;
