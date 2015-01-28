@@ -1,6 +1,5 @@
 package br.com.arndroid.etdiet.settings;
 
-import android.support.v4.app.NavUtils;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import br.com.arndroid.etdiet.action.ActionUtils;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
+import br.com.arndroid.etdiet.utils.NavigationUtils;
 
 public class SettingsMainActivity extends Activity implements
         PointDialog.OnPointSetListener,
@@ -31,7 +31,7 @@ public class SettingsMainActivity extends Activity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                NavigationUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

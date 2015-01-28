@@ -2,7 +2,6 @@ package br.com.arndroid.etdiet.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.view.MenuItem;
@@ -13,6 +12,7 @@ import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
+import br.com.arndroid.etdiet.utils.NavigationUtils;
 
 public class SettingsListActivity extends Activity implements
         MealIdealValuesDialog.OnMealIdealValuesSetListener,
@@ -80,7 +80,7 @@ public class SettingsListActivity extends Activity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                NavigationUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
