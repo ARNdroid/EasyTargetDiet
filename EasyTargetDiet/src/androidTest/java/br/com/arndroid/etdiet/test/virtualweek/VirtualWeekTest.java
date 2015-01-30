@@ -85,7 +85,7 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
     }
 
     // This broken test is subject of issue #162.
-    public void ignoreTestWithDataChangeInPeriodMustCallObserver() throws InterruptedException {
+    public void ignoreTestWithDataChangeInPeriodMustCallObserver() {
         final IsolatedContext mockContext = getMockContext();
         final MockContentResolver2 contentResolver2 = getMockContentResolver();
         final VirtualWeek virtualWeek = VirtualWeek.getInstanceForTests(mockContext, contentResolver2);

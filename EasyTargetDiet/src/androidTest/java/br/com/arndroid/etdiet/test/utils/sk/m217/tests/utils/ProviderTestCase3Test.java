@@ -52,7 +52,7 @@ public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
     }
 
     // This broken test is subject of issue #162.
-    public void ignoreTestWithDatabaseChangeMustCallObserver() throws InterruptedException {
+    public void ignoreTestWithDatabaseChangeMustCallObserver() {
         final Context context = getMockContext();
         final TestContentObserver mObserver = new TestContentObserver();
 
