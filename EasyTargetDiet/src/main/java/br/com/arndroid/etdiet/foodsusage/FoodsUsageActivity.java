@@ -2,9 +2,6 @@ package br.com.arndroid.etdiet.foodsusage;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.view.Menu;
@@ -16,7 +13,6 @@ import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.MenuUtils;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
-import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.NavigationUtils;
 
 public class FoodsUsageActivity extends Activity implements
@@ -86,7 +82,7 @@ public class FoodsUsageActivity extends Activity implements
                         R.id.foods_usage_list_fragment, itemId);
                 return true;
             case android.R.id.home:
-                NavigationUtils.navigateUpFromSameTask(this);
+                NavigationUtils.navigateUpFromSameTaskPreservingScreenState(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

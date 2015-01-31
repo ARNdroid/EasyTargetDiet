@@ -31,7 +31,7 @@ public class SettingsMainActivity extends Activity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavigationUtils.navigateUpFromSameTask(this);
+                NavigationUtils.navigateUpFromSameTaskPreservingScreenState(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
