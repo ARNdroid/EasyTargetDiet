@@ -40,7 +40,7 @@ public class DateUtilsTest extends TestCase {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         assertTrue(DateUtils.isDateIdCurrentDate(DateUtils.dateToDateId(calendar.getTime())));
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
         assertFalse(DateUtils.isDateIdCurrentDate(DateUtils.dateToDateId(calendar.getTime())));
     }
 

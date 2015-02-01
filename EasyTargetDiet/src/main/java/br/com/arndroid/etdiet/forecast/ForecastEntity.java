@@ -1,8 +1,5 @@
 package br.com.arndroid.etdiet.forecast;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
@@ -17,7 +14,7 @@ public class ForecastEntity {
     private static final int FIFTY_NINE_MINUTES = 3540000;
 
     public static final int STRAIGHT_TO_GOAL = 0;
-    public static final int GOING_TO_GOAL_WITH_HELP = 1;
+    public static final int OUT_OF_GOAL_WITH_ENOUGH_RESERVES = 1;
     public static final int OUT_OF_GOAL_BUT_CAN_RETURN = 2;
     public static final int OUT_OF_GOAL = 3;
 
@@ -81,7 +78,7 @@ public class ForecastEntity {
         switch (getForecastType()) {
             case ForecastEntity.STRAIGHT_TO_GOAL:
                 return R.string.forecast_straight_to_goal_description;
-            case ForecastEntity.GOING_TO_GOAL_WITH_HELP:
+            case ForecastEntity.OUT_OF_GOAL_WITH_ENOUGH_RESERVES:
                 return R.string.forecast_going_to_goal_with_help_description;
             case ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN:
                 return R.string.forecast_out_of_goal_but_can_return_description;

@@ -773,6 +773,14 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
         }
     }
 
+    public float getTotalGoalForMeals() {
+        float result = 0.0f;
+        for (int i = 0; i < Meals.getMealsCount() - 1; i++) {
+            result += getGoalForMeal(i);
+        }
+        return result;
+    }
+
     public Long getId() {
         return id;
     }
