@@ -710,6 +710,88 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
                 + "]";
     }
 
+    public void setStartTimeForMeal(int value, int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                setBreakfastStartTime(value);
+                break;
+            case Meals.BRUNCH:
+                setBrunchStartTime(value);
+                break;
+            case Meals.LUNCH:
+                setLunchStartTime(value);
+                break;
+            case Meals.SNACK:
+                setSnackStartTime(value);
+                break;
+            case Meals.DINNER:
+                setDinnerStartTime(value);
+                break;
+            case Meals.SUPPER:
+                setSupperStartTime(value);
+                break;
+            case Meals.EXERCISE:
+                throw new IllegalStateException("Is illegal to set startTime for Exercise");
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public void setEndTimeForMeal(int value, int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                setBreakfastEndTime(value);
+                break;
+            case Meals.BRUNCH:
+                setBrunchEndTime(value);
+                break;
+            case Meals.LUNCH:
+                setLunchEndTime(value);
+                break;
+            case Meals.SNACK:
+                setSnackEndTime(value);
+                break;
+            case Meals.DINNER:
+                setDinnerEndTime(value);
+                break;
+            case Meals.SUPPER:
+                setSupperEndTime(value);
+                break;
+            case Meals.EXERCISE:
+                throw new IllegalStateException("Is illegal to set endTime for Exercise");
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public void setGoalForMeal(float value, int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                setBreakfastGoal(value);
+                break;
+            case Meals.BRUNCH:
+                setBrunchGoal(value);
+                break;
+            case Meals.LUNCH:
+                setLunchGoal(value);
+                break;
+            case Meals.SNACK:
+                setSnackGoal(value);
+                break;
+            case Meals.DINNER:
+                setDinnerGoal(value);
+                break;
+            case Meals.SUPPER:
+                setSupperGoal(value);
+                break;
+            case Meals.EXERCISE:
+                setExerciseGoal(value);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
     public int getStartTimeForMeal(int meal) {
         switch (meal) {
             case Meals.BREAKFAST:

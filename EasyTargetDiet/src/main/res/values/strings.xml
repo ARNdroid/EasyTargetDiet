@@ -127,5 +127,7 @@
     <string name="forecast">Forecast</string>
     <string name="balance">Balance (from Daily Allowance)</string>
     <string name="no_show_forecast_description">Some interesting description here!</string>
+    <string name="edit">edit</string>
+    <string name="edit_ideal_values">Edit ideal values</string>
 
 </resources>
