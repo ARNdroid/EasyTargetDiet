@@ -19,8 +19,6 @@ import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class JournalDateFragment extends Fragment implements DateDialog.OnDateSetListener {
 
-    private static final String MONTH_AND_YEAR_FORMAT = "%s %s";
-
     public interface JournalFragmentListener {
 
         public void onDateChanged(Date newDate);
@@ -36,7 +34,8 @@ public class JournalDateFragment extends Fragment implements DateDialog.OnDateSe
     private LinearLayout mLayDate;
 
     private TextView mTxtDay;
-    private TextView mTxtMonthAndYear;
+    private TextView mTxtMonth;
+    private TextView mTxtYear;
     private TextView mTxtWeekday;
     private TextView mTxtToday;
 
@@ -46,7 +45,7 @@ public class JournalDateFragment extends Fragment implements DateDialog.OnDateSe
         View rootView = inflater.inflate(R.layout.journal_date_fragment, container, false);
 
         mMonthsShortNameArray = getResources().getStringArray(R.array.months_short_name_list);
-        mWeekdaysNameArray = getResources().getStringArray(R.array.weekdays_name_list);
+        mWeekdaysNameArray = getResources().getStringArray(R.array.weekdays_short_name_list);
 
         bindScreen(rootView);
         setupScreen();
@@ -67,7 +66,8 @@ public class JournalDateFragment extends Fragment implements DateDialog.OnDateSe
     private void bindScreen(View rootView) {
         mLayDate = (LinearLayout) rootView.findViewById(R.id.layDate);
         mTxtDay = (TextView) rootView.findViewById(R.id.txtDay);
-        mTxtMonthAndYear = (TextView) rootView.findViewById(R.id.txtMonthAndYear);
+        mTxtMonth = (TextView) rootView.findViewById(R.id.txtMonth);
+        mTxtYear = (TextView) rootView.findViewById(R.id.txtYear);
         mTxtWeekday = (TextView) rootView.findViewById(R.id.txtWeekday);
         mTxtToday = (TextView) rootView.findViewById(R.id.txtToday);
     }
@@ -92,27 +92,21 @@ public class JournalDateFragment extends Fragment implements DateDialog.OnDateSe
         mCurrentDateId = dateId;
         mTxtDay.setText(DateUtils.getFormattedDayFromDateId(dateId));
         final int month = DateUtils.getMonthFromDateId(dateId) - 1;
-        mTxtMonthAndYear.setText(String.format(MONTH_AND_YEAR_FORMAT, mMonthsShortNameArray[month],
-                DateUtils.getFormattedYearFromDateId(dateId)));
+        mTxtMonth.setText(mMonthsShortNameArray[month]);
+        mTxtYear.setText(DateUtils.getFormattedYearFromDateId(dateId));
+
         final int weekday = DateUtils.getWeekdayFromDateId(dateId) - 1;
         mTxtWeekday.setText(mWeekdaysNameArray[weekday].toUpperCase());
-        final int textColor;
         final Compatibility compatibility = Compatibility.getInstance();
         if (DateUtils.isDateIdCurrentDate(dateId)) {
-            textColor = getResources().getColor(R.color.accent_dark);
             compatibility.setBackground(mLayDate,
                     getResources().getDrawable(R.drawable.card_selector));
             mTxtToday.setText(getString(R.string.today));
         } else {
-            textColor = getResources().getColor(R.color.card_old_style_foreground);
             compatibility.setBackground(mLayDate,
                     getResources().getDrawable(R.drawable.card_old_style_selector));
             mTxtToday.setText(getString(R.string.not_today));
         }
-        mTxtWeekday.setTextColor(textColor);
-        mTxtDay.setTextColor(textColor);
-        mTxtMonthAndYear.setTextColor(textColor);
-        mTxtToday.setTextColor(textColor);
     }
 
     @Override

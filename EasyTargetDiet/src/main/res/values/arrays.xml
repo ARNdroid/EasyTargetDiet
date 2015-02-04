@@ -26,6 +26,16 @@
         <item>@string/saturday</item>
     </string-array>
 
+    <string-array name="weekdays_short_name_list" >
+        <item>@string/sunday_short</item>
+        <item>@string/monday_short</item>
+        <item>@string/tuesday_short</item>
+        <item>@string/wednesday_short</item>
+        <item>@string/thursday_short</item>
+        <item>@string/friday_short</item>
+        <item>@string/saturday_short</item>
+    </string-array>
+
     <string-array name="exercise_use_mode_list">
         <item>@string/exercise_use_mode_dont_use</item>
         <item>@string/exercise_use_mode_use_dont_accumulate</item>

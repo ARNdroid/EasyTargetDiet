@@ -10,7 +10,7 @@
     <string name="dinner">Dinner</string>
     <string name="supper">Supper</string>
     <string name="date">Date</string>
-    <string name="used">Used</string>
+    <string name="done">Done</string>
     <string name="quick_insert_description">Some %1$s</string>
     <string name="list_empty_foods_usage">Nothing to show yet. Try adding some values.</string>
     <string name="delete_food_usage_msg">Delete %1$s from %2$s?</string>
@@ -19,8 +19,9 @@
     <string name="forecast_out_of_goal_but_can_return_description">Out of goal but I can return.</string>
     <string name="forecast_out_of_goal_description">Sorry, I\'m out of goal today…</string>
     <string name="no_show_two_digits_number">NN</string>
-    <string name="no_show_small_month_and_year">Sep 2007</string>
-    <string name="no_show_week_day">MONDAY</string>
+    <string name="no_show_small_year">2007</string>
+    <string name="no_show_month">Sep</string>
+    <string name="no_show_week_day_short">Mon</string>
     <string name="no_show_card_title">SOME TITLE</string>
     <string name="my_points">MY POINTS</string>
     <string name="my_points_at_end_of_day">FORECAST MY POINTS AT END OF DAY</string>
@@ -61,6 +62,13 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
+    <string name="sunday_short">Sun</string>
+    <string name="monday_short">Mon</string>
+    <string name="tuesday_short">Tue</string>
+    <string name="wednesday_short">Wed</string>
+    <string name="thursday_short">Thu</string>
+    <string name="friday_short">Fri</string>
+    <string name="saturday_short">Sat</string>
     <string name="choose_exercise_goal">Choose exercise goal for weekday</string>
     <string name="choose_liquid_goal">Choose liquid goal for weekday</string>
     <string name="choose_oil_goal">Choose oil goal for weekday</string>
@@ -122,12 +130,13 @@
     <string name="no_show_line_1">Line 1</string>
     <string name="no_show_line_2">Line 2</string>
     <string name="balance_title">BALANCE</string>
-    <string name="to_use">To Use</string>
     <string name="plus_signal">+</string>
     <string name="forecast">Forecast</string>
     <string name="balance">Balance (from Daily Allowance)</string>
     <string name="no_show_forecast_description">Some interesting description here!</string>
     <string name="edit">edit</string>
     <string name="edit_ideal_values">Edit ideal values</string>
+    <string name="calendar">calendar</string>
+    <string name="todo">Todo</string>
 
 </resources>
