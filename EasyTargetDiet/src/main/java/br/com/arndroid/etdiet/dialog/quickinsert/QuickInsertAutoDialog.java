@@ -1,5 +1,6 @@
 package br.com.arndroid.etdiet.dialog.quickinsert;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -62,12 +63,15 @@ public class QuickInsertAutoDialog extends DialogFragment implements
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        // We don't have access to root ViewGroup here:
+        @SuppressLint("InflateParams")
         View view = inflater.inflate(R.layout.quick_insert_auto_dialog, null);
         builder.setView(view);
 
         bindScreen(view);
 
         if (savedInstanceState != null) {
+            LOG.trace("Inside onCreateDialog: restoring state from savedInstanceState");
             setTitle(savedInstanceState.getString(STATE_KEY_TITLE));
             setAddMode(savedInstanceState.getInt(STATE_KEY_ADD_MODE));
             setFoodsUsageEntity((FoodsUsageEntity) savedInstanceState.getParcelable(STATE_KEY_FOODS_USAGE));
@@ -113,6 +117,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
 
     @Override
     public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+        LOG.trace("Inside onSaveInstanceState: saving state to outState");
         fromScreenToEntity();
         outState.putString(STATE_KEY_TITLE, getTitle());
         outState.putInt(STATE_KEY_ADD_MODE, getAddMode());

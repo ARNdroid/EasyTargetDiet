@@ -7,7 +7,7 @@ import br.com.arndroid.etdiet.provider.days.DaysEntity;
 
 public class DaySummary implements Parcelable {
 
-    // Attention: it's a Parcelable. The order and the number of fields matter.
+    // Mind the gap: it's a Parcelable. The order and the number of fields matter.
     private DaysEntity daysEntity;
     private UsageSummary usageSummary;
     private SettingsValues settingsValues;
@@ -17,6 +17,8 @@ public class DaySummary implements Parcelable {
     private float diaryAllowanceAfterUsage; // and diary allowance before usage == DayEntity.allowed
     private float weeklyAllowanceBeforeUsage;
     private float weeklyAllowanceAfterUsage;
+    private float toDoBeforeUsage; // The initial goal of the day
+    private float toDoAfterUsage; // The remaining value to met the initial goal
 
     public DaySummary() {}
 
@@ -30,6 +32,8 @@ public class DaySummary implements Parcelable {
         diaryAllowanceAfterUsage = toClone.diaryAllowanceAfterUsage;
         weeklyAllowanceBeforeUsage = toClone.weeklyAllowanceBeforeUsage;
         weeklyAllowanceAfterUsage = toClone.weeklyAllowanceAfterUsage;
+        toDoBeforeUsage = toClone.toDoBeforeUsage;
+        toDoAfterUsage = toClone.toDoAfterUsage;
     }
 
     public UsageSummary getUsage() {
@@ -39,7 +43,6 @@ public class DaySummary implements Parcelable {
     public void setUsage(UsageSummary usage) {
         this.usageSummary = usage;
     }
-
 
     public float getExerciseToCarry() {
         return exerciseToCarry;
@@ -105,6 +108,22 @@ public class DaySummary implements Parcelable {
         this.settingsValues = settingsValues;
     }
 
+    public float getToDoBeforeUsage() {
+        return toDoBeforeUsage;
+    }
+
+    public void setToDoBeforeUsage(float toDoBeforeUsage) {
+        this.toDoBeforeUsage = toDoBeforeUsage;
+    }
+
+    public float getToDoAfterUsage() {
+        return toDoAfterUsage;
+    }
+
+    public void setToDoAfterUsage(float toDoAfterUsage) {
+        this.toDoAfterUsage = toDoAfterUsage;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -121,6 +140,8 @@ public class DaySummary implements Parcelable {
         destination.writeFloat(diaryAllowanceAfterUsage);
         destination.writeFloat(weeklyAllowanceBeforeUsage);
         destination.writeFloat(weeklyAllowanceAfterUsage);
+        destination.writeFloat(toDoBeforeUsage);
+        destination.writeFloat(toDoAfterUsage);
     }
 
     public static final Parcelable.Creator<DaySummary> CREATOR
@@ -137,6 +158,8 @@ public class DaySummary implements Parcelable {
             result.setDiaryAllowanceAfterUsage(in.readFloat());
             result.setWeeklyAllowanceBeforeUsage(in.readFloat());
             result.setWeeklyAllowanceAfterUsage(in.readFloat());
+            result.setToDoBeforeUsage(in.readFloat());
+            result.setToDoAfterUsage(in.readFloat());
 
             return result;
         }

@@ -31,14 +31,13 @@ public class MockContentResolver2 extends MockContentResolver {
 		mRootNode.notifyMyObservers(uri, 0, observer, false);
 	}
 
-	public void safeRegisterContentObserver(Uri uri, boolean notifyForDescendents,
+	public void safeRegisterContentObserver(Uri uri, boolean notifyForDescendants,
 			ContentObserver observer) {
-		mRootNode.addObserver(uri, observer, notifyForDescendents);
+		mRootNode.addObserver(uri, observer, notifyForDescendants);
 	}
 
 	public void safeUnregisterContentObserver(ContentObserver observer) {
 		mRootNode.removeObserver(observer);
 	}
-
 
 }

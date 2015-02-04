@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:etdview="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,9 +33,17 @@
             android:id="@+id/forecastMeter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding ="@dimen/default_view_padding"
+            android:paddingLeft="@dimen/default_view_padding"
+            android:paddingStart="@dimen/default_view_padding"
+            android:paddingTop="@dimen/default_view_padding"
+            android:paddingBottom="@dimen/default_view_padding"
+            android:paddingRight="11dp"
+            android:paddingEnd="14dp"
             etdview:percentage="0.6"
-            etdview:forecastType="0"/>
+            etdview:forecastType="0"
+            etdview:barHeightInDp="85"
+            etdview:barWidthInDp="13"
+            tools:ignore="NewApi" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -46,13 +55,36 @@
 
             <TextView
                 style="@style/CardFont.Data.XLarge"
-                android:id="@+id/txtPtsDay"
+                android:id="@+id/txtPtsToDo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_show_two_digits_with_decimal_number" />
 
             <TextView
                 style="@style/CardFont.Section.Large"
+                android:id="@+id/lblPtsToDo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/default_view_padding">
+
+            <TextView
+                style="@style/CardFont.Data"
+                android:id="@+id/txtPtsDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_show_two_digits_with_decimal_number" />
+
+            <TextView
+                style="@style/CardFont.Section"
                 android:id="@+id/lblPtsDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -140,7 +140,11 @@ public class SettingsListFragment extends ListFragment implements
         }
     }
 
-    private void createAndShowMealIdealValuesDialogWith(String title, int minIntegerValue, int maxIntegerValue, Integer initialStartTime, Integer initialEndTime, Float initialIdealValue, String tag) {
+    @SuppressWarnings("SameParameterValue")
+    private void createAndShowMealIdealValuesDialogWith(String title, int minIntegerValue,
+                                                        int maxIntegerValue, Integer initialStartTime,
+                                                        Integer initialEndTime, Float initialIdealValue,
+                                                        String tag) {
         final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
         dialog.setTitle(title);
         dialog.setMinIntegerValue(minIntegerValue);
@@ -151,6 +155,7 @@ public class SettingsListFragment extends ListFragment implements
         dialog.show(getFragmentManager(), tag);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void createAndShowIntegerDialogWith(String title, int minValue, int maxValue,
                                                 Integer initialValue, String tag) {
         final IntegerDialog dialog = new IntegerDialog();
@@ -161,6 +166,7 @@ public class SettingsListFragment extends ListFragment implements
         dialog.show(getFragmentManager(), tag);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void createAndShowPointDialogWith(String title, int minIntegerValue, int maxIntegerValue,
                                               Float initialValue, String tag) {
         final PointDialog dialog = new PointDialog();

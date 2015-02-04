@@ -6,16 +6,25 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import javax.crypto.spec.DESedeKeySpec;
+
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
 
-public class FoodsUsageHeaderFragment extends Fragment {
+public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValuesDialog.OnMealIdealValuesSetListener {
+    public static final String OWNER_TAG = FoodsUsageHeaderFragment.class.getSimpleName();
+
+    private String mDateId;
+    private int mMeal;
+    private float mTotalUsed;
     private TextView mTxtDate;
     private TextView mTxtUsed;
     private TextView mTxtGoal;
@@ -27,6 +36,8 @@ public class FoodsUsageHeaderFragment extends Fragment {
 
         bindScreen(rootView);
 
+        setupScreen(rootView);
+
         return rootView;
     }
 
@@ -34,6 +45,26 @@ public class FoodsUsageHeaderFragment extends Fragment {
         mTxtDate = (TextView) rootView.findViewById(R.id.txtDate);
         mTxtUsed = (TextView) rootView.findViewById(R.id.txtUsed);
         mTxtGoal = (TextView) rootView.findViewById(R.id.txtGoal);
+    }
+
+    private void setupScreen(View rootView) {
+        final ImageButton btnEdit = (ImageButton) rootView.findViewById(R.id.btnEditMeal);
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DaysManager manager = new DaysManager(getActivity().getApplicationContext());
+                DaysEntity daysEntity = manager.dayFromDateId(mDateId);
+
+                final MealIdealValuesDialog dialog = new MealIdealValuesDialog();
+                dialog.setTitle(getString(R.string.edit_ideal_values));
+                dialog.setMinIntegerValue(0);
+                dialog.setMaxIntegerValue(99);
+                dialog.setInitialStartTime(daysEntity.getStartTimeForMeal(mMeal));
+                dialog.setInitialEndTime(daysEntity.getEndTimeForMeal(mMeal));
+                dialog.setInitialIdealValue(daysEntity.getGoalForMeal(mMeal));
+                dialog.show(getFragmentManager(), OWNER_TAG);
+            }
+        });
     }
 
     private void refreshScreen(String dateId, int meal, float used) {
@@ -57,12 +88,30 @@ public class FoodsUsageHeaderFragment extends Fragment {
     }
 
     public void onDataChangedFromHolderActivity(String dateId, int meal, Cursor data) {
+        mDateId = dateId;
+        mMeal = meal;
         float totalUsed = 0.0f;
         if (data.moveToFirst()) {
             do {
                 totalUsed += data.getFloat(data.getColumnIndex(Contract.FoodsUsage.VALUE));
             } while (data.moveToNext());
         }
-        refreshScreen(dateId, meal, totalUsed);
+        mTotalUsed = totalUsed;
+        refreshScreen(mDateId, mMeal, mTotalUsed);
+    }
+
+    @Override
+    public void onMealIdealValuesSet(String tag, int actualStartTime, int actualEndTime, float actualValue) {
+        final DaysManager manager = new DaysManager(getActivity().getApplicationContext());
+
+        DaysEntity daysEntity = manager.dayFromDateId(mDateId);
+        if (mMeal != Meals.EXERCISE) {
+            daysEntity.setStartTimeForMeal(actualStartTime, mMeal);
+            daysEntity.setEndTimeForMeal(actualEndTime, mMeal);
+        }
+        daysEntity.setGoalForMeal(actualValue, mMeal);
+
+        manager.refresh(daysEntity);
+        refreshScreen(mDateId, mMeal, mTotalUsed);
     }
 }

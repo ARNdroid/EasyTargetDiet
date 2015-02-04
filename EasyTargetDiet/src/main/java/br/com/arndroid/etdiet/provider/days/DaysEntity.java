@@ -8,10 +8,14 @@ import android.os.Parcelable;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
+import br.com.arndroid.etdiet.utils.ParcelUtils;
 
 public class DaysEntity extends AbstractEntity implements Parcelable {
 
     public static final int NO_TIME = -1;
+    private static final long SENTINEL_ID = -1L;
+    private static final float SENTINEL_FLOAT_VALUE = -1.0f;
+    private static final int SENTINEL_INT_VALUE = -1;
 
     // Attention: it's a Parcelable. The order and the number of fields matter.
     private Long id;
@@ -706,6 +710,88 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
                 + "]";
     }
 
+    public void setStartTimeForMeal(int value, int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                setBreakfastStartTime(value);
+                break;
+            case Meals.BRUNCH:
+                setBrunchStartTime(value);
+                break;
+            case Meals.LUNCH:
+                setLunchStartTime(value);
+                break;
+            case Meals.SNACK:
+                setSnackStartTime(value);
+                break;
+            case Meals.DINNER:
+                setDinnerStartTime(value);
+                break;
+            case Meals.SUPPER:
+                setSupperStartTime(value);
+                break;
+            case Meals.EXERCISE:
+                throw new IllegalStateException("Is illegal to set startTime for Exercise");
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public void setEndTimeForMeal(int value, int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                setBreakfastEndTime(value);
+                break;
+            case Meals.BRUNCH:
+                setBrunchEndTime(value);
+                break;
+            case Meals.LUNCH:
+                setLunchEndTime(value);
+                break;
+            case Meals.SNACK:
+                setSnackEndTime(value);
+                break;
+            case Meals.DINNER:
+                setDinnerEndTime(value);
+                break;
+            case Meals.SUPPER:
+                setSupperEndTime(value);
+                break;
+            case Meals.EXERCISE:
+                throw new IllegalStateException("Is illegal to set endTime for Exercise");
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
+    public void setGoalForMeal(float value, int meal) {
+        switch (meal) {
+            case Meals.BREAKFAST:
+                setBreakfastGoal(value);
+                break;
+            case Meals.BRUNCH:
+                setBrunchGoal(value);
+                break;
+            case Meals.LUNCH:
+                setLunchGoal(value);
+                break;
+            case Meals.SNACK:
+                setSnackGoal(value);
+                break;
+            case Meals.DINNER:
+                setDinnerGoal(value);
+                break;
+            case Meals.SUPPER:
+                setSupperGoal(value);
+                break;
+            case Meals.EXERCISE:
+                setExerciseGoal(value);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid meal=" + meal + ".");
+        }
+    }
+
     public int getStartTimeForMeal(int meal) {
         switch (meal) {
             case Meals.BREAKFAST:
@@ -767,6 +853,14 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
+    }
+
+    public float getTotalGoalForMeals() {
+        float result = 0.0f;
+        for (int i = 0; i < Meals.getMealsCount() - 1; i++) {
+            result += getGoalForMeal(i);
+        }
+        return result;
     }
 
     public Long getId() {
@@ -1301,34 +1395,35 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel destination, int flags) {
-        destination.writeLong(id);
+
+        ParcelUtils.safeFromNullWriteLong(destination, id, SENTINEL_ID);
         destination.writeString(dateId);
-        destination.writeFloat(allowed);
-        destination.writeInt(breakfastStartTime);
-        destination.writeInt(breakfastEndTime);
-        destination.writeFloat(breakfastGoal);
-        destination.writeInt(brunchStartTime);
-        destination.writeInt(brunchEndTime);
-        destination.writeFloat(brunchGoal);
-        destination.writeInt(lunchStartTime);
-        destination.writeInt(lunchEndTime);
-        destination.writeFloat(lunchGoal);
-        destination.writeInt(snackStartTime);
-        destination.writeInt(snackEndTime);
-        destination.writeFloat(snackGoal);
-        destination.writeInt(dinnerStartTime);
-        destination.writeInt(dinnerEndTime);
-        destination.writeFloat(dinnerGoal);
-        destination.writeInt(supperStartTime);
-        destination.writeInt(supperEndTime);
-        destination.writeFloat(supperGoal);
-        destination.writeFloat(exerciseGoal);
-        destination.writeInt(liquidDone);
-        destination.writeInt(liquidGoal);
-        destination.writeInt(oilDone);
-        destination.writeInt(oilGoal);
-        destination.writeInt(supplementDone);
-        destination.writeInt(supplementGoal);
+        ParcelUtils.safeFromNullWriteFloat(destination, allowed, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, breakfastStartTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, breakfastEndTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, breakfastGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, brunchStartTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, brunchEndTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, brunchGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, lunchStartTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, lunchEndTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, lunchGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, snackStartTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, snackEndTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, snackGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, dinnerStartTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, dinnerEndTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, dinnerGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, supperStartTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, supperEndTime, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, supperGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteFloat(destination, exerciseGoal, SENTINEL_FLOAT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, liquidDone, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, liquidGoal, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, oilDone, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, oilGoal, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, supplementDone, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, supplementGoal, SENTINEL_INT_VALUE);
         destination.writeString(note);
     }
 
@@ -1338,34 +1433,34 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
         public DaysEntity createFromParcel(Parcel in) {
             final DaysEntity result = new DaysEntity();
 
-            result.setId(in.readLong());
+            result.setId(ParcelUtils.safeFromNullReadLong(in, SENTINEL_ID));
             result.setDateId(in.readString());
-            result.setAllowed(in.readFloat());
-            result.setBreakfastStartTime(in.readInt());
-            result.setBreakfastEndTime(in.readInt());
-            result.setBreakfastGoal(in.readFloat());
-            result.setBrunchStartTime(in.readInt());
-            result.setBrunchEndTime(in.readInt());
-            result.setBrunchGoal(in.readFloat());
-            result.setLunchStartTime(in.readInt());
-            result.setLunchEndTime(in.readInt());
-            result.setLunchGoal(in.readFloat());
-            result.setSnackStartTime(in.readInt());
-            result.setSnackEndTime(in.readInt());
-            result.setSnackGoal(in.readFloat());
-            result.setDinnerStartTime(in.readInt());
-            result.setDinnerEndTime(in.readInt());
-            result.setDinnerGoal(in.readFloat());
-            result.setSupperStartTime(in.readInt());
-            result.setSupperEndTime(in.readInt());
-            result.setSupperGoal(in.readFloat());
-            result.setExerciseGoal(in.readFloat());
-            result.setLiquidDone(in.readInt());
-            result.setLiquidGoal(in.readInt());
-            result.setOilDone(in.readInt());
-            result.setOilGoal(in.readInt());
-            result.setSupplementDone(in.readInt());
-            result.setSupplementGoal(in.readInt());
+            result.setAllowed(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setBreakfastStartTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setBreakfastEndTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setBreakfastGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setBrunchStartTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setBrunchEndTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setBrunchGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setLunchStartTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setLunchEndTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setLunchGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setSnackStartTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setSnackEndTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setSnackGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setDinnerStartTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setDinnerEndTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setDinnerGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setSupperStartTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setSupperEndTime(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setSupperGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setExerciseGoal(ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE));
+            result.setLiquidDone(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setLiquidGoal(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setOilDone(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setOilGoal(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setSupplementDone(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
+            result.setSupplementGoal(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
             result.setNote(in.readString());
 
             return result;

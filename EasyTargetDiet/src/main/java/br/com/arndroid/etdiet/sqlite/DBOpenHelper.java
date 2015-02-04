@@ -49,6 +49,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 LOG.trace("About to execute scriptV01ToV02");
                 DBScripts.scriptV01ToV02(db);
                 LOG.trace("scriptV01ToV02 executed");
+
+            // Mind the gap: when inserting a new case DON'T COPY THE BREAK!
+            // The break statement is used only for default clause.
             break;
             default:
                 final String errorMessage = String.format(

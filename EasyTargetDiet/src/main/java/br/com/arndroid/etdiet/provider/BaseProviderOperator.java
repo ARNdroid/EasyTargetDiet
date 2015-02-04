@@ -82,6 +82,7 @@ public abstract class BaseProviderOperator implements ProviderOperator {
 
     protected abstract String tableName();
 
+    @SuppressWarnings("UnusedParameters")
     protected abstract void onValidateParameters(int operation, Uri uri, OperationParameters parameters,
                                                  Provider provider);
 
@@ -132,11 +133,10 @@ public abstract class BaseProviderOperator implements ProviderOperator {
     }
 
 
-    private boolean continueOnConstraintViolation(@SuppressWarnings("UnusedDeclaration") int operation,
-                                                  @SuppressWarnings("UnusedDeclaration") Uri uri,
-                                                  @SuppressWarnings("UnusedDeclaration") OperationParameters parameters,
-                                                  @SuppressWarnings("UnusedDeclaration") SQLiteConstraintException constraintException,
-                                                  @SuppressWarnings("UnusedDeclaration") Provider provider) {
+    @SuppressWarnings({"SameReturnValue", "UnusedParameters"})
+    private boolean continueOnConstraintViolation(int operation, Uri uri, OperationParameters parameters,
+                                                  SQLiteConstraintException constraintException,
+                                                  Provider provider) {
         return false;
     }
 

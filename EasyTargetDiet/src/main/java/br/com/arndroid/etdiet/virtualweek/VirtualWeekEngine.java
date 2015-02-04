@@ -143,6 +143,28 @@ public class VirtualWeekEngine {
         } else {
             summary.setExerciseToCarry(FLOAT_ZERO);
         }
+
+        final float allowed = summary.getEntity().getAllowed();
+        final float planned = summary.getEntity().getTotalGoalForMeals();
+        float reservesAtStartOfDay = summary.getWeeklyAllowanceBeforeUsage();
+        if (summary.getSettingsValues().getExerciseUseMode()
+                != Contract.ParametersHistory.EXERCISE_USE_MODE_DONT_USE) {
+            reservesAtStartOfDay += summary.getTotalExercise();
+        }
+        if (planned > allowed) {
+            if (planned - allowed <= reservesAtStartOfDay) {
+                // Scene 1: planned > allowed and reserves will cover.
+                summary.setToDoBeforeUsage(planned);
+            } else {
+                // Scene 2: planned > allowed but reserves won't cover.
+                summary.setToDoBeforeUsage(allowed + reservesAtStartOfDay);
+            }
+        } else {
+            // Scene 3: planned <= allowed
+            summary.setToDoBeforeUsage(planned);
+        }
+
+        summary.setToDoAfterUsage(summary.getToDoBeforeUsage() - usage.getTotalUsed());
     }
 
     private void buildAllDaysForReferenceDate(Date referenceDate) {

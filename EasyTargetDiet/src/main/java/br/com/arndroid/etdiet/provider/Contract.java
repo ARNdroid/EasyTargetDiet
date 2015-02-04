@@ -17,15 +17,7 @@ public class Contract {
 	 * Global Definitions
 	 */
 
-    /*
-        This constant is intended to be equals applicationId.
-        Android decoupled applicationId and packageName from build config
-        but in BuildConfig class the name remains PACKAGE_NAME for applicationId
-        value.
-        There is issue (71736) in Android AOSP to create the constant with
-        the new name and deprecate the old one.
-     */
-    public static final String AUTHORITY = BuildConfig.PACKAGE_NAME + ".provider";
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     public static final int FIELD_TYPE_INTEGER = 1;
     public static final int FIELD_TYPE_LONG = 2;
@@ -50,6 +42,7 @@ public class Contract {
             final private String mColumnName;
             final private Object mValue;
 
+            @SuppressWarnings("SameParameterValue")
             public FieldDescriptor(String tableName, String columnName, Object value) {
                 mTableName = tableName;
                 mColumnName = columnName;
@@ -71,16 +64,21 @@ public class Contract {
             private static final long serialVersionUID = 1L;
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         public static final int UNEXPECTED_ERROR = 0;
         public static final int NULL_VALUE = 1;
+        @SuppressWarnings("UnusedDeclaration")
         public static final int INVALID_VALUE = 2;
+        @SuppressWarnings("UnusedDeclaration")
         public static final int ID_UPDATED = 3;
+        @SuppressWarnings("UnusedDeclaration")
         public static final int DUPLICATED_DATA = 4;
 
         private final int mErrorCode;
         private final FieldDescriptor[] mFieldDescriptorArray;
         private String mDetailMessage;
 
+        @SuppressWarnings("SameParameterValue")
         public TargetException(int errorCode, FieldDescriptor[] fieldDescriptorArray, Throwable cause) {
             super(cause);
             mErrorCode = errorCode;
@@ -91,6 +89,7 @@ public class Contract {
             return mErrorCode;
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         public FieldDescriptor[] getFieldDescriptorArray() {
             // OK... we are returning the internal array and clients will have access
             // to our array and to fields descriptors. But we are not scared about
@@ -173,6 +172,7 @@ public class Contract {
 		/*
 		    Projections
 		 */
+        @SuppressWarnings("UnusedDeclaration")
         public static final String[] ID_PROJECTION = {_ID};
 
 		/*
@@ -193,12 +193,14 @@ public class Contract {
 		 * Sort order
 		 */
 
+        @SuppressWarnings("UnusedDeclaration")
         public static final String DATE_ID_ASC = DATE_ID + " ASC";
 
 		/*
 		 * Utility methods
 		 */
 
+        @SuppressWarnings("UnusedDeclaration")
         public static int fieldTypeForColumn(String columnName) {
             return fieldTypeForTableAndColumn(TABLE_NAME, columnName);
         }
@@ -271,12 +273,13 @@ public class Contract {
 		 * Sort order
 		 */
 
-        public static final String TIME_ASC_SORT_ORDER = TIME + " ASC";
+        public static final String TIME_DESC_SORT_ORDER = TIME + " DESC";
 
 		/*
 		 * Utility methods
 		 */
 
+        @SuppressWarnings("UnusedDeclaration")
         public static int fieldTypeForColumn(String columnName) {
             return fieldTypeForTableAndColumn(TABLE_NAME, columnName);
         }
@@ -344,6 +347,7 @@ public class Contract {
 		 * Utility methods
 		 */
 
+        @SuppressWarnings("UnusedDeclaration")
         public static int fieldTypeForColumn(String columnName) {
             return fieldTypeForTableAndColumn(TABLE_NAME, columnName);
         }
@@ -401,8 +405,8 @@ public class Contract {
         public static final int EXERCISE_USE_MODE_PARAMETER_TYPE = 3;
         public static final int EXERCISE_USE_ORDER_PARAMETER_TYPE = 4;
 
-        public static final int UNDEFINED_INTEGRAL_PARAMATER_VALUE = -1;
-        public static final float UNDEFINED_FLOATING_POINT_PARAMATER_VALUE = -1.0f;
+        public static final int UNDEFINED_INTEGRAL_PARAMETER_VALUE = -1;
+        public static final float UNDEFINED_FLOATING_POINT_PARAMETER_VALUE = -1.0f;
 
         public static final int EXERCISE_USE_ORDER_USE_EXERCISES_FIRST = 0;
         public static final int EXERCISE_USE_ORDER_USE_WEEKLY_ALLOWANCE_FIRST = 1;
@@ -418,6 +422,7 @@ public class Contract {
         public static final String[] ID_PROJECTION = {_ID};
         public static final String[] INTEGRAL_PROJECTION = {_ID, DATE, INTEGRAL_NEW_VALUE};
         public static final String[] FLOATING_POINT_PROJECTION = {_ID, DATE, FLOATING_POINT_NEW_VALUE};
+        @SuppressWarnings("UnusedDeclaration")
         public static final String[] TEXT_PROJECTION = {_ID, DATE, TEXT_NEW_VALUE};
         public static final String[] ALL_COLS_PROJECTION = {_ID, TYPE, DATE, INTEGRAL_NEW_VALUE, FLOATING_POINT_NEW_VALUE, TEXT_NEW_VALUE};
 
@@ -439,6 +444,7 @@ public class Contract {
 		 * Utility methods
 		 */
 
+        @SuppressWarnings("UnusedDeclaration")
         public static int fieldTypeForColumn(String columnName) {
             return fieldTypeForTableAndColumn(TABLE_NAME, columnName);
         }
@@ -470,6 +476,7 @@ public class Contract {
 		 */
 
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+        @SuppressWarnings("UnusedDeclaration")
         public static final Uri DATE_ID_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" +
                 TABLE_NAME + "/date_id");
 
@@ -502,6 +509,7 @@ public class Contract {
 		 * Utility methods
 		 */
 
+        @SuppressWarnings("UnusedDeclaration")
         public static int fieldTypeForColumn(String columnName) {
             return fieldTypeForTableAndColumn(TABLE_NAME, columnName);
         }

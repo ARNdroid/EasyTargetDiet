@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="br.com.arndroid.etdiet.settings.SettingsListFragment"
-        tools:layout="@layout/simple_list_item_2" />
+        tools:layout="@layout/settings_list_item_2" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package br.com.arndroid.etdiet.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -38,6 +39,8 @@ public class PointDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        // We don't have access to root ViewGroup here:
+        @SuppressLint("InflateParams")
         View view = inflater.inflate(R.layout.point_dialog, null);
         builder.setView(view);
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.arndroid.etdiet">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="br.com.arndroid.etdiet">
 
 <uses-sdk />
 
@@ -9,7 +10,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".app.ETDApp">
+        android:name=".app.ETDApp"
+        android:supportsRtl="false"
+        tools:ignore="UnusedAttribute">
 
         <activity
             android:name=".journal.JournalActivity"
@@ -23,40 +26,48 @@
         <activity
             android:name=".foodsusage.FoodsUsageActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".journal.JournalActivity">
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <activity
             android:name=".settings.SettingsMainActivity"
-            android:label="@string/settings">
+            android:label="@string/settings"
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <activity
-            android:name=".settings.SettingsListActivity">
+            android:name=".settings.SettingsListActivity"
+            android:parentActivityName=".settings.SettingsMainActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".settings.SettingsMainActivity" />
+                android:value="br.com.arndroid.etdiet.settings.SettingsMainActivity" />
         </activity>
 
         <activity
-            android:name=".weights.WeightsActivity">
+            android:name=".weights.WeightsActivity"
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <activity
             android:name=".forecast.ForecastActivity"
-            android:parentActivityName=".journal.JournalActivity">
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".journal.JournalActivity" />
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
         </activity>
 
         <provider

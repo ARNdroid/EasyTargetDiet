@@ -64,7 +64,11 @@ public class DateUtils {
     }
 
     public static boolean isDateIdCurrentDate(String dateId) {
-        return dateToDateId(new Date()).equals(dateId);
+        return compareDateId(dateToDateId(new Date()), dateId) == 0;
+    }
+
+    public static int compareDateId(String dateId, String compareToDateId) {
+        return dateId.compareTo(compareToDateId);
     }
 
     public static int hoursToMillis(int hours) {
@@ -80,7 +84,9 @@ public class DateUtils {
         int year = picker.getYear();
         int month = picker.getMonth();
         int dayOfMonth = picker.getDayOfMonth();
-        //noinspection MagicConstant
+        // The DatePicker.getMonth() return the month from a Calendar. It's safe here to suppress
+        // the lint warning:
+        // noinspection ResourceType
         cal.set(year, month, dayOfMonth);
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING);
 
@@ -98,7 +104,9 @@ public class DateUtils {
 
     public static Date dateIdToDate(String dateId) {
         Calendar cal = Calendar.getInstance();
-        //noinspection MagicConstant
+        // We don't care about Calendar.January, Calendar.February because the inspection will be
+        // satisfied only using the literal constant.
+        // noinspection ResourceType
         cal.set(getYearFromDateId(dateId), getMonthFromDateId(dateId) - 1, getDayFromDateId(dateId), 0, 0);
         return (cal.getTime());
     }

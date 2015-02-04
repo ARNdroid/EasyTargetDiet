@@ -1,8 +1,5 @@
 package br.com.arndroid.etdiet.forecast;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.Date;
 
 import br.com.arndroid.etdiet.R;
@@ -11,11 +8,13 @@ import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class ForecastEntity {
 
+    private static final int ZERO_HOURS = 0;
     private static final int TWENTY_THREE_HOURS = 82800000;
+    private static final int ZERO_MINUTES = 0;
     private static final int FIFTY_NINE_MINUTES = 3540000;
 
     public static final int STRAIGHT_TO_GOAL = 0;
-    public static final int GOING_TO_GOAL_WITH_HELP = 1;
+    public static final int OUT_OF_GOAL_WITH_ENOUGH_RESERVES = 1;
     public static final int OUT_OF_GOAL_BUT_CAN_RETURN = 2;
     public static final int OUT_OF_GOAL = 3;
 
@@ -79,7 +78,7 @@ public class ForecastEntity {
         switch (getForecastType()) {
             case ForecastEntity.STRAIGHT_TO_GOAL:
                 return R.string.forecast_straight_to_goal_description;
-            case ForecastEntity.GOING_TO_GOAL_WITH_HELP:
+            case ForecastEntity.OUT_OF_GOAL_WITH_ENOUGH_RESERVES:
                 return R.string.forecast_going_to_goal_with_help_description;
             case ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN:
                 return R.string.forecast_out_of_goal_but_can_return_description;
@@ -92,12 +91,20 @@ public class ForecastEntity {
 
     public static ForecastEntity getInstanceForDaySummary(DaySummary daySummary) {
         final String dateId = daySummary.getEntity().getDateId();
-        if (DateUtils.isDateIdCurrentDate(dateId)) {
+        final int resultCompareDateId = DateUtils.compareDateId(dateId, DateUtils.dateToDateId(new Date()));
+        if (resultCompareDateId == 0) {
+            // Present date:
             return Forecaster.getInstance().forecast(new Date(), daySummary);
-        } else {
+        } else if (resultCompareDateId < 0) {
+            // Paste date:
             return Forecaster.getInstance().forecast(new Date(
                     DateUtils.dateIdToDate(dateId).getTime()
                             + TWENTY_THREE_HOURS + FIFTY_NINE_MINUTES), daySummary);
+        } else {
+            // Future date:
+            return Forecaster.getInstance().forecast(new Date(
+                    DateUtils.dateIdToDate(dateId).getTime()
+                            + ZERO_HOURS + ZERO_MINUTES), daySummary);
         }
     }
 }

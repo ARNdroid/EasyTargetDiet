@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Card"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/breakfast" />
 
         <TextView
@@ -42,7 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number" />
+            android:layout_alignParentEnd="true"
+            android:text="@string/no_show_two_digits_number"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             style="@style/CardFont.Item.Small"
@@ -51,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblBreakfastName"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
@@ -73,6 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/brunch" />
 
         <TextView
@@ -81,7 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number" />
+            android:layout_alignParentEnd="true"
+            android:text="@string/no_show_two_digits_number"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             style="@style/CardFont.Item.Small"
@@ -90,6 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblBrunchName"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
@@ -112,6 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/lunch" />
 
         <TextView
@@ -120,7 +130,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number" />
+            android:layout_alignParentEnd="true"
+            android:text="@string/no_show_two_digits_number"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             style="@style/CardFont.Item.Small"
@@ -129,6 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblLunchName"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
@@ -151,6 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/snack" />
 
         <TextView
@@ -159,7 +173,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number" />
+            android:layout_alignParentEnd="true"
+            android:text="@string/no_show_two_digits_number"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             style="@style/CardFont.Item.Small"
@@ -168,6 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblSnackName"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
@@ -190,6 +207,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/dinner" />
 
         <TextView
@@ -198,7 +216,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number" />
+            android:layout_alignParentEnd="true"
+            android:text="@string/no_show_two_digits_number"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             style="@style/CardFont.Item.Small"
@@ -207,6 +227,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblDinnerName"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>
@@ -228,6 +249,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/supper" />
 
         <TextView
@@ -236,7 +258,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/no_show_two_digits_number" />
+            android:layout_alignParentEnd="true"
+            android:text="@string/no_show_two_digits_number"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             style="@style/CardFont.Item.Small"
@@ -245,6 +269,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblSupperName"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/no_show_ideal_values" />
 
     </RelativeLayout>

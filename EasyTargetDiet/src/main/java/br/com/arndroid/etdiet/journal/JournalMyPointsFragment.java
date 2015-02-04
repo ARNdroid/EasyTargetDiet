@@ -31,6 +31,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
     private String mCurrentDateId;
 
     private TextView mTxtTitle;
+    private TextView mTxtPtsToDo;
     private TextView mTxtPtsDay;
     private TextView mTxtPtsWeek;
     private TextView mTxtPtsExercise;
@@ -54,6 +55,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
 
     private void bindScreen(View rootView) {
         mTxtTitle = (TextView) rootView.findViewById(R.id.txtTitle);
+        mTxtPtsToDo = (TextView) rootView.findViewById(R.id.txtPtsToDo);
         mTxtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
         mTxtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
         mTxtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
@@ -100,6 +102,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
         final float percentage = 1.0f - forecastEntity.getToUse() / forecastEntity.getForecastUsed();
         mForecastMeter.setPercentage(percentage);
 
+        mTxtPtsToDo.setText(String.valueOf(mDaySummary.getToDoAfterUsage()));
         mTxtPtsDay.setText(String.valueOf(mDaySummary.getDiaryAllowanceAfterUsage()));
         mTxtPtsWeek.setText(String.valueOf(mDaySummary.getWeeklyAllowanceAfterUsage()));
         mTxtPtsExercise.setText(String.valueOf(mDaySummary.getExerciseAfterUsage()));

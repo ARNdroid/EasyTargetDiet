@@ -61,11 +61,6 @@ public class SimpleHintStrategy extends BaseHintStrategy {
         return result;
     }
 
-    @Override
-    public boolean onTimeChanged(Context context, FoodsUsageEntity foodsUsageEntity) {
-        return super.onTimeChanged(context, foodsUsageEntity);
-    }
-
     private boolean updateValue(Context context, FoodsUsageEntity foodsUsageEntity) {
         if (isValueAHint()) {
             foodsUsageEntity.setValue(Meals.preferredUsageForMealInDate(context, foodsUsageEntity.getMeal(),

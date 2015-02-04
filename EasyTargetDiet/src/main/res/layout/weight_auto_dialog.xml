@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtNote"
             android:hint="@string/note"
-            android:layout_gravity="left|center_vertical"
+            android:layout_gravity="start|center_vertical"
             android:inputType="textMultiLine" />
 
         <LinearLayout

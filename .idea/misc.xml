@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+    <entry_points version="2.0">
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.action.ActionUtils ActionUtils()" />
+      <entry_point TYPE="field" FQNAME="br.com.arndroid.etdiet.provider.Contract.TargetException.FieldDescriptor serialVersionUID" />
+      <entry_point TYPE="field" FQNAME="br.com.arndroid.etdiet.provider.Contract.TargetException serialVersionUID" />
+      <entry_point TYPE="class" FQNAME="br.com.arndroid.etdiet.app.ETDApp" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.utils.PointUtils PointUtils()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.utils.WeightUtils WeightUtils()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.provider.AbstractEntity void validateOrThrow()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.utils.ParcelUtils ParcelUtils()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.utils.NavigationUtils NavigationUtils()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.test.utils.sk.m217.tests.utils.ProviderTestCase3Test void ignoreTestWithoutDatabaseChangeMustNotCallObserver()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.test.utils.sk.m217.tests.utils.ProviderTestCase3Test void ignoreTestWithDatabaseChangeMustCallObserver()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.test.virtualweek.VirtualWeekTest void ignoreTestWithoutDataChangeInPeriodMustNotCallObserver()" />
+      <entry_point TYPE="method" FQNAME="br.com.arndroid.etdiet.test.virtualweek.VirtualWeekTest void ignoreTestWithDataChangeInPeriodMustCallObserver()" />
+    </entry_points>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
 </project>

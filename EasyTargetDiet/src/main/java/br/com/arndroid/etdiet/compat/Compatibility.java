@@ -68,9 +68,12 @@ public abstract class Compatibility {
                     instance =  new CompatibilityAPI_19();
                     break;
                 case Build.VERSION_CODES.KITKAT_WATCH:
+                    instance =  new CompatibilityAPI_20();
+                    break;
+                case Build.VERSION_CODES.LOLLIPOP:
                 default:
                     // Here (and only here) the last compatibility version
-                    instance =  new CompatibilityAPI_20();
+                    instance =  new CompatibilityAPI_21();
                     break;
             }
             LOG.trace("instance configured.");
