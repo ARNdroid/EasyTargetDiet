@@ -23,7 +23,7 @@
     <string name="no_show_month">Sep</string>
     <string name="no_show_week_day_short">Mon</string>
     <string name="no_show_card_title">SOME TITLE</string>
-    <string name="my_points">MY POINTS</string>
+    <string name="my_points_left">MY POINTS LEFT</string>
     <string name="my_points_at_end_of_day">FORECAST MY POINTS AT END OF DAY</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
