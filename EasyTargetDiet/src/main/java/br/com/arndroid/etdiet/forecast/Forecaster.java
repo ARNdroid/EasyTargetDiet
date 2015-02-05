@@ -64,7 +64,7 @@ public class Forecaster {
         result.setUsed(used);
         result.setToUse(toUse);
         result.setForecastUsed(forecast);
-        result.setBalanceFromDailyAllowance(allowed - forecast);
+        result.setBalance(goal - forecast);
 
         return result;
     }

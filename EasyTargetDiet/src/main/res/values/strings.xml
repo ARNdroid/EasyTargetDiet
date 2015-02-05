@@ -15,7 +15,7 @@
     <string name="list_empty_foods_usage">Nothing to show yet. Try adding some values.</string>
     <string name="delete_food_usage_msg">Delete %1$s from %2$s?</string>
     <string name="forecast_straight_to_goal_description">Straight to goal!!</string>
-    <string name="forecast_going_to_goal_with_help_description">Going to goal (using reserves)!</string>
+    <string name="out_of_goal_with_enough_reserves">Out of goal using my reserves!</string>
     <string name="forecast_out_of_goal_but_can_return_description">Out of goal but I can return.</string>
     <string name="forecast_out_of_goal_description">Sorry, I\'m out of goal today…</string>
     <string name="no_show_two_digits_number">NN</string>
@@ -132,12 +132,13 @@
     <string name="balance_title">BALANCE</string>
     <string name="plus_signal">+</string>
     <string name="forecast">Forecast</string>
-    <string name="balance">Balance (from Daily Allowance)</string>
+    <string name="balance">Balance (from Planned)</string>
     <string name="no_show_forecast_description">Some interesting description here!</string>
     <string name="edit">edit</string>
     <string name="edit_ideal_values">Edit ideal values</string>
     <string name="calendar">calendar</string>
     <string name="planned">Planned</string>
+    <string name="to_do">To do</string>
     <string name="total_planned">Total planned</string>
 
 </resources>

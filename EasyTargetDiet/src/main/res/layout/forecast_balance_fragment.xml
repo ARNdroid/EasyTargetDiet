@@ -78,7 +78,7 @@
                 android:id="@+id/lblToUse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/planned" />
+                android:text="@string/to_do" />
 
         </LinearLayout>
 
