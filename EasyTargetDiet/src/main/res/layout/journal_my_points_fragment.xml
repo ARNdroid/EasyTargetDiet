@@ -55,17 +55,17 @@
 
             <TextView
                 style="@style/CardFont.Data.XLarge"
-                android:id="@+id/txtPtsToDo"
+                android:id="@+id/txtPtsPlanned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_show_two_digits_with_decimal_number" />
 
             <TextView
                 style="@style/CardFont.Section.Large"
-                android:id="@+id/lblPtsToDo"
+                android:id="@+id/lblPtsPlanned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/todo" />
+                android:text="@string/planned" />
 
         </LinearLayout>
 

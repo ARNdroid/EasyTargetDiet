@@ -137,6 +137,6 @@
     <string name="edit">edit</string>
     <string name="edit_ideal_values">Edit ideal values</string>
     <string name="calendar">calendar</string>
-    <string name="todo">Todo</string>
+    <string name="planned">Planned</string>
 
 </resources>

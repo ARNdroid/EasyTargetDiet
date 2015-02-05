@@ -17,8 +17,8 @@ public class DaySummary implements Parcelable {
     private float diaryAllowanceAfterUsage; // and diary allowance before usage == DayEntity.allowed
     private float weeklyAllowanceBeforeUsage;
     private float weeklyAllowanceAfterUsage;
-    private float toDoBeforeUsage; // The initial goal of the day
-    private float toDoAfterUsage; // The remaining value to met the initial goal
+    private float plannedBeforeUsage; // The initial goal of the day
+    private float plannedAfterUsage; // The remaining value to met the initial goal
 
     public DaySummary() {}
 
@@ -32,8 +32,8 @@ public class DaySummary implements Parcelable {
         diaryAllowanceAfterUsage = toClone.diaryAllowanceAfterUsage;
         weeklyAllowanceBeforeUsage = toClone.weeklyAllowanceBeforeUsage;
         weeklyAllowanceAfterUsage = toClone.weeklyAllowanceAfterUsage;
-        toDoBeforeUsage = toClone.toDoBeforeUsage;
-        toDoAfterUsage = toClone.toDoAfterUsage;
+        plannedBeforeUsage = toClone.plannedBeforeUsage;
+        plannedAfterUsage = toClone.plannedAfterUsage;
     }
 
     public UsageSummary getUsage() {
@@ -108,20 +108,20 @@ public class DaySummary implements Parcelable {
         this.settingsValues = settingsValues;
     }
 
-    public float getToDoBeforeUsage() {
-        return toDoBeforeUsage;
+    public float getPlannedBeforeUsage() {
+        return plannedBeforeUsage;
     }
 
-    public void setToDoBeforeUsage(float toDoBeforeUsage) {
-        this.toDoBeforeUsage = toDoBeforeUsage;
+    public void setPlannedBeforeUsage(float plannedBeforeUsage) {
+        this.plannedBeforeUsage = plannedBeforeUsage;
     }
 
-    public float getToDoAfterUsage() {
-        return toDoAfterUsage;
+    public float getPlannedAfterUsage() {
+        return plannedAfterUsage;
     }
 
-    public void setToDoAfterUsage(float toDoAfterUsage) {
-        this.toDoAfterUsage = toDoAfterUsage;
+    public void setPlannedAfterUsage(float plannedAfterUsage) {
+        this.plannedAfterUsage = plannedAfterUsage;
     }
 
     @Override
@@ -140,8 +140,8 @@ public class DaySummary implements Parcelable {
         destination.writeFloat(diaryAllowanceAfterUsage);
         destination.writeFloat(weeklyAllowanceBeforeUsage);
         destination.writeFloat(weeklyAllowanceAfterUsage);
-        destination.writeFloat(toDoBeforeUsage);
-        destination.writeFloat(toDoAfterUsage);
+        destination.writeFloat(plannedBeforeUsage);
+        destination.writeFloat(plannedAfterUsage);
     }
 
     public static final Parcelable.Creator<DaySummary> CREATOR
@@ -158,8 +158,8 @@ public class DaySummary implements Parcelable {
             result.setDiaryAllowanceAfterUsage(in.readFloat());
             result.setWeeklyAllowanceBeforeUsage(in.readFloat());
             result.setWeeklyAllowanceAfterUsage(in.readFloat());
-            result.setToDoBeforeUsage(in.readFloat());
-            result.setToDoAfterUsage(in.readFloat());
+            result.setPlannedBeforeUsage(in.readFloat());
+            result.setPlannedAfterUsage(in.readFloat());
 
             return result;
         }
