@@ -138,5 +138,6 @@
     <string name="edit_ideal_values">Edit ideal values</string>
     <string name="calendar">calendar</string>
     <string name="planned">Planned</string>
+    <string name="total_planned">Total planned</string>
 
 </resources>
