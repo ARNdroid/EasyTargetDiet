@@ -65,6 +65,7 @@
                 android:id="@+id/lblPtsPlanned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_large"
                 android:text="@string/planned" />
 
         </LinearLayout>
@@ -88,6 +89,7 @@
                 android:id="@+id/lblPtsDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/day" />
 
         </LinearLayout>
@@ -111,6 +113,7 @@
                 android:id="@+id/lblPtsWeek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/week" />
 
             <TextView
@@ -126,6 +129,7 @@
                 android:id="@+id/lblPtsExercises"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/exercise" />
 
         </LinearLayout>

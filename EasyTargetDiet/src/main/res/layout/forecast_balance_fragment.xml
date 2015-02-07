@@ -47,6 +47,7 @@
                 android:id="@+id/lblUsed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/done" />
 
         </LinearLayout>
@@ -78,6 +79,7 @@
                 android:id="@+id/lblToUse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/to_do" />
 
         </LinearLayout>
@@ -110,6 +112,7 @@
             android:id="@+id/lblForecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
             android:text="@string/forecast" />
 
     </LinearLayout>
@@ -137,6 +140,7 @@
             android:id="@+id/lblBalance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
             android:text="@string/balance" />
 
     </LinearLayout>
