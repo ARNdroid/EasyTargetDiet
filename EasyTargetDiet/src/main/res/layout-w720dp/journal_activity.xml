@@ -13,14 +13,14 @@
         android:baselineAligned="false">
 
         <fragment
-            class="br.com.arndroid.etdiet.journal.JournalDateFragment"
+            class="br.com.arndroid.etdiet.journal.JournalOnGoingFragment"
             android:id="@+id/journal_date_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_margin"
             android:layout_marginLeft="@dimen/card_margin"
             android:layout_marginRight="@dimen/card_margin"
-            tools:layout="@layout/journal_date_fragment" />
+            tools:layout="@layout/journal_on_going_fragment" />
 
         <fragment
             class="br.com.arndroid.etdiet.journal.JournalMyPointsFragment"

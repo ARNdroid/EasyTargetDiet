@@ -9,5 +9,9 @@
     <dimen name="padding_after_item_field">4dp</dimen>
     <dimen name="padding_after_dialog_item_divider">6dp</dimen>
     <dimen name="padding_before_settings_header">16dp</dimen>
+    <dimen name="margin_collapsed_below_data_large">-10dp</dimen>
+    <dimen name="margin_collapsed_below_data_small">-5dp</dimen>
+    <dimen name="margin_collapsed_below_image">-5dp</dimen>
+    <dimen name="margin_collapsed_below_date">-10dp</dimen>
 
 </resources>

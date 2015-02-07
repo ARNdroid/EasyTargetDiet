@@ -2,43 +2,33 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Card"
-    android:id="@+id/layDate"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_view_padding"
-    android:gravity="center_vertical"
-    android:clickable="true"
-    android:background="@drawable/card_selector">
+    android:gravity="center"
+    android:clickable="true">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_view_padding"
-        android:src="@drawable/ic_calendar"
-        android:contentDescription="@string/calendar"/>
-
-    <LinearLayout
+<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="@dimen/default_view_padding">
+        tools:ignore="UseCompoundDrawables">
 
-        <TextView
-            style="@style/CardFont.Data.Small"
-            android:id="@+id/txtYear"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_show_small_year" />
+            android:src="@drawable/ic_calendar"
+            android:contentDescription="@string/calendar"/>
 
         <TextView
             style="@style/CardFont.Data.Small"
             android:id="@+id/txtMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_show_month" />
+            android:layout_marginTop="@dimen/margin_collapsed_below_image"
+            android:text="@string/no_show_month"/>
 
     </LinearLayout>
 
@@ -46,8 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="@dimen/default_view_padding">
+        android:orientation="vertical">
 
         <TextView
             style="@style/CardFont.Data.Large"
@@ -61,18 +50,9 @@
             android:id="@+id/txtWeekday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_collapsed_below_date"
             android:text="@string/no_show_week_day_short" />
 
     </LinearLayout>
-
-
-
-    <TextView
-        style="@style/CardFont.Data.Small"
-        android:id="@+id/txtToday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/no_show_today" />
 
 </LinearLayout>

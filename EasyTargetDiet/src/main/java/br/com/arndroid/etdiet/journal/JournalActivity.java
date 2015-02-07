@@ -26,7 +26,7 @@ import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.weights.WeightsActivity;
 
 public class JournalActivity extends Activity implements
-        JournalDateFragment.JournalFragmentListener,
+        JournalOnGoingFragment.JournalFragmentListener,
         VirtualWeek.ViewObserver,
         DateDialog.OnDateSetListener,
         IntegerDialog.OnIntegerSetListener,
@@ -36,7 +36,7 @@ public class JournalActivity extends Activity implements
     private VirtualWeek mVirtualWeek;
     private final CurrentDateId mCurrentDateId = new CurrentDateId();
     private int mCurrentMeal;
-    private JournalDateFragment mJournalDateFragment;
+    private JournalOnGoingFragment mJournalOnGoingFragment;
     private JournalMyPointsFragment mJournalMyPointsFragment;
     private JournalMyGoalsFragment mJournalMyGoalsFragment;
     private JournalMyMealsFragment mJournalMyMealsFragment;
@@ -111,7 +111,7 @@ public class JournalActivity extends Activity implements
     }
 
     private void bindScreen() {
-        mJournalDateFragment = (JournalDateFragment) getFragmentManager()
+        mJournalOnGoingFragment = (JournalOnGoingFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_date_fragment);
         mJournalMyPointsFragment = (JournalMyPointsFragment) getFragmentManager()
                 .findFragmentById(R.id.journal_my_points_fragment);
@@ -131,7 +131,7 @@ public class JournalActivity extends Activity implements
     }
 
     private void refreshScreen(DaySummary daySummary) {
-        mJournalDateFragment.refreshScreen(daySummary);
+        mJournalOnGoingFragment.refreshScreen(daySummary);
         mJournalMyPointsFragment.refreshScreen(daySummary);
         mJournalMyGoalsFragment.refreshScreen(daySummary);
         mJournalMyMealsFragment.refreshScreen(daySummary);
@@ -169,7 +169,7 @@ public class JournalActivity extends Activity implements
          Activity.
          The following code send the event to original Fragment again.
          */
-        if (tag.startsWith(JournalDateFragment.OWNER_TAG)) {
+        if (tag.startsWith(JournalOnGoingFragment.OWNER_TAG)) {
             ((DateDialog.OnDateSetListener) getFragmentManager()
                     .findFragmentById(R.id.journal_date_fragment)).onDateSet(tag, actualDate);
         } else {

@@ -140,5 +140,7 @@
     <string name="planned">Planned</string>
     <string name="to_do">To do</string>
     <string name="total_planned">Total planned</string>
+    <string name="on_going">ON GOING</string>
+    <string name="no_show_preferred_meal">[Meal name] +NN</string>
 
 </resources>
