@@ -55,17 +55,18 @@
 
             <TextView
                 style="@style/CardFont.Data.XLarge"
-                android:id="@+id/txtPtsToDo"
+                android:id="@+id/txtPtsPlanned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_show_two_digits_with_decimal_number" />
 
             <TextView
                 style="@style/CardFont.Section.Large"
-                android:id="@+id/lblPtsToDo"
+                android:id="@+id/lblPtsPlanned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/todo" />
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_large"
+                android:text="@string/planned" />
 
         </LinearLayout>
 
@@ -88,6 +89,7 @@
                 android:id="@+id/lblPtsDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/day" />
 
         </LinearLayout>
@@ -111,6 +113,7 @@
                 android:id="@+id/lblPtsWeek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/week" />
 
             <TextView
@@ -126,6 +129,7 @@
                 android:id="@+id/lblPtsExercises"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_collapsed_below_data_small"
                 android:text="@string/exercise" />
 
         </LinearLayout>

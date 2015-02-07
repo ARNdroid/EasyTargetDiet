@@ -133,6 +133,11 @@
         <item name="android:layout_margin">2dp</item>
     </style>
 
+    <style name="FlatButton">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/card_selector</item>
+    </style>
+
     <style name="Settings">
         <item name="android:padding">6dp</item>
         <item name="android:background">@drawable/settings_background</item>

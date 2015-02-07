@@ -22,7 +22,7 @@ public class ForecastEntity {
     private float mUsed;
     private float mToUse;
     private float mForecastUsed;
-    private float mBalanceFromDailyAllowance;
+    private float mBalance;
     private int mForecastType;
 
     @SuppressWarnings("UnusedDeclaration")
@@ -58,12 +58,12 @@ public class ForecastEntity {
         mForecastUsed = forecastUsed;
     }
 
-    public float getBalanceFromDailyAllowance() {
-        return mBalanceFromDailyAllowance;
+    public float getBalance() {
+        return mBalance;
     }
 
-    public void setBalanceFromDailyAllowance(float balance) {
-        mBalanceFromDailyAllowance = balance;
+    public void setBalance(float balance) {
+        mBalance = balance;
     }
 
     public int getForecastType() {
@@ -79,7 +79,7 @@ public class ForecastEntity {
             case ForecastEntity.STRAIGHT_TO_GOAL:
                 return R.string.forecast_straight_to_goal_description;
             case ForecastEntity.OUT_OF_GOAL_WITH_ENOUGH_RESERVES:
-                return R.string.forecast_going_to_goal_with_help_description;
+                return R.string.out_of_goal_with_enough_reserves;
             case ForecastEntity.OUT_OF_GOAL_BUT_CAN_RETURN:
                 return R.string.forecast_out_of_goal_but_can_return_description;
             case ForecastEntity.OUT_OF_GOAL:

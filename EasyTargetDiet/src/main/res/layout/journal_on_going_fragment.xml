@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_view_padding">
+
+    <TextView
+        style="@style/CardFont.Header"
+        android:id="@+id/lblTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/on_going" />
+
+    <View
+        style="@style/HeaderDivider"
+        android:id="@+id/divHeader"
+        android:layout_below="@id/lblTitle"/>
+
+    <include
+        style="@style/Card"
+        android:id="@+id/layDate"
+        layout="@layout/include_journal_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divHeader"
+        android:background="@drawable/card_selector"/>
+
+    <Button
+        style="@style/FlatButton"
+        android:id="@+id/btnPreferredMeal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divHeader"
+        android:layout_toRightOf="@id/layDate"
+        android:layout_toEndOf="@id/layDate"
+        android:textSize="22sp"
+        android:text="@string/no_show_preferred_meal"/>
+
+</RelativeLayout>

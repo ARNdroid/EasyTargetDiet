@@ -33,6 +33,7 @@ public class JournalMyMealsFragment extends Fragment {
     private TextView mTxtDinnerIdealValues;
     private TextView mTxtSupperPts;
     private TextView mTxtSupperIdealValues;
+    private TextView mTxtTotalPts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +70,7 @@ public class JournalMyMealsFragment extends Fragment {
         mTxtDinnerIdealValues = (TextView) rootView.findViewById(R.id.txtDinnerIdealValues);
         mTxtSupperPts = (TextView) rootView.findViewById(R.id.txtSupperPts);
         mTxtSupperIdealValues = (TextView) rootView.findViewById(R.id.txtSupperIdealValues);
+        mTxtTotalPts = (TextView) rootView.findViewById(R.id.txtTotalPts);
     }
 
     private void setupScreen(View rootView) {
@@ -160,6 +162,7 @@ public class JournalMyMealsFragment extends Fragment {
                 daySummary.getEntity().getSupperGoal(),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSupperStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSupperEndTime())));
+        mTxtTotalPts.setText(String.valueOf(daySummary.getPlannedBeforeUsage()));
     }
 
     public void layMealAction(View view) {

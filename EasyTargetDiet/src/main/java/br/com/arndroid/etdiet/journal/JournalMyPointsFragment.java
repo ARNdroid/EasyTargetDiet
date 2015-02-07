@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
@@ -18,11 +15,7 @@ import br.com.arndroid.etdiet.dialog.quickinsert.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.forecast.ForecastActivity;
 import br.com.arndroid.etdiet.forecast.ForecastBalanceFragment;
 import br.com.arndroid.etdiet.forecast.ForecastEntity;
-import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
-import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersEntity;
-import br.com.arndroid.etdiet.provider.weekdayparameters.WeekdayParametersManager;
-import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.views.ForecastMeterView;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
@@ -31,7 +24,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
     private String mCurrentDateId;
 
     private TextView mTxtTitle;
-    private TextView mTxtPtsToDo;
+    private TextView mTxtPtsPlanned;
     private TextView mTxtPtsDay;
     private TextView mTxtPtsWeek;
     private TextView mTxtPtsExercise;
@@ -55,7 +48,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
 
     private void bindScreen(View rootView) {
         mTxtTitle = (TextView) rootView.findViewById(R.id.txtTitle);
-        mTxtPtsToDo = (TextView) rootView.findViewById(R.id.txtPtsToDo);
+        mTxtPtsPlanned = (TextView) rootView.findViewById(R.id.txtPtsPlanned);
         mTxtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
         mTxtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
         mTxtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
@@ -102,7 +95,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
         final float percentage = 1.0f - forecastEntity.getToUse() / forecastEntity.getForecastUsed();
         mForecastMeter.setPercentage(percentage);
 
-        mTxtPtsToDo.setText(String.valueOf(mDaySummary.getToDoAfterUsage()));
+        mTxtPtsPlanned.setText(String.valueOf(mDaySummary.getPlannedAfterUsage()));
         mTxtPtsDay.setText(String.valueOf(mDaySummary.getDiaryAllowanceAfterUsage()));
         mTxtPtsWeek.setText(String.valueOf(mDaySummary.getWeeklyAllowanceAfterUsage()));
         mTxtPtsExercise.setText(String.valueOf(mDaySummary.getExerciseAfterUsage()));

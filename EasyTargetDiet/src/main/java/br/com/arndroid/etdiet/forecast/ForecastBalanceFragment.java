@@ -42,7 +42,7 @@ public class ForecastBalanceFragment extends Fragment {
         mTxtUsed.setText(String.valueOf(forecastEntity.getUsed()));
         mTxtToUse.setText(String.valueOf(forecastEntity.getToUse()));
         mTxtForecast.setText(String.valueOf(forecastEntity.getForecastUsed()));
-        mTxtBalance.setText(String.valueOf(forecastEntity.getBalanceFromDailyAllowance()));
+        mTxtBalance.setText(String.valueOf(forecastEntity.getBalance()));
         mTxtForecastDescription.setText(getString(forecastEntity.getStringResourceIdForForecastType()));
     }
 }

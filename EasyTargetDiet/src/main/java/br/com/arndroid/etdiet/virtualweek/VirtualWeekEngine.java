@@ -154,17 +154,17 @@ public class VirtualWeekEngine {
         if (planned > allowed) {
             if (planned - allowed <= reservesAtStartOfDay) {
                 // Scene 1: planned > allowed and reserves will cover.
-                summary.setToDoBeforeUsage(planned);
+                summary.setPlannedBeforeUsage(planned);
             } else {
                 // Scene 2: planned > allowed but reserves won't cover.
-                summary.setToDoBeforeUsage(allowed + reservesAtStartOfDay);
+                summary.setPlannedBeforeUsage(allowed + reservesAtStartOfDay);
             }
         } else {
             // Scene 3: planned <= allowed
-            summary.setToDoBeforeUsage(planned);
+            summary.setPlannedBeforeUsage(planned);
         }
 
-        summary.setToDoAfterUsage(summary.getToDoBeforeUsage() - usage.getTotalUsed());
+        summary.setPlannedAfterUsage(summary.getPlannedBeforeUsage() - usage.getTotalUsed());
     }
 
     private void buildAllDaysForReferenceDate(Date referenceDate) {
