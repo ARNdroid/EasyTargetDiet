@@ -190,9 +190,9 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
     }
 
     public class ViewObserverMonitor implements VirtualWeek.ViewObserver {
-        final public List<DaySummary> summariesOnDayChanged = new ArrayList<DaySummary>();
-        final public List<DaySummary> summariesOnFoodsUsageChanged = new ArrayList<DaySummary>();
-        final public List<DaySummary> summariesOnSummaryRequested = new ArrayList<DaySummary>();
+        final public List<DaySummary> summariesOnDayChanged = new ArrayList<>();
+        final public List<DaySummary> summariesOnFoodsUsageChanged = new ArrayList<>();
+        final public List<DaySummary> summariesOnSummaryRequested = new ArrayList<>();
         public int parametersChangedCount = 0;
 
         @Override

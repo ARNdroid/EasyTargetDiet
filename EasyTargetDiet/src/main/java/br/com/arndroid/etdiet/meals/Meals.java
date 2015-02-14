@@ -93,8 +93,8 @@ public final class Meals {
         final MealsAdvisorHelper advisorHelper = new MealsAdvisorHelper();
 
         final int onlyMeals = getMealsCount() - 1;
-        List<Integer> found = new ArrayList<Integer>(onlyMeals);
-        List<Integer> candidates = new ArrayList<Integer>(onlyMeals);
+        List<Integer> found = new ArrayList<>(onlyMeals);
+        List<Integer> candidates = new ArrayList<>(onlyMeals);
         List<Integer> temp;
         for (int candidate = 0; candidate < onlyMeals; candidate++) {
             candidates.add(candidate);
@@ -130,8 +130,8 @@ public final class Meals {
         final MealsAdvisorHelper advisorHelper = new MealsAdvisorHelper();
 
         final int onlyMeals = getMealsCount() - 1;
-        List<Integer> found = new ArrayList<Integer>(onlyMeals);
-        List<Integer> candidates = new ArrayList<Integer>(onlyMeals);
+        List<Integer> found = new ArrayList<>(onlyMeals);
+        List<Integer> candidates = new ArrayList<>(onlyMeals);
         List<Integer> temp;
         for (int candidate = 0; candidate < onlyMeals; candidate++) {
             candidates.add(candidate);
@@ -144,7 +144,7 @@ public final class Meals {
             // No meals in period.
 
             // Try to find a union of closest meals ending before and closest meals starting after that
-            final List<Integer> closestUnion = new ArrayList<Integer>(onlyMeals);
+            final List<Integer> closestUnion = new ArrayList<>(onlyMeals);
             advisorHelper.findClosestMealsEndingBeforeTime(time, daysEntity, candidates, found);
             closestUnion.addAll(found);
             advisorHelper.findClosestMealsStartingAfterTime(time, daysEntity, candidates, found);

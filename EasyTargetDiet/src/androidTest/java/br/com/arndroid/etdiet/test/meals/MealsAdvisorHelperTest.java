@@ -39,8 +39,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsInPeriodWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -55,14 +55,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsInPeriodMustReturnCorrectValues(){
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -106,8 +106,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithNoPointsWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final UsageSummary emptyUsageSummary = new UsageSummary();
         emptyUsageSummary.setBreakfastUsed(0);
@@ -121,14 +121,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithNoPointsMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final UsageSummary emptyUsageSummary = new UsageSummary();
         emptyUsageSummary.setBreakfastUsed(0);
@@ -170,8 +170,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithMinorIntervalWithEmptyCandidatesMustReturnCorrectValues(){
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -186,14 +186,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithMinorIntervalMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -239,8 +239,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsStartingEarlyWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -255,14 +255,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsStartingEarlyMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -303,8 +303,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsEndingBeforeTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -319,14 +319,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsEndingBeforeTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -355,8 +355,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestMealsEndingBeforeTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -371,14 +371,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestMealsEndingBeforeTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -414,8 +414,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsStartingAfterTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -430,14 +430,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsStartingAfterTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -466,8 +466,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestMealsStartingAfterTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -482,14 +482,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestMealsStartingAfterTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -512,8 +512,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestNeighborsForTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity equalsSpacedDaysEntity = new DaysEntity(null, null, null,
                 SIX_HOURS, SEVEN_HOURS, null,
@@ -528,14 +528,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestNeighborsForTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity equalsSpacedDaysEntity = new DaysEntity(null, null, null,
                 SIX_HOURS, SEVEN_HOURS, null,
@@ -560,8 +560,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithPointsMinorGoalWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, 1.0f,
@@ -583,14 +583,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithPointsMinorGoalMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
         candidates.add(Meals.BREAKFAST);
         candidates.add(Meals.BRUNCH);
         candidates.add(Meals.LUNCH);
         candidates.add(Meals.SNACK);
         candidates.add(Meals.DINNER);
         candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, 1.0f,

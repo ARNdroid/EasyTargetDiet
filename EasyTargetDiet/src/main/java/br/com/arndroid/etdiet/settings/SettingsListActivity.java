@@ -45,28 +45,29 @@ public class SettingsListActivity extends Activity implements
     }
 
     private String getTitleFromSettingsType(String settingsColumnName) {
-        if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.exercise_goal);
-        } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.liquid_goal);
-        } else if (Contract.WeekdayParameters.OIL_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.oil_goal);
-        } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.supplement_goal);
-        } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.breakfast_ideal_values);
-        } else if (Contract.WeekdayParameters.BRUNCH_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.brunch_ideal_values);
-        } else if (Contract.WeekdayParameters.LUNCH_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.lunch_ideal_values);
-        } else if (Contract.WeekdayParameters.SNACK_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.snack_ideal_values);
-        } else if (Contract.WeekdayParameters.DINNER_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.dinner_ideal_values);
-        } else if (Contract.WeekdayParameters.SUPPER_GOAL.equals(settingsColumnName)) {
-            return getString(R.string.supper_ideal_values);
-        } else {
-            throw new IllegalArgumentException("Invalid settingsColumnName=" + settingsColumnName);
+        switch (settingsColumnName) {
+            case Contract.WeekdayParameters.EXERCISE_GOAL:
+                return getString(R.string.exercise_goal);
+            case Contract.WeekdayParameters.LIQUID_GOAL:
+                return getString(R.string.liquid_goal);
+            case Contract.WeekdayParameters.OIL_GOAL:
+                return getString(R.string.oil_goal);
+            case Contract.WeekdayParameters.SUPPLEMENT_GOAL:
+                return getString(R.string.supplement_goal);
+            case Contract.WeekdayParameters.BREAKFAST_GOAL:
+                return getString(R.string.breakfast_ideal_values);
+            case Contract.WeekdayParameters.BRUNCH_GOAL:
+                return getString(R.string.brunch_ideal_values);
+            case Contract.WeekdayParameters.LUNCH_GOAL:
+                return getString(R.string.lunch_ideal_values);
+            case Contract.WeekdayParameters.SNACK_GOAL:
+                return getString(R.string.snack_ideal_values);
+            case Contract.WeekdayParameters.DINNER_GOAL:
+                return getString(R.string.dinner_ideal_values);
+            case Contract.WeekdayParameters.SUPPER_GOAL:
+                return getString(R.string.supper_ideal_values);
+            default:
+                throw new IllegalArgumentException("Invalid settingsColumnName=" + settingsColumnName);
         }
     }
 

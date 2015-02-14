@@ -25,7 +25,7 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
             new DatabaseChangeObserver[VirtualWeekEngine.DAYS_IN_A_WEEK];
     private DatabaseChangeObserver mParametersHistoryObserver = null;
     private DatabaseChangeObserver mWeekdayParametersObserver = null;
-    final private List<ViewObserver> viewObservers = new LinkedList<ViewObserver>();
+    final private List<ViewObserver> viewObservers = new LinkedList<>();
 
     public static VirtualWeek getInstance(Context context) {
         /*

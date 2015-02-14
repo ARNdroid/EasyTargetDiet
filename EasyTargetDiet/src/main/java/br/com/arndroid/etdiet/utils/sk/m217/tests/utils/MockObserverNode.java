@@ -44,8 +44,8 @@ public final class MockObserverNode {
     public static final int DELETE_TYPE = 2;
 
     final private String mName;
-    final private ArrayList<MockObserverNode> mChildren = new ArrayList<MockObserverNode>();
-    final private ArrayList<MockObserverEntry> mObservers = new ArrayList<MockObserverEntry>();
+    final private ArrayList<MockObserverNode> mChildren = new ArrayList<>();
+    final private ArrayList<MockObserverEntry> mObservers = new ArrayList<>();
 
     public MockObserverNode(String name) {
         mName = name;

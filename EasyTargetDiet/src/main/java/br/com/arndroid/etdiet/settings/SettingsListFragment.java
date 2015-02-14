@@ -83,60 +83,71 @@ public class SettingsListFragment extends ListFragment implements
         WeekdayParametersEntity entity = new WeekdayParametersManager(getActivity()
                 .getApplicationContext()).weekdayParametersFromWeekday(mSelectedWeekday);
 
-        if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            createAndShowPointDialogWith(getString(R.string.exercise_goal),
-                    0, 99, entity.getExerciseGoal(), EXERCISE_GOAL_SETTINGS_TAG);
+        switch (mSettingsColumnName) {
+            case Contract.WeekdayParameters.EXERCISE_GOAL:
+                createAndShowPointDialogWith(getString(R.string.exercise_goal),
+                        0, 99, entity.getExerciseGoal(), EXERCISE_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
-            createAndShowIntegerDialogWith(getString(R.string.liquid_goal),
-                    0, 99, entity.getLiquidGoal(), LIQUID_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.LIQUID_GOAL:
+                createAndShowIntegerDialogWith(getString(R.string.liquid_goal),
+                        0, 99, entity.getLiquidGoal(), LIQUID_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
-            createAndShowIntegerDialogWith(getString(R.string.oil_goal), 0, 99,
-                    entity.getOilGoal(), OIL_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.OIL_GOAL:
+                createAndShowIntegerDialogWith(getString(R.string.oil_goal), 0, 99,
+                        entity.getOilGoal(), OIL_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
-            createAndShowIntegerDialogWith(getString(R.string.supplement_goal), 0, 99,
-                    entity.getSupplementGoal(), SUPPLEMENT_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.SUPPLEMENT_GOAL:
+                createAndShowIntegerDialogWith(getString(R.string.supplement_goal), 0, 99,
+                        entity.getSupplementGoal(), SUPPLEMENT_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(mSettingsColumnName)) {
-            createAndShowMealIdealValuesDialogWith(
-                    getString(R.string.breakfast_ideal_values), 0, 99,
-                    entity.getBreakfastStartTime(), entity.getBreakfastEndTime(),
-                    entity.getBreakfastGoal(), BREAKFAST_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.BREAKFAST_GOAL:
+                createAndShowMealIdealValuesDialogWith(
+                        getString(R.string.breakfast_ideal_values), 0, 99,
+                        entity.getBreakfastStartTime(), entity.getBreakfastEndTime(),
+                        entity.getBreakfastGoal(), BREAKFAST_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.BRUNCH_GOAL.equals(mSettingsColumnName)) {
-            createAndShowMealIdealValuesDialogWith(
-                    getString(R.string.brunch_ideal_values), 0, 99,
-                    entity.getBrunchStartTime(), entity.getBrunchEndTime(),
-                    entity.getBrunchGoal(), BRUNCH_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.BRUNCH_GOAL:
+                createAndShowMealIdealValuesDialogWith(
+                        getString(R.string.brunch_ideal_values), 0, 99,
+                        entity.getBrunchStartTime(), entity.getBrunchEndTime(),
+                        entity.getBrunchGoal(), BRUNCH_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.LUNCH_GOAL.equals(mSettingsColumnName)) {
-            createAndShowMealIdealValuesDialogWith(
-                    getString(R.string.lunch_ideal_values), 0, 99,
-                    entity.getLunchStartTime(), entity.getLunchEndTime(),
-                    entity.getLunchGoal(), LUNCH_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.LUNCH_GOAL:
+                createAndShowMealIdealValuesDialogWith(
+                        getString(R.string.lunch_ideal_values), 0, 99,
+                        entity.getLunchStartTime(), entity.getLunchEndTime(),
+                        entity.getLunchGoal(), LUNCH_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.SNACK_GOAL.equals(mSettingsColumnName)) {
-            createAndShowMealIdealValuesDialogWith(
-                    getString(R.string.snack_ideal_values), 0, 99,
-                    entity.getSnackStartTime(), entity.getSnackEndTime(),
-                    entity.getSnackGoal(), SNACK_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.SNACK_GOAL:
+                createAndShowMealIdealValuesDialogWith(
+                        getString(R.string.snack_ideal_values), 0, 99,
+                        entity.getSnackStartTime(), entity.getSnackEndTime(),
+                        entity.getSnackGoal(), SNACK_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.DINNER_GOAL.equals(mSettingsColumnName)) {
-            createAndShowMealIdealValuesDialogWith(
-                    getString(R.string.dinner_ideal_values), 0, 99,
-                    entity.getDinnerStartTime(), entity.getDinnerEndTime(),
-                    entity.getDinnerGoal(), DINNER_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.DINNER_GOAL:
+                createAndShowMealIdealValuesDialogWith(
+                        getString(R.string.dinner_ideal_values), 0, 99,
+                        entity.getDinnerStartTime(), entity.getDinnerEndTime(),
+                        entity.getDinnerGoal(), DINNER_GOAL_SETTINGS_TAG);
 
-        } else if (Contract.WeekdayParameters.SUPPER_GOAL.equals(mSettingsColumnName)) {
-            createAndShowMealIdealValuesDialogWith(
-                    getString(R.string.supper_ideal_values), 0, 99,
-                    entity.getSupperStartTime(), entity.getSupperEndTime(),
-                    entity.getSupperGoal(), SUPPER_GOAL_SETTINGS_TAG);
+                break;
+            case Contract.WeekdayParameters.SUPPER_GOAL:
+                createAndShowMealIdealValuesDialogWith(
+                        getString(R.string.supper_ideal_values), 0, 99,
+                        entity.getSupperStartTime(), entity.getSupperEndTime(),
+                        entity.getSupperGoal(), SUPPER_GOAL_SETTINGS_TAG);
 
-        } else {
-            throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
+                break;
+            default:
+                throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
     }
 

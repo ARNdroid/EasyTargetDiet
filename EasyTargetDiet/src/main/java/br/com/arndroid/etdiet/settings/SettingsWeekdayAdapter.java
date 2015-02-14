@@ -45,56 +45,67 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
         mHolder.text1.setText(resources.getStringArray(R.array.weekdays_name_list)[weekday - 1]);
 
         final String formattedValue;
-        if (Contract.WeekdayParameters.EXERCISE_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedUnitsActualValueFromColumnName(cursor, resources,
-                    Contract.WeekdayParameters.EXERCISE_GOAL);
-        } else if (Contract.WeekdayParameters.LIQUID_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedTimesActualValueFromColumnName(cursor, resources,
-                    Contract.WeekdayParameters.LIQUID_GOAL);
-        } else if (Contract.WeekdayParameters.OIL_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedTimesActualValueFromColumnName(cursor, resources,
-                    Contract.WeekdayParameters.OIL_GOAL);
-        } else if (Contract.WeekdayParameters.SUPPLEMENT_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedTimesActualValueFromColumnName(cursor, resources,
-                    Contract.WeekdayParameters.SUPPLEMENT_GOAL);
-        } else if (Contract.WeekdayParameters.BREAKFAST_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedMealIdealValueFromColumnName(
-                    cursor, resources,
-                    Contract.WeekdayParameters.BREAKFAST_START_TIME,
-                    Contract.WeekdayParameters.BREAKFAST_END_TIME,
-                    Contract.WeekdayParameters.BREAKFAST_GOAL);
-        } else if (Contract.WeekdayParameters.BRUNCH_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedMealIdealValueFromColumnName(
-                    cursor, resources,
-                    Contract.WeekdayParameters.BRUNCH_START_TIME,
-                    Contract.WeekdayParameters.BRUNCH_END_TIME,
-                    Contract.WeekdayParameters.BRUNCH_GOAL);
-        } else if (Contract.WeekdayParameters.LUNCH_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedMealIdealValueFromColumnName(
-                    cursor, resources,
-                    Contract.WeekdayParameters.LUNCH_START_TIME,
-                    Contract.WeekdayParameters.LUNCH_END_TIME,
-                    Contract.WeekdayParameters.LUNCH_GOAL);
-        } else if (Contract.WeekdayParameters.SNACK_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedMealIdealValueFromColumnName(
-                    cursor, resources,
-                    Contract.WeekdayParameters.SNACK_START_TIME,
-                    Contract.WeekdayParameters.SNACK_END_TIME,
-                    Contract.WeekdayParameters.SNACK_GOAL);
-        } else if (Contract.WeekdayParameters.DINNER_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedMealIdealValueFromColumnName(
-                    cursor, resources,
-                    Contract.WeekdayParameters.DINNER_START_TIME,
-                    Contract.WeekdayParameters.DINNER_END_TIME,
-                    Contract.WeekdayParameters.DINNER_GOAL);
-        } else if (Contract.WeekdayParameters.SUPPER_GOAL.equals(mSettingsColumnName)) {
-            formattedValue = getFormattedMealIdealValueFromColumnName(
-                    cursor, resources,
-                    Contract.WeekdayParameters.SUPPER_START_TIME,
-                    Contract.WeekdayParameters.SUPPER_END_TIME,
-                    Contract.WeekdayParameters.SUPPER_GOAL);
-        } else {
-            throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
+        switch (mSettingsColumnName) {
+            case Contract.WeekdayParameters.EXERCISE_GOAL:
+                formattedValue = getFormattedUnitsActualValueFromColumnName(cursor, resources,
+                        Contract.WeekdayParameters.EXERCISE_GOAL);
+                break;
+            case Contract.WeekdayParameters.LIQUID_GOAL:
+                formattedValue = getFormattedTimesActualValueFromColumnName(cursor, resources,
+                        Contract.WeekdayParameters.LIQUID_GOAL);
+                break;
+            case Contract.WeekdayParameters.OIL_GOAL:
+                formattedValue = getFormattedTimesActualValueFromColumnName(cursor, resources,
+                        Contract.WeekdayParameters.OIL_GOAL);
+                break;
+            case Contract.WeekdayParameters.SUPPLEMENT_GOAL:
+                formattedValue = getFormattedTimesActualValueFromColumnName(cursor, resources,
+                        Contract.WeekdayParameters.SUPPLEMENT_GOAL);
+                break;
+            case Contract.WeekdayParameters.BREAKFAST_GOAL:
+                formattedValue = getFormattedMealIdealValueFromColumnName(
+                        cursor, resources,
+                        Contract.WeekdayParameters.BREAKFAST_START_TIME,
+                        Contract.WeekdayParameters.BREAKFAST_END_TIME,
+                        Contract.WeekdayParameters.BREAKFAST_GOAL);
+                break;
+            case Contract.WeekdayParameters.BRUNCH_GOAL:
+                formattedValue = getFormattedMealIdealValueFromColumnName(
+                        cursor, resources,
+                        Contract.WeekdayParameters.BRUNCH_START_TIME,
+                        Contract.WeekdayParameters.BRUNCH_END_TIME,
+                        Contract.WeekdayParameters.BRUNCH_GOAL);
+                break;
+            case Contract.WeekdayParameters.LUNCH_GOAL:
+                formattedValue = getFormattedMealIdealValueFromColumnName(
+                        cursor, resources,
+                        Contract.WeekdayParameters.LUNCH_START_TIME,
+                        Contract.WeekdayParameters.LUNCH_END_TIME,
+                        Contract.WeekdayParameters.LUNCH_GOAL);
+                break;
+            case Contract.WeekdayParameters.SNACK_GOAL:
+                formattedValue = getFormattedMealIdealValueFromColumnName(
+                        cursor, resources,
+                        Contract.WeekdayParameters.SNACK_START_TIME,
+                        Contract.WeekdayParameters.SNACK_END_TIME,
+                        Contract.WeekdayParameters.SNACK_GOAL);
+                break;
+            case Contract.WeekdayParameters.DINNER_GOAL:
+                formattedValue = getFormattedMealIdealValueFromColumnName(
+                        cursor, resources,
+                        Contract.WeekdayParameters.DINNER_START_TIME,
+                        Contract.WeekdayParameters.DINNER_END_TIME,
+                        Contract.WeekdayParameters.DINNER_GOAL);
+                break;
+            case Contract.WeekdayParameters.SUPPER_GOAL:
+                formattedValue = getFormattedMealIdealValueFromColumnName(
+                        cursor, resources,
+                        Contract.WeekdayParameters.SUPPER_START_TIME,
+                        Contract.WeekdayParameters.SUPPER_END_TIME,
+                        Contract.WeekdayParameters.SUPPER_GOAL);
+                break;
+            default:
+                throw new IllegalStateException("Invalid mSettingsColumnName=" + mSettingsColumnName);
         }
         mHolder.text2.setText(formattedValue);
     }
