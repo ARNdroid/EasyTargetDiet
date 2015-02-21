@@ -10,11 +10,13 @@ import br.com.arndroid.etdiet.action.ActionUtils;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.PointDialog;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
+import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.utils.NavigationUtils;
 
 public class SettingsMainActivity extends Activity implements
         PointDialog.OnPointSetListener,
         StringListDialog.OnStringSelectedListener,
+        TextDialog.OnTextSetListener,
         ActivityActionCaller {
 
     @Override
@@ -73,5 +75,16 @@ public class SettingsMainActivity extends Activity implements
 
         ActionUtils.callActionInFragment(this, getFragmentManager(), fragmentId,
                 holderActivityClass, actionTag, actionData);
+    }
+
+    @Override
+    public void onTextSet(String tag, String actualText) {
+        // We are here against our will...
+        if (tag.startsWith(SettingsMainFragment.OWNER_TAG)) {
+            ((TextDialog.OnTextSetListener) getFragmentManager()
+                    .findFragmentById(R.id.settings_main_fragment)).onTextSet(tag, actualText);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
     }
 }

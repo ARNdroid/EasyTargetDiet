@@ -12,15 +12,18 @@ import android.widget.TextView;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 
 public class SettingsWeekdayAdapter extends CursorAdapter {
 
+    private final Context mContext;
     private final String mSettingsColumnName;
     private final LayoutInflater mInflater;
     private ViewHolder mHolder = null;
 
     public SettingsWeekdayAdapter(Context context, String settingsColumnName) {
         super(context, null, false);
+        mContext = context;
         mSettingsColumnName = settingsColumnName;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -113,8 +116,9 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
     @SuppressWarnings("SameParameterValue")
     private String getFormattedUnitsActualValueFromColumnName(Cursor cursor, Resources resources,
                                                               String goalColumnName) {
+        final float quantity = cursor.getFloat(cursor.getColumnIndex(goalColumnName));
         return String.format(resources.getString(R.string.units_actual_value),
-                cursor.getFloat(cursor.getColumnIndex(goalColumnName)));
+                quantity, PreferencesUtils.getTrackingUnitNameForQuantity(mContext, quantity));
     }
 
     private String getFormattedTimesActualValueFromColumnName(Cursor cursor, Resources resources,
@@ -129,6 +133,7 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
                                                             String goalColumnName) {
         return String.format(resources.getString(R.string.meal_ideal_actual_values),
                 cursor.getFloat(cursor.getColumnIndex(goalColumnName)),
+                PreferencesUtils.getTrackingUnitNameForQuantity(mContext, cursor.getFloat(cursor.getColumnIndex(goalColumnName))),
                 DateUtils.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(
                         startTimeColumnName))),
                 DateUtils.timeToFormattedString(cursor.getInt(cursor.getColumnIndex(

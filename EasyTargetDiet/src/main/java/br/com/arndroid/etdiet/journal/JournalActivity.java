@@ -21,6 +21,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.utils.CurrentDateId;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.weights.WeightsActivity;
@@ -126,11 +127,12 @@ public class JournalActivity extends Activity implements
     }
 
     private void setupScreen() {
-        mJournalMyPointsFragment.setTitle(getString(R.string.my_points_left));
         mJournalMyPointsFragment.setForecastMeterCanTouch(true);
     }
 
     private void refreshScreen(DaySummary daySummary) {
+        mJournalMyPointsFragment.setTitle(String.format(getString(R.string.my_units_left),
+                PreferencesUtils.getTrackingUnitNameMany(getApplicationContext()).toUpperCase()));
         mJournalOnGoingFragment.refreshScreen(daySummary);
         mJournalMyPointsFragment.refreshScreen(daySummary);
         mJournalMyGoalsFragment.refreshScreen(daySummary);

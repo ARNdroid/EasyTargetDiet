@@ -15,6 +15,7 @@ import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageListFragment;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class JournalMyMealsFragment extends Fragment {
@@ -127,39 +128,44 @@ public class JournalMyMealsFragment extends Fragment {
         mCurrentDateId = daySummary.getEntity().getDateId();
         final String idealFormat = getString(R.string.meal_ideal_actual_values);
         mTxtBreakfastPts.setText(String.valueOf(daySummary.getUsage().getBreakfastUsed()));
-        mTxtBreakfastIdealValues.setText(String.format(
-                idealFormat,
+        mTxtBreakfastIdealValues.setText(String.format(idealFormat,
                 daySummary.getEntity().getBreakfastGoal(),
+                PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getBreakfastGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getBreakfastStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getBreakfastEndTime())));
         mTxtBrunchPts.setText(String.valueOf(daySummary.getUsage().getBrunchUsed()));
         mTxtBrunchIdealValues.setText(String.format(
                 idealFormat,
                 daySummary.getEntity().getBrunchGoal(),
+                PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getBrunchGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getBrunchEndTime())));
         mTxtLunchPts.setText(String.valueOf(daySummary.getUsage().getLunchUsed()));
         mTxtLunchIdealValues.setText(String.format(
                 idealFormat,
                 daySummary.getEntity().getLunchGoal(),
+                PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getLunchGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getLunchStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getLunchEndTime())));
         mTxtSnackPts.setText(String.valueOf(daySummary.getUsage().getSnackUsed()));
         mTxtSnackIdealValues.setText(String.format(
                 idealFormat,
                 daySummary.getEntity().getSnackGoal(),
+                PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getSnackGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSnackStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSnackEndTime())));
         mTxtDinnerPts.setText(String.valueOf(daySummary.getUsage().getDinnerUsed()));
         mTxtDinnerIdealValues.setText(String.format(
                 idealFormat,
                 daySummary.getEntity().getDinnerGoal(),
+                PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getDinnerGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getDinnerEndTime())));
         mTxtSupperPts.setText(String.valueOf(daySummary.getUsage().getSupperUsed()));
         mTxtSupperIdealValues.setText(String.format(
                 idealFormat,
                 daySummary.getEntity().getSupperGoal(),
+                PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getSupperGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSupperStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSupperEndTime())));
         mTxtTotalPts.setText(String.valueOf(daySummary.getPlannedBeforeUsage()));

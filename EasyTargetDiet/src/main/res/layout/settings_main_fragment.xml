@@ -18,6 +18,35 @@
             android:layout_height="wrap_content"
             android:text="@string/my_plan" />
 
+        <View
+            style="@style/ItemDividerHorizontal" />
+
+        <RelativeLayout
+            android:id="@+id/layTrackingUnitName"
+            android:clickable="true"
+            android:background="@drawable/card_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_after_item_divider"
+            android:paddingBottom="@dimen/padding_after_item_divider">
+
+            <TextView
+                style="@style/SettingsFont"
+                android:id="@+id/lblTrackingUnitName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tracking_unit_name" />
+
+            <TextView
+                style="@style/SettingsFont.Small"
+                android:id="@+id/txtTrackingUnitNameActualValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblTrackingUnitName"
+                android:text="@string/no_show_marshaled_tracking_unit_name" />
+
+        </RelativeLayout>
+
         <View style="@style/HeaderDivider" />
 
         <RelativeLayout
