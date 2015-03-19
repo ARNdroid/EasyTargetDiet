@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clickable="true"
+    android:background="@drawable/card_selector"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="@dimen/default_view_padding">
+
+    <TextView
+        style="@style/CardFont.Data.Small"
+        android:id="@+id/txtHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_collapsed_below_image"
+        android:text="@string/no_show_quick_usage_header" />
+
+    <TextView
+        style="@style/CardFont.Data.Large"
+        android:id="@+id/txtDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_show_quick_usage_detail" />
+
+    <TextView
+        style="@style/CardFont.Data.Small"
+        android:id="@+id/txtFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_collapsed_below_image"
+        android:text="@string/no_show_quick_usage_footer" />
+
+</LinearLayout>

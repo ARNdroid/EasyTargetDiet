@@ -26,18 +26,16 @@
         layout="@layout/include_journal_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/divHeader"
-        android:background="@drawable/card_selector"/>
+        android:layout_centerVertical="true"/>
 
-    <Button
-        style="@style/FlatButton"
-        android:id="@+id/btnPreferredMeal"
+    <include
+        style="@style/Card"
+        android:id="@+id/layQuickUsage"
+        layout="@layout/include_journal_quick_usage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/divHeader"
         android:layout_toRightOf="@id/layDate"
-        android:layout_toEndOf="@id/layDate"
-        android:textSize="22sp"
-        android:text="@string/no_show_preferred_meal"/>
+        android:layout_toEndOf="@id/layDate"/>
 
 </RelativeLayout>
