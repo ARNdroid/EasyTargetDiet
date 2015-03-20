@@ -87,7 +87,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
             mHintStrategy.setMealAHint(mFoodsUsageEntity.getMeal() == null);
         }
         mHintStrategy.setValueAHint(isNew);
-        mHintStrategy.initialize(getActivity().getApplicationContext(), mFoodsUsageEntity);
+        mHintStrategy.initialize(getActivity().getApplicationContext(), mFoodsUsageEntity, mAddMode);
 
         setupScreen();
         refreshScreen();

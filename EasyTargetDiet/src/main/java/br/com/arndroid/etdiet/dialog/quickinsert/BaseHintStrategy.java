@@ -10,6 +10,7 @@ public abstract class BaseHintStrategy {
     private boolean mIsTimeAHint;
     private boolean mIsValueAHint;
     // Description hints are NOT executed here!
+	protected int mQuickInsertMode;
 
     @SuppressWarnings("UnusedDeclaration")
     public boolean isDateAHint() {
@@ -44,7 +45,7 @@ public abstract class BaseHintStrategy {
         mIsValueAHint = isValueAHint;
     }
 
-    public abstract void initialize(Context context, FoodsUsageEntity foodsUsageEntity);
+    public abstract void initialize(Context context, FoodsUsageEntity foodsUsageEntity, int quickInsertMode);
 
     public boolean onDateChanged(Context context, FoodsUsageEntity foodsUsageEntity) {
         setDateAHint(false);
