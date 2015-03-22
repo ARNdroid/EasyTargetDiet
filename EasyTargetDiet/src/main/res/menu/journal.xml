@@ -14,6 +14,11 @@
         android:showAsAction="never"
         tools:ignore="AppCompatResource" />
 
+    <item android:id="@+id/backup"
+        android:title="@string/backup"
+        android:showAsAction="never"
+        tools:ignore="AppCompatResource" />
+
     <item android:id="@+id/settings"
         android:title="@string/settings"
         android:showAsAction="never"

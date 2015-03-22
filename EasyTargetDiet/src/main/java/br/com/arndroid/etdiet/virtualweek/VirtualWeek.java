@@ -172,6 +172,7 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
                 break;
             case DatabaseChangeObserver.PARAMETERS_HISTORY_CHANGE_TYPE:
             case DatabaseChangeObserver.WEEKDAY_PARAMETERS_CHANGE_TYPE:
+            case DatabaseChangeObserver.DATABASE_RESTORE_CHANGE_TYPE:
                 unregisterObservers();
                 createVirtualWeekEngineAndRegisterObservers(new Date());
                 break;
@@ -198,6 +199,8 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
                 case DatabaseChangeObserver.WEEKDAY_PARAMETERS_CHANGE_TYPE:
                     viewObserver.onParametersChanged();
                     break;
+                case DatabaseChangeObserver.DATABASE_RESTORE_CHANGE_TYPE:
+                    viewObserver.onDatabaseRestored();
                 default:
                     throw new IllegalStateException("Invalid changeType = " + changeType);
             }
@@ -226,6 +229,10 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
         }
     }
 
+    public void informDatabaseRestore() {
+        final int NO_INDEX = -1;
+        onContentChanged(DatabaseChangeObserver.DATABASE_RESTORE_CHANGE_TYPE, NO_INDEX);
+    }
 
     private void swapVirtualWeek(String referenceDateId) {
         unregisterObservers();
@@ -241,5 +248,7 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
         public void onParametersChanged();
 
         public void onSummaryRequested(DaySummary daySummary);
+
+        public void onDatabaseRestored();
     }
 }

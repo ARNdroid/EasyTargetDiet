@@ -13,7 +13,7 @@
         android:id="@+id/lblUsage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/weight_list" />
+        android:text="@string/backup_list" />
 
     <View
         style="@style/HeaderDivider" />
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:divider="@color/item_divider"
         android:dividerHeight="@dimen/item_divider_height"
-        tools:listitem="@layout/weights_list_item" />
+        tools:listitem="@layout/backup_list_item" />
 
     <TextView
         style="@style/CardFont.Item"

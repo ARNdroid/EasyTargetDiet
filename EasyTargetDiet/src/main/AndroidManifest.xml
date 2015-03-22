@@ -5,13 +5,15 @@
 
     <uses-sdk />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".app.ETDApp"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"
         android:allowBackup="true"
-        android:backupAgent=".backup.android.AndroidBackupAgentHelper"
+        android:backupAgent=".backups.android.AndroidBackupAgentHelper"
         android:supportsRtl="false"
         tools:ignore="UnusedAttribute">
 
@@ -59,6 +61,15 @@
 
         <activity
             android:name=".weights.WeightsActivity"
+            android:parentActivityName=".journal.JournalActivity"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.arndroid.etdiet.journal.JournalActivity" />
+        </activity>
+
+        <activity
+            android:name=".backups.custom.BackupActivity"
             android:parentActivityName=".journal.JournalActivity"
             tools:ignore="UnusedAttribute">
             <meta-data

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_after_item_divider"
+    android:paddingBottom="@dimen/padding_before_item_divider"
+    android:background="@drawable/card_selector">
+
+    <TextView
+        style="@style/CardFont.Item"
+        android:id="@+id/lblFileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/no_show_backup_file_name" />
+
+    <TextView
+        style="@style/CardFont.Item.Small"
+        android:id="@+id/lblLastModified"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblFileName"
+        android:text="@string/no_show_backup_last_modified" />
+
+    <TextView
+        style="@style/CardFont.Item.Small"
+        android:id="@+id/lblFolderName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblLastModified"
+        android:text="@string/no_show_backup_folder_name" />
+</RelativeLayout>

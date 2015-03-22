@@ -1,5 +1,6 @@
 package br.com.arndroid.etdiet.sqlite;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Calendar;
@@ -250,6 +251,34 @@ public class DBScripts {
             db.execSQL("CREATE UNIQUE INDEX " + Contract.Weights.TABLE_NAME + "_"
                     + Contract.Weights.DATE_ID + "_" + Contract.Weights.TIME + "_idx "
                     + "ON " + Contract.Weights.TABLE_NAME + " (" + Contract.Weights.DATE_ID + ", " + Contract.Weights.TIME + ");");
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public static void scriptV02ToV03(SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            // ETD metadata:
+            db.execSQL("CREATE TABLE etd_metadata ("
+                    + "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                    + "key TEXT NOT NULL, "
+                    + "value TEXT);");
+            db.execSQL("CREATE UNIQUE INDEX etd_metadata_key_idx "
+                    + "ON etd_metadata (key);");
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        // Metadata value for database restore validation:
+        ContentValues values = new ContentValues();
+        values.put("key", DBOpenHelper.ASSIGNMENT_KEY);
+        values.put("value", DBOpenHelper.ASSIGNMENT_VALUE);
+        db.beginTransaction();
+        try {
+            db.insert("etd_metadata", null, values);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

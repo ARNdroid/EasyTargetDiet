@@ -156,5 +156,23 @@
     <string name="quick_usage_value">+%1$s</string>
     <string name="quick_usage_do_it_now">Do it now!</string>
     <string name="quick_usage_not_current_date">Not current date</string>
+    <string name="backup_list">BACKUP LIST</string>
+    <string name="no_show_backup_file_name">ETD_YYYYmmDDhhMMss.backup</string>
+    <string name="no_show_backup_folder_name">root/SDCARD/EasyTargetDiet/backup/</string>
+    <string name="restore_backup_msg">This operation will replace your current database with %1$s. Restore it?</string>
+    <string name="backup">Backup</string>
+    <string name="list_empty_backups">Nothing to show yet. Try adding some backups.</string>
+    <string name="backup_result_msg_io_exception">We could NOT make a backup. An file error occurred (IO_EXCEPTION).</string>
+    <string name="backup_result_msg_security_exception">We could NOT make a backup. An file security error occurred (SECURITY_EXCEPTION).</string>
+    <string name="backup_result_msg_sd_card_unavailable">We could NOT make a backup. An error with the sd card occurred (SD_CARD_UNAVAILABLE).</string>
+    <string name="backup_result_msg_success">Backup successful.</string>
+    <string name="restore_result_msg_io_exception">We could NOT restore. An file error occurred (IO_EXCEPTION).</string>
+    <string name="restore_result_msg_security_exception">We could NOT restore. An file security error occurred (SECURITY_EXCEPTION).</string>
+    <string name="restore_result_msg_sd_card_unavailable">We could NOT restore. An error with the sd card occurred (SD_CARD_UNAVAILABLE).</string>
+    <string name="restore_result_msg_invalid_candidate">We could NOT restore. The restore file is invalid (INVALID_CANDIDATE_FILE).</string>
+    <string name="restore_result_msg_success">Restore successful.</string>
+    <string name="restore">Restore</string>
+    <string name="no_show_backup_last_modified">DD/mm/YYYY HH:MM:ss</string>
+    <string name="delete_backup_file_msg">Delete backup file %1$s?</string>
 
 </resources>

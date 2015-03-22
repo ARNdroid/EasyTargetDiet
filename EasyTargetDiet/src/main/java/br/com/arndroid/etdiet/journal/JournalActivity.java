@@ -12,6 +12,7 @@ import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActionUtils;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.action.MenuUtils;
+import br.com.arndroid.etdiet.backups.custom.BackupActivity;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
@@ -103,6 +104,9 @@ public class JournalActivity extends Activity implements
             case R.id.weight:
                 MenuUtils.callMenuInFragmentByIntent(this, WeightsActivity.class, itemId);
                 return true;
+            case R.id.backup:
+                MenuUtils.callMenuInFragmentByIntent(this, BackupActivity.class, itemId);
+                return true;
             case R.id.settings:
                 MenuUtils.callMenuInFragmentByIntent(this, SettingsMainActivity.class, itemId);
                 return true;
@@ -153,6 +157,11 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onParametersChanged() {
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
+    }
+
+    @Override
+    public void onDatabaseRestored() {
         mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 

@@ -194,6 +194,7 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         final public List<DaySummary> summariesOnFoodsUsageChanged = new ArrayList<>();
         final public List<DaySummary> summariesOnSummaryRequested = new ArrayList<>();
         public int parametersChangedCount = 0;
+        public int databaseRestoredCount = 0;
 
         @Override
         public void onDayChanged(DaySummary summary) {
@@ -213,6 +214,11 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         @Override
         public void onSummaryRequested(DaySummary summary) {
             summariesOnSummaryRequested.add(summary);
+        }
+
+        @Override
+        public void onDatabaseRestored() {
+            databaseRestoredCount++;
         }
     }
 }

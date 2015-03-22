@@ -17,7 +17,9 @@ public class DateUtils {
     private static final int DATE_ID_MONTH_END_POSITION = 6; // exclusive
     private static final int DATE_ID_DAY_START_POSITION = 6; // inclusive
     private static final String DATE_ID_FORMAT_STRING = "yyyyMMdd";
+    private static final String TIMESTAMP_FORMAT_STRING = "yyyyMMddHHmmss";
     private static final String DATE_FORMAT_STRING = "dd/MM/yyyy";
+    private static final String DATE_AND_TIME_FORMAT_STRING = "dd/MM/yyyy HH:mm:ss";
 
     // Utility class.
     private DateUtils() {
@@ -137,5 +139,19 @@ public class DateUtils {
         final Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return hoursToMillis(cal.get(Calendar.HOUR_OF_DAY)) + minutesToMillis(cal.get(Calendar.MINUTE));
+    }
+
+    public static String dateToTimestamp(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_FORMAT_STRING);
+        return sdf.format(date);
+    }
+
+    public static String epochToFormattedString(long epoch) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_AND_TIME_FORMAT_STRING);
+        return sdf.format(epochToDate(epoch));
+    }
+
+    public static Date epochToDate(long epoch) {
+        return new Date(epoch);
     }
 }
