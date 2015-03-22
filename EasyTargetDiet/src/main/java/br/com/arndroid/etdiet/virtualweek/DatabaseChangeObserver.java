@@ -11,6 +11,7 @@ public class DatabaseChangeObserver extends ContentObserver {
     public static final int FOODS_USAGE_CHANGE_TYPE = 1;
     public static final int PARAMETERS_HISTORY_CHANGE_TYPE = 2;
     public static final int WEEKDAY_PARAMETERS_CHANGE_TYPE = 3;
+    public static final int DATABASE_RESTORE_CHANGE_TYPE = 4;
 
     private final int mChangeType;
     private final int mIndex;

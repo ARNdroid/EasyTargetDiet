@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,12 +15,12 @@ import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
+import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDateSetListener {
-
-    private static final int NO_TIME = -1;
 
     public interface JournalFragmentListener {
 
@@ -32,15 +31,20 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
     public static final String DATE_EDIT_TAG = OWNER_TAG + ".DATE_EDIT_TAG";
 
     private String mCurrentDateId;
+    private FoodsUsageEntity mQuickUsage;
 
     private String[] mMonthsShortNameArray;
     private String[] mWeekdaysNameArray;
+
     private LinearLayout mLayDate;
+    private LinearLayout mLayQuickUsage;
 
     private TextView mTxtDay;
     private TextView mTxtMonth;
     private TextView mTxtWeekday;
-    private Button mBtnPreferredMeal;
+    private TextView mTxtHeader;
+    private TextView mTxtDetails;
+    private TextView mTxtFooter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,10 +72,13 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
 
     private void bindScreen(View rootView) {
         mLayDate = (LinearLayout) rootView.findViewById(R.id.layDate);
+        mLayQuickUsage = (LinearLayout) rootView.findViewById(R.id.layQuickUsage);
         mTxtDay = (TextView) rootView.findViewById(R.id.txtDay);
         mTxtMonth = (TextView) rootView.findViewById(R.id.txtMonth);
         mTxtWeekday = (TextView) rootView.findViewById(R.id.txtWeekday);
-        mBtnPreferredMeal = (Button) rootView.findViewById(R.id.btnPreferredMeal);
+        mTxtHeader = (TextView) rootView.findViewById(R.id.txtHeader);
+        mTxtDetails = (TextView) rootView.findViewById(R.id.txtDetails);
+        mTxtFooter = (TextView) rootView.findViewById(R.id.txtFooter);
     }
 
     private void setupScreen() {
@@ -85,6 +92,19 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
                 dialog.setSpinnerShown(false);
                 dialog.setInitialValue(DateUtils.dateIdToDate(mCurrentDateId));
                 dialog.show(getFragmentManager(), DATE_EDIT_TAG);
+            }
+        });
+
+        mLayQuickUsage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mQuickUsage != null) {
+                    mQuickUsage.setDateId(mCurrentDateId);
+                    mQuickUsage.setTime(DateUtils.dateToTimeAsInt(new Date()));
+                    final FoodsUsageManager manager = new FoodsUsageManager(getActivity().getApplicationContext());
+                    manager.refresh(mQuickUsage);
+                }
             }
         });
     }
@@ -107,22 +127,24 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
                     getResources().getDrawable(R.drawable.card_old_style_selector));
         }
 
-        final boolean isDateIdCurrentDate = DateUtils.isDateIdCurrentDate(mCurrentDateId);
-        final Date currentDate;
-        final int currentTime;
-        if (isDateIdCurrentDate) {
-            currentDate = new Date();
-            currentTime = DateUtils.dateToTimeAsInt(currentDate);
+        if (DateUtils.isDateIdCurrentDate(mCurrentDateId)) {
+            final Date currentDate = new Date();
+            final int currentTime = DateUtils.dateToTimeAsInt(currentDate);
+            final int preferredMeal = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(), currentTime,
+                    currentDate, false);
+            final float preferredUse = Meals.preferredUsageForMealInDate(getActivity().getApplicationContext(), preferredMeal, currentDate);
+            final String mealName = getString(Meals.getMealResourceNameIdFromMealId(preferredMeal));
+            final String preferredDescription = String.format(getString(R.string.quick_usage_description), mealName.toLowerCase());
+            mTxtHeader.setText(preferredDescription);
+            mQuickUsage = new FoodsUsageEntity(null, null, preferredMeal, null, preferredDescription, preferredUse);
+            mTxtDetails.setText(String.format(getString(R.string.quick_usage_value), String.valueOf(preferredUse)));
+            mTxtFooter.setText(getString(R.string.quick_usage_do_it_now));
         } else {
-            currentDate = DateUtils.dateIdToDate(mCurrentDateId);
-            currentTime = NO_TIME;
+            mQuickUsage = null;
+            mTxtHeader.setText(getString(R.string.quick_usage_not_current_date));
+            mTxtDetails.setText("");
+            mTxtFooter.setText("");
         }
-        final int preferredMeal = Meals.preferredMealForTimeInDate(getActivity(), currentTime,
-                currentDate, !isDateIdCurrentDate);
-        final float preferredUse = Meals.preferredUsageForMealInDate(getActivity(), preferredMeal, currentDate);
-        final String preferredDescription = getString(Meals.getMealResourceNameIdFromMealId(preferredMeal))
-                + "   +" + String.valueOf(preferredUse);
-        mBtnPreferredMeal.setText(preferredDescription);
     }
 
     @Override

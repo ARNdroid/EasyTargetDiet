@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,9 @@ import br.com.arndroid.etdiet.sqlite.DBOpenHelper;
 
 public class Provider extends ContentProvider {
 
-    final static private List<ProviderOperator> operators = new ArrayList<ProviderOperator>();
+    private static final Logger LOG = LoggerFactory.getLogger(Provider.class);
+
+    final static private List<ProviderOperator> operators = new ArrayList<>();
 
     static {
         // Safe change ProviderOperator: on new implementation add a new line.
@@ -40,7 +45,7 @@ public class Provider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mDBHelper = new DBOpenHelper(getContext());
+        initializeOpenHelper();
         return true;
     }
 
@@ -83,5 +88,22 @@ public class Provider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         return providerOperatorForUri(uri).delete(uri, selection, selectionArgs, this);
+    }
+
+    public void closeOpenHelper() {
+        LOG.trace("closeOpenHelper(): method entered.");
+        LOG.trace("closeOpenHelper(): about to call SQLiteOpenHelper.close().");
+        mDBHelper.close();
+        LOG.trace("closeOpenHelper(): SQLiteOpenHelper.close() called. Exiting.");
+    }
+
+    public void initializeOpenHelper() {
+        LOG.trace("initializeOpenHelper(): method entered and mDBHelper=='{}'.", mDBHelper);
+        if (mDBHelper != null) {
+            LOG.trace("initializeOpenHelper(): mDBHelper NOT null. Closing it before new assignment.");
+            mDBHelper.close();
+        }
+        mDBHelper = new DBOpenHelper(getContext());
+        LOG.trace("initializeOpenHelper(): new assignment done and mDBHelper=='{}'.", mDBHelper);
     }
 }

@@ -12,6 +12,7 @@ import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActionUtils;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.action.MenuUtils;
+import br.com.arndroid.etdiet.backups.custom.BackupActivity;
 import br.com.arndroid.etdiet.dialog.DateDialog;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
 import br.com.arndroid.etdiet.dialog.TextDialog;
@@ -21,6 +22,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.settings.SettingsMainActivity;
 import br.com.arndroid.etdiet.utils.CurrentDateId;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeek;
 import br.com.arndroid.etdiet.weights.WeightsActivity;
@@ -102,6 +104,9 @@ public class JournalActivity extends Activity implements
             case R.id.weight:
                 MenuUtils.callMenuInFragmentByIntent(this, WeightsActivity.class, itemId);
                 return true;
+            case R.id.backup:
+                MenuUtils.callMenuInFragmentByIntent(this, BackupActivity.class, itemId);
+                return true;
             case R.id.settings:
                 MenuUtils.callMenuInFragmentByIntent(this, SettingsMainActivity.class, itemId);
                 return true;
@@ -126,11 +131,12 @@ public class JournalActivity extends Activity implements
     }
 
     private void setupScreen() {
-        mJournalMyPointsFragment.setTitle(getString(R.string.my_points_left));
         mJournalMyPointsFragment.setForecastMeterCanTouch(true);
     }
 
     private void refreshScreen(DaySummary daySummary) {
+        mJournalMyPointsFragment.setTitle(String.format(getString(R.string.my_units_left),
+                PreferencesUtils.getTrackingUnitNameMany(getApplicationContext()).toUpperCase()));
         mJournalOnGoingFragment.refreshScreen(daySummary);
         mJournalMyPointsFragment.refreshScreen(daySummary);
         mJournalMyGoalsFragment.refreshScreen(daySummary);
@@ -151,6 +157,11 @@ public class JournalActivity extends Activity implements
 
     @Override
     public void onParametersChanged() {
+        mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
+    }
+
+    @Override
+    public void onDatabaseRestored() {
         mVirtualWeek.requestSummaryForObserverAndDateId(this, mCurrentDateId.getCurrentDateId());
     }
 

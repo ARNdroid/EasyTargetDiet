@@ -11,6 +11,7 @@ import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.journal.JournalMyPointsFragment;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 import br.com.arndroid.etdiet.virtualweek.VirtualWeekEngine;
 
@@ -60,7 +61,8 @@ public class ForecastActivity extends Activity {
     }
 
     private void setupScreen() {
-        mJournalMyPointsFragment.setTitle(getString(R.string.my_points_at_end_of_day));
+        mJournalMyPointsFragment.setTitle(String.format(getString(R.string.my_units_at_end_of_day),
+                PreferencesUtils.getTrackingUnitNameMany(getApplicationContext()).toUpperCase()));
         mJournalMyPointsFragment.setForecastMeterCanTouch(false);
     }
 

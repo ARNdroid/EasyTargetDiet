@@ -516,106 +516,111 @@ public class Contract {
     }
 
     private static int fieldTypeForTableAndColumn(String tableName, String columnName) {
-        if(FoodsUsage.TABLE_NAME.equals(tableName)) {
-            if (FoodsUsage._ID.equals(columnName)) {
-                return FIELD_TYPE_LONG;
-            } else if (FoodsUsage.DATE_ID.equals(columnName)) {
-                return FIELD_TYPE_STRING;
-            } else if (FoodsUsage.MEAL.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (FoodsUsage.TIME.equals(columnName)) {
-                return FIELD_TYPE_LONG;
-            } else if (FoodsUsage.DESCRIPTION.equals(columnName)) {
-                return FIELD_TYPE_STRING;
-            } else if (FoodsUsage.VALUE.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else {
-                throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
-            }
+        switch (tableName) {
+            case FoodsUsage.TABLE_NAME:
+                switch (columnName) {
+                    case FoodsUsage._ID:
+                        return FIELD_TYPE_LONG;
+                    case FoodsUsage.DATE_ID:
+                        return FIELD_TYPE_STRING;
+                    case FoodsUsage.MEAL:
+                        return FIELD_TYPE_INTEGER;
+                    case FoodsUsage.TIME:
+                        return FIELD_TYPE_LONG;
+                    case FoodsUsage.DESCRIPTION:
+                        return FIELD_TYPE_STRING;
+                    case FoodsUsage.VALUE:
+                        return FIELD_TYPE_FLOAT;
+                    default:
+                        throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
+                }
 
-        } else if(WeekdayParameters.TABLE_NAME.equals(tableName)) {
-            if (WeekdayParameters._ID.equals(columnName)) {
-                return FIELD_TYPE_LONG;
-            } else if (WeekdayParameters.BREAKFAST_START_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.BREAKFAST_END_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.BREAKFAST_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.BRUNCH_START_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.BRUNCH_END_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.BRUNCH_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.LUNCH_START_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.LUNCH_END_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.LUNCH_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.SNACK_START_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.SNACK_END_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.SNACK_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.DINNER_START_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.DINNER_END_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.DINNER_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.SUPPER_START_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.SUPPER_END_TIME.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.SUPPER_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.EXERCISE_GOAL.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (WeekdayParameters.LIQUID_GOAL.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.OIL_GOAL.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (WeekdayParameters.SUPPLEMENT_GOAL.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else {
-                throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
-            }
+            case WeekdayParameters.TABLE_NAME:
+                switch (columnName) {
+                    case WeekdayParameters._ID:
+                        return FIELD_TYPE_LONG;
+                    case WeekdayParameters.BREAKFAST_START_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.BREAKFAST_END_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.BREAKFAST_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.BRUNCH_START_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.BRUNCH_END_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.BRUNCH_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.LUNCH_START_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.LUNCH_END_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.LUNCH_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.SNACK_START_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.SNACK_END_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.SNACK_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.DINNER_START_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.DINNER_END_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.DINNER_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.SUPPER_START_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.SUPPER_END_TIME:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.SUPPER_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.EXERCISE_GOAL:
+                        return FIELD_TYPE_FLOAT;
+                    case WeekdayParameters.LIQUID_GOAL:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.OIL_GOAL:
+                        return FIELD_TYPE_INTEGER;
+                    case WeekdayParameters.SUPPLEMENT_GOAL:
+                        return FIELD_TYPE_INTEGER;
+                    default:
+                        throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
+                }
 
-        } else if (ParametersHistory.TABLE_NAME.equals(tableName)) {
-            if (ParametersHistory._ID.equals(columnName)) {
-                return FIELD_TYPE_LONG;
-            } else if (ParametersHistory.TYPE.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (ParametersHistory.DATE.equals(columnName)) {
-                return FIELD_TYPE_STRING;
-            } else if (ParametersHistory.INTEGRAL_NEW_VALUE.equals(columnName)) {
-                return FIELD_TYPE_INTEGER;
-            } else if (ParametersHistory.FLOATING_POINT_NEW_VALUE.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (ParametersHistory.TEXT_NEW_VALUE.equals(columnName)) {
-                return FIELD_TYPE_STRING;
-            } else {
-                throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
-            }
+            case ParametersHistory.TABLE_NAME:
+                switch (columnName) {
+                    case ParametersHistory._ID:
+                        return FIELD_TYPE_LONG;
+                    case ParametersHistory.TYPE:
+                        return FIELD_TYPE_INTEGER;
+                    case ParametersHistory.DATE:
+                        return FIELD_TYPE_STRING;
+                    case ParametersHistory.INTEGRAL_NEW_VALUE:
+                        return FIELD_TYPE_INTEGER;
+                    case ParametersHistory.FLOATING_POINT_NEW_VALUE:
+                        return FIELD_TYPE_FLOAT;
+                    case ParametersHistory.TEXT_NEW_VALUE:
+                        return FIELD_TYPE_STRING;
+                    default:
+                        throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
+                }
 
-        } else if (Weights.TABLE_NAME.equals(tableName)) {
-            if (Weights._ID.equals(columnName)) {
-                return FIELD_TYPE_LONG;
-            } else if (Weights.DATE_ID.equals(columnName)) {
-                return FIELD_TYPE_STRING;
-            } else if (Weights.WEIGHT.equals(columnName)) {
-                return FIELD_TYPE_FLOAT;
-            } else if (Weights.NOTE.equals(columnName)) {
-                return FIELD_TYPE_STRING;
-            } else {
-                throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
-            }
+            case Weights.TABLE_NAME:
+                switch (columnName) {
+                    case Weights._ID:
+                        return FIELD_TYPE_LONG;
+                    case Weights.DATE_ID:
+                        return FIELD_TYPE_STRING;
+                    case Weights.WEIGHT:
+                        return FIELD_TYPE_FLOAT;
+                    case Weights.NOTE:
+                        return FIELD_TYPE_STRING;
+                    default:
+                        throw new IllegalArgumentException("Unknown column " + columnName + " for table " + tableName);
+                }
 
-        } else {
-            throw new IllegalArgumentException("Unknown table " + tableName);
+            default:
+                throw new IllegalArgumentException("Unknown table " + tableName);
         }
     }
 }

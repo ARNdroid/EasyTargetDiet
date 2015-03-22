@@ -101,7 +101,7 @@ public class MealsAdvisorHelper {
 
     public void findClosestMealsEndingBeforeTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
         validateListParametersOrThrow(candidates, result);
-        List<Integer> tempResult = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        List<Integer> tempResult = new ArrayList<>(Meals.getMealsCount() - 1);
         findMealsEndingBeforeTime(time, daysEntity, candidates, tempResult);
 
         result.clear();
@@ -133,7 +133,7 @@ public class MealsAdvisorHelper {
 
     public void findClosestMealsStartingAfterTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
         validateListParametersOrThrow(candidates, result);
-        List<Integer> tempResult = new ArrayList<Integer>(Meals.getMealsCount() - 1);
+        List<Integer> tempResult = new ArrayList<>(Meals.getMealsCount() - 1);
         findMealsStartingAfterTime(time, daysEntity, candidates, tempResult);
 
         result.clear();

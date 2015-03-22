@@ -1,8 +1,11 @@
 package br.com.arndroid.etdiet.settings;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +18,18 @@ import java.util.Date;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.PointDialog;
+import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 
 public class SettingsMainFragment extends Fragment implements
         StringListDialog.OnStringSelectedListener,
-        PointDialog.OnPointSetListener {
+        PointDialog.OnPointSetListener,
+        TextDialog.OnTextSetListener{
 
+    private TextView mTxtTrackingUnitName;
     private TextView mTxtDailyAllowanceActualValue;
     private TextView mTxtWeeklyAllowanceActualValue;
     private TextView mTxtExerciseUseMode;
@@ -41,6 +48,8 @@ public class SettingsMainFragment extends Fragment implements
             + ".EXERCISE_USE_ORDER_SETTINGS_TAG";
     private static final String TRACKING_WEEKDAY_SETTINGS_TAG = OWNER_TAG
             + ".TRACKING_WEEKDAY_SETTINGS_TAG";
+    public static final String TRACKING_UNIT_NAME_SETTINGS_TAG = OWNER_TAG
+            + ".TRACKING_UNIT_NAME_SETTINGS_TAG";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,19 +75,27 @@ public class SettingsMainFragment extends Fragment implements
     }
 
     private void refreshScreen() {
-        final ParametersHistoryManager manager = new ParametersHistoryManager(getActivity()
-                .getApplicationContext());
+        final Context applicationContext = getActivity().getApplicationContext();
+        mTxtTrackingUnitName.setText(String.format(getString(R.string.marshaled_tracking_unit_name),
+                PreferencesUtils.getTrackingUnitNameZero(applicationContext),
+                PreferencesUtils.getTrackingUnitNameOne(applicationContext),
+                PreferencesUtils.getTrackingUnitNameMany(applicationContext)));
+
+        final ParametersHistoryManager manager = new ParametersHistoryManager(applicationContext);
         final String unitsActualValueFormat = getString(R.string.units_actual_value);
+        final Date currentDate = new Date();
         mTxtDailyAllowanceActualValue.setText(String.format(unitsActualValueFormat,
-                manager.getDailyAllowanceForDate(new Date())));
+                manager.getDailyAllowanceForDate(currentDate),
+                PreferencesUtils.getTrackingUnitNameForQuantity(applicationContext, manager.getDailyAllowanceForDate(currentDate))));
         mTxtWeeklyAllowanceActualValue.setText(String.format(unitsActualValueFormat,
-                manager.getWeeklyAllowanceForDate(new Date())));
+                manager.getWeeklyAllowanceForDate(currentDate),
+                PreferencesUtils.getTrackingUnitNameForQuantity(applicationContext, manager.getWeeklyAllowanceForDate(currentDate))));
         mTxtExerciseUseMode.setText(exerciseUseModeDescription(
-                manager.getExerciseUseModeForDate(new Date())));
+                manager.getExerciseUseModeForDate(currentDate)));
         mTxtExerciseUseOrder.setText(exerciseUseOrderDescription(
-                manager.getExerciseUseOrderForDate(new Date())));
+                manager.getExerciseUseOrderForDate(currentDate)));
         mTxtTrackingWeekday.setText(trackingWeekdayDescription(
-                manager.getTrackingWeekdayForDate(new Date())));
+                manager.getTrackingWeekdayForDate(currentDate)));
     }
 
     private String trackingWeekdayDescription(int trackingWeekday) {
@@ -127,6 +144,8 @@ public class SettingsMainFragment extends Fragment implements
     }
 
     private void bindScreen(View rootView) {
+        mTxtTrackingUnitName = (TextView) rootView.findViewById(
+                R.id.txtTrackingUnitNameActualValue);
         mTxtDailyAllowanceActualValue = (TextView) rootView.findViewById(
                 R.id.txtDailyAllowanceActualValue);
         mTxtWeeklyAllowanceActualValue = (TextView) rootView.findViewById(
@@ -140,6 +159,21 @@ public class SettingsMainFragment extends Fragment implements
     }
 
     private void setupScreen(View rootView) {
+        final RelativeLayout layTrackingUnitName = (RelativeLayout) rootView.findViewById(R.id.layTrackingUnitName);
+        layTrackingUnitName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextDialog dialog = new TextDialog();
+                dialog.setTitle(getString(R.string.tracking_unit_name));
+                final Context applicationContext = getActivity().getApplicationContext();
+                dialog.setInitialText(String.format(getString(R.string.unmarshaled_tracking_unit_name),
+                        PreferencesUtils.getTrackingUnitNameZero(applicationContext),
+                        PreferencesUtils.getTrackingUnitNameOne(applicationContext),
+                        PreferencesUtils.getTrackingUnitNameMany(applicationContext)));
+                dialog.show(getFragmentManager(), TRACKING_UNIT_NAME_SETTINGS_TAG);
+            }
+        });
+
         final RelativeLayout layDailyAllowance = (RelativeLayout) rootView.findViewById(R.id.layDailyAllowance);
         layDailyAllowance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,6 +361,30 @@ public class SettingsMainFragment extends Fragment implements
             manager.setExerciseUseOrder(chosenIndex);
         } else if (TRACKING_WEEKDAY_SETTINGS_TAG.equals(tag)) {
             manager.setTrackingWeekday(chosenIndex + 1);
+        } else {
+            throw new IllegalArgumentException("Invalid tag=" + tag);
+        }
+        refreshScreen();
+    }
+
+    @Override
+    public void onTextSet(String tag, String actualText) {
+        if (TRACKING_UNIT_NAME_SETTINGS_TAG.equals(tag)) {
+            String[] trackingUnitNames = actualText.split(";");
+            if (trackingUnitNames.length != 3
+                    || TextUtils.isEmpty(trackingUnitNames[0])
+                    || TextUtils.isEmpty(trackingUnitNames[1])
+                    || TextUtils.isEmpty(trackingUnitNames[2])) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(getString(R.string.tracking_unit_name_edit_error));
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.create().show();
+            } else {
+                final Context applicationContext = getActivity().getApplicationContext();
+                PreferencesUtils.setTrackingUnitNameZero(applicationContext, trackingUnitNames[0]);
+                PreferencesUtils.setTrackingUnitNameOne(applicationContext, trackingUnitNames[1]);
+                PreferencesUtils.setTrackingUnitNameMany(applicationContext, trackingUnitNames[2]);
+            }
         } else {
             throw new IllegalArgumentException("Invalid tag=" + tag);
         }

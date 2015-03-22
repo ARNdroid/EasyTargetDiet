@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -66,15 +66,18 @@ dependencies {
     compile group: 'com.github.tony19', name: 'logback-android-core', version: '1.0.10-2'
     compile group: 'com.github.tony19', name: 'logback-android-classic', version: '1.0.10-2'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'
+    androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker', version: '1.0'
+    androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker-mockito', version: '1.0'
+    androidTestCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
 }
 
 class ETDBuildProfile {
-    private int major
-    private int minor
-    private int hotfix
-    private String storeFile
-    private String storePassword
-    private String keyAlias
+    private int mMajor
+    private int mMinor
+    private int mHotfix
+    private String mStoreFile
+    private String mStorePassword
+    private String mKeyAlias
 
     public ETDBuildProfile() {
         getPropertiesFromFile()
@@ -87,25 +90,26 @@ class ETDBuildProfile {
         // /gradle.properties
         Properties properties = new Properties()
         properties.load(new FileInputStream(System.getProperty("user.dir") + '/EasyTargetDiet/gradle.properties'))
-        major = Integer.parseInt(properties.getProperty('major'))
-        minor = Integer.parseInt(properties.getProperty('minor'))
-        hotfix = Integer.parseInt(properties.getProperty('hotfix'))
+        final String[] version = properties.getProperty('version').split('\\.')
+        mMajor = Integer.parseInt(version[0])
+        mMinor = Integer.parseInt(version[1])
+        mHotfix = Integer.parseInt(version[2])
 
         // /local.properties
         properties.load(new FileInputStream(System.getProperty("user.dir") + '/EasyTargetDiet/local.properties'))
-        storeFile = properties.getProperty('store_file')
-        keyAlias = properties.getProperty('key_alias')
+        mStoreFile = properties.getProperty('store_file')
+        mKeyAlias = properties.getProperty('key_alias')
     }
 
     public void validatePropertiesOrThrow() {
-        if (major < 0) {
-            throw new InvalidUserDataException("Version major = ${major}. Must be a positive integer")
+        if (mMajor < 0) {
+            throw new InvalidUserDataException("Version major = ${mMajor}. Must be a positive integer")
         }
-        if (minor < 0 || minor > 99) {
-            throw new InvalidUserDataException("Version minor = ${minor}. Must be between 0 and 99.")
+        if (mMinor < 0 || mMinor > 99) {
+            throw new InvalidUserDataException("Version minor = ${mMinor}. Must be between 0 and 99.")
         }
-        if (hotfix < 0 || hotfix > 999) {
-            throw new InvalidUserDataException("Version hotfix = ${hotfix}. Must be between 0 and 999.")
+        if (mHotfix < 0 || mHotfix > 999) {
+            throw new InvalidUserDataException("Version hotfix = ${mHotfix}. Must be between 0 and 999.")
         }
     }
 
@@ -124,31 +128,31 @@ class ETDBuildProfile {
     }
 
     public void getPropertiesFromUser() {
-        storePassword = getUserEntry('\nETD ==> Enter storePassword: ')
+        mStorePassword = getUserEntry('\nETD ==> Enter storePassword: ')
     }
 
     int getVersionCode() {
-        return 100000 * major + 1000 * minor + hotfix
+        return 100000 * mMajor + 1000 * mMinor + mHotfix
     }
 
     public String getVersionName() {
-        return "${major}.${minor}.${hotfix}"
+        return "${mMajor}.${mMinor}.${mHotfix}"
     }
 
     public String getVersionNameForAPK() {
-        return "${major}_${minor}_${hotfix}"
+        return "${mMajor}_${mMinor}_${mHotfix}"
     }
 
     public String getStoreFile() {
-        return storeFile
+        return mStoreFile
     }
 
     public String getKeyAlias() {
-        return keyAlias
+        return mKeyAlias
     }
 
     public String getStorePassword() {
-        return storePassword
+        return mStorePassword
     }
 
     public String getAPKNameForVariant(String variantName) {

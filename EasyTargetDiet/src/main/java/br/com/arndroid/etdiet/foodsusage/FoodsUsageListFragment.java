@@ -48,7 +48,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
     private static final int FOODS_USAGE_LOADER_ID = 1;
 
     final private ExposedObservable<FoodsUsageListFragmentListener> mListeners =
-            new ExposedObservable<FoodsUsageListFragmentListener>();
+            new ExposedObservable<>();
 
     public void registerListener(FoodsUsageListFragmentListener listener) {
         mListeners.registerObserver(listener);

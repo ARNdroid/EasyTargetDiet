@@ -87,7 +87,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
             mHintStrategy.setMealAHint(mFoodsUsageEntity.getMeal() == null);
         }
         mHintStrategy.setValueAHint(isNew);
-        mHintStrategy.initialize(getActivity().getApplicationContext(), mFoodsUsageEntity);
+        mHintStrategy.initialize(getActivity().getApplicationContext(), mFoodsUsageEntity, mAddMode);
 
         setupScreen();
         refreshScreen();
@@ -179,7 +179,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
                 if (TextUtils.isEmpty(mEdtDescription.getText())) {
                     final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
                             Meals.getMealFromPosition(position)));
-                    final String hint = String.format(getString(R.string.quick_insert_description), mealName.toLowerCase());
+                    final String hint = String.format(getString(R.string.quick_usage_description), mealName.toLowerCase());
                     mEdtDescription.setHint(hint);
                 }
 

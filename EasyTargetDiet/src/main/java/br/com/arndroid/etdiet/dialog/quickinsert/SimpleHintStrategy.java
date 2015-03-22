@@ -16,10 +16,11 @@ public class SimpleHintStrategy extends BaseHintStrategy {
     private static final int NO_TIME = -1;
 
     @Override
-    public void initialize(Context context, FoodsUsageEntity foodsUsageEntity) {
+    public void initialize(Context context, FoodsUsageEntity foodsUsageEntity, int quickInsertMode) {		
+		mQuickInsertMode = quickInsertMode;
         final boolean isDateIdCurrentDate = DateUtils.isDateIdCurrentDate(foodsUsageEntity.getDateId());
         updateMeal(context, foodsUsageEntity, isDateIdCurrentDate);
-        updateTime(context, foodsUsageEntity, isDateIdCurrentDate);
+        updateTime(context, foodsUsageEntity, isDateIdCurrentDate, mQuickInsertMode);
         updateValue(context, foodsUsageEntity);
     }
 
@@ -33,7 +34,7 @@ public class SimpleHintStrategy extends BaseHintStrategy {
             result = true;
         }
 
-        if (updateTime(context, foodsUsageEntity, isDateIdCurrentDate)) {
+        if (updateTime(context, foodsUsageEntity, isDateIdCurrentDate, mQuickInsertMode)) {
             result = true;
         }
 
@@ -50,7 +51,7 @@ public class SimpleHintStrategy extends BaseHintStrategy {
 
         final boolean isDateIdCurrentDate = DateUtils.isDateIdCurrentDate(foodsUsageEntity.getDateId());
 
-        if (updateTime(context, foodsUsageEntity, isDateIdCurrentDate)) {
+        if (updateTime(context, foodsUsageEntity, isDateIdCurrentDate, mQuickInsertMode)) {
             result = true;
         }
 
@@ -70,9 +71,9 @@ public class SimpleHintStrategy extends BaseHintStrategy {
         return false;
     }
 
-    private boolean updateTime(Context context, FoodsUsageEntity foodsUsageEntity, boolean isDateIdCurrentDate) {
+    private boolean updateTime(Context context, FoodsUsageEntity foodsUsageEntity, boolean isDateIdCurrentDate, int quickInsertMode) {
         if (isTimeAHint()) {
-            if (isDateIdCurrentDate) {
+            if (isDateIdCurrentDate && quickInsertMode == QuickInsertAutoDialog.ADD_MODE_JOURNAL) {
                 foodsUsageEntity.setTime(DateUtils.dateToTimeAsInt(new Date()));
             } else {
                 final WeekdayParametersEntity parametersEntity = new WeekdayParametersManager(context).weekdayParametersFromWeekday(DateUtils.getWeekdayFromDateId(foodsUsageEntity.getDateId()));

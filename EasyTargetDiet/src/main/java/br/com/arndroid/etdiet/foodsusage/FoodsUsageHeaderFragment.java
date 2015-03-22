@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import javax.crypto.spec.DESedeKeySpec;
-
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -18,6 +16,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.PreferencesUtils;
 
 public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValuesDialog.OnMealIdealValuesSetListener {
     public static final String OWNER_TAG = FoodsUsageHeaderFragment.class.getSimpleName();
@@ -80,10 +79,13 @@ public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValue
 
         if (startTime >= 0) {
             mTxtGoal.setText(String.format(getString(R.string.meal_ideal_actual_values),
-                    goal, DateUtils.timeToFormattedString(startTime),
+                    goal,
+                    PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), goal),
+                    DateUtils.timeToFormattedString(startTime),
                     DateUtils.timeToFormattedString(endTime)));
         } else {
-            mTxtGoal.setText(String.format(getString(R.string.units_actual_value), goal));
+            mTxtGoal.setText(String.format(getString(R.string.units_actual_value),
+                    goal, PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), goal)));
         }
     }
 
