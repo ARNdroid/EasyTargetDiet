@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.virtualweek;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Log;
 
 public class DatabaseChangeObserver extends ContentObserver {
 

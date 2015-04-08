@@ -1,6 +1,5 @@
 package br.com.arndroid.etdiet.utils;
 
-import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
 
