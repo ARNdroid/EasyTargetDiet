@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.weights;
 import android.content.Context;
 import android.database.Cursor;
 import android.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.StringUtils;
 
 public class WeightsListAdapter extends CursorAdapter {
 
@@ -45,7 +45,7 @@ public class WeightsListAdapter extends CursorAdapter {
         holder.time.setText(DateUtils.timeToFormattedString(cursor.getInt(
                 cursor.getColumnIndex(Contract.Weights.TIME))));
         holder.note.setText(cursor.getString(cursor.getColumnIndex(Contract.Weights.NOTE)));
-        if (TextUtils.isEmpty(holder.note.getText().toString())) {
+        if (StringUtils.isEmpty(holder.note.getText().toString())) {
             holder.note.setVisibility(View.GONE);
         } else {
             holder.note.setVisibility(View.VISIBLE);

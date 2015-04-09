@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
+import br.com.arndroid.etdiet.utils.StringUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class JournalNotesFragment extends Fragment implements
@@ -62,7 +62,7 @@ public class JournalNotesFragment extends Fragment implements
     public void refreshScreen(DaySummary daySummary) {
         mCurrentDateId = daySummary.getEntity().getDateId();
 
-        if (TextUtils.isEmpty(daySummary.getEntity().getNote())) {
+        if (StringUtils.isEmpty(daySummary.getEntity().getNote())) {
             mTxtNotes.setText(R.string.note_empty);
             mBtnEditNotes.setText(getString(R.string.note_add));
         } else {

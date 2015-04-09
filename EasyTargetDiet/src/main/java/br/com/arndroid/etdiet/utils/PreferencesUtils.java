@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.utils;
 import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import br.com.arndroid.etdiet.R;
 
@@ -24,7 +23,7 @@ public class PreferencesUtils {
     }
 
     public static void setTrackingUnitNameZero(Context context, String name) {
-        if (TextUtils.isEmpty(name)) {
+        if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Tracking unit name for zero quantity must be NOT empty.");
         }
 
@@ -41,7 +40,7 @@ public class PreferencesUtils {
     }
 
     public static void setTrackingUnitNameOne(Context context, String name) {
-        if (TextUtils.isEmpty(name)) {
+        if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Tracking unit name for one quantity must be NOT empty.");
         }
 
@@ -58,7 +57,7 @@ public class PreferencesUtils {
     }
 
     public static void setTrackingUnitNameMany(Context context, String name) {
-        if (TextUtils.isEmpty(name)) {
+        if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Tracking unit name for 'many' quantity must be NOT empty.");
         }
 

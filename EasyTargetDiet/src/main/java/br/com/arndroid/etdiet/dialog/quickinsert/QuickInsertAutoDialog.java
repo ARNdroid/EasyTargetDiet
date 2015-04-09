@@ -8,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +28,7 @@ import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.utils.PointUtils;
+import br.com.arndroid.etdiet.utils.StringUtils;
 
 public class QuickInsertAutoDialog extends DialogFragment implements
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
@@ -97,7 +97,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 fromScreenToEntity();
-                if (TextUtils.isEmpty(mEdtDescription.getText())) {
+                if (StringUtils.isEmpty(mEdtDescription.getText())) {
                     mFoodsUsageEntity.setDescription(mEdtDescription.getHint().toString());
                 }
                 mFoodsUsageEntity.validateOrThrow();
@@ -176,7 +176,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
                 // Reset programmatic selection control variable:
                 setIsMealAProgrammaticSelection(position);
 
-                if (TextUtils.isEmpty(mEdtDescription.getText())) {
+                if (StringUtils.isEmpty(mEdtDescription.getText())) {
                     final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
                             Meals.getMealFromPosition(position)));
                     final String hint = String.format(getString(R.string.quick_usage_description), mealName.toLowerCase());
