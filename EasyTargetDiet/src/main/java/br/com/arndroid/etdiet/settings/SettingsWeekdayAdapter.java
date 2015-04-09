@@ -123,8 +123,8 @@ public class SettingsWeekdayAdapter extends CursorAdapter {
 
     private String getFormattedTimesActualValueFromColumnName(Cursor cursor, Resources resources,
                                                               String goalColumnName) {
-        return String.format(resources.getString(R.string.times_actual_value),
-                cursor.getInt(cursor.getColumnIndex(goalColumnName)));
+        final int times = cursor.getInt(cursor.getColumnIndex(goalColumnName));
+        return String.format(resources.getQuantityString(R.plurals.times_actual_value, times, times));
     }
 
     private String getFormattedMealIdealValueFromColumnName(Cursor cursor, Resources resources,

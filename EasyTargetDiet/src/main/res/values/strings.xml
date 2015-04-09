@@ -73,7 +73,10 @@
     <string name="choose_liquid_goal">Choose liquid goal for weekday</string>
     <string name="choose_oil_goal">Choose oil goal for weekday</string>
     <string name="choose_supplement_goal">Choose supplement for weekday</string>
-    <string name="times_actual_value">%d times</string>
+    <plurals name="times_actual_value">
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d times</item>
+    </plurals>
     <string name="liquid_goal">Liquid Goal</string>
     <string name="oil_goal">Oil goal</string>
     <string name="supplement_goal">Supplement goal</string>
