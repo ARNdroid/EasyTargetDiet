@@ -89,13 +89,13 @@ public class DateUtils {
         // the lint warning:
         // noinspection ResourceType
         cal.set(year, month, dayOfMonth);
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING, java.util.Locale.getDefault());
 
         return sdf.format(cal.getTime());
     }
 
     public static String dateToDateId(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_ID_FORMAT_STRING, java.util.Locale.getDefault());
         return sdf.format(date);
     }
 
@@ -113,7 +113,7 @@ public class DateUtils {
     }
 
     public static String dateIdToFormattedString(String dateId) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_STRING);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_STRING, java.util.Locale.getDefault());
         return sdf.format(dateIdToDate(dateId));
     }
 
@@ -141,12 +141,12 @@ public class DateUtils {
     }
 
     public static String dateToTimestamp(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_FORMAT_STRING);
+        SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_FORMAT_STRING, java.util.Locale.getDefault());
         return sdf.format(date);
     }
 
     public static String epochToFormattedString(long epoch) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_AND_TIME_FORMAT_STRING);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_AND_TIME_FORMAT_STRING, java.util.Locale.getDefault());
         return sdf.format(epochToDate(epoch));
     }
 
