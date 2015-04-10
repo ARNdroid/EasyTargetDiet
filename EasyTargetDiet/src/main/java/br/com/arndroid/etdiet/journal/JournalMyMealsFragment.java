@@ -168,7 +168,7 @@ public class JournalMyMealsFragment extends Fragment {
                 PreferencesUtils.getTrackingUnitNameForQuantity(getActivity().getApplicationContext(), daySummary.getEntity().getSupperGoal()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSupperStartTime()),
                 DateUtils.timeToFormattedString(daySummary.getEntity().getSupperEndTime())));
-        mTxtTotalPts.setText(String.valueOf(daySummary.getPlannedBeforeUsage()));
+        mTxtTotalPts.setText(String.valueOf(daySummary.getEntity().getTotalGoalForMeals()));
     }
 
     public void layMealAction(View view) {

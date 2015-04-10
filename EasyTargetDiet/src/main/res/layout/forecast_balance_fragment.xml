@@ -137,7 +137,7 @@
 
         <TextView
             style="@style/CardFont.Item.Small"
-            android:id="@+id/lblBalance"
+            android:id="@+id/txtBalanceDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_collapsed_below_data_small"

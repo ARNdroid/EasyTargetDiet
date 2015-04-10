@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import br.com.arndroid.etdiet.R;
+import br.com.arndroid.etdiet.virtualweek.DaySummary;
 
 public class ForecastBalanceFragment extends Fragment {
 
@@ -19,6 +20,7 @@ public class ForecastBalanceFragment extends Fragment {
     private TextView mTxtForecast;
     private TextView mTxtBalance;
     private TextView mTxtForecastDescription;
+    private TextView mTxtBalanceDescription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +37,7 @@ public class ForecastBalanceFragment extends Fragment {
         mTxtToUse = (TextView) rootView.findViewById(R.id.txtToUse);
         mTxtForecast = (TextView) rootView.findViewById(R.id.txtForecast);
         mTxtBalance = (TextView) rootView.findViewById(R.id.txtBalance);
+        mTxtBalanceDescription = (TextView) rootView.findViewById(R.id.txtBalanceDescription);
         mTxtForecastDescription = (TextView) rootView.findViewById(R.id.txtForecastDescription);
     }
 
@@ -43,6 +46,9 @@ public class ForecastBalanceFragment extends Fragment {
         mTxtToUse.setText(String.valueOf(forecastEntity.getToUse()));
         mTxtForecast.setText(String.valueOf(forecastEntity.getForecastUsed()));
         mTxtBalance.setText(String.valueOf(forecastEntity.getBalance()));
+        final String goalType = getString(
+                forecastEntity.getGoalType() == DaySummary.GOAL_TYPE_PLANNED ? R.string.planned : R.string.left);
+        mTxtBalanceDescription.setText(String.format(getString(R.string.balance), goalType));
         mTxtForecastDescription.setText(getString(forecastEntity.getStringResourceIdForForecastType()));
     }
 }
