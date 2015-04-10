@@ -9,7 +9,6 @@
     <color name="card_pressed">#ccff99</color>
 
     <color name="card_old_style_background">#f5e9dc</color>
-    <color name="card_old_style_foreground">#996633</color>
     <color name="card_old_style_pressed">#cc9999</color>
 
     <color name="settings_background">@color/card_background</color>

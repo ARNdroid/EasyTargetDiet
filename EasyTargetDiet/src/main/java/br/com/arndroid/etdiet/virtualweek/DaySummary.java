@@ -7,8 +7,8 @@ import br.com.arndroid.etdiet.provider.days.DaysEntity;
 
 public class DaySummary implements Parcelable {
 
-    public static int GOAL_TYPE_PLANNED = 0;
-    public static int GOAL_TYPE_LEFT = 1;
+    public static final int GOAL_TYPE_PLANNED = 0;
+    public static final int GOAL_TYPE_LEFT = 1;
 
     // Mind the gap: it's a Parcelable. The order and the number of fields matter.
     private DaysEntity daysEntity;

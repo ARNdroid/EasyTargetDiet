@@ -19,7 +19,6 @@
     <string name="forecast_out_of_goal_but_can_return_description">Out of goal but I can return.</string>
     <string name="forecast_out_of_goal_description">Sorry, I\'m out of goal today…</string>
     <string name="no_show_two_digits_number">NN</string>
-    <string name="no_show_small_year">2007</string>
     <string name="no_show_month">Sep</string>
     <string name="no_show_week_day_short">Mon</string>
     <string name="no_show_card_title">SOME TITLE</string>
@@ -125,11 +124,8 @@
     <string name="delete_weight_msg">Delete weight %1$.2f measured on %2$s - %3$s?</string>
     <string name="list_empty_weights">Nothing to show yet. Try adding some weights.</string>
     <string name="no_show_weight_notes">Weight notes line 1.\nWeight notes line 2.\nWeight notes line 3.</string>
-    <string name="no_show_today">TODAY</string>
     <string name="note_add">ADD</string>
     <string name="note_edit">EDIT</string>
-    <string name="today">TODAY</string>
-    <string name="not_today">NOT today</string>
     <string name="no_show_line_1">Line 1</string>
     <string name="no_show_line_2">Line 2</string>
     <string name="balance_title">BALANCE</string>
@@ -146,7 +142,6 @@
     <string name="planned">Planned</string>
     <string name="left">Left</string>
     <string name="on_going">ON GOING</string>
-    <string name="no_show_preferred_meal">[Meal name] +NN</string>
     <string name="default_tracking_unit_name_zero">units</string>
     <string name="default_tracking_unit_name_one">unit</string>
     <string name="default_tracking_unit_name_many">units</string>
