@@ -45,7 +45,7 @@ public class WeightsListAdapter extends CursorAdapter {
         holder.time.setText(DateUtils.timeToFormattedString(cursor.getInt(
                 cursor.getColumnIndex(Contract.Weights.TIME))));
         holder.note.setText(cursor.getString(cursor.getColumnIndex(Contract.Weights.NOTE)));
-        if (StringUtils.isEmpty(holder.note.getText().toString())) {
+        if (StringUtils.isEmptyOrOnlySpaces(holder.note.getText().toString())) {
             holder.note.setVisibility(View.GONE);
         } else {
             holder.note.setVisibility(View.VISIBLE);

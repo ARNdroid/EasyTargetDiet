@@ -2,8 +2,6 @@ package br.com.arndroid.etdiet.journal;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.Html;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +60,7 @@ public class JournalNotesFragment extends Fragment implements
     public void refreshScreen(DaySummary daySummary) {
         mCurrentDateId = daySummary.getEntity().getDateId();
 
-        if (StringUtils.isEmpty(daySummary.getEntity().getNote())) {
+        if (StringUtils.isEmptyOrOnlySpaces(daySummary.getEntity().getNote())) {
             mTxtNotes.setText(R.string.note_empty);
             mBtnEditNotes.setText(getString(R.string.note_add));
         } else {

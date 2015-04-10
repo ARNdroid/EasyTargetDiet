@@ -8,7 +8,7 @@ public class StringUtils {
     private StringUtils() {
     }
 
-    public static boolean isEmpty(CharSequence str) {
+    public static boolean isEmptyOrOnlySpaces(CharSequence str) {
         return str == null || TextUtils.isEmpty(str.toString().trim());
     }
 }

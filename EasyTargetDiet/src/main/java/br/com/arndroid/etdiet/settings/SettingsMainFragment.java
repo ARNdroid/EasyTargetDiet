@@ -372,9 +372,9 @@ public class SettingsMainFragment extends Fragment implements
         if (TRACKING_UNIT_NAME_SETTINGS_TAG.equals(tag)) {
             String[] trackingUnitNames = actualText.split(";");
             if (trackingUnitNames.length != 3
-                    || StringUtils.isEmpty(trackingUnitNames[0])
-                    || StringUtils.isEmpty(trackingUnitNames[1])
-                    || StringUtils.isEmpty(trackingUnitNames[2])) {
+                    || StringUtils.isEmptyOrOnlySpaces(trackingUnitNames[0])
+                    || StringUtils.isEmptyOrOnlySpaces(trackingUnitNames[1])
+                    || StringUtils.isEmptyOrOnlySpaces(trackingUnitNames[2])) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(getString(R.string.tracking_unit_name_edit_error));
                 builder.setPositiveButton(android.R.string.ok, null);

@@ -97,7 +97,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 fromScreenToEntity();
-                if (StringUtils.isEmpty(mEdtDescription.getText())) {
+                if (StringUtils.isEmptyOrOnlySpaces(mEdtDescription.getText())) {
                     mFoodsUsageEntity.setDescription(mEdtDescription.getHint().toString());
                 }
                 mFoodsUsageEntity.validateOrThrow();
@@ -176,7 +176,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
                 // Reset programmatic selection control variable:
                 setIsMealAProgrammaticSelection(position);
 
-                if (StringUtils.isEmpty(mEdtDescription.getText())) {
+                if (StringUtils.isEmptyOrOnlySpaces(mEdtDescription.getText())) {
                     final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
                             Meals.getMealFromPosition(position)));
                     final String hint = String.format(getString(R.string.quick_usage_description), mealName.toLowerCase());

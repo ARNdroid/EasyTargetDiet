@@ -9,6 +9,7 @@ import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.ParcelUtils;
+import br.com.arndroid.etdiet.utils.StringUtils;
 
 public class DaysEntity extends AbstractEntity implements Parcelable {
 
@@ -89,7 +90,7 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
         this.oilGoal = oilGoal;
         this.supplementDone = supplementDone;
         this.supplementGoal = supplementGoal;
-        this.note = note;
+        this.note = StringUtils.isEmptyOrOnlySpaces(note) ? null : note;
     }
 
     public DaysEntity(DaysEntity toClone) {

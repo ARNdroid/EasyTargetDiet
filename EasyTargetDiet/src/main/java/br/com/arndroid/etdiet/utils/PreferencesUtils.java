@@ -23,7 +23,7 @@ public class PreferencesUtils {
     }
 
     public static void setTrackingUnitNameZero(Context context, String name) {
-        if (StringUtils.isEmpty(name)) {
+        if (StringUtils.isEmptyOrOnlySpaces(name)) {
             throw new IllegalArgumentException("Tracking unit name for zero quantity must be NOT empty.");
         }
 
@@ -40,7 +40,7 @@ public class PreferencesUtils {
     }
 
     public static void setTrackingUnitNameOne(Context context, String name) {
-        if (StringUtils.isEmpty(name)) {
+        if (StringUtils.isEmptyOrOnlySpaces(name)) {
             throw new IllegalArgumentException("Tracking unit name for one quantity must be NOT empty.");
         }
 
@@ -57,7 +57,7 @@ public class PreferencesUtils {
     }
 
     public static void setTrackingUnitNameMany(Context context, String name) {
-        if (StringUtils.isEmpty(name)) {
+        if (StringUtils.isEmptyOrOnlySpaces(name)) {
             throw new IllegalArgumentException("Tracking unit name for 'many' quantity must be NOT empty.");
         }
 
