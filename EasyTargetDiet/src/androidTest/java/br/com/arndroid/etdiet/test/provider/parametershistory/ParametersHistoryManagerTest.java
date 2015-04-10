@@ -3,7 +3,6 @@ package br.com.arndroid.etdiet.test.provider.parametershistory;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ProviderTestCase2;
-import android.util.Log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

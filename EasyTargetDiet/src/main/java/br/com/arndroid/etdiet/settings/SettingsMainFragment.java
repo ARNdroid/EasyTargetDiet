@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.parametershistory.ParametersHistoryManager;
 import br.com.arndroid.etdiet.dialog.StringListDialog;
 import br.com.arndroid.etdiet.utils.PreferencesUtils;
+import br.com.arndroid.etdiet.utils.StringUtils;
 
 public class SettingsMainFragment extends Fragment implements
         StringListDialog.OnStringSelectedListener,
@@ -372,9 +372,9 @@ public class SettingsMainFragment extends Fragment implements
         if (TRACKING_UNIT_NAME_SETTINGS_TAG.equals(tag)) {
             String[] trackingUnitNames = actualText.split(";");
             if (trackingUnitNames.length != 3
-                    || TextUtils.isEmpty(trackingUnitNames[0])
-                    || TextUtils.isEmpty(trackingUnitNames[1])
-                    || TextUtils.isEmpty(trackingUnitNames[2])) {
+                    || StringUtils.isEmptyOrOnlySpaces(trackingUnitNames[0])
+                    || StringUtils.isEmptyOrOnlySpaces(trackingUnitNames[1])
+                    || StringUtils.isEmptyOrOnlySpaces(trackingUnitNames[2])) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(getString(R.string.tracking_unit_name_edit_error));
                 builder.setPositiveButton(android.R.string.ok, null);

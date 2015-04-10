@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

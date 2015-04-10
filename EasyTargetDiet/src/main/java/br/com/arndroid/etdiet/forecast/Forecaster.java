@@ -49,7 +49,7 @@ public class Forecaster {
 
         final ForecastEntity result = new ForecastEntity();
         final float allowed = daysEntity.getAllowed();
-        final float goal = summary.getPlannedBeforeUsage();
+        final float goal = summary.getGoalBeforeUsage();
 
         if (forecast <= goal) {
             result.setForecastType(ForecastEntity.STRAIGHT_TO_GOAL);
@@ -65,6 +65,7 @@ public class Forecaster {
         result.setToUse(toUse);
         result.setForecastUsed(forecast);
         result.setBalance(goal - forecast);
+        result.setGoalType(summary.getGoalType());
 
         return result;
     }

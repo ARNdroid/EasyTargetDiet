@@ -62,11 +62,11 @@
 
             <TextView
                 style="@style/CardFont.Section.Large"
-                android:id="@+id/lblPtsPlanned"
+                android:id="@+id/txtGoalType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_collapsed_below_data_large"
-                android:text="@string/planned" />
+                android:text="@string/no_show_goal_type" />
 
         </LinearLayout>
 

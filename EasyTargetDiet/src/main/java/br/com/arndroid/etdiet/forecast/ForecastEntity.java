@@ -23,6 +23,7 @@ public class ForecastEntity {
     private float mToUse;
     private float mForecastUsed;
     private float mBalance;
+    private int mGoalType;
     private int mForecastType;
 
     @SuppressWarnings("UnusedDeclaration")
@@ -72,6 +73,14 @@ public class ForecastEntity {
 
     public void setForecastType(int forecastType) {
         mForecastType = forecastType;
+    }
+
+    public int getGoalType() {
+        return mGoalType;
+    }
+
+    public void setGoalType(int goalType) {
+        this.mGoalType = goalType;
     }
 
     public int getStringResourceIdForForecastType() {

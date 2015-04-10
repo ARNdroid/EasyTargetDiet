@@ -7,6 +7,9 @@ import br.com.arndroid.etdiet.provider.days.DaysEntity;
 
 public class DaySummary implements Parcelable {
 
+    public static final int GOAL_TYPE_PLANNED = 0;
+    public static final int GOAL_TYPE_LEFT = 1;
+
     // Mind the gap: it's a Parcelable. The order and the number of fields matter.
     private DaysEntity daysEntity;
     private UsageSummary usageSummary;
@@ -17,8 +20,9 @@ public class DaySummary implements Parcelable {
     private float diaryAllowanceAfterUsage; // and diary allowance before usage == DayEntity.allowed
     private float weeklyAllowanceBeforeUsage;
     private float weeklyAllowanceAfterUsage;
-    private float plannedBeforeUsage; // The initial goal of the day
-    private float plannedAfterUsage; // The remaining value to met the initial goal
+    private float goalBeforeUsage; // The initial goal of the day
+    private float goalAfterUsage; // The remaining value to met the initial goal
+    private int goalType; // If == GOAL_TYPE_LEFT, the user planned greater than diary allowance + reserves
 
     public DaySummary() {}
 
@@ -32,8 +36,17 @@ public class DaySummary implements Parcelable {
         diaryAllowanceAfterUsage = toClone.diaryAllowanceAfterUsage;
         weeklyAllowanceBeforeUsage = toClone.weeklyAllowanceBeforeUsage;
         weeklyAllowanceAfterUsage = toClone.weeklyAllowanceAfterUsage;
-        plannedBeforeUsage = toClone.plannedBeforeUsage;
-        plannedAfterUsage = toClone.plannedAfterUsage;
+        goalBeforeUsage = toClone.goalBeforeUsage;
+        goalAfterUsage = toClone.goalAfterUsage;
+        goalType = toClone.goalType;
+    }
+
+    public int getGoalType() {
+        return goalType;
+    }
+
+    public void setGoalType(int goalType) {
+        this.goalType = goalType;
     }
 
     public UsageSummary getUsage() {
@@ -108,20 +121,20 @@ public class DaySummary implements Parcelable {
         this.settingsValues = settingsValues;
     }
 
-    public float getPlannedBeforeUsage() {
-        return plannedBeforeUsage;
+    public float getGoalBeforeUsage() {
+        return goalBeforeUsage;
     }
 
-    public void setPlannedBeforeUsage(float plannedBeforeUsage) {
-        this.plannedBeforeUsage = plannedBeforeUsage;
+    public void setGoalBeforeUsage(float goalBeforeUsage) {
+        this.goalBeforeUsage = goalBeforeUsage;
     }
 
-    public float getPlannedAfterUsage() {
-        return plannedAfterUsage;
+    public float getGoalAfterUsage() {
+        return goalAfterUsage;
     }
 
-    public void setPlannedAfterUsage(float plannedAfterUsage) {
-        this.plannedAfterUsage = plannedAfterUsage;
+    public void setGoalAfterUsage(float goalAfterUsage) {
+        this.goalAfterUsage = goalAfterUsage;
     }
 
     @Override
@@ -140,8 +153,9 @@ public class DaySummary implements Parcelable {
         destination.writeFloat(diaryAllowanceAfterUsage);
         destination.writeFloat(weeklyAllowanceBeforeUsage);
         destination.writeFloat(weeklyAllowanceAfterUsage);
-        destination.writeFloat(plannedBeforeUsage);
-        destination.writeFloat(plannedAfterUsage);
+        destination.writeFloat(goalBeforeUsage);
+        destination.writeFloat(goalAfterUsage);
+        destination.writeInt(goalType);
     }
 
     public static final Parcelable.Creator<DaySummary> CREATOR
@@ -158,8 +172,9 @@ public class DaySummary implements Parcelable {
             result.setDiaryAllowanceAfterUsage(in.readFloat());
             result.setWeeklyAllowanceBeforeUsage(in.readFloat());
             result.setWeeklyAllowanceAfterUsage(in.readFloat());
-            result.setPlannedBeforeUsage(in.readFloat());
-            result.setPlannedAfterUsage(in.readFloat());
+            result.setGoalBeforeUsage(in.readFloat());
+            result.setGoalAfterUsage(in.readFloat());
+            result.setGoalType(in.readInt());
 
             return result;
         }

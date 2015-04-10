@@ -28,6 +28,7 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
     private TextView mTxtPtsDay;
     private TextView mTxtPtsWeek;
     private TextView mTxtPtsExercise;
+    private TextView mTxtGoalType;
     private ForecastMeterView mForecastMeter;
     private boolean mForecastMeterCanTouch;
 
@@ -52,16 +53,14 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
         mTxtPtsDay = (TextView) rootView.findViewById(R.id.txtPtsDay);
         mTxtPtsWeek = (TextView) rootView.findViewById(R.id.txtPtsWeek);
         mTxtPtsExercise = (TextView) rootView.findViewById(R.id.txtPtsExercise);
+        mTxtGoalType = (TextView) rootView.findViewById(R.id.txtGoalType);
         mForecastMeter = (ForecastMeterView) rootView.findViewById(R.id.forecastMeter);
     }
 
     private void setupScreen() {
-
-
         mForecastMeter.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 if (mForecastMeterCanTouch) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
@@ -95,10 +94,13 @@ public class JournalMyPointsFragment extends Fragment implements FragmentMenuRep
         final float percentage = 1.0f - forecastEntity.getToUse() / forecastEntity.getForecastUsed();
         mForecastMeter.setPercentage(percentage);
 
-        mTxtPtsPlanned.setText(String.valueOf(mDaySummary.getPlannedAfterUsage()));
+        mTxtPtsPlanned.setText(String.valueOf(mDaySummary.getGoalAfterUsage()));
         mTxtPtsDay.setText(String.valueOf(mDaySummary.getDiaryAllowanceAfterUsage()));
         mTxtPtsWeek.setText(String.valueOf(mDaySummary.getWeeklyAllowanceAfterUsage()));
         mTxtPtsExercise.setText(String.valueOf(mDaySummary.getExerciseAfterUsage()));
+        final String goalType = getString(
+                mDaySummary.getGoalType() == DaySummary.GOAL_TYPE_PLANNED ? R.string.planned : R.string.left);
+        mTxtGoalType.setText(goalType);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.ParcelUtils;
+import br.com.arndroid.etdiet.utils.StringUtils;
 
 public class WeightsEntity extends AbstractEntity implements Parcelable {
 
@@ -31,7 +32,7 @@ public class WeightsEntity extends AbstractEntity implements Parcelable {
         this.dateId = dateId;
         this.time = time;
         this.weight = weight;
-        this.note = note;
+        this.note = StringUtils.isEmptyOrOnlySpaces(note) ? null : note;
     }
 
     public WeightsEntity(WeightsEntity toClone) {

@@ -1,7 +1,6 @@
 package br.com.arndroid.etdiet.utils;
 
 import android.database.Observable;
-import android.util.Log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
