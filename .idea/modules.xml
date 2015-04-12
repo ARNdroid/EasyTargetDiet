@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EasyTargetDiet/EasyTargetDiet.iml" filepath="$PROJECT_DIR$/EasyTargetDiet/EasyTargetDiet.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EasyTargetDietProject.iml" filepath="$PROJECT_DIR$/EasyTargetDietProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasyTargetDiet.iml" filepath="$PROJECT_DIR$/EasyTargetDiet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/etd-app/etd-app.iml" filepath="$PROJECT_DIR$/etd-app/etd-app.iml" />
     </modules>
   </component>
 </project>

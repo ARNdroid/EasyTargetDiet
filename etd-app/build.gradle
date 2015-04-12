@@ -1,18 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
-    }
-}
-
 apply plugin: 'com.android.application'
-
-repositories {
-    mavenCentral()
-}
 
 android {
     ETDBuildProfile buildProfile = new ETDBuildProfile()
@@ -89,14 +75,14 @@ class ETDBuildProfile {
     public void getPropertiesFromFile() {
         // /gradle.properties
         Properties properties = new Properties()
-        properties.load(new FileInputStream(System.getProperty("user.dir") + '/EasyTargetDiet/gradle.properties'))
+        properties.load(new FileInputStream(System.getProperty("user.dir") + '/etd-app/gradle.properties'))
         final String[] version = properties.getProperty('version').split('\\.')
         mMajor = Integer.parseInt(version[0])
         mMinor = Integer.parseInt(version[1])
         mHotfix = Integer.parseInt(version[2])
 
         // /local.properties
-        properties.load(new FileInputStream(System.getProperty("user.dir") + '/EasyTargetDiet/local.properties'))
+        properties.load(new FileInputStream(System.getProperty("user.dir") + '/etd-app/local.properties'))
         mStoreFile = properties.getProperty('store_file')
         mKeyAlias = properties.getProperty('key_alias')
     }
