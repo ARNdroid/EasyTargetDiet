@@ -2,7 +2,7 @@ package br.com.arndroid.etdiet.backups.custom;
 
 import android.support.annotation.NonNull;
 
-public class RestoreFileInfo implements Comparable {
+public class RestoreFileInfo implements Comparable<RestoreFileInfo> {
 
     private final String fileName;
     private final String dirName;
@@ -36,8 +36,7 @@ public class RestoreFileInfo implements Comparable {
     }
 
     @Override
-    public int compareTo(@NonNull Object anotherObj) {
-        final RestoreFileInfo anotherInfo = (RestoreFileInfo) anotherObj;
+    public int compareTo(@NonNull RestoreFileInfo anotherInfo) {
         // order is last modified desc:
         return (int) (anotherInfo.lastModified - lastModified);
     }

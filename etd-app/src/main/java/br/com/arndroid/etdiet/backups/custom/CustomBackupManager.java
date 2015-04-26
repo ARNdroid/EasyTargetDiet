@@ -139,7 +139,7 @@ public class CustomBackupManager {
     }
 
     public List<RestoreFileInfo> getAllRestoreCandidates() {
-        ArrayList<RestoreFileInfo> result = new ArrayList<>();
+        List<RestoreFileInfo> result = new ArrayList<>();
         final File parentBackupFolder = mOperations.getExternalBackupDirectory();
         LOG.trace("getAllRestoreCandidates(): about to get all files for '{}'.", parentBackupFolder);
         File[] files = mOperations.listAllFiles(parentBackupFolder);

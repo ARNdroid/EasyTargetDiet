@@ -3,6 +3,13 @@ apply plugin: 'com.android.application'
 android {
     ETDBuildProfile buildProfile = new ETDBuildProfile()
 
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            // To see warnings details uncomment the following line:
+            // options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
