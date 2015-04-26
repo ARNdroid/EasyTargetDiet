@@ -19,16 +19,20 @@
 
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAIcHuMZh1M2qO4UBAYn8yDJ6Nm_zTb74-obT4dCg"/>
+            android:value="AEdPqrEAAAAIcHuMZh1M2qO4UBAYn8yDJ6Nm_zTb74-obT4dCg" />
 
         <activity
-            android:name=".journal.JournalActivity"
-            android:label="@string/app_name">
+            android:name=".journal.JournalActivity" />
+
+        <activity-alias
+            android:name=".EntryPointAlias"
+            android:label="@string/app_name"
+            android:targetActivity=".journal.JournalActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
 
         <activity
             android:name=".foodsusage.FoodsUsageActivity"
