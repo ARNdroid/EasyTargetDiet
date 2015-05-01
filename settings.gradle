@@ -1,1 +1,1 @@
-include ':etd-app'
+include ':etd-app', ':etd-shr'

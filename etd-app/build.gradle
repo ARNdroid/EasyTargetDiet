@@ -1,7 +1,10 @@
+import br.com.arndroid.buildutlis.AppBuildProfile
+
 apply plugin: 'com.android.application'
 
 android {
-    ETDBuildProfile buildProfile = new ETDBuildProfile()
+
+    AppBuildProfile buildProfile = new AppBuildProfile('etd-app')
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
@@ -15,19 +18,19 @@ android {
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 //noinspection GroovyAssignabilityCheck
-                def newApkFileName = "$project.buildDir/outputs/apk/" + buildProfile.getAPKNameForVariant(variant.baseName)
+                def newApkFileName = "$project.buildDir/outputs/apk/" + buildProfile.getOutputFileNameForVariant(variant.baseName)
                 output.outputFile = new File(newApkFileName)
             }
         }
     }
 
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion buildProfile.getCompileSdkVersion()
+    buildToolsVersion buildProfile.getBuildToolsVersion()
 
     defaultConfig {
         applicationId 'br.com.arndroid.etdiet'
-        minSdkVersion 15
-        targetSdkVersion 21
+        minSdkVersion buildProfile.getMinSdkVersion()
+        targetSdkVersion buildProfile.getTargetSdkVersion()
         versionName buildProfile.getVersionName()
         versionCode buildProfile.getVersionCode()
     }
@@ -47,6 +50,7 @@ android {
         }
 
         release {
+            minifyEnabled false
             // noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release
         }
@@ -54,6 +58,7 @@ android {
 }
 
 dependencies {
+    compile project(':etd-shr')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:support-v4:21.0.3'
     compile group: 'com.github.tony19', name: 'logback-android-core', version: '1.0.10-2'
@@ -62,117 +67,4 @@ dependencies {
     androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker', version: '1.0'
     androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker-mockito', version: '1.0'
     androidTestCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
-}
-
-class ETDBuildProfile {
-    private int mMajor
-    private int mMinor
-    private int mHotfix
-    private String mStoreFile
-    private String mStorePassword
-    private String mKeyAlias
-
-    public ETDBuildProfile() {
-        getPropertiesFromFile()
-        validatePropertiesOrThrow()
-        confirmPropertiesWithUserOrThrow()
-        getPropertiesFromUser()
-    }
-
-    public void getPropertiesFromFile() {
-        // /gradle.properties
-        Properties properties = new Properties()
-        properties.load(new FileInputStream(System.getProperty("user.dir") + '/etd-app/gradle.properties'))
-        final String[] version = properties.getProperty('version').split('\\.')
-        mMajor = Integer.parseInt(version[0])
-        mMinor = Integer.parseInt(version[1])
-        mHotfix = Integer.parseInt(version[2])
-
-        // /local.properties
-        properties.load(new FileInputStream(System.getProperty("user.dir") + '/etd-app/local.properties'))
-        mStoreFile = properties.getProperty('store_file')
-        mKeyAlias = properties.getProperty('key_alias')
-    }
-
-    public void validatePropertiesOrThrow() {
-        if (mMajor < 0) {
-            throw new InvalidUserDataException("Version major = ${mMajor}. Must be a positive integer")
-        }
-        if (mMinor < 0 || mMinor > 99) {
-            throw new InvalidUserDataException("Version minor = ${mMinor}. Must be between 0 and 99.")
-        }
-        if (mHotfix < 0 || mHotfix > 999) {
-            throw new InvalidUserDataException("Version hotfix = ${mHotfix}. Must be between 0 and 999.")
-        }
-    }
-
-    public void confirmPropertiesWithUserOrThrow() {
-        // Current version
-        //System.out.println "ETD ==> Current version is ${getVersionName()} (${getVersionCode()})"
-        String answer = getUserEntry("\nETD ==> Current version is ${getVersionName()} (${getVersionCode()})\nETD ==> Enter yEs to accept this version: ")
-        if (answer == null) {
-            System.out.println("\nETD ==> Version ${getVersionName()} (${getVersionCode()}) accepted by default.")
-            answer = 'yEs'
-        }
-        if (!'yEs'.equals(answer)) {
-            System.out.println "ETD ==> User entered '${answer}'. Build will fail (stop)."
-            throw new InvalidUserDataException("Current version ${getVersionName()} (${getVersionCode()}) NOT accepted.");
-        }
-    }
-
-    public void getPropertiesFromUser() {
-        mStorePassword = getUserEntry('\nETD ==> Enter storePassword: ')
-    }
-
-    int getVersionCode() {
-        return 100000 * mMajor + 1000 * mMinor + mHotfix
-    }
-
-    public String getVersionName() {
-        return "${mMajor}.${mMinor}.${mHotfix}"
-    }
-
-    public String getVersionNameForAPK() {
-        return "${mMajor}_${mMinor}_${mHotfix}"
-    }
-
-    public String getStoreFile() {
-        return mStoreFile
-    }
-
-    public String getKeyAlias() {
-        return mKeyAlias
-    }
-
-    public String getStorePassword() {
-        return mStorePassword
-    }
-
-    public String getAPKNameForVariant(String variantName) {
-        return "EasyTargetDiet-${getVersionNameForAPK()}-${variantName.toUpperCase()}.apk"
-    }
-
-    private static String getUserEntry(String message) {
-        String userEntry
-        try {
-            userEntry = System.console().readLine(message)
-        }
-        catch(Exception e) {
-            // We know... catching Exception is not so good,
-            // but it's enough here.
-            StringBuilder builder = new StringBuilder()
-            builder.append('\nETD ==> When getting following user entry:')
-            builder.append('\nETD ==> ----------------------------------')
-            builder.append(message)
-            builder.append('\nETD ==> ----------------------------------')
-            builder.append('\nETD ==> This exception occurred:')
-            builder.append('\nETD ==> ----------------------------------')
-            builder.append("\nETD ==> ${e}")
-            builder.append('\nETD ==> ----------------------------------')
-            builder.append('\nETD ==> Null will be returned')
-            System.out.println(builder.toString())
-            return null
-        }
-        return userEntry
-    }
 }
