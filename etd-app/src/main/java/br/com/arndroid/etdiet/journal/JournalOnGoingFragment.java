@@ -3,6 +3,7 @@ package br.com.arndroid.etdiet.journal;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,10 +122,10 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
         final Compatibility compatibility = Compatibility.getInstance();
         if (DateUtils.isDateIdCurrentDate(dateId)) {
             compatibility.setBackground(mLayDate,
-                    getResources().getDrawable(R.drawable.card_selector));
+                    ContextCompat.getDrawable(getActivity(), R.drawable.card_selector));
         } else {
             compatibility.setBackground(mLayDate,
-                    getResources().getDrawable(R.drawable.card_old_style_selector));
+                    ContextCompat.getDrawable(getActivity(), R.drawable.card_old_style_selector));
         }
 
         if (DateUtils.isDateIdCurrentDate(mCurrentDateId)) {
