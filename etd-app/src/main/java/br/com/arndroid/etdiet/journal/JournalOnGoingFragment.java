@@ -24,7 +24,7 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
 
     public interface JournalFragmentListener {
 
-        public void onDateChanged(Date newDate);
+        void onDateChanged(Date newDate);
     }
 
     public static final String OWNER_TAG = JournalOnGoingFragment.class.getSimpleName();

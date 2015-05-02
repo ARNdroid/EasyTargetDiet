@@ -123,37 +123,37 @@ public class Contract {
     protected interface DaysColumns {
 
         // Table:
-        public static final String TABLE_NAME = "days";
+        String TABLE_NAME = "days";
 
         // Columns:
-        public static final String DATE_ID = "date_id";
-        public static final String ALLOWED = "allowed";
-        public static final String BREAKFAST_START_TIME = "breakfast_start_time";
-        public static final String BREAKFAST_END_TIME = "breakfast_end_time";
-        public static final String BREAKFAST_GOAL = "breakfast_goal";
-        public static final String BRUNCH_START_TIME = "brunch_start_time";
-        public static final String BRUNCH_END_TIME = "brunch_end_time";
-        public static final String BRUNCH_GOAL = "brunch_goal";
-        public static final String LUNCH_START_TIME = "lunch_start_time";
-        public static final String LUNCH_END_TIME = "lunch_end_time";
-        public static final String LUNCH_GOAL = "lunch_goal";
-        public static final String SNACK_START_TIME = "snack_start_time";
-        public static final String SNACK_END_TIME = "snack_end_time";
-        public static final String SNACK_GOAL = "snack_goal";
-        public static final String DINNER_START_TIME = "dinner_start_time";
-        public static final String DINNER_END_TIME = "dinner_end_time";
-        public static final String DINNER_GOAL = "dinner_goal";
-        public static final String SUPPER_START_TIME = "supper_start_time";
-        public static final String SUPPER_END_TIME = "supper_end_time";
-        public static final String SUPPER_GOAL = "supper_goal";
-        public static final String EXERCISE_GOAL = "exercise_goal";
-        public static final String LIQUID_DONE = "liquid_done";
-        public static final String LIQUID_GOAL = "liquid_goal";
-        public static final String OIL_DONE = "oil_done";
-        public static final String OIL_GOAL = "oil_goal";
-        public static final String SUPPLEMENT_DONE = "supplement_done";
-        public static final String SUPPLEMENT_GOAL = "supplement_goal";
-        public static final String NOTE = "note";
+        String DATE_ID = "date_id";
+        String ALLOWED = "allowed";
+        String BREAKFAST_START_TIME = "breakfast_start_time";
+        String BREAKFAST_END_TIME = "breakfast_end_time";
+        String BREAKFAST_GOAL = "breakfast_goal";
+        String BRUNCH_START_TIME = "brunch_start_time";
+        String BRUNCH_END_TIME = "brunch_end_time";
+        String BRUNCH_GOAL = "brunch_goal";
+        String LUNCH_START_TIME = "lunch_start_time";
+        String LUNCH_END_TIME = "lunch_end_time";
+        String LUNCH_GOAL = "lunch_goal";
+        String SNACK_START_TIME = "snack_start_time";
+        String SNACK_END_TIME = "snack_end_time";
+        String SNACK_GOAL = "snack_goal";
+        String DINNER_START_TIME = "dinner_start_time";
+        String DINNER_END_TIME = "dinner_end_time";
+        String DINNER_GOAL = "dinner_goal";
+        String SUPPER_START_TIME = "supper_start_time";
+        String SUPPER_END_TIME = "supper_end_time";
+        String SUPPER_GOAL = "supper_goal";
+        String EXERCISE_GOAL = "exercise_goal";
+        String LIQUID_DONE = "liquid_done";
+        String LIQUID_GOAL = "liquid_goal";
+        String OIL_DONE = "oil_done";
+        String OIL_GOAL = "oil_goal";
+        String SUPPLEMENT_DONE = "supplement_done";
+        String SUPPLEMENT_GOAL = "supplement_goal";
+        String NOTE = "note";
     }
 
     public static final class Days implements BaseColumns, DaysColumns {
@@ -213,15 +213,15 @@ public class Contract {
     protected interface FoodsUsageColumns {
 
         // Table:
-        public static final String TABLE_NAME = "foods_usage";
+        String TABLE_NAME = "foods_usage";
 
         // Columns:
-        public static final String DATE_ID = "date_id";
-        public static final String MEAL = "meal";
-        public static final String TIME = "time";
-        public static final String DESCRIPTION = "description";
-        public static final String VALUE = "value";
-        public static final String SUM_VALUE = "sum_value"; // Calculated only.
+        String DATE_ID = "date_id";
+        String MEAL = "meal";
+        String TIME = "time";
+        String DESCRIPTION = "description";
+        String VALUE = "value";
+        String SUM_VALUE = "sum_value"; // Calculated only.
 
     }
 
@@ -292,31 +292,31 @@ public class Contract {
     protected interface WeekdaysParametersColumns {
 
         // Table:
-        public static final String TABLE_NAME = "weekday_parameters";
+        String TABLE_NAME = "weekday_parameters";
 
         // Columns:
-        public static final String BREAKFAST_START_TIME = "breakfast_start_time";
-        public static final String BREAKFAST_END_TIME = "breakfast_end_time";
-        public static final String BREAKFAST_GOAL = "breakfast_goal";
-        public static final String BRUNCH_START_TIME = "brunch_start_time";
-        public static final String BRUNCH_END_TIME = "brunch_end_time";
-        public static final String BRUNCH_GOAL = "brunch_goal";
-        public static final String LUNCH_START_TIME = "lunch_start_time";
-        public static final String LUNCH_END_TIME = "lunch_end_time";
-        public static final String LUNCH_GOAL = "lunch_goal";
-        public static final String SNACK_START_TIME = "snack_start_time";
-        public static final String SNACK_END_TIME = "snack_end_time";
-        public static final String SNACK_GOAL = "snack_goal";
-        public static final String DINNER_START_TIME = "dinner_start_time";
-        public static final String DINNER_END_TIME = "dinner_end_time";
-        public static final String DINNER_GOAL = "dinner_goal";
-        public static final String SUPPER_START_TIME = "supper_start_time";
-        public static final String SUPPER_END_TIME = "supper_end_time";
-        public static final String SUPPER_GOAL = "supper_goal";
-        public static final String EXERCISE_GOAL = "exercise_goal";
-        public static final String LIQUID_GOAL = "liquid_goal";
-        public static final String OIL_GOAL = "oil_goal";
-        public static final String SUPPLEMENT_GOAL = "supplement_goal";
+        String BREAKFAST_START_TIME = "breakfast_start_time";
+        String BREAKFAST_END_TIME = "breakfast_end_time";
+        String BREAKFAST_GOAL = "breakfast_goal";
+        String BRUNCH_START_TIME = "brunch_start_time";
+        String BRUNCH_END_TIME = "brunch_end_time";
+        String BRUNCH_GOAL = "brunch_goal";
+        String LUNCH_START_TIME = "lunch_start_time";
+        String LUNCH_END_TIME = "lunch_end_time";
+        String LUNCH_GOAL = "lunch_goal";
+        String SNACK_START_TIME = "snack_start_time";
+        String SNACK_END_TIME = "snack_end_time";
+        String SNACK_GOAL = "snack_goal";
+        String DINNER_START_TIME = "dinner_start_time";
+        String DINNER_END_TIME = "dinner_end_time";
+        String DINNER_GOAL = "dinner_goal";
+        String SUPPER_START_TIME = "supper_start_time";
+        String SUPPER_END_TIME = "supper_end_time";
+        String SUPPER_GOAL = "supper_goal";
+        String EXERCISE_GOAL = "exercise_goal";
+        String LIQUID_GOAL = "liquid_goal";
+        String OIL_GOAL = "oil_goal";
+        String SUPPLEMENT_GOAL = "supplement_goal";
     }
 
     public static final class WeekdayParameters implements BaseColumns, WeekdaysParametersColumns {
@@ -360,14 +360,14 @@ public class Contract {
     protected interface ParametersHistoryColumns {
 
         // Table:
-        public static final String TABLE_NAME = "parameters_history";
+        String TABLE_NAME = "parameters_history";
 
         // Columns:
-        public static final String TYPE = "type";
-        public static final String DATE = "date";
-        public static final String INTEGRAL_NEW_VALUE = "integral_new_value";
-        public static final String FLOATING_POINT_NEW_VALUE = "floating_point_new_value";
-        public static final String TEXT_NEW_VALUE = "text_new_value";
+        String TYPE = "type";
+        String DATE = "date";
+        String INTEGRAL_NEW_VALUE = "integral_new_value";
+        String FLOATING_POINT_NEW_VALUE = "floating_point_new_value";
+        String TEXT_NEW_VALUE = "text_new_value";
 
     }
 
@@ -457,13 +457,13 @@ public class Contract {
     protected interface WeightsColumns {
 
         // Table:
-        public static final String TABLE_NAME = "weights";
+        String TABLE_NAME = "weights";
 
         // Columns:
-        public static final String DATE_ID = "date_id";
-        public static final String TIME = "time";
-        public static final String WEIGHT = "weight";
-        public static final String NOTE = "note";
+        String DATE_ID = "date_id";
+        String TIME = "time";
+        String WEIGHT = "weight";
+        String NOTE = "note";
     }
 
     public static final class Weights implements BaseColumns, WeightsColumns {

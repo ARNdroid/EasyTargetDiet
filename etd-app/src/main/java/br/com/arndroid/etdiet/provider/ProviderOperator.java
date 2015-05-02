@@ -10,13 +10,13 @@ public interface ProviderOperator {
 
     String getType(Uri uri);
 
-    public Cursor query(Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder, Provider provider);
+    Cursor query(Uri uri, String[] projection, String selection,
+                 String[] selectionArgs, String sortOrder, Provider provider);
 
-    public Uri insert(Uri uri, ContentValues values, Provider provider);
+    Uri insert(Uri uri, ContentValues values, Provider provider);
 
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs,
-                      Provider provider);
+    int update(Uri uri, ContentValues values, String selection, String[] selectionArgs,
+               Provider provider);
 
-    public int delete(Uri uri, String selection, String[] selectionArgs, Provider provider);
+    int delete(Uri uri, String selection, String[] selectionArgs, Provider provider);
 }

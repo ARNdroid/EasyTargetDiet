@@ -35,7 +35,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         FragmentActionReplier {
 
     public interface FoodsUsageListFragmentListener {
-        public void onListValuesChanged(Cursor data);
+        void onListValuesChanged(Cursor data);
     }
 
     public static final String MEAL_SELECTED_ACTION_TAG = FoodsUsageListFragment.class.getSimpleName() +

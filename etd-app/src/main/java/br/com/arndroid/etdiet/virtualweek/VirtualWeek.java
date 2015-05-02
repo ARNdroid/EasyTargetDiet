@@ -239,16 +239,16 @@ public class VirtualWeek implements DatabaseChangeObserver.ChangeListener {
         createVirtualWeekEngineAndRegisterObservers(DateUtils.dateIdToDate(referenceDateId));
     }
 
-    public static interface ViewObserver {
+    public interface ViewObserver {
 
-        public void onDayChanged(DaySummary summary);
+        void onDayChanged(DaySummary summary);
 
-        public void onFoodsUsageChanged(DaySummary summary);
+        void onFoodsUsageChanged(DaySummary summary);
 
-        public void onParametersChanged();
+        void onParametersChanged();
 
-        public void onSummaryRequested(DaySummary daySummary);
+        void onSummaryRequested(DaySummary daySummary);
 
-        public void onDatabaseRestored();
+        void onDatabaseRestored();
     }
 }

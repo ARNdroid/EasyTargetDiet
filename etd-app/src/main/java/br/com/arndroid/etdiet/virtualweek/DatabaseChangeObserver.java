@@ -34,6 +34,6 @@ public class DatabaseChangeObserver extends ContentObserver {
     }
 
     public interface ChangeListener {
-        public void onContentChanged(int changeType, int index);
+        void onContentChanged(int changeType, int index);
     }
 }
