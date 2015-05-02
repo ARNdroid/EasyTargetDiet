@@ -30,7 +30,7 @@ public abstract class AbstractBuildProfile {
     protected static final Map<String, String> sContextValues = new HashMap<>();
 
     // Members:
-    private String mModuleName;
+    private final String mModuleName;
     private String mStoreFile;
     private String mStorePassword;
     private String mKeyAlias;
