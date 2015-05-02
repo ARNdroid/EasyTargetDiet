@@ -19,8 +19,8 @@ public abstract class AbstractBuildProfile {
     private static final String DEFAULT_VERSION_STRING = "0.11.0";
 
     // COMPILATION PROPERTIES:
-    private static final int DEFAULT_SDK_VERSION_COMPILE = 21;
-    private static final String DEFAULT_BUILD_TOOLS_VERSION = "21.1.2";
+    private static final int DEFAULT_SDK_VERSION_COMPILE = 22;
+    private static final String DEFAULT_BUILD_TOOLS_VERSION = "22.0.1";
     private static final int DEFAULT_SDK_VERSION_MIN = 15;
     private static final int DEFAULT_SDK_VERSION_TARGET = DEFAULT_SDK_VERSION_COMPILE;
 
