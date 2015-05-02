@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.dialog.TextDialog;
@@ -15,6 +16,7 @@ import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.utils.StringUtils;
 import br.com.arndroid.etdiet.virtualweek.DaySummary;
+import br.com.arndroid.etdshr.Test;
 
 public class JournalNotesFragment extends Fragment implements
         TextDialog.OnTextSetListener {
@@ -75,5 +77,7 @@ public class JournalNotesFragment extends Fragment implements
         DaysEntity entity = manager.dayFromDate(DateUtils.dateIdToDate(mCurrentDateId));
         entity.setNote(actualText);
         manager.refresh(entity);
+        // TODO: remove.
+        Toast.makeText(getActivity(), Test.showDependency(), Toast.LENGTH_LONG).show();
     }
 }
