@@ -1,17 +1,24 @@
-import br.com.arndroid.buildutlis.ShrBuildProfile
+import br.com.arndroid.buildutlis.PtcBuildProfile
 
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
 
-    ShrBuildProfile buildProfile = new ShrBuildProfile('etd-shr')
+    PtcBuildProfile buildProfile = new PtcBuildProfile('etd-ptc')
 
-    android.libraryVariants.all { variant ->
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            // To see warnings details uncomment the following line:
+            // options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+
+    android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 //noinspection GroovyAssignabilityCheck
-                def newApkFileName = "$project.buildDir/outputs/aar/" + buildProfile.getOutputFileNameForVariant(variant.baseName)
+                def newApkFileName = "$project.buildDir/outputs/apk/" + buildProfile.getOutputFileNameForVariant(variant.baseName)
                 output.outputFile = new File(newApkFileName)
             }
         }
@@ -21,21 +28,39 @@ android {
     buildToolsVersion buildProfile.getBuildToolsVersion()
 
     defaultConfig {
+        applicationId 'br.com.arndroid.etdptc'
         minSdkVersion buildProfile.getMinSdkVersion()
         targetSdkVersion buildProfile.getTargetSdkVersion()
         versionName buildProfile.getVersionName()
         versionCode buildProfile.getVersionCode()
     }
 
+    signingConfigs {
+        release {
+            storeFile file(buildProfile.getStoreFile())
+            storePassword buildProfile.getStorePassword()
+            keyAlias buildProfile.getKeyAlias()
+            keyPassword buildProfile.getStorePassword()
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
+
         release {
             minifyEnabled false
+            // noinspection GroovyAssignabilityCheck
+            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
+    compile project(':etd-api')
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:support-v4:22.1.1'
     compile group: 'com.github.tony19', name: 'logback-android-core', version: '1.0.10-2'
     compile group: 'com.github.tony19', name: 'logback-android-classic', version: '1.0.10-2'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" />
       <module fileurl="file://$PROJECT_DIR$/etd-api/etd-api.iml" filepath="$PROJECT_DIR$/etd-api/etd-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/etd-app/etd-app.iml" filepath="$PROJECT_DIR$/etd-app/etd-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/etd-ptc/etd-ptc.iml" filepath="$PROJECT_DIR$/etd-ptc/etd-ptc.iml" />
       <module fileurl="file://$PROJECT_DIR$/etd-shr/etd-shr.iml" filepath="$PROJECT_DIR$/etd-shr/etd-shr.iml" />
     </modules>
   </component>

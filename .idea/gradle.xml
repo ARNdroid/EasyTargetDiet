@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/etd-api" />
             <option value="$PROJECT_DIR$/etd-app" />
+            <option value="$PROJECT_DIR$/etd-ptc" />
             <option value="$PROJECT_DIR$/etd-shr" />
           </set>
         </option>
