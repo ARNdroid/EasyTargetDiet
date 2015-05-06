@@ -6,16 +6,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdapi.Test;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // TODO: remove.
+        LOG.warn("Inside Test.showDependency()");
         TextView textView = (TextView) findViewById(R.id.txtHello);
         textView.setText(Test.showDependency());
     }

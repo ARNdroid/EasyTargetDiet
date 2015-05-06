@@ -1,16 +1,16 @@
 <!--suppress XmlUnboundNsPrefix -->
 <configuration>
-    <property name="LOG_DIR" value="/data/data/br.com.arndroid.etdiet/files/log" />
+    <property name="LOG_DIR" value="/data/data/br.com.arndroid.etdptc/files/log" />
 
     <!-- The LogCat appender -->
-    <appender name="LogCatEtdApp" class="ch.qos.logback.classic.android.LogcatAppender">
+    <appender name="LogCatEtdPtc" class="ch.qos.logback.classic.android.LogcatAppender">
         <encoder>
-            <pattern>==>etd-app %msg</pattern>
+            <pattern>==>etd-ptc %msg</pattern>
         </encoder>
     </appender>
 
     <!-- The WarnsAndErrors appender -->
-    <appender name="WarnsAndErrorsEtdApp" class="ch.qos.logback.core.FileAppender">
+    <appender name="WarnsAndErrorsEtdPtc" class="ch.qos.logback.core.FileAppender">
 
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
@@ -25,8 +25,8 @@
     </appender>
 
     <root level="TRACE">
-        <appender-ref ref="LogCatEtdApp" />
-        <appender-ref ref="WarnsAndErrorsEtdApp" />
+        <appender-ref ref="LogCatEtdPtc" />
+        <appender-ref ref="WarnsAndErrorsEtdPtc" />
     </root>
 
 </configuration>

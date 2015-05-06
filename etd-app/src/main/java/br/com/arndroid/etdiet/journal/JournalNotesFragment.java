@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.dialog.TextDialog;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
@@ -20,6 +23,8 @@ import br.com.arndroid.etdshr.Test;
 
 public class JournalNotesFragment extends Fragment implements
         TextDialog.OnTextSetListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(JournalNotesFragment.class);
 
     public static final String OWNER_TAG = JournalNotesFragment.class.getSimpleName();
     public static final String NOTE_EDIT_TAG = OWNER_TAG + ".NOTE_EDIT_TAG";
@@ -78,6 +83,7 @@ public class JournalNotesFragment extends Fragment implements
         entity.setNote(actualText);
         manager.refresh(entity);
         // TODO: remove.
+        LOG.warn("Inside JournalNotesFragment.onTextSet(tag, actualText)");
         Toast.makeText(getActivity(), Test.showDependency(), Toast.LENGTH_LONG).show();
     }
 }
