@@ -1,10 +1,8 @@
-import br.com.arndroid.buildutlis.AppBuildProfile
+import br.com.arndroid.buildutils.BuildUtils
 
 apply plugin: 'com.android.application'
 
 android {
-
-    AppBuildProfile buildProfile = new AppBuildProfile('etd-app')
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
@@ -17,30 +15,30 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                //noinspection GroovyAssignabilityCheck
-                def newApkFileName = "$project.buildDir/outputs/apk/" + buildProfile.getOutputFileNameForVariant(variant.baseName)
+                def newApkFileName = "$project.buildDir/outputs/apk/" +
+                        BuildUtils.getOutputFileNameFor('ETD-APP', '.apk', defaultVersionName, variant.baseName)
                 output.outputFile = new File(newApkFileName)
             }
         }
     }
 
-    compileSdkVersion buildProfile.getCompileSdkVersion()
-    buildToolsVersion buildProfile.getBuildToolsVersion()
+    compileSdkVersion defaultCompileSdkVersion
+    buildToolsVersion defaultBuildToolsVersion
 
     defaultConfig {
         applicationId 'br.com.arndroid.etdiet'
-        minSdkVersion buildProfile.getMinSdkVersion()
-        targetSdkVersion buildProfile.getTargetSdkVersion()
-        versionName buildProfile.getVersionName()
-        versionCode buildProfile.getVersionCode()
+        minSdkVersion defaultMinSdkVersion
+        targetSdkVersion defaultTargetSdkVersion
+        versionName defaultVersionName
+        versionCode defaultVersionCode
     }
 
     signingConfigs {
         release {
-            storeFile file(buildProfile.getStoreFile())
-            storePassword buildProfile.getStorePassword()
-            keyAlias buildProfile.getKeyAlias()
-            keyPassword buildProfile.getStorePassword()
+            storeFile file(defaultStoreFile)
+            storePassword defaultStorePassword
+            keyAlias defaultKeyAlias
+            keyPassword defaultKeyPassword
         }
     }
 

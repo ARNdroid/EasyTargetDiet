@@ -1,4 +1,26 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import br.com.arndroid.buildutils.BuildUtils
+
+ext {
+    /* Here default extra properties for ALL sub projects.
+       If you need to override some value, do it inside
+       build.gradle specific for that sub project. */
+
+    // Version
+    defaultVersionName = '0.11.0'
+    defaultVersionCode = BuildUtils.versionNumberForVersionName defaultVersionName
+
+    // Compilation properties:
+    defaultCompileSdkVersion = 22
+    defaultBuildToolsVersion = '22.0.1'
+    defaultMinSdkVersion = 15
+    defaultTargetSdkVersion = defaultCompileSdkVersion
+
+    // Signing properties:
+    defaultStoreFile = System.getenv 'ARNDROID_KEYSTORE_HOME'
+    defaultStorePassword = System.getenv 'ARNDROID_KEYSTORE_PASSWORD'
+    defaultKeyAlias = 'easytargetdiet'
+    defaultKeyPassword = System.getenv 'ARNDROID_ETD_KEY_ALIAS_PASSWORD'
+}
 
 buildscript {
     repositories {
@@ -17,4 +39,3 @@ allprojects {
         jcenter()
     }
 }
-

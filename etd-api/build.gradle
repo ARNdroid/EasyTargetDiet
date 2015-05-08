@@ -1,30 +1,28 @@
-import br.com.arndroid.buildutlis.ApiBuildProfile
+import br.com.arndroid.buildutils.BuildUtils
 
 apply plugin: 'com.android.library'
 
 android {
 
-    ApiBuildProfile buildProfile = new ApiBuildProfile('etd-api')
-
     android.libraryVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                //noinspection GroovyAssignabilityCheck
-                def newApkFileName = "$project.buildDir/outputs/aar/" + buildProfile.getOutputFileNameForVariant(variant.baseName)
+                def newApkFileName = "$project.buildDir/outputs/aar/" +
+                        BuildUtils.getOutputFileNameFor('ETD-API', '.aar', defaultVersionName, variant.baseName)
                 output.outputFile = new File(newApkFileName)
             }
         }
     }
 
-    compileSdkVersion buildProfile.getCompileSdkVersion()
-    buildToolsVersion buildProfile.getBuildToolsVersion()
+    compileSdkVersion defaultCompileSdkVersion
+    buildToolsVersion defaultBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion buildProfile.getMinSdkVersion()
-        targetSdkVersion buildProfile.getTargetSdkVersion()
-        versionName buildProfile.getVersionName()
-        versionCode buildProfile.getVersionCode()
+        minSdkVersion defaultMinSdkVersion
+        targetSdkVersion defaultTargetSdkVersion
+        versionName defaultVersionName
+        versionCode defaultVersionCode
     }
 
     buildTypes {
