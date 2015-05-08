@@ -93,8 +93,8 @@
     <orderEntry type="library" exported="" scope="TEST" name="mockito-core-1.10.19" level="project" />
     <orderEntry type="library" exported="" name="logback-android-classic-1.0.10-2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="dexmaker-1.0" level="project" />
-    <orderEntry type="library" exported="" name="logback-android-core-1.0.10-2" level="project" />
     <orderEntry type="library" exported="" name="apktool-lib-1.4.4-3" level="project" />
+    <orderEntry type="library" exported="" name="logback-android-core-1.0.10-2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="dexmaker-mockito-1.0" level="project" />

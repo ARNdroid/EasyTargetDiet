@@ -16,7 +16,7 @@ ext {
     defaultTargetSdkVersion = defaultCompileSdkVersion
 
     // Signing properties:
-    defaultStoreFile = System.getenv 'ARNDROID_KEYSTORE_HOME'
+    defaultStoreFile = System.getenv 'ARNDROID_KEYSTORE_FILE'
     defaultStorePassword = System.getenv 'ARNDROID_KEYSTORE_PASSWORD'
     defaultKeyAlias = 'easytargetdiet'
     defaultKeyPassword = System.getenv 'ARNDROID_ETD_KEY_ALIAS_PASSWORD'
