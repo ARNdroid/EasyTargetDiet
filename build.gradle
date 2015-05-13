@@ -7,7 +7,7 @@ ext {
 
     // Version
     defaultVersionName = '0.11.0'
-    defaultVersionCode = BuildUtils.versionNumberForVersionName defaultVersionName
+    defaultVersionCode = BuildUtils.versionCodeForVersionName defaultVersionName
 
     // Compilation properties:
     defaultCompileSdkVersion = 22
