@@ -2,9 +2,9 @@ package br.com.arndroid.buildutils;
 
 /* package */ class Version {
 
-    private int mMajor;
-    private int mMinor;
-    private int mHotfix;
+    private final int mMajor;
+    private final int mMinor;
+    private final int mHotfix;
 
     public Version(String versionName) {
         final String[] version = versionName.split("\\.");

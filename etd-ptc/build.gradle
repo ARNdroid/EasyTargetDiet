@@ -11,6 +11,10 @@ android {
         }
     }
 
+    gradle.buildFinished { buildResult ->
+        println BuildUtils.buildSummaryFor ('etd-ptc', defaultVersionName, defaultVersionCode, buildResult.failure)
+    }
+
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile

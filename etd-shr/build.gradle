@@ -4,6 +4,10 @@ apply plugin: 'com.android.library'
 
 android {
 
+    gradle.buildFinished { buildResult ->
+        println BuildUtils.buildSummaryFor ('etd-shr', defaultVersionName, defaultVersionCode, buildResult.failure)
+    }
+
     android.libraryVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
