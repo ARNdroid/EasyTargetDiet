@@ -66,7 +66,7 @@ dependencies {
     compile group: 'com.github.tony19', name: 'logback-android-core', version: '1.0.10-2'
     compile group: 'com.github.tony19', name: 'logback-android-classic', version: '1.0.10-2'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'
-    androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker', version: '1.0'
-    androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker-mockito', version: '1.0'
+    androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker', version: '1.2'
+    androidTestCompile group: 'com.google.dexmaker', name: 'dexmaker-mockito', version: '1.2'
     androidTestCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
 }
