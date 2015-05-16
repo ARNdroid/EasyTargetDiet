@@ -6,12 +6,12 @@ ext {
        build.gradle specific for that sub project. */
 
     // Version
-    defaultVersionName = '0.11.0'
+    defaultVersionName = rootPropertyVersionName
     defaultVersionCode = BuildUtils.versionCodeForVersionName defaultVersionName
 
     // Compilation properties:
-    defaultCompileSdkVersion = 22
-    defaultBuildToolsVersion = '22.0.1'
+    defaultCompileSdkVersion = Integer.parseInt rootPropertyCompileSdkVersion
+    defaultBuildToolsVersion = rootPropertyBuildToolsVersion
     defaultMinSdkVersion = 15
     defaultTargetSdkVersion = defaultCompileSdkVersion
 
@@ -19,10 +19,10 @@ ext {
     defaultLintAbortOnError = !rootPropertyLintAbortOnError.equals('false')
 
     // Signing properties:
-    defaultStoreFile = System.getenv 'ARNDROID_KEYSTORE_FILE'
-    defaultStorePassword = System.getenv 'ARNDROID_KEYSTORE_PASSWORD'
+    defaultStoreFile = userPropertyStoreFile
+    defaultStorePassword = userPropertyStorePassword
     defaultKeyAlias = 'easytargetdiet'
-    defaultKeyPassword = System.getenv 'ARNDROID_ETD_KEY_ALIAS_PASSWORD'
+    defaultKeyPassword = userPropertyKeyPassword
 }
 
 buildscript {
