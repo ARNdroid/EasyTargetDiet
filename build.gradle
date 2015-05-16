@@ -15,6 +15,9 @@ ext {
     defaultMinSdkVersion = 15
     defaultTargetSdkVersion = defaultCompileSdkVersion
 
+    // Lint
+    defaultLintAbortOnError = !rootPropertyLintAbortOnError.equals('false')
+
     // Signing properties:
     defaultStoreFile = System.getenv 'ARNDROID_KEYSTORE_FILE'
     defaultStorePassword = System.getenv 'ARNDROID_KEYSTORE_PASSWORD'
@@ -28,7 +31,11 @@ buildscript {
     }
 
     dependencies {
+        // Android plugin:
         classpath 'com.android.tools.build:gradle:1.2.3'
+        // Bintray-release plugin:
+        classpath 'com.novoda:bintray-release:0.2.10'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

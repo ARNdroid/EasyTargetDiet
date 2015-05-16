@@ -12,9 +12,9 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                def newApkFileName = "$project.buildDir/outputs/aar/" +
+                def newAarFileName = "$project.buildDir/outputs/aar/" +
                         BuildUtils.getOutputFileNameFor('ETD-SHR', '.aar', defaultVersionName, variant.baseName)
-                output.outputFile = new File(newApkFileName)
+                output.outputFile = new File(newAarFileName)
             }
         }
     }
@@ -33,6 +33,10 @@ android {
         release {
             minifyEnabled false
         }
+    }
+
+    lintOptions {
+        abortOnError defaultLintAbortOnError
     }
 }
 

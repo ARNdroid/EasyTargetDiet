@@ -29,7 +29,7 @@ package br.com.arndroid.buildutils;
     }
 
     public String versionForOutputFileName() {
-        return mMajor + "_" + mMinor + "_" + mHotfix;
+        return mMajor + "." + mMinor + "." + mHotfix;
     }
 
     public int versionNumber() {
