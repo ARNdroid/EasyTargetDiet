@@ -198,7 +198,7 @@ public class JournalMyMealsFragment extends Fragment {
 
         final Bundle data = new Bundle();
         data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
-        data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, meal);
+        data.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, meal);
 
         ((ActivityActionCaller)getActivity()).onCallAction(R.id.foods_usage_list_fragment,
                 FoodsUsageActivity.class, FoodsUsageListFragment.MEAL_SELECTED_ACTION_TAG, data);

@@ -207,49 +207,30 @@ public final class Meals {
         switch (meal) {
             case BREAKFAST:
                 mealGoal = entity.getBreakfastGoal();
-                break;
-            case BRUNCH:
-                mealGoal = entity.getBrunchGoal();
-                break;
-            case LUNCH:
-                mealGoal = entity.getLunchGoal();
-                break;
-            case SNACK:
-                mealGoal = entity.getSnackGoal();
-                break;
-            case DINNER:
-                mealGoal = entity.getDinnerGoal();
-                break;
-            case SUPPER:
-                mealGoal = entity.getSupperGoal();
-                break;
-            case EXERCISE:
-                mealGoal = entity.getExerciseGoal();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid meal=" + meal);
-        }
-
-        switch (meal) {
-            case BREAKFAST:
                 mealUsed = summary.getBreakfastUsed();
                 break;
             case BRUNCH:
+                mealGoal = entity.getBrunchGoal();
                 mealUsed = summary.getBrunchUsed();
                 break;
             case LUNCH:
+                mealGoal = entity.getLunchGoal();
                 mealUsed = summary.getLunchUsed();
                 break;
             case SNACK:
+                mealGoal = entity.getSnackGoal();
                 mealUsed = summary.getSnackUsed();
                 break;
             case DINNER:
+                mealGoal = entity.getDinnerGoal();
                 mealUsed = summary.getDinnerUsed();
                 break;
             case SUPPER:
+                mealGoal = entity.getSupperGoal();
                 mealUsed = summary.getSupperUsed();
                 break;
             case EXERCISE:
+                mealGoal = entity.getExerciseGoal();
                 mealUsed = summary.getExerciseDone();
                 break;
             default:

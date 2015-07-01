@@ -15,19 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
 import br.com.arndroid.etdiet.dialog.quickinsert.QuickInsertAutoDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
-import br.com.arndroid.etdiet.provider.days.DaysEntity;
-import br.com.arndroid.etdiet.provider.days.DaysManager;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageEntity;
 import br.com.arndroid.etdiet.provider.foodsusage.FoodsUsageManager;
-import br.com.arndroid.etdiet.utils.DateUtils;
 import br.com.arndroid.etdiet.utils.ExposedObservable;
 
 public class FoodsUsageListFragment extends ListFragment implements FragmentMenuReplier,
@@ -42,8 +37,8 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
             ".MEAL_SELECTED_ACTION_TAG";
     public static final String DATE_ID_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
             ".DATE_ID_ACTION_KEY";
-    public static final String MEAL_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
-            ".MEAL_ACTION_KEY";
+    public static final String MEAL_POSITION_ACTION_KEY = FoodsUsageListFragment.class.getSimpleName() +
+            ".MEAL_POSITION_ACTION_KEY";
 
     private static final int FOODS_USAGE_LOADER_ID = 1;
 
@@ -97,7 +92,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         switch (menuItemId) {
             case R.id.quick_add:
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mDateId,
-                        Meals.getMealFromPosition(mMeal), null, null, null);
+                        mMeal, null, null, null);
                 final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
                 dialog.setFoodsUsageEntity(entity);
                 dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
@@ -163,7 +158,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
     @Override
     public void onReplyActionFromOtherFragment(String actionTag, Bundle actionData) {
         onDataChangedFromHolderActivity(actionData.getString(DATE_ID_ACTION_KEY),
-                actionData.getInt(MEAL_ACTION_KEY));
+                Meals.getMealFromPosition(actionData.getInt(MEAL_POSITION_ACTION_KEY)));
     }
 
     @Override

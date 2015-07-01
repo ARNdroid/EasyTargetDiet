@@ -228,7 +228,7 @@ public class JournalActivity extends Activity implements
     public void onCallAction(int fragmentId, Class holderActivityClass, String actionTag,
                              Bundle actionData) {
         if (FoodsUsageListFragment.MEAL_SELECTED_ACTION_TAG.equals(actionTag)) {
-            mCurrentMeal = actionData.getInt(FoodsUsageListFragment.MEAL_ACTION_KEY);
+            mCurrentMeal = Meals.getMealFromPosition(actionData.getInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY));
             /*
               We had problems checking only if mFoodsUsageListFragment != null.
               If the orientation change to landscape in a 7'' device the layout journal_activity.xml

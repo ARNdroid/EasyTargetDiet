@@ -14,7 +14,6 @@ import br.com.arndroid.etdiet.action.MenuUtils;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
-import br.com.arndroid.etdiet.settings.SettingsListFragment;
 import br.com.arndroid.etdiet.utils.NavigationUtils;
 
 public class FoodsUsageActivity extends Activity implements
@@ -42,11 +41,11 @@ public class FoodsUsageActivity extends Activity implements
         if(savedInstanceState == null) {
             Bundle data = getIntent().getExtras().getBundle(FragmentActionReplier.ACTION_DATA_KEY);
             mDateId = data.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
-            actionBar.setSelectedNavigationItem(data.getInt(FoodsUsageListFragment.MEAL_ACTION_KEY));
+            actionBar.setSelectedNavigationItem(data.getInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY));
         } else {
             mDateId = savedInstanceState.getString(FoodsUsageListFragment.DATE_ID_ACTION_KEY);
             actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
-                    FoodsUsageListFragment.MEAL_ACTION_KEY));
+                    FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY));
         }
 
         bindScreen();
@@ -55,8 +54,7 @@ public class FoodsUsageActivity extends Activity implements
     @Override
     protected void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
         outState.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mDateId);
-        outState.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY,
-                Meals.getMealFromPosition(getActionBar().getSelectedNavigationIndex()));
+        outState.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, getActionBar().getSelectedNavigationIndex());
 
         super.onSaveInstanceState(outState);
     }

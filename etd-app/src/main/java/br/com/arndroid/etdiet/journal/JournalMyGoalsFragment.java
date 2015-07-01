@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
@@ -87,7 +85,7 @@ public class JournalMyGoalsFragment extends Fragment implements
             public boolean onLongClick(View v) {
                 final Bundle data = new Bundle();
                 data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
-                data.putInt(FoodsUsageListFragment.MEAL_ACTION_KEY, Meals.EXERCISE);
+                data.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, Meals.EXERCISE);
 
                 ((ActivityActionCaller)getActivity()).onCallAction(R.id.foods_usage_list_fragment,
                         FoodsUsageActivity.class, FoodsUsageListFragment.MEAL_SELECTED_ACTION_TAG,
