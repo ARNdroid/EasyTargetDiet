@@ -5,7 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.provider.days.DaysManager;
@@ -20,48 +22,22 @@ public final class Meals {
 
     }
 
-    // The value of this constants can NOT
-    // be changed since their values are stored
-    // in database
-    public static final int BREAKFAST = 0;
-    public static final int BRUNCH = 1;
-    public static final int LUNCH = 2;
-    public static final int SNACK = 3;
-    public static final int DINNER = 4;
-    public static final int SUPPER = 5;
-    public static final int EXERCISE = 6;
-    private static final int MEAL_TOTAL_ITEMS = 7;
-
-    public static int getMealFromPosition(int position) {
+    public static Meal getMealFromPosition(int position) {
         // This is intended to be used by adapters (based in a list, with an actual position, etc...)
+        return Meal.fromInteger(position);
+    }
 
-        switch (position) {
-            // We know... We could return position here but is better to explicit the relationship!
-            case 0:
-                return BREAKFAST;
-            case 1:
-                return BRUNCH;
-            case 2:
-                return LUNCH;
-            case 3:
-                return SNACK;
-            case 4:
-                return DINNER;
-            case 5:
-                return SUPPER;
-            case 6:
-                return EXERCISE;
-            default:
-                throw new IllegalArgumentException("Invalid position=" + position);
-        }
+    public static int getPositionFromMeal(Meal meal) {
+        // Counter part of getMealFromPosition
+        return meal.getCorrelationId();
     }
 
     public static int getMealsCount() {
-        return MEAL_TOTAL_ITEMS;
+        return Meal.sizeOfAll;
     }
 
-    public static int getMealResourceNameIdFromMealId(int mealId) {
-        switch (mealId) {
+    public static int getMealResourceNameIdFromMeal(Meal meal) {
+        switch (meal) {
             case BREAKFAST:
                 return R.string.breakfast;
             case BRUNCH:
@@ -77,26 +53,26 @@ public final class Meals {
             case EXERCISE:
                 return R.string.exercise;
             default:
-                throw new IllegalArgumentException("Invalid mealId=" + mealId);
+                throw new IllegalArgumentException("Invalid meal=" + meal);
         }
     }
 
-    public static int preferredMealForTimeInDate(Context context, int time, Date date, boolean fillMode) {
+    public static Meal preferredMealForTimeInDate(Context context, int time, Date date, boolean fillMode) {
         return fillMode ? adviceMealFillMode(context, date) : adviceMeal(context, time, date);
     }
 
-    private static int adviceMealFillMode(Context context, Date date) {
+    private static Meal adviceMealFillMode(Context context, Date date) {
         final DaysEntity daysEntity = new DaysManager(context).dayFromDate(date);
         final UsageSummary usageSummary = new FoodsUsageManager(context).usageSummaryForDateId(
                 DateUtils.dateToDateId(date));
 
         final MealsAdvisorHelper advisorHelper = new MealsAdvisorHelper();
 
-        final int onlyMeals = getMealsCount() - 1;
-        List<Integer> found = new ArrayList<>(onlyMeals);
-        List<Integer> candidates = new ArrayList<>(onlyMeals);
-        List<Integer> temp;
-        for (int candidate = 0; candidate < onlyMeals; candidate++) {
+        final Set<Meal> onlyMeals = Meal.getOnlyMealsUnmodifiableSet();
+        List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        List<Meal> temp;
+        for (Meal candidate : onlyMeals) {
             candidates.add(candidate);
         }
 
@@ -122,18 +98,19 @@ public final class Meals {
         throw new IllegalStateException("here we must have returned smt before.");
     }
 
-    private static int adviceMeal(Context context, int time, Date date) {
+    private static Meal adviceMeal(Context context, int time, Date date) {
         final DaysEntity daysEntity = new DaysManager(context).dayFromDate(date);
         final UsageSummary usageSummary = new FoodsUsageManager(context).usageSummaryForDateId(
                 DateUtils.dateToDateId(date));
 
         final MealsAdvisorHelper advisorHelper = new MealsAdvisorHelper();
 
-        final int onlyMeals = getMealsCount() - 1;
-        List<Integer> found = new ArrayList<>(onlyMeals);
-        List<Integer> candidates = new ArrayList<>(onlyMeals);
-        List<Integer> temp;
-        for (int candidate = 0; candidate < onlyMeals; candidate++) {
+        final Set<Meal> onlyMeals = Meal.getOnlyMealsUnmodifiableSet();
+        final int sizeOfOnlyMeals = onlyMeals.size();
+        List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        List<Meal> temp;
+        for (Meal candidate : onlyMeals) {
             candidates.add(candidate);
         }
 
@@ -144,7 +121,7 @@ public final class Meals {
             // No meals in period.
 
             // Try to find a union of closest meals ending before and closest meals starting after that
-            final List<Integer> closestUnion = new ArrayList<>(onlyMeals);
+            final List<Meal> closestUnion = new ArrayList<>(sizeOfOnlyMeals);
             advisorHelper.findClosestMealsEndingBeforeTime(time, daysEntity, candidates, found);
             closestUnion.addAll(found);
             advisorHelper.findClosestMealsStartingAfterTime(time, daysEntity, candidates, found);
@@ -199,7 +176,7 @@ public final class Meals {
         throw new IllegalStateException("here we must have returned smt before.");
     }
 
-    public static float preferredUsageForMealInDate(Context context, int meal, Date date) {
+    public static float preferredUsageForMealInDate(Context context, Meal meal, Date date) {
         DaysEntity entity = new DaysManager(context).dayFromDate(date);
         UsageSummary summary = new FoodsUsageManager(context).usageSummaryForDateId(DateUtils.dateToDateId(date));
 

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import java.util.Date;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActionUtils;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
@@ -37,7 +38,7 @@ public class JournalActivity extends Activity implements
 
     private VirtualWeek mVirtualWeek;
     private final CurrentDateId mCurrentDateId = new CurrentDateId();
-    private int mCurrentMeal;
+    private Meal mCurrentMeal;
     private JournalOnGoingFragment mJournalOnGoingFragment;
     private JournalMyPointsFragment mJournalMyPointsFragment;
     private JournalMyGoalsFragment mJournalMyGoalsFragment;
@@ -53,7 +54,7 @@ public class JournalActivity extends Activity implements
 
         mCurrentDateId.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-            mCurrentMeal = savedInstanceState.getInt(Contract.FoodsUsage.MEAL);
+            mCurrentMeal = Meal.fromInteger(savedInstanceState.getInt(Contract.FoodsUsage.MEAL));
         } else {
             final Date currentDate = new Date();
             mCurrentMeal = Meals.preferredMealForTimeInDate(this,
@@ -67,7 +68,7 @@ public class JournalActivity extends Activity implements
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         mCurrentDateId.onSaveInstanceState(outState);
-        outState.putInt(Contract.FoodsUsage.MEAL, mCurrentMeal);
+        outState.putInt(Contract.FoodsUsage.MEAL, mCurrentMeal.getCorrelationId());
         super.onSaveInstanceState(outState);
     }
 

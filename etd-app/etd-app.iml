@@ -99,5 +99,6 @@
     <orderEntry type="library" exported="" scope="TEST" name="dexmaker-1.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.1" level="project" />
     <orderEntry type="module" module-name="etd-shr" exported="" />
+    <orderEntry type="module" module-name="etd-api" exported="" />
   </component>
 </module>

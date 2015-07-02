@@ -3,9 +3,10 @@ package br.com.arndroid.etdiet.test.meals;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
-import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.meals.MealsAdvisorHelper;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.virtualweek.UsageSummary;
@@ -39,8 +40,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsInPeriodWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -55,14 +56,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsInPeriodMustReturnCorrectValues(){
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -74,12 +75,12 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsInPeriod(THIRTEEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.LUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
 
         mAdvisorHelper.findMealsInPeriod(EIGHTEEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         final DaysEntity overlapAllDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TWENTY_HOURS, null,
@@ -91,12 +92,12 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsInPeriod(FOURTEEN_HOURS, overlapAllDaysEntity, candidates, found);
         assertEquals(6, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         mAdvisorHelper.findMealsInPeriod(SEVEN_HOURS, overlapAllDaysEntity, candidates, found);
         assertTrue(found.isEmpty());
@@ -106,8 +107,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithNoPointsWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final UsageSummary emptyUsageSummary = new UsageSummary();
         emptyUsageSummary.setBreakfastUsed(0);
@@ -121,14 +122,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithNoPointsMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final UsageSummary emptyUsageSummary = new UsageSummary();
         emptyUsageSummary.setBreakfastUsed(0);
@@ -139,12 +140,12 @@ public class MealsAdvisorHelperTest extends TestCase {
         emptyUsageSummary.setSupperUsed(0);
         mAdvisorHelper.findMealsWithNoPoints(emptyUsageSummary, candidates, found);
         assertEquals(6, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         final UsageSummary commonUsageSummary = new UsageSummary();
         commonUsageSummary.setBreakfastUsed(6);
@@ -155,8 +156,8 @@ public class MealsAdvisorHelperTest extends TestCase {
         commonUsageSummary.setSupperUsed(0);
         mAdvisorHelper.findMealsWithNoPoints(commonUsageSummary, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         final UsageSummary fullUsageSummary = new UsageSummary();
         fullUsageSummary.setBreakfastUsed(1);
@@ -170,8 +171,8 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithMinorIntervalWithEmptyCandidatesMustReturnCorrectValues(){
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -186,14 +187,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithMinorIntervalMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -205,12 +206,12 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsWithMinorInterval(commonDaysEntity, candidates, found);
         assertEquals(6, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         final DaysEntity overlapAllDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TWENTY_HOURS, null,
@@ -222,8 +223,8 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsWithMinorInterval(overlapAllDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
 
         final DaysEntity lastIsMinorDaysEntity = new DaysEntity(null, null, null,
                 ZERO_HOURS, SIX_HOURS, null,
@@ -235,12 +236,12 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsWithMinorInterval(lastIsMinorDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.SUPPER));
     }
 
     public void testFindMealsStartingEarlyWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -255,14 +256,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsStartingEarlyMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -274,7 +275,7 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsStartingEarly(commonDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
+        assertTrue(found.contains(Meal.BREAKFAST));
 
         final DaysEntity overlapAllDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TWENTY_HOURS, null,
@@ -286,8 +287,8 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsStartingEarly(overlapAllDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.SUPPER));
 
         final DaysEntity lastStartsEarlyDaysEntity = new DaysEntity(null, null, null,
                 SIX_HOURS, ELEVEN_HOURS, null,
@@ -299,12 +300,12 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsStartingEarly(lastStartsEarlyDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.SUPPER));
     }
 
     public void testFindMealsEndingBeforeTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -319,14 +320,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsEndingBeforeTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -338,25 +339,25 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsEndingBeforeTime(TWENTY_ONE_HOURS, commonDaysEntity, candidates, found);
         assertEquals(6, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         mAdvisorHelper.findMealsEndingBeforeTime(SEVEN_HOURS, commonDaysEntity, candidates, found);
         assertTrue(found.isEmpty());
 
         mAdvisorHelper.findMealsEndingBeforeTime(FOURTEEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
     }
 
     public void testFindClosestMealsEndingBeforeTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -371,14 +372,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestMealsEndingBeforeTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -390,14 +391,14 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findClosestMealsEndingBeforeTime(TWENTY_ONE_HOURS, commonDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         mAdvisorHelper.findClosestMealsEndingBeforeTime(SEVEN_HOURS, commonDaysEntity, candidates, found);
         assertTrue(found.isEmpty());
 
         mAdvisorHelper.findClosestMealsEndingBeforeTime(FOURTEEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.BRUNCH));
+        assertTrue(found.contains(Meal.BRUNCH));
 
         final DaysEntity overlapAllDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TWENTY_HOURS, null,
@@ -409,13 +410,13 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findClosestMealsEndingBeforeTime(TWENTY_ONE_HOURS, overlapAllDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.SUPPER));
     }
 
     public void testFindMealsStartingAfterTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -430,14 +431,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsStartingAfterTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -449,25 +450,25 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findMealsStartingAfterTime(SEVEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(6, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         mAdvisorHelper.findMealsStartingAfterTime(TWENTY_ONE_HOURS, commonDaysEntity, candidates, found);
         assertTrue(found.isEmpty());
 
         mAdvisorHelper.findMealsStartingAfterTime(FOURTEEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
     }
 
     public void testFindClosestMealsStartingAfterTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -482,14 +483,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestMealsStartingAfterTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, null,
@@ -501,19 +502,19 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findClosestMealsStartingAfterTime(SEVEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
+        assertTrue(found.contains(Meal.BREAKFAST));
 
         mAdvisorHelper.findClosestMealsStartingAfterTime(TWENTY_ONE_HOURS, commonDaysEntity, candidates, found);
         assertTrue(found.isEmpty());
 
         mAdvisorHelper.findClosestMealsStartingAfterTime(FOURTEEN_HOURS, commonDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.DINNER));
+        assertTrue(found.contains(Meal.DINNER));
     }
 
     public void testFindClosestNeighborsForTimeWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity equalsSpacedDaysEntity = new DaysEntity(null, null, null,
                 SIX_HOURS, SEVEN_HOURS, null,
@@ -528,14 +529,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindClosestNeighborsForTimeMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity equalsSpacedDaysEntity = new DaysEntity(null, null, null,
                 SIX_HOURS, SEVEN_HOURS, null,
@@ -547,21 +548,21 @@ public class MealsAdvisorHelperTest extends TestCase {
                 null, null, null, null, null, null, null, null);
         mAdvisorHelper.findClosestNeighborsForTime(EIGHT_HOURS, equalsSpacedDaysEntity, candidates, found);
         assertEquals(2, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
 
         mAdvisorHelper.findClosestNeighborsForTime(TWENTY_TWO_HOURS, equalsSpacedDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.DINNER));
+        assertTrue(found.contains(Meal.DINNER));
 
         mAdvisorHelper.findClosestNeighborsForTime(SIX_HOURS, equalsSpacedDaysEntity, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.BRUNCH));
+        assertTrue(found.contains(Meal.BRUNCH));
     }
 
     public void testFindMealsWithPointsMinorGoalWithEmptyCandidatesMustReturnCorrectValues() {
-        final List<Integer> emptyCandidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> emptyCandidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, 1.0f,
@@ -583,14 +584,14 @@ public class MealsAdvisorHelperTest extends TestCase {
     }
 
     public void testFindMealsWithPointsMinorGoalMustReturnCorrectValues() {
-        final List<Integer> candidates = new ArrayList<>(Meals.getMealsCount() - 1);
-        candidates.add(Meals.BREAKFAST);
-        candidates.add(Meals.BRUNCH);
-        candidates.add(Meals.LUNCH);
-        candidates.add(Meals.SNACK);
-        candidates.add(Meals.DINNER);
-        candidates.add(Meals.SUPPER);
-        final List<Integer> found = new ArrayList<>(Meals.getMealsCount() - 1);
+        final List<Meal> candidates = new ArrayList<>(Meal.sizeOfOnlyMeals);
+        candidates.add(Meal.BREAKFAST);
+        candidates.add(Meal.BRUNCH);
+        candidates.add(Meal.LUNCH);
+        candidates.add(Meal.SNACK);
+        candidates.add(Meal.DINNER);
+        candidates.add(Meal.SUPPER);
+        final List<Meal> found = new ArrayList<>(Meal.sizeOfOnlyMeals);
 
         final DaysEntity commonDaysEntity = new DaysEntity(null, null, null,
                 EIGHT_HOURS, TEN_HOURS, 1.0f,
@@ -609,12 +610,12 @@ public class MealsAdvisorHelperTest extends TestCase {
         emptyUsageSummary.setSupperUsed(0);
         mAdvisorHelper.findMealsWithPointsMinorGoal(commonDaysEntity, emptyUsageSummary, candidates, found);
         assertEquals(6, found.size());
-        assertTrue(found.contains(Meals.BREAKFAST));
-        assertTrue(found.contains(Meals.BRUNCH));
-        assertTrue(found.contains(Meals.LUNCH));
-        assertTrue(found.contains(Meals.SNACK));
-        assertTrue(found.contains(Meals.DINNER));
-        assertTrue(found.contains(Meals.SUPPER));
+        assertTrue(found.contains(Meal.BREAKFAST));
+        assertTrue(found.contains(Meal.BRUNCH));
+        assertTrue(found.contains(Meal.LUNCH));
+        assertTrue(found.contains(Meal.SNACK));
+        assertTrue(found.contains(Meal.DINNER));
+        assertTrue(found.contains(Meal.SUPPER));
 
         final UsageSummary fullUsageSummary = new UsageSummary();
         fullUsageSummary.setBreakfastUsed(1000);
@@ -635,6 +636,6 @@ public class MealsAdvisorHelperTest extends TestCase {
         onlySnackUsageSummary.setSupperUsed(1000);
         mAdvisorHelper.findMealsWithPointsMinorGoal(commonDaysEntity, onlySnackUsageSummary, candidates, found);
         assertEquals(1, found.size());
-        assertTrue(found.contains(Meals.SNACK));
+        assertTrue(found.contains(Meal.SNACK));
     }
 }

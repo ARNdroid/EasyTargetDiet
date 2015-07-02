@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
@@ -44,26 +45,27 @@ public class FoodsUsageManager {
             if(c.getCount() > 0) {
                 c.moveToFirst();
                 do {
-                    switch (c.getInt(c.getColumnIndex(Contract.FoodsUsage.MEAL))) {
-                        case Meals.BREAKFAST:
+                    final Meal meal = Meal.fromInteger(c.getInt(c.getColumnIndex(Contract.FoodsUsage.MEAL)));
+                    switch (meal) {
+                        case BREAKFAST:
                             breakfastUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.BRUNCH:
+                        case BRUNCH:
                             brunchUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.LUNCH:
+                        case LUNCH:
                             lunchUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.SNACK:
+                        case SNACK:
                             sneakUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.DINNER:
+                        case DINNER:
                             dinnerUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.SUPPER:
+                        case SUPPER:
                             supperUsed += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
-                        case Meals.EXERCISE:
+                        case EXERCISE:
                             exerciseDone += c.getFloat(c.getColumnIndex(Contract.FoodsUsage.VALUE));
                             break;
                         default:

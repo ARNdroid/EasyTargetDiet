@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.ParcelUtils;
@@ -21,7 +22,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
     // It's a Parcelable. The order and the number of fields matter.
     private Long id;
     private String dateId;
-    private Integer meal;
+    private Meal meal;
     private Integer time;
     private String description;
     private Float value;
@@ -30,7 +31,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
 	 * Implementation
 	 */
 
-    public FoodsUsageEntity(Long id, String dateId, Integer meal, Integer time, String description,
+    public FoodsUsageEntity(Long id, String dateId, Meal meal, Integer time, String description,
                             Float value) {
         this.id = id;
         this.dateId = dateId;
@@ -45,7 +46,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
         ContentValues cv = new ContentValues();
         cv.put(Contract.FoodsUsage._ID, id);
         cv.put(Contract.FoodsUsage.DATE_ID, dateId);
-        cv.put(Contract.FoodsUsage.MEAL, meal);
+        cv.put(Contract.FoodsUsage.MEAL, meal.getCorrelationId());
         cv.put(Contract.FoodsUsage.TIME, time);
         cv.put(Contract.FoodsUsage.DESCRIPTION, description);
         cv.put(Contract.FoodsUsage.VALUE, value);
@@ -62,7 +63,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
             cv.put(Contract.FoodsUsage.DATE_ID, dateId);
         }
         if (meal != null) {
-            cv.put(Contract.FoodsUsage.MEAL, meal);
+            cv.put(Contract.FoodsUsage.MEAL, meal.getCorrelationId());
         }
         if (time != null) {
             cv.put(Contract.FoodsUsage.TIME, time);
@@ -228,11 +229,11 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
         this.dateId = dateId;
     }
 
-    public Integer getMeal() {
+    public Meal getMeal() {
         return meal;
     }
 
-    public void setMeal(Integer meal) {
+    public void setMeal(Meal meal) {
         this.meal = meal;
     }
 
@@ -269,7 +270,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
     public void writeToParcel(Parcel destination, int flags) {
         ParcelUtils.safeFromNullWriteLong(destination, id, SENTINEL_ID);
         destination.writeString(dateId);
-        ParcelUtils.safeFromNullWriteInteger(destination, meal, SENTINEL_INT_VALUE);
+        ParcelUtils.safeFromNullWriteInteger(destination, meal.getCorrelationId(), SENTINEL_INT_VALUE);
         ParcelUtils.safeFromNullWriteInteger(destination, time, SENTINEL_INT_VALUE);
         destination.writeString(description);
         ParcelUtils.safeFromNullWriteFloat(destination, value, SENTINEL_FLOAT_VALUE);
@@ -289,7 +290,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
                 cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID) == -1 ?
                     null : cursor.getString(cursor.getColumnIndex(Contract.FoodsUsage.DATE_ID)),
                 cursor.getColumnIndex(Contract.FoodsUsage.MEAL) == -1 ?
-                    null : cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.MEAL)),
+                    null : Meal.fromInteger(cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.MEAL))),
                 cursor.getColumnIndex(Contract.FoodsUsage.TIME) == -1 ?
                     null : cursor.getInt(cursor.getColumnIndex(Contract.FoodsUsage.TIME)),
                 cursor.getColumnIndex(Contract.FoodsUsage.DESCRIPTION) == -1 ?
@@ -319,9 +320,9 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
         }
         // meal:
         if (principal.getAsInteger(Contract.FoodsUsage.MEAL) != null) {
-            result.setMeal(principal.getAsInteger(Contract.FoodsUsage.MEAL));
+            result.setMeal(Meal.fromInteger(principal.getAsInteger(Contract.FoodsUsage.MEAL)));
         } else {
-            result.setMeal(complement.getAsInteger(Contract.FoodsUsage.MEAL));
+            result.setMeal(Meal.fromInteger(complement.getAsInteger(Contract.FoodsUsage.MEAL)));
         }
         // time:
         if (principal.getAsInteger(Contract.FoodsUsage.TIME) != null) {
@@ -354,7 +355,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
         return new FoodsUsageEntity(
                 values.getAsLong(Contract.FoodsUsage._ID),
                 values.getAsString(Contract.FoodsUsage.DATE_ID),
-                values.getAsInteger(Contract.FoodsUsage.MEAL),
+                Meal.fromInteger(values.getAsInteger(Contract.FoodsUsage.MEAL)),
                 values.getAsInteger(Contract.FoodsUsage.TIME),
                 values.getAsString(Contract.FoodsUsage.DESCRIPTION),
                 values.getAsFloat(Contract.FoodsUsage.VALUE));
@@ -367,7 +368,7 @@ public class FoodsUsageEntity extends AbstractEntity implements Parcelable {
 
             final Long id = ParcelUtils.safeFromNullReadLong(in, SENTINEL_ID);
             final String dateId = in.readString();
-            final Integer meal = ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE);
+            final Meal meal = Meal.fromInteger(ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE));
             final Integer time = ParcelUtils.safeFromNullReadInteger(in, SENTINEL_INT_VALUE);
             final String description = in.readString();
             final Float value = ParcelUtils.safeFromNullReadFloat(in, SENTINEL_FLOAT_VALUE);

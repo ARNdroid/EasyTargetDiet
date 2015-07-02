@@ -5,6 +5,7 @@ import android.database.Cursor;
 
 import java.util.Date;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -559,21 +560,21 @@ public class WeekdayParametersEntity extends AbstractEntity {
         this.id = id;
     }
 
-    public int getStartTimeForMeal(int meal) {
+    public int getStartTimeForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastStartTime();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchStartTime();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchStartTime();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackStartTime();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerStartTime();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperStartTime();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return DateUtils.dateToTimeAsInt(new Date());
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
@@ -581,21 +582,21 @@ public class WeekdayParametersEntity extends AbstractEntity {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public int getEndTimeForMeal(int meal) {
+    public int getEndTimeForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastEndTime();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchEndTime();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchEndTime();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackEndTime();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerEndTime();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperEndTime();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return DateUtils.dateToTimeAsInt(new Date());
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
@@ -603,21 +604,21 @@ public class WeekdayParametersEntity extends AbstractEntity {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public float getGoalForMeal(int meal) {
+    public float getGoalForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastGoal();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchGoal();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchGoal();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackGoal();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerGoal();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperGoal();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return getExerciseGoal();
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");

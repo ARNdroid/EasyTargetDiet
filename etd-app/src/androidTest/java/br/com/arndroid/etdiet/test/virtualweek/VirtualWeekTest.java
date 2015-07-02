@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -67,7 +68,7 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
 
         final FoodsUsageManager foodsUsageManager = new FoodsUsageManager(mockContext);
         FoodsUsageEntity foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(cal.getTime()),
-                Meals.BREAKFAST, 1, "food to test", 10.0f);
+                Meal.BREAKFAST, 1, "food to test", 10.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
 
         cal.setTime(weekPeriod.getFinalDate());
@@ -77,7 +78,7 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
         daysManager.refresh(daysEntity);
 
         foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(cal.getTime()),
-                Meals.BREAKFAST, 1, "food to test", 10.0f);
+                Meal.BREAKFAST, 1, "food to test", 10.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
         // Refreshing again to update:
         foodsUsageManager.refresh(foodsUsageEntity);
@@ -144,13 +145,13 @@ public class VirtualWeekTest extends ProviderTestCase3<Provider> {
 
         final FoodsUsageManager foodsUsageManager = new FoodsUsageManager(mockContext);
         FoodsUsageEntity foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(date0),
-                Meals.BREAKFAST, 1, "food to test 1", 10.0f);
+                Meal.BREAKFAST, 1, "food to test 1", 10.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
         foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(date1),
-                Meals.BREAKFAST, 1, "food to test 2", 20.0f);
+                Meal.BREAKFAST, 1, "food to test 2", 20.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
         foodsUsageEntity = new FoodsUsageEntity(null, DateUtils.dateToDateId(date2),
-                Meals.BREAKFAST, 1, "food to test 3", 30.0f);
+                Meal.BREAKFAST, 1, "food to test 3", 30.0f);
         foodsUsageManager.refresh(foodsUsageEntity);
         // Refreshing again to update:
         foodsUsageManager.refresh(foodsUsageEntity);

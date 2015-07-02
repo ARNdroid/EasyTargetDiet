@@ -177,7 +177,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
                 setIsMealAProgrammaticSelection(position);
 
                 if (StringUtils.isEmptyOrOnlySpaces(mEdtDescription.getText())) {
-                    final String mealName = getString(Meals.getMealResourceNameIdFromMealId(
+                    final String mealName = getString(Meals.getMealResourceNameIdFromMeal(
                             Meals.getMealFromPosition(position)));
                     final String hint = String.format(getString(R.string.quick_usage_description), mealName.toLowerCase());
                     mEdtDescription.setHint(hint);
@@ -226,7 +226,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
         LOG.trace("Inside fromEntityToScreen: mHintStrategy={}", mHintStrategy);
 
         mBtnDate.setText(DateUtils.dateIdToFormattedString(mFoodsUsageEntity.getDateId()));
-        doMealProgrammaticSelection(mFoodsUsageEntity.getMeal());
+        doMealProgrammaticSelection(Meals.getPositionFromMeal(mFoodsUsageEntity.getMeal()));
         mBtnTime.setText(DateUtils.timeToFormattedString(mFoodsUsageEntity.getTime()));
         mEdtDescription.setText(mFoodsUsageEntity.getDescription());
         doPointProgrammaticSelection();

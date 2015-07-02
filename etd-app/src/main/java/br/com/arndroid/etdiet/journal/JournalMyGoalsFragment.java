@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.dialog.IntegerDialog;
@@ -73,7 +74,7 @@ public class JournalMyGoalsFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 final FoodsUsageEntity entity = new FoodsUsageEntity(null, mCurrentDateId,
-                        Meals.EXERCISE, null, null, null);
+                        Meal.EXERCISE, null, null, null);
                 final QuickInsertAutoDialog dialog = new QuickInsertAutoDialog();
                 dialog.setFoodsUsageEntity(entity);
                 dialog.setAddMode(QuickInsertAutoDialog.ADD_MODE_USAGE_LIST);
@@ -85,7 +86,7 @@ public class JournalMyGoalsFragment extends Fragment implements
             public boolean onLongClick(View v) {
                 final Bundle data = new Bundle();
                 data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
-                data.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, Meals.EXERCISE);
+                data.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, Meals.getPositionFromMeal(Meal.EXERCISE));
 
                 ((ActivityActionCaller)getActivity()).onCallAction(R.id.foods_usage_list_fragment,
                         FoodsUsageActivity.class, FoodsUsageListFragment.MEAL_SELECTED_ACTION_TAG,

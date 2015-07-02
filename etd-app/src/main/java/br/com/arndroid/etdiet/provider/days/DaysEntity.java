@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.provider.AbstractEntity;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.utils.ParcelUtils;
@@ -711,81 +711,81 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
                 + "]";
     }
 
-    public void setStartTimeForMeal(int value, int meal) {
+    public void setStartTimeForMeal(int value, Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 setBreakfastStartTime(value);
                 break;
-            case Meals.BRUNCH:
+            case BRUNCH:
                 setBrunchStartTime(value);
                 break;
-            case Meals.LUNCH:
+            case LUNCH:
                 setLunchStartTime(value);
                 break;
-            case Meals.SNACK:
+            case SNACK:
                 setSnackStartTime(value);
                 break;
-            case Meals.DINNER:
+            case DINNER:
                 setDinnerStartTime(value);
                 break;
-            case Meals.SUPPER:
+            case SUPPER:
                 setSupperStartTime(value);
                 break;
-            case Meals.EXERCISE:
+            case EXERCISE:
                 throw new IllegalStateException("Is illegal to set startTime for Exercise");
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 
-    public void setEndTimeForMeal(int value, int meal) {
+    public void setEndTimeForMeal(int value, Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 setBreakfastEndTime(value);
                 break;
-            case Meals.BRUNCH:
+            case BRUNCH:
                 setBrunchEndTime(value);
                 break;
-            case Meals.LUNCH:
+            case LUNCH:
                 setLunchEndTime(value);
                 break;
-            case Meals.SNACK:
+            case SNACK:
                 setSnackEndTime(value);
                 break;
-            case Meals.DINNER:
+            case DINNER:
                 setDinnerEndTime(value);
                 break;
-            case Meals.SUPPER:
+            case SUPPER:
                 setSupperEndTime(value);
                 break;
-            case Meals.EXERCISE:
+            case EXERCISE:
                 throw new IllegalStateException("Is illegal to set endTime for Exercise");
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 
-    public void setGoalForMeal(float value, int meal) {
+    public void setGoalForMeal(float value, Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 setBreakfastGoal(value);
                 break;
-            case Meals.BRUNCH:
+            case BRUNCH:
                 setBrunchGoal(value);
                 break;
-            case Meals.LUNCH:
+            case LUNCH:
                 setLunchGoal(value);
                 break;
-            case Meals.SNACK:
+            case SNACK:
                 setSnackGoal(value);
                 break;
-            case Meals.DINNER:
+            case DINNER:
                 setDinnerGoal(value);
                 break;
-            case Meals.SUPPER:
+            case SUPPER:
                 setSupperGoal(value);
                 break;
-            case Meals.EXERCISE:
+            case EXERCISE:
                 setExerciseGoal(value);
                 break;
             default:
@@ -793,63 +793,63 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
         }
     }
 
-    public int getStartTimeForMeal(int meal) {
+    public int getStartTimeForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastStartTime();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchStartTime();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchStartTime();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackStartTime();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerStartTime();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperStartTime();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return NO_TIME;
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 
-    public int getEndTimeForMeal(int meal) {
+    public int getEndTimeForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastEndTime();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchEndTime();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchEndTime();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackEndTime();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerEndTime();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperEndTime();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return NO_TIME;
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
         }
     }
 
-    public float getGoalForMeal(int meal) {
+    public float getGoalForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastGoal();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchGoal();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchGoal();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackGoal();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerGoal();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperGoal();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return getExerciseGoal();
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");
@@ -858,8 +858,8 @@ public class DaysEntity extends AbstractEntity implements Parcelable {
 
     public float getTotalGoalForMeals() {
         float result = 0.0f;
-        for (int i = 0; i < Meals.getMealsCount() - 1; i++) {
-            result += getGoalForMeal(i);
+        for (Meal meal : Meal.getOnlyMealsUnmodifiableSet()) {
+            result += getGoalForMeal(meal);
         }
         return result;
     }

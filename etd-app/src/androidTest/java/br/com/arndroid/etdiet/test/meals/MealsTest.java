@@ -5,6 +5,7 @@ import android.test.ProviderTestCase2;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
@@ -72,7 +73,7 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         common.setSupperEndTime(TWENTY_HOURS);
         mWeekdayParametersManager.refresh(common);
 
-        assertEquals(Meals.SNACK, Meals.preferredMealForTimeInDate(getMockContext(), FIFTEEN_HOURS,
+        assertEquals(Meal.SNACK, Meals.preferredMealForTimeInDate(getMockContext(), FIFTEEN_HOURS,
                 calendar.getTime(), false));
     }
 
@@ -96,12 +97,12 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperEndTime(TWENTY_TWO_HOURS);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(), EIGHT_HOURS,
+        assertEquals(Meal.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(), EIGHT_HOURS,
                 calendar.getTime(), false));
-        assertEquals(Meals.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(), ELEVEN_HOURS,
+        assertEquals(Meal.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(), ELEVEN_HOURS,
                 calendar.getTime(), false));
     }
 
@@ -125,16 +126,16 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperEndTime(TWENTY_TWO_HOURS);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
                 EIGHT_HOURS - ONE_MINUTES, calendar.getTime(), false));
-        assertEquals(Meals.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 EIGHT_HOURS + ONE_MINUTES, calendar.getTime(), false));
     }
 
@@ -158,16 +159,16 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperEndTime(TWENTY_TWO_HOURS);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 EIGHT_HOURS, calendar.getTime(), false));
-        assertEquals(Meals.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 ELEVEN_HOURS, calendar.getTime(), false));
     }
 
@@ -190,7 +191,7 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         brunchAndLunchOverlaps.setSupperEndTime(TWENTY_TWO_HOURS);
         mWeekdayParametersManager.refresh(brunchAndLunchOverlaps);
 
-        assertEquals(Meals.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
                 EIGHT_HOURS - ONE_MINUTES, calendar.getTime(), false));
     }
 
@@ -213,7 +214,7 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         brunchAndLunchOverlaps.setSupperEndTime(TWENTY_TWO_HOURS);
         mWeekdayParametersManager.refresh(brunchAndLunchOverlaps);
 
-        assertEquals(Meals.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 EIGHT_HOURS + ONE_MINUTES, calendar.getTime(), false));
     }
 
@@ -237,10 +238,10 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         overlapAll.setSupperEndTime(TWENTY_HOURS);
         mWeekdayParametersManager.refresh(overlapAll);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.SUPPER, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.SUPPER, Meals.preferredMealForTimeInDate(getMockContext(),
                 NINE_HOURS, calendar.getTime(), false));
     }
 
@@ -263,7 +264,7 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         overlapAll.setSupperEndTime(TWENTY_HOURS);
         mWeekdayParametersManager.refresh(overlapAll);
 
-        assertEquals(Meals.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
                 NINE_HOURS, calendar.getTime(), false));
     }
 
@@ -286,7 +287,7 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         overlapAll.setSupperEndTime(TWENTY_HOURS - ONE_MINUTES);
         mWeekdayParametersManager.refresh(overlapAll);
 
-        assertEquals(Meals.SUPPER, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.SUPPER, Meals.preferredMealForTimeInDate(getMockContext(),
                 NINE_HOURS, calendar.getTime(), false));
     }
 
@@ -309,7 +310,7 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         overlapAll.setSupperEndTime(TWENTY_HOURS);
         mWeekdayParametersManager.refresh(overlapAll);
 
-        assertEquals(Meals.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
                 NINE_HOURS, calendar.getTime(), false));
     }
 
@@ -333,20 +334,20 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         overlapAll.setSupperEndTime(TWENTY_HOURS);
         mWeekdayParametersManager.refresh(overlapAll);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 FIFTEEN_HOURS, calendar.getTime(), false));
 
     }
@@ -371,20 +372,20 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         overlapAll.setSupperEndTime(TWENTY_HOURS);
         mWeekdayParametersManager.refresh(overlapAll);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.SNACK, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.SNACK, Meals.preferredMealForTimeInDate(getMockContext(),
                 FIFTEEN_HOURS, calendar.getTime(), false));
 
     }
@@ -415,18 +416,18 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(1.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.SNACK, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.SNACK, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -456,18 +457,18 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(1.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BRUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -497,20 +498,20 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(1.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.SUPPER, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.SUPPER, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -540,12 +541,12 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(1.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.LUNCH, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -575,18 +576,18 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(10.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.SNACK, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.SNACK, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -616,20 +617,20 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(10.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.DINNER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.DINNER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SUPPER, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SUPPER, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.BREAKFAST, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -659,16 +660,16 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(10.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 1.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
-        assertEquals(Meals.DINNER, Meals.preferredMealForTimeInDate(getMockContext(),
+        assertEquals(Meal.DINNER, Meals.preferredMealForTimeInDate(getMockContext(),
                 NO_TIME, calendar.getTime(), true));
     }
 
@@ -698,26 +699,26 @@ public class MealsTest extends ProviderTestCase2<Provider> {
         equalsSpaced.setSupperGoal(10.0f);
         mWeekdayParametersManager.refresh(equalsSpaced);
 
-        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meals.BREAKFAST, NINE_HOURS, "", 11.0f);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, dateId, Meal.BREAKFAST, NINE_HOURS, "", 11.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.BRUNCH, NINE_HOURS, "", 10.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.BRUNCH, NINE_HOURS, "", 10.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.LUNCH, NINE_HOURS, "", 5.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.LUNCH, NINE_HOURS, "", 5.0f);
         mFoodsUsageManager.refresh(food);
-        food = new FoodsUsageEntity(null, dateId, Meals.SNACK, NINE_HOURS, "", 1.0f);
+        food = new FoodsUsageEntity(null, dateId, Meal.SNACK, NINE_HOURS, "", 1.0f);
         mFoodsUsageManager.refresh(food);
 
         assertEquals(0.0f, Meals.preferredUsageForMealInDate(getMockContext(),
-                Meals.BREAKFAST, calendar.getTime()));
+                Meal.BREAKFAST, calendar.getTime()));
         assertEquals(0.0f, Meals.preferredUsageForMealInDate(getMockContext(),
-                Meals.BRUNCH, calendar.getTime()));
+                Meal.BRUNCH, calendar.getTime()));
         assertEquals(5.0f, Meals.preferredUsageForMealInDate(getMockContext(),
-                Meals.LUNCH, calendar.getTime()));
+                Meal.LUNCH, calendar.getTime()));
         assertEquals(9.0f, Meals.preferredUsageForMealInDate(getMockContext(),
-                Meals.SNACK, calendar.getTime()));
+                Meal.SNACK, calendar.getTime()));
         assertEquals(10.0f, Meals.preferredUsageForMealInDate(getMockContext(),
-                Meals.DINNER, calendar.getTime()));
+                Meal.DINNER, calendar.getTime()));
         assertEquals(10.0f, Meals.preferredUsageForMealInDate(getMockContext(),
-                Meals.SUPPER, calendar.getTime()));
+                Meal.SUPPER, calendar.getTime()));
     }
 }

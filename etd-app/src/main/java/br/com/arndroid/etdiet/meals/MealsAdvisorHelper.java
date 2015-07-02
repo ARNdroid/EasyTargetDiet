@@ -3,16 +3,17 @@ package br.com.arndroid.etdiet.meals;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.virtualweek.UsageSummary;
 
 public class MealsAdvisorHelper {
 
-    public void findMealsInPeriod(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findMealsInPeriod(int time, DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
         result.clear();
 
-        for (Integer meal : candidates) {
+        for (Meal meal : candidates) {
             if (time >= daysEntity.getStartTimeForMeal(meal) &&
                     time <= daysEntity.getEndTimeForMeal(meal)) {
                 result.add(meal);
@@ -20,24 +21,23 @@ public class MealsAdvisorHelper {
         }
     }
 
-    public void findMealsWithNoPoints(UsageSummary usageSummary, List<Integer> candidates, List<Integer> result) {
+    public void findMealsWithNoPoints(UsageSummary usageSummary, List<Meal> candidates, List<Meal> result) {
 
         validateListParametersOrThrow(candidates, result);
         result.clear();
 
-        for (Integer meal : candidates) {
+        for (Meal meal : candidates) {
             if (usageSummary.getUsageForMeal(meal) == 0) {
                 result.add(meal);
             }
         }
     }
 
-    public void findMealsWithPointsMinorGoal(DaysEntity daysEntity, UsageSummary usageSummary, List<Integer> candidates, List<Integer> result) {
-
+    public void findMealsWithPointsMinorGoal(DaysEntity daysEntity, UsageSummary usageSummary, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
         result.clear();
 
-        for (Integer meal : candidates) {
+        for (Meal meal : candidates) {
             if (usageSummary.getUsageForMeal(meal)
                     < daysEntity.getGoalForMeal(meal)) {
                 result.add(meal);
@@ -45,8 +45,8 @@ public class MealsAdvisorHelper {
         }
     }
 
-    public void findMealsWithMinorInterval(DaysEntity daysEntity, List<Integer> candidates,
-                                           List<Integer> result) {
+    public void findMealsWithMinorInterval(DaysEntity daysEntity, List<Meal> candidates,
+                                           List<Meal> result) {
 
         validateListParametersOrThrow(candidates, result);
         result.clear();
@@ -69,7 +69,7 @@ public class MealsAdvisorHelper {
         }
     }
 
-    public void findMealsStartingEarly(DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findMealsStartingEarly(DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
         result.clear();
 
@@ -88,20 +88,20 @@ public class MealsAdvisorHelper {
         }
     }
 
-    public void findMealsEndingBeforeTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findMealsEndingBeforeTime(int time, DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
         result.clear();
 
-        for (Integer meal : candidates) {
+        for (Meal meal : candidates) {
             if (daysEntity.getEndTimeForMeal(meal) < time) {
                 result.add(meal);
             }
         }
     }
 
-    public void findClosestMealsEndingBeforeTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findClosestMealsEndingBeforeTime(int time, DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
-        List<Integer> tempResult = new ArrayList<>(Meals.getMealsCount() - 1);
+        List<Meal> tempResult = new ArrayList<>(Meal.sizeOfOnlyMeals);
         findMealsEndingBeforeTime(time, daysEntity, candidates, tempResult);
 
         result.clear();
@@ -120,20 +120,20 @@ public class MealsAdvisorHelper {
         }
     }
 
-    public void findMealsStartingAfterTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findMealsStartingAfterTime(int time, DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
         result.clear();
 
-        for (Integer meal : candidates) {
+        for (Meal meal : candidates) {
             if (daysEntity.getStartTimeForMeal(meal) > time) {
                 result.add(meal);
             }
         }
     }
 
-    public void findClosestMealsStartingAfterTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findClosestMealsStartingAfterTime(int time, DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         validateListParametersOrThrow(candidates, result);
-        List<Integer> tempResult = new ArrayList<>(Meals.getMealsCount() - 1);
+        List<Meal> tempResult = new ArrayList<>(Meal.sizeOfOnlyMeals);
         findMealsStartingAfterTime(time, daysEntity, candidates, tempResult);
 
         result.clear();
@@ -152,7 +152,7 @@ public class MealsAdvisorHelper {
         }
     }
 
-    public void findClosestNeighborsForTime(int time, DaysEntity daysEntity, List<Integer> candidates, List<Integer> result) {
+    public void findClosestNeighborsForTime(int time, DaysEntity daysEntity, List<Meal> candidates, List<Meal> result) {
         /*
             Neighbors are only meals NOT in period with time (ie, meal end time < time or meal
             start time > time. PS: meal start time < meal end time is assured by WeekDayParametersManager)
@@ -162,7 +162,7 @@ public class MealsAdvisorHelper {
         result.clear();
 
         int minorDelta = Integer.MAX_VALUE;
-        for (Integer meal : candidates) {
+        for (Meal meal : candidates) {
             final int startTime = daysEntity.getStartTimeForMeal(meal);
             final int endTime = daysEntity.getEndTimeForMeal(meal);
             boolean isNeighbor = false;
@@ -186,7 +186,7 @@ public class MealsAdvisorHelper {
         }
     }
 
-    private void validateListParametersOrThrow(List<Integer> candidates, List<Integer> result) {
+    private void validateListParametersOrThrow(List<Meal> candidates, List<Meal> result) {
         if (candidates == null || result == null) {
             throw new IllegalArgumentException("candidates and result must not null.");
         }

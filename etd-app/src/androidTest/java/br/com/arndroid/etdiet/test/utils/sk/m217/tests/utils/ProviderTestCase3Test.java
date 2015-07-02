@@ -9,6 +9,7 @@ import android.os.Handler;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
@@ -52,7 +53,7 @@ public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
 
         final FoodsUsageManager foodsManager = new FoodsUsageManager(context);
         FoodsUsageEntity foodsEntity = new FoodsUsageEntity(null, otherDateId,
-                Meals.BREAKFAST, 1, "food for test", 7.7f);
+                Meal.BREAKFAST, 1, "food for test", 7.7f);
         foodsManager.refresh(foodsEntity);
 
         assertTrue(!mObserver.mCalled);
@@ -77,7 +78,7 @@ public class ProviderTestCase3Test extends ProviderTestCase3<Provider> {
 
         final FoodsUsageManager foodsManager = new FoodsUsageManager(context);
         FoodsUsageEntity foodsEntity = new FoodsUsageEntity(null, dateId,
-                Meals.BREAKFAST, 1, "food for test", 7.7f);
+                Meal.BREAKFAST, 1, "food for test", 7.7f);
         foodsManager.refresh(foodsEntity);
 
         assertTrue(mObserver.mCalled);

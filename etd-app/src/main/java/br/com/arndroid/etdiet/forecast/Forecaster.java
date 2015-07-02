@@ -2,7 +2,7 @@ package br.com.arndroid.etdiet.forecast;
 
 import java.util.Date;
 
-import br.com.arndroid.etdiet.meals.Meals;
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
 import br.com.arndroid.etdiet.utils.DateUtils;
@@ -32,10 +32,10 @@ public class Forecaster {
         final DaysEntity daysEntity = summary.getEntity();
         final UsageSummary usageSummary = summary.getUsage();
         float toUse = 0.0f;
-        for (int i = 0; i < Meals.getMealsCount() - 1; i++) {
-            if (time < daysEntity.getEndTimeForMeal(i)
-                    && usageSummary.getUsageForMeal(i) < daysEntity.getGoalForMeal(i)) {
-                toUse += daysEntity.getGoalForMeal(i) - usageSummary.getUsageForMeal(i);
+        for (Meal meal : Meal.getOnlyMealsUnmodifiableSet()) {
+            if (time < daysEntity.getEndTimeForMeal(meal)
+                    && usageSummary.getUsageForMeal(meal) < daysEntity.getGoalForMeal(meal)) {
+                toUse += daysEntity.getGoalForMeal(meal) - usageSummary.getUsageForMeal(meal);
             }
         }
 

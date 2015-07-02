@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.meals.Meals;
@@ -22,7 +23,7 @@ public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValue
     public static final String OWNER_TAG = FoodsUsageHeaderFragment.class.getSimpleName();
 
     private String mDateId;
-    private int mMeal;
+    private Meal mMeal;
     private float mTotalUsed;
     private TextView mTxtDate;
     private TextView mTxtUsed;
@@ -66,7 +67,7 @@ public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValue
         });
     }
 
-    private void refreshScreen(String dateId, int meal, float used) {
+    private void refreshScreen(String dateId, Meal meal, float used) {
         mTxtDate.setText(DateUtils.dateIdToFormattedString(dateId));
         mTxtUsed.setText(String.valueOf(used));
 
@@ -89,7 +90,7 @@ public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValue
         }
     }
 
-    public void onDataChangedFromHolderActivity(String dateId, int meal, Cursor data) {
+    public void onDataChangedFromHolderActivity(String dateId, Meal meal, Cursor data) {
         mDateId = dateId;
         mMeal = meal;
         float totalUsed = 0.0f;
@@ -107,7 +108,7 @@ public class FoodsUsageHeaderFragment extends Fragment implements MealIdealValue
         final DaysManager manager = new DaysManager(getActivity().getApplicationContext());
 
         DaysEntity daysEntity = manager.dayFromDateId(mDateId);
-        if (mMeal != Meals.EXERCISE) {
+        if (mMeal != Meal.EXERCISE) {
             daysEntity.setStartTimeForMeal(actualStartTime, mMeal);
             daysEntity.setEndTimeForMeal(actualEndTime, mMeal);
         }

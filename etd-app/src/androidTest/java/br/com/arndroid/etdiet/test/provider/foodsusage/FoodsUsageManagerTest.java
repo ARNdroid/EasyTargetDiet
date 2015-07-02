@@ -6,6 +6,7 @@ import android.test.ProviderTestCase2;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
 import br.com.arndroid.etdiet.provider.days.DaysEntity;
@@ -35,7 +36,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
     public void testRemoveMustDelete() {
         final String dateId = DateUtils.dateToDateId(new Date());
         final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId,
-                1, 2, "some description", 4.0f);
+                Meals.getMealFromPosition(1), 2, "some description", 4.0f);
         mManager.refresh(entity);
         int totalRecords = -1;
         Cursor c = null;
@@ -70,8 +71,8 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
             if (c != null) c.close();
         }
 
-        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, 1, 2, "some description",
-                3.0f);
+        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, Meals.getMealFromPosition(1),
+                2, "some description", 3.0f);
         mManager.refresh(entity);
 
         try {
@@ -94,8 +95,8 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
             if (c != null) c.close();
         }
 
-        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, 1, 2, "some description",
-                3.0f);
+        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, Meals.getMealFromPosition(1),
+                2, "some description", 3.0f);
         mManager.refresh(entity);
 
         try {
@@ -123,8 +124,8 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
             if (c != null) c.close();
         }
 
-        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, 1, 2, "some description",
-                3.0f);
+        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, Meals.getMealFromPosition(1),
+                2, "some description", 3.0f);
         mManager.refresh(entity);
 
         try {
@@ -140,7 +141,7 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
         final Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         final FoodsUsageEntity entity = new FoodsUsageEntity(null, DateUtils.dateToDateId(cal.getTime()),
-                1, 2, "some description", 3.0f);
+                Meals.getMealFromPosition(1), 2, "some description", 3.0f);
         mManager.refresh(entity);
         final Long oldId = entity.getId();
 
@@ -157,13 +158,13 @@ public class FoodsUsageManagerTest extends ProviderTestCase2<Provider> {
 
     public void testRefreshWithoutDateChangeMustPreserveRecord() {
         final String dateId = DateUtils.dateToDateId(new Date());
-        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, 1, 2, "some description",
-                3.0f);
+        final FoodsUsageEntity entity = new FoodsUsageEntity(null, dateId, Meals.getMealFromPosition(1),
+                2, "some description", 3.0f);
         mManager.refresh(entity);
 
         final Long oldId = entity.getId();
 
-        entity.setMeal(10);
+        entity.setMeal(Meals.getMealFromPosition(2));
         entity.setTime(20);
         entity.setDescription("some description modified");
         entity.setValue(30.0f);

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import br.com.arndroid.etdapi.data.Meal;
+
 public class MealsAdapter extends BaseAdapter {
     private final Context mContext;
     private final LayoutInflater mInflater;
@@ -23,13 +25,13 @@ public class MealsAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        final int mealId = Meals.getMealFromPosition(position);
-        return mContext.getString(Meals.getMealResourceNameIdFromMealId(mealId));
+        final Meal meal = Meals.getMealFromPosition(position);
+        return mContext.getString(Meals.getMealResourceNameIdFromMeal(meal));
     }
 
     @Override
     public long getItemId(int position) {
-        return Meals.getMealFromPosition(position);
+        return Meals.getMealFromPosition(position).getCorrelationId();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class MealsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final String mealName = mContext.getString(Meals.getMealResourceNameIdFromMealId(
+        final String mealName = mContext.getString(Meals.getMealResourceNameIdFromMeal(
                 Meals.getMealFromPosition(position)));
         holder.text1.setText(mealName);
         return convertView;

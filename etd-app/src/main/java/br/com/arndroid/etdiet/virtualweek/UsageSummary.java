@@ -3,6 +3,7 @@ package br.com.arndroid.etdiet.virtualweek;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.meals.Meals;
 
 public class UsageSummary implements Parcelable {
@@ -28,21 +29,21 @@ public class UsageSummary implements Parcelable {
         supperUsed = toClone.supperUsed;
     }
 
-    public float getUsageForMeal(int meal) {
+    public float getUsageForMeal(Meal meal) {
         switch (meal) {
-            case Meals.BREAKFAST:
+            case BREAKFAST:
                 return getBreakfastUsed();
-            case Meals.BRUNCH:
+            case BRUNCH:
                 return getBrunchUsed();
-            case Meals.LUNCH:
+            case LUNCH:
                 return getLunchUsed();
-            case Meals.SNACK:
+            case SNACK:
                 return getSnackUsed();
-            case Meals.DINNER:
+            case DINNER:
                 return getDinnerUsed();
-            case Meals.SUPPER:
+            case SUPPER:
                 return getSupperUsed();
-            case Meals.EXERCISE:
+            case EXERCISE:
                 return getExerciseDone();
             default:
                 throw new IllegalArgumentException("Invalid meal=" + meal + ".");

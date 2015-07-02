@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.compat.Compatibility;
 import br.com.arndroid.etdiet.dialog.DateDialog;
@@ -131,10 +132,10 @@ public class JournalOnGoingFragment extends Fragment implements DateDialog.OnDat
         if (DateUtils.isDateIdCurrentDate(mCurrentDateId)) {
             final Date currentDate = new Date();
             final int currentTime = DateUtils.dateToTimeAsInt(currentDate);
-            final int preferredMeal = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(), currentTime,
+            final Meal preferredMeal = Meals.preferredMealForTimeInDate(getActivity().getApplicationContext(), currentTime,
                     currentDate, false);
             final float preferredUse = Meals.preferredUsageForMealInDate(getActivity().getApplicationContext(), preferredMeal, currentDate);
-            final String mealName = getString(Meals.getMealResourceNameIdFromMealId(preferredMeal));
+            final String mealName = getString(Meals.getMealResourceNameIdFromMeal(preferredMeal));
             final String preferredDescription = String.format(getString(R.string.quick_usage_description), mealName.toLowerCase());
             mTxtHeader.setText(preferredDescription);
             mQuickUsage = new FoodsUsageEntity(null, null, preferredMeal, null, preferredDescription, preferredUse);

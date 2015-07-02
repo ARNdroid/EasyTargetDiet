@@ -14,6 +14,7 @@ import br.com.arndroid.etdiet.action.MenuUtils;
 import br.com.arndroid.etdiet.dialog.MealIdealValuesDialog;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.meals.MealsAdapter;
+import br.com.arndroid.etdiet.settings.SettingsListFragment;
 import br.com.arndroid.etdiet.utils.NavigationUtils;
 
 public class FoodsUsageActivity extends Activity implements

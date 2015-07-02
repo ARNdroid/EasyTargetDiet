@@ -5,6 +5,7 @@ import android.test.ProviderTestCase2;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.meals.Meals;
 import br.com.arndroid.etdiet.provider.Contract;
 import br.com.arndroid.etdiet.provider.Provider;
@@ -50,8 +51,8 @@ public class VirtualWeekEngineTest extends ProviderTestCase2<Provider> {
         final FoodsUsageManager manager = new FoodsUsageManager(getMockContext());
         WeekPeriod period = new WeekPeriod(getMockContext(), new Date());
         Calendar calendar = Calendar.getInstance();
-        FoodsUsageEntity food = new FoodsUsageEntity(null, null, Meals.BREAKFAST, 0, "food for test", null);
-        FoodsUsageEntity exercise = new FoodsUsageEntity(null, null, Meals.EXERCISE, 0, "exercise for test", null);
+        FoodsUsageEntity food = new FoodsUsageEntity(null, null, Meal.BREAKFAST, 0, "food for test", null);
+        FoodsUsageEntity exercise = new FoodsUsageEntity(null, null, Meal.EXERCISE, 0, "exercise for test", null);
 
         calendar.setTime(period.getInitialDate());
         food.setDateId(DateUtils.dateToDateId(calendar.getTime()));

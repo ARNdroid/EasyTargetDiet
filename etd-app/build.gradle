@@ -64,6 +64,7 @@ android {
 }
 
 dependencies {
+    compile project(':etd-api')
     compile project(':etd-shr')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:support-v4:22.1.1'

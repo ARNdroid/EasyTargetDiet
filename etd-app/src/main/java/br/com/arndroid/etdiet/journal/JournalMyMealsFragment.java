@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.ActivityActionCaller;
 import br.com.arndroid.etdiet.foodsusage.FoodsUsageActivity;
@@ -172,25 +173,25 @@ public class JournalMyMealsFragment extends Fragment {
     }
 
     public void layMealAction(View view) {
-        int meal;
+        Meal meal;
         switch (view.getId()) {
             case R.id.layBreakfast:
-                meal = Meals.BREAKFAST;
+                meal = Meal.BREAKFAST;
                 break;
             case R.id.layBrunch:
-                meal = Meals.BRUNCH;
+                meal = Meal.BRUNCH;
                 break;
             case R.id.layLunch:
-                meal = Meals.LUNCH;
+                meal = Meal.LUNCH;
                 break;
             case R.id.laySnack:
-                meal = Meals.SNACK;
+                meal = Meal.SNACK;
                 break;
             case R.id.layDinner:
-                meal = Meals.DINNER;
+                meal = Meal.DINNER;
                 break;
             case R.id.laySupper:
-                meal = Meals.SUPPER;
+                meal = Meal.SUPPER;
                 break;
             default:
                 throw new IllegalStateException("Invalid View.id " + view.getId());
@@ -198,7 +199,7 @@ public class JournalMyMealsFragment extends Fragment {
 
         final Bundle data = new Bundle();
         data.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mCurrentDateId);
-        data.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, meal);
+        data.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, Meals.getPositionFromMeal(meal));
 
         ((ActivityActionCaller)getActivity()).onCallAction(R.id.foods_usage_list_fragment,
                 FoodsUsageActivity.class, FoodsUsageListFragment.MEAL_SELECTED_ACTION_TAG, data);

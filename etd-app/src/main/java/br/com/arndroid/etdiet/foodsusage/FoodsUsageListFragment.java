@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import br.com.arndroid.etdapi.data.Meal;
 import br.com.arndroid.etdiet.R;
 import br.com.arndroid.etdiet.action.FragmentActionReplier;
 import br.com.arndroid.etdiet.action.FragmentMenuReplier;
@@ -54,7 +55,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
     }
 
     private String mDateId;
-    private int mMeal;
+    private Meal mMeal;
     private FoodsUsageListAdapter mAdapter;
     private TextView mTxtEmpty;
     private ListView mLstList;
@@ -119,7 +120,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
                         getActivity().getApplicationContext());
                 final FoodsUsageEntity entity = manager.foodUsageFromId(foodId);
                 final String mealName = FoodsUsageListFragment.this.getString(
-                        Meals.getMealResourceNameIdFromMealId(entity.getMeal()));
+                        Meals.getMealResourceNameIdFromMeal(entity.getMeal()));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -147,7 +148,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
         }
     }
 
-    public void onDataChangedFromHolderActivity(String dateId, int meal) {
+    public void onDataChangedFromHolderActivity(String dateId, Meal meal) {
         mDateId = dateId;
         mMeal = meal;
         // If not loaded, load the first instance,
@@ -168,7 +169,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
                 return new CursorLoader(getActivity(), Contract.FoodsUsage.CONTENT_URI,
                         Contract.FoodsUsage.SIMPLE_LIST_PROJECTION,
                         Contract.FoodsUsage.DATE_ID_AND_MEAL_SELECTION,
-                        new String[] {String.valueOf(mDateId), String.valueOf(mMeal)},
+                        new String[] {String.valueOf(mDateId), String.valueOf(mMeal.getCorrelationId())},
                         Contract.FoodsUsage.TIME_DESC_SORT_ORDER);
 
             default:
