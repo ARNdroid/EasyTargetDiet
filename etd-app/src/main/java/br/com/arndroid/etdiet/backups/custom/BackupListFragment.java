@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class BackupListFragment extends ListFragment implements FragmentMenuRepl
     private BackupListAdapter mAdapter;
 
     @Override
-    public View onCreateView(@SuppressWarnings("NullableProblems") LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.backups_list_fragment, container, false);
         bindScreen(rootView);

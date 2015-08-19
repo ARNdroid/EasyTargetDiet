@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
 import br.com.arndroid.etdiet.R;
@@ -72,7 +73,7 @@ public class SettingsListActivity extends Activity implements
     }
 
     @Override
-    protected void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(SETTINGS_TYPE_PARAMETER, mSettingsColumnName);
         super.onSaveInstanceState(outState);
     }

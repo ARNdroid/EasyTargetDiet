@@ -8,6 +8,7 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class FoodsUsageListFragment extends ListFragment implements FragmentMenu
     private ListView mLstList;
 
     @Override
-    public View onCreateView(@SuppressWarnings("NullableProblems") LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.foods_usage_list_fragment, container, false);
         bindScreen(rootView);

@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -97,7 +98,7 @@ public class WeightAutoDialog extends DialogFragment implements
     }
 
     @Override
-    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         fromScreenToEntity();
         outState.putString(TITLE_KEY, getTitle());
         outState.putInt(MIN_KEY, getMinIntegerValue());

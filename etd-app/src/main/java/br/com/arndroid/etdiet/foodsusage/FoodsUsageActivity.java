@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,7 +54,7 @@ public class FoodsUsageActivity extends Activity implements
     }
 
     @Override
-    protected void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(FoodsUsageListFragment.DATE_ID_ACTION_KEY, mDateId);
         outState.putInt(FoodsUsageListFragment.MEAL_POSITION_ACTION_KEY, getActionBar().getSelectedNavigationIndex());
 

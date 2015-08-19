@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -116,7 +117,7 @@ public class QuickInsertAutoDialog extends DialogFragment implements
     }
 
     @Override
-    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         LOG.trace("Inside onSaveInstanceState: saving state to outState");
         fromScreenToEntity();
         outState.putString(STATE_KEY_TITLE, getTitle());

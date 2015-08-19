@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -92,7 +93,7 @@ public class DateDialog extends DialogFragment {
     }
 
     @Override
-    public void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString(TITLE_KEY, getTitle());
         outState.putString(INITIAL_KEY, DateUtils.dateToDateId(getInitialValue()));
         outState.putBoolean(CALENDAR_VIEW_SHOWN, getCalendarViewShown());

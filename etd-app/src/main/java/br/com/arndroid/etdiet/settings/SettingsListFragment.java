@@ -6,6 +6,7 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class SettingsListFragment extends ListFragment implements
     private SettingsWeekdayAdapter mAdapter;
 
     @Override
-    public View onCreateView(@SuppressWarnings("NullableProblems") LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.settings_list_fragment, container, false);
     }

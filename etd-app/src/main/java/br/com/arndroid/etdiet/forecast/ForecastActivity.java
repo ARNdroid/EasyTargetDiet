@@ -3,6 +3,7 @@ package br.com.arndroid.etdiet.forecast;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class ForecastActivity extends Activity {
     }
 
     @Override
-    protected void onSaveInstanceState(@SuppressWarnings("NullableProblems") Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(DAY_SUMMARY_ACTION_KEY, mDaySummary);
 
         super.onSaveInstanceState(outState);
