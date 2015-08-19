@@ -32,6 +32,7 @@ public final class Meals {
         return meal.getCorrelationId();
     }
 
+    @SuppressWarnings("SameReturnValue")
     public static int getMealsCount() {
         return Meal.sizeOfAll;
     }

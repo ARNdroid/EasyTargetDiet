@@ -42,8 +42,10 @@ public enum Meal {
         return mCorrelationId;
     }
 
-    // Returns meal from Integer. If invalid value, return null.
+    // Returns meal from Integer. If invalid value, throws exception (except if value is also null).
     public static Meal fromInteger(Integer value) {
+        if (value == null) return null;
+
         Meal result = mapIntegerToMeal.get(value);
         if (result == null) {
             throw new IllegalArgumentException("Invalid value=" + value);

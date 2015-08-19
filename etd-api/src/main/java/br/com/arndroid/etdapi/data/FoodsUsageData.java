@@ -1,14 +1,22 @@
 package br.com.arndroid.etdapi.data;
 
+import android.os.Bundle;
+
 import java.util.Date;
 
 public final class FoodsUsageData {
 
-    private Date mDate;
-    private Integer mTime;
-    private Meal mMeal;
-    private String mDescription;
-    private Float mValue;
+    private static final String BUNDLE_KEY_DATE = "BUNDLE_KEY_DATE";
+    private static final String BUNDLE_KEY_TIME = "BUNDLE_KEY_TIME";
+    private static final String BUNDLE_KEY_MEAL = "BUNDLE_KEY_MEAL";
+    private static final String BUNDLE_KEY_DESCRIPTION = "BUNDLE_KEY_DESCRIPTION";
+    private static final String BUNDLE_KEY_VALUE = "BUNDLE_KEY_VALUE";
+
+    final private Date mDate;
+    final private Integer mTime;
+    final private Meal mMeal;
+    final private String mDescription;
+    final private Float mValue;
 
     /*package*/ FoodsUsageData(Date date, Integer time, Meal meal, String description, Float value) {
         mDate = date;
@@ -52,7 +60,6 @@ public final class FoodsUsageData {
                 if (temp.mMeal != null)
                     return false;
             }
-
 
             // mDescription:
             if (this.mDescription != null) {
@@ -100,6 +107,16 @@ public final class FoodsUsageData {
                 + "]";
     }
 
+    public Bundle toBundle() {
+        final Bundle result = new Bundle();
+        result.putLong(BUNDLE_KEY_DATE, mDate.getTime());
+        result.putInt(BUNDLE_KEY_TIME, mTime);
+        result.putInt(BUNDLE_KEY_MEAL, mMeal.getCorrelationId());
+        result.putString(BUNDLE_KEY_DESCRIPTION, mDescription);
+        result.putFloat(BUNDLE_KEY_VALUE, mValue);
+        return result;
+    }
+
     public Date getDate() {
         return mDate;
     }
@@ -118,5 +135,13 @@ public final class FoodsUsageData {
 
     public Float getValue() {
         return mValue;
+    }
+
+    public static FoodsUsageData fromBundle(Bundle bundle) {
+        return new FoodsUsageData(new Date(bundle.getLong(BUNDLE_KEY_DATE)),
+                bundle.getInt(BUNDLE_KEY_TIME),
+                Meal.fromInteger(bundle.getInt(BUNDLE_KEY_MEAL)),
+                bundle.getString(BUNDLE_KEY_DESCRIPTION),
+                bundle.getFloat(BUNDLE_KEY_VALUE));
     }
 }
